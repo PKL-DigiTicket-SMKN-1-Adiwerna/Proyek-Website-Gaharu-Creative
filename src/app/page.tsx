@@ -23,7 +23,7 @@ export default function Home() {
                 href={`https://wa.me/${site.waNumber}?text=Halo%20Gaharu%20Creative%2C%20saya%20ingin%20konsultasi%20gratis.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand rounded-lg hover:bg-brand-strong transition-colors focus-visible:outline-none"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#059669] rounded-lg hover:bg-[#047857] transition-colors focus-visible:outline-none"
               >
                 Konsultasi Gratis
               </a>
@@ -93,7 +93,7 @@ export default function Home() {
           <div className="mt-10">
             <Link
               href="/layanan"
-              className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand rounded-lg hover:bg-brand-strong transition-colors focus-visible:outline-none"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#059669] rounded-lg hover:bg-[#047857] transition-colors focus-visible:outline-none"
             >
               Lihat Semua Layanan
             </Link>
@@ -162,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="bg-brand py-16 md:py-20">
+      <section className="bg-[#10B981] py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
             Siap tumbuh bersama kami?
@@ -174,7 +174,7 @@ export default function Home() {
             href={`https://wa.me/${site.waNumber}?text=Halo%20Gaharu%20Creative%2C%20saya%20ingin%20konsultasi%20gratis.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-brand bg-white rounded-lg hover:bg-white/90 transition-colors focus-visible:outline-none"
+            className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-[#10B981] bg-white rounded-lg hover:bg-white/90 transition-colors focus-visible:outline-none"
           >
             Konsultasi Gratis via WhatsApp
           </a>

@@ -8,6 +8,15 @@
  * Palet ini masih placeholder sampai brand guideline resmi Gaharu Creative
  * dikirim (lihat docs/PERTUKANGAN-BRAND.md). Semua nilai ada di sini supaya
  * penggantian brand cukup di satu file.
+ *
+ * Palet baru (dari user):
+ * - Utama (Primary): #10B981
+ * - Kedua (Secondary): #047857
+ * - Ketiga (Surface): #FFFFFF
+ * - Tombol teks putih: #059669
+ *
+ * CATATAN KONTRAS: #059669 vs putih = 3.77:1 (gagal WCAG AA normal, lolos large text ≥18.66px bold/24px).
+ * #047857 vs putih = 5.48:1 (lolos WCAG AA normal). Diperlukan ukuran teks tombol ≥ 18.66px bold jika tetap pakai #059669.
  */
 :root {
   --paper: #fbfaf7;
@@ -15,11 +24,11 @@
   --ink: #151310;
   --ink-soft: #5c554e;
   --line: #e4dfd7;
-  --brand: #0f3d2e;
-  --brand-strong: #0a2b20;
-  --brand-2: #17684a;
+  --brand: #10B981;        /* Utama - Primary */
+  --brand-strong: #059669; /* Tombol teks putih - Button with white text */
+  --brand-2: #047857;      /* Kedua - Secondary */
   --accent-text: #8a5a00;
-  --focus: #0f3d2e;
+  --focus: #10B981;
 }
 
 .dark {
@@ -28,11 +37,11 @@
   --ink: #f5f2ec;
   --ink-soft: #a8a29b;
   --line: #332f28;
-  --brand: #7fd8ae;
-  --brand-strong: #a5e6c6;
-  --brand-2: #4fb287;
+  --brand: #34d399;        /* lighter emerald for dark mode */
+  --brand-strong: #10B981; /* tombol teks putih di dark mode */
+  --brand-2: #6ee7b7;      /* lighter secondary for dark mode */
   --accent-text: #f0b429;
-  --focus: #7fd8ae;
+  --focus: #34d399;
 }
 
 @theme inline {
