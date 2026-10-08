@@ -1,0 +1,23 @@
+node_modules/
+
+dist/
+.vite/
+*.local
+
+# log
+npm-debug.log*
+yarn-error.log*
+
+# environment
+.env
+.env.*
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# build cache
+*.tsbuildinfo
+
+/AGENTS.md
