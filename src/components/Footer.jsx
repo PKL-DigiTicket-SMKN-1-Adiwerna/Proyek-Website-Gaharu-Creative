@@ -1,83 +1,67 @@
 import { Link } from "react-router-dom";
-import { site } from "../data/site.js";
-import { services } from "../data/services.js";
+import { site, footerServices, footerExtraLinks, links } from "../data/site.js";
+import { Container } from "./ui.jsx";
 import CopyrightYear from "./CopyrightYear.jsx";
 
+/*
+ * Satu komponen footer untuk semua halaman. DESAIN.md 6.3 mencatat footer
+ * wireframe berbeda-beda antar halaman; versi seragam ini yang dipakai.
+ *
+ * Tautan Kebijakan Privasi, Syarat & Ketentuan, dan Karier diminta muncul di
+ * footer Portofolio dan Kontak. Halaman tujuannya belum ada, jadi tiga nama
+ * itu ditampilkan sebagai teks berlabel, bukan tautan mati.
+ */
+export default function Footer({ variant = "ringkas" }) {
+  const showExtra = variant === "lengkap";
 
-const waHref = `https://wa.me/${site.waNumber}?text=${encodeURIComponent(
-  "Halo Gaharu Creative, saya ingin konsultasi gratis."
-)}`;
-
-export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-border bg-card">
-      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-6">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2.5">
-              <span
-                aria-hidden="true"
-                className="flex h-8 w-8 items-center justify-center rounded-md bg-action font-display text-sm font-bold text-on-action"
-              >
-                G
-              </span>
-              <span className="font-display text-base font-semibold text-text">{site.name}</span>
-            </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-              {site.tagline} Berlokasi di {site.address}.
-            </p>
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex min-h-11 items-center rounded-md bg-action px-5 text-sm font-semibold text-on-action transition-colors hover:bg-action-hover"
-            >
-              Konsultasi gratis
-            </a>
-          </div>
+    <footer className="border-t border-line bg-paper">
+      <Container className="py-12 text-center sm:py-14">
+        <p className="text-base font-bold text-ink">{site.name}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{site.tagline}</p>
 
+        <div className="mt-8 flex flex-col gap-6 text-sm">
           <div>
-            <h2 className="text-sm font-semibold text-text">Layanan</h2>
-            <ul className="mt-4 space-y-3">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    href={`/layanan#${s.slug}`}
-                    className="inline-block py-1.5 text-sm text-muted transition-colors hover:text-action-text"
-                  >
-                    {s.title}
-                  </Link>
-                </li>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">Layanan</p>
+            <ul className="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1 text-ink">
+              {footerServices.map((name) => (
+                <li key={name}>{name}</li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-text">Kontak</h2>
-            <address className="mt-4 space-y-3 text-sm not-italic text-muted">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">Kontak</p>
+            <ul className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 text-ink">
               <li>
-                {site.address}
-                {!site.addressVerified && (
-                  <span className="block text-xs text-flag">Alamat lengkap belum dikonfirmasi</span>
-                )}
+                <a
+                  href={links.mail}
+                  className="inline-block py-1 underline decoration-line underline-offset-4 hover:decoration-ink"
+                >
+                  {site.email}
+                </a>
               </li>
-              <li>{site.hours}</li>
-              {site.phone && <li>{site.phone}</li>}
-              <li>
-                {site.email}
-                {!site.emailVerified && (
-                  <span className="block text-xs text-flag">Domain belum dikonfirmasi</span>
-                )}
-              </li>
-            </address>
-            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2">
+              <li>{site.phone}</li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">Jam Operasional</p>
+            <p className="mt-2 text-ink">{site.hours}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">Media Sosial</p>
+            <ul
+              data-placeholder="Akun belum diverifikasi"
+              className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1">
               {site.socials.map((s) => (
-                <li key={s.href}>
+                <li key={s.label}>
                   <a
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block py-1.5 text-sm text-muted transition-colors hover:text-action-text"
+                    className="inline-block py-1 text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
                   >
                     {s.label}
                   </a>
@@ -85,15 +69,33 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+
+          <div className="border-t border-line pt-6">
+            <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1" aria-label="Tautan legal">
+              {footerExtraLinks.map((item) => (
+                <span key={item.label} className="text-muted" title={item.state}>
+                  {item.label}
+                  <span className="ml-1 text-xs uppercase tracking-wider">
+                    ({item.state})
+                  </span>
+                </span>
+              ))}
+            </nav>
+            <p className="mt-4 text-sm text-muted">
+              <Link to="/" className="underline decoration-line underline-offset-4 hover:decoration-ink">
+                {site.name}
+              </Link>{" "}
+              &copy; <CopyrightYear from={site.founded} />. Semua hak dilindungi.
+            </p>
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            &copy; <CopyrightYear /> {site.name}. Hak cipta dilindungi.
+        {showExtra ? (
+          <p className="mt-6 text-xs text-muted">
+            Menu: Tentang Kami, Layanan, Portofolio, Artikel, Kontak.
           </p>
-          <p>{site.legal.company}</p>
-        </div>
-      </div>
+        ) : null}
+      </Container>
     </footer>
   );
 }

@@ -1,36 +1,84 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { site } from "../data/site.js";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { site, navLinks, links, clientLanguages } from "../data/site.js";
+import { Button, Container } from "./ui.jsx";
+import { Icon } from "./Icons.jsx";
 
-const navLinks = [
-  { href: "/", label: "Beranda" },
-  { href: "/tentang", label: "Tentang" },
-  { href: "/layanan", label: "Layanan" },
-  { href: "/portofolio", label: "Portofolio" },
-  { href: "/insight", label: "Insight" },
-  { href: "/kontak", label: "Kontak" },
-];
+/*
+ * Navbar (DESAIN.md 3.1): logo kiri, menu tengah, pemilih bahasa dan tombol
+ * Hubungi Kami kanan. Menu aktif ditandai garis bawah.
+ */
+function LanguagePicker() {
+  const [open, setOpen] = useState(false);
+  const box = useRef(null);
 
-const waHref = `https://wa.me/${site.waNumber}?text=${encodeURIComponent(
-  "Halo Gaharu Creative, saya ingin konsultasi gratis."
-)}`;
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e) => {
+      if (box.current && !box.current.contains(e.target)) setOpen(false);
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div className="relative" ref={box}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-label="Pilih bahasa"
+        className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-field px-3 text-sm font-semibold text-ink transition-colors hover:bg-block"
+      >
+        <Icon name="globe" className="h-4 w-4" />
+        ID
+        <Icon name="chevronDown" className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open ? (
+        <ul className="absolute right-0 z-50 mt-2 w-56 rounded-md border border-line bg-paper p-1.5 shadow-sm">
+          {clientLanguages.map((lang) => (
+            <li key={lang.code}>
+              {lang.available ? (
+                <span
+                  aria-current="true"
+                  className="flex min-h-11 items-center justify-between rounded px-3 py-2 text-sm font-semibold text-ink"
+                >
+                  {lang.label}
+                  <Icon name="check" className="h-4 w-4" />
+                </span>
+              ) : (
+                <span
+                  aria-disabled="true"
+                  className="flex min-h-11 items-center justify-between rounded px-3 py-2 text-sm text-muted"
+                >
+                  {lang.label}
+                  <span className="text-xs uppercase tracking-wider">segera</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 4);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Escape menutup menu, dan body tidak bisa di-scroll di belakang overlay.
-  useEffect(() => {
-    if (!isOpen) return;
+    if (!open) return;
     const onKey = (e) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -38,116 +86,97 @@ export default function Header() {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [open]);
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b bg-card/90 backdrop-blur-md ${
-        isScrolled ? "border-border shadow-sm" : "border-border/60"
-      }`}
-    >
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper">
+      <Container>
         <div className="flex h-16 items-center justify-between gap-4">
-          <Link href="/" className="group flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
+          <Link to="/" className="flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
             <span
               aria-hidden="true"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-action font-display text-sm font-bold text-on-action"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink text-sm font-bold text-ink"
             >
               G
             </span>
-            <span className="font-display text-base font-semibold tracking-tight text-text">
-              {site.name}
-            </span>
+            <span className="text-base font-bold tracking-tight text-ink">{site.name}</span>
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-accent/10 hover:text-text"
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-ink ${
+                    isActive
+                      ? "text-ink underline decoration-2 underline-offset-8"
+                      : "text-muted"
+                  }`
+                }
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-2 rounded-md bg-action px-4 py-2 text-sm font-semibold text-on-action transition-colors hover:bg-action-hover"
-            >
-              Konsultasi
-            </a>
           </nav>
+
+          <div className="hidden items-center gap-3 lg:flex">
+            <LanguagePicker />
+            <Button to={links.konsultasi} kind="nav" className="px-4">
+              Hubungi Kami
+            </Button>
+          </div>
 
           <button
             type="button"
-            onClick={() => setIsOpen((v) => !v)}
-            aria-expanded={isOpen}
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
             aria-controls="menu-mobile"
-            aria-label={isOpen ? "Tutup menu" : "Buka menu"}
-            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-text transition-colors hover:bg-accent/10 lg:hidden"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-field text-ink lg:hidden"
+            aria-label={open ? "Tutup menu" : "Buka menu"}
           >
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              aria-hidden="true"
-            >
-              {isOpen ? (
-                <path d="M6 6l12 12M18 6L6 18" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              )}
-            </svg>
+            <span aria-hidden="true" className="relative block h-4 w-5">
+              <span className={`absolute left-0 h-0.5 w-5 bg-ink transition-transform ${open ? "top-2 rotate-45" : "top-0"}`} />
+              <span className={`absolute left-0 top-2 h-0.5 w-5 bg-ink transition-opacity ${open ? "opacity-0" : "opacity-100"}`} />
+              <span className={`absolute left-0 h-0.5 w-5 bg-ink transition-transform ${open ? "top-2 -rotate-45" : "top-4"}`} />
+            </span>
           </button>
         </div>
-      </div>
+      </Container>
 
-      {/* Panel menu mobile: bukan sekadar nav yang transparan, tapi sheet
-          yang menutup layar dan bisa ditutup dengan Escape. */}
-      {isOpen && (
-        <div className="fixed inset-x-0 top-16 bottom-0 z-40 lg:hidden">
-          <button
-            type="button"
-            aria-label="Tutup menu"
-            tabIndex={-1}
-            onClick={() => setIsOpen(false)}
-            className="absolute inset-0 bg-black/40"
-          />
-          <nav
-            id="menu-mobile"
-            aria-label="Navigasi mobile"
-            className="absolute inset-x-0 top-0 max-h-full overflow-y-auto border-b border-border bg-card px-5 pb-6 pt-2 shadow-xl"
-          >
-            <ul className="flex flex-col">
+      {open ? (
+        <div id="menu-mobile" className="border-t border-line bg-paper lg:hidden">
+          <Container className="py-4">
+            <nav className="flex flex-col" aria-label="Navigasi mobile">
               {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="flex min-h-12 items-center border-b border-border/60 text-base font-medium text-text"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `min-h-11 rounded-md px-3 py-3 text-base font-medium ${
+                      isActive ? "bg-block text-ink" : "text-muted"
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
               ))}
-            </ul>
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-action px-5 text-base font-semibold text-on-action transition-colors hover:bg-action-hover"
-            >
-              Konsultasi gratis
-            </a>
-          </nav>
+            </nav>
+            <div className="mt-4 flex items-center gap-3 border-t border-line pt-4">
+              <LanguagePicker />
+              <Button
+                to={links.konsultasi}
+                kind="nav"
+                className="flex-1"
+                onClick={() => setOpen(false)}
+              >
+                Hubungi Kami
+              </Button>
+            </div>
+          </Container>
         </div>
-      )}
+      ) : null}
     </header>
   );
 }

@@ -1,91 +1,50 @@
 @import "tailwindcss";
 @import "@fontsource-variable/plus-jakarta-sans";
-@import "@fontsource-variable/bricolage-grotesque";
-
-/* Class-based dark mode so the theme toggle can control both modes. */
-@custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * DESIGN TOKENS
+ * DESIGN TOKENS - tahap wireframe.
  *
- * Palet brand (dari klien, brand guideline resmi belum diterima):
- *   Hijau utama  #10B981
- *   Hijau tua    #047857
+ * DESAIN.md bagian 2.1 belum menetapkan warna brand, jadi semua nilai di
+ * bawah hitam, putih, dan abu. Saat brand guideline masuk, cukup ganti
+ * variabel di :root, komponen tidak perlu disentuh satu per satu.
  *
- * Aturan pemakaian warna. Baca ini sebelum menukar warna.
- *
- * 1. --accent hanya untuk graphic dan garis dekoratif.
- *    #10B981 di atas #fbfaf7 = 2.43:1, GAGAL WCAG AA.
- *    Jangan dipakai untuk teks.
- *
- * 2. --action untuk tombol dan link, dipasangkan dengan --on-action.
- *      Light: #047857 + #ffffff = 5.48:1  (lolos AA)
- *      Dark:  #34d399 + #06231a = 8.65:1  (lolos AA)
- *    Di dark mode tombol dibalik jadi hijau terang dengan teks hampir
- *    hitam. Itu disengaja, bukan salah warna.
- *
- * 3. Warna brand asli #10B981 tetap ada sebagai --accent supaya identitas
- *    perusahaan tidak hilang.
- *
- * Angka kontras lain yang perlu diingat:
- *   #059669 + putih = 3.77:1 (gagal AA teks normal)
- *   #047857 + bg   = 5.25:1 (lolos AA)
+ * Aturan kontras yang sudah dicek di atas putih:
+ *   --ink        18.6:1  teks utama, tombol terisi
+ *   --muted       7.0:1  teks sekunder, lolos AA
+ *   --tag-ink     9.7:1  teks di dalam tag kategori
+ *   --fill        1.0:1  isi tombol navbar, dipasangkan dengan --ink
+ * Garis pemisah section tidak membawa informasi, jadi tidak ikut diuji.
+ * Batas control form (input, select, textarea) justru wajib 3:1 menurut
+ * WCAG 1.4.11, jadi dipisah ke --field: #8f8f8f di atas putih = 3.2:1.
  */
 :root {
-  --bg: #fbfaf7;
-  --card: #ffffff;
-  --text: #151310;
-  --muted: #5c554e;
-  --border: #e4dfd7;
-
-  --accent: #10b981;
-  --action: #047857;
-  --action-hover: #065f46;
-  --action-text: #047857;
-  --on-action: #ffffff;
-
-  --flag: #8a5a00;
-  --focus: #047857;
+  --paper: #ffffff;
+  --ink: #111111;
+  --muted: #595959;
+  --line: #d9d9d9;
+  --field: #8f8f8f;
+  --fill: #e6e6e6;
+  --block: #f2f2f2;
+  --tag-bg: #efefef;
+  --tag-ink: #404040;
+  --focus: #111111;
 }
 
-.dark {
-  --bg: #14120f;
-  --card: #1c1a16;
-  --text: #f5f2ec;
-  --muted: #a8a29b;
-  --border: #332f28;
-
-  --accent: #34d399;
-  --action: #34d399;
-  --action-hover: #10b981;
-  --action-text: #34d399;
-  --on-action: #06231a;
-
-  --flag: #f0b429;
-  --focus: #34d399;
-}
-
-/*
- *Bukan @theme inline. Inline membekukan nilai variabel saat build, jadi
- * toggle kelas .dark di runtime tidak berpengaruh. Tanpa inline, Tailwind
- * menulis variabel CSS asli yang dibaca browser saat runtime.
+/* Nilai ditranslasikan ke utility Tailwind (bg-paper, text-ink, dan lain-lain).
+ * Tanpa keyword inline, supaya perubahan di atas terbaca saat runtime.
  */
 @theme {
-  --color-bg: var(--bg);
-  --color-card: var(--card);
-  --color-text: var(--text);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-border: var(--border);
-
-  --color-accent: var(--accent);
-  --color-action: var(--action);
-  --color-action-hover: var(--action-hover);
-  --color-action-text: var(--action-text);
-  --color-on-action: var(--on-action);
-  --color-flag: var(--flag);
+  --color-line: var(--line);
+  --color-field: var(--field);
+  --color-fill: var(--fill);
+  --color-block: var(--block);
+  --color-tag: var(--tag-bg);
+  --color-tag-ink: var(--tag-ink);
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -93,17 +52,16 @@ html {
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 /*
- * Focus ring. Pakai :where() supaya specificity 0, jadi utility class lain
- * tidak bisa menimpanya. Jangan pakai focus-visible:outline-none di
- * komponen, itu mematikan navigasi keyboard.
+ * Fokus terlihat. :where() bikin specificity nol supaya utility lain tidak
+ * menimpanya. Jangan pasang focus:outline-none di komponen.
  */
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--focus);
@@ -112,26 +70,22 @@ body {
 }
 
 /*
- * Penanda konten yang belum diverifikasi. Render sebagai baris di bawah
- * konten, bukan overlay, supaya tidak menutupi teks.
+ * Penanda data yang belum diverifikasi. Isi teks diambil dari atribut
+ * data-placeholder, dirender di bawah konten, tidak menutupi apa pun.
  */
 [data-placeholder]::after {
   content: attr(data-placeholder);
   display: inline-block;
   margin-top: 0.5rem;
-  background: var(--flag);
-  color: #fff;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  background: var(--block);
   font-size: 0.6875rem;
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-}
-
-.dark [data-placeholder]::after {
-  color: #241a00;
 }
 
 @media (prefers-reduced-motion: reduce) {
