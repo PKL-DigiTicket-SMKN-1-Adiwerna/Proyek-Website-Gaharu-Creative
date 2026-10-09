@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# next dev menulis ulang AGENTS.md setiap kali mendeteksi AI agent.
+# File ini alat bantu lokal, bukan bagian dari proyek.
+/AGENTS.md

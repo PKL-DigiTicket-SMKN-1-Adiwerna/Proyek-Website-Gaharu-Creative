@@ -1,0 +1,31 @@
+chore: buang artefak template create-next-app dari repo
+
+Empat file di repo ini masih bawaan create-next-app dan kelihatan
+kena generate tools, sekarang dibersihkan.
+
+AGENTS.md dihapus dan masuk .gitignore. File ini bukan aset proyek:
+next dev menulis ulang blok instruksi ke dalamnya setiap kali mendeteksi
+AI agent aktif. Kalau hanya dihapus, commit berikutnya akanmembawa file itu
+lagi. Menandainya ignored membuat next dev tetap bisa menulisnya secara
+lokal tanpa pernah ikut ter-commit.
+
+src/app/favicon.ico dihapus, digantikan src/app/icon.svg. Favicon bawaan
+create-next-app adalah logo Next.js. Icon baru pakai huruf G di atas
+warna aksi #047857, jadi konsisten dengan mark di Header dan Footer.
+
+Komentar template di next.config.ts dan eslint.config.mjs diganti
+komentar yang menjelaskan alasan setting-nya, bukan sisaan "// config
+options here".
+
+Link mati di README diperbaiki. README menunjuk ke BRIEF.md, tapi file itu
+tidak pernah ada di repo dan tidak ada di disk. Sekarang arahkan ke
+docs/DATA-YANG-DIBUTUHKAN.md, satu-satunya dokumen yang benar-benar ada.
+
+Catatan: empat commit sebelumnya tetap terlihat di riwayat GitHub,
+termasuk "Initial commit from Create Next App". Riwayat tidak bisa dihapus
+tanpa menimpa branch, itu keputusan terpisah dan aku tidak melakukannya tanpa
+konfirmasi.
+
+Verifikasi: npm run build lolos, npm run lint bersih, route /icon.svg
+static. Semua link relatif di README dicek ulang dan tidak ada yang
+mati lagi.

@@ -40,7 +40,7 @@ src/
     sections/       potongan seksi yang dipakai lebih dari satu halaman
   content/          data konten (services.ts)
   lib/              types.ts dan site.ts (konfigurasi situs)
-docs/               catatan keputusan dan daftar data yang dibutuhkan
+docs/               daftar data yang dibutuhkan sebelum tayang
 ```
 
 ## Konten
@@ -77,4 +77,4 @@ jadi sementara mengikuti setelan sistem.
 
 ## Brief
 
-Ringkasan proyek ada di [BRIEF.md](BRIEF.md), disalin dari file brief yang dikirim klien.
+Ringkasan proyek ada di [docs/DATA-YANG-DIBUTUHKAN.md](docs/DATA-YANG-DIBUTUHKAN.md).

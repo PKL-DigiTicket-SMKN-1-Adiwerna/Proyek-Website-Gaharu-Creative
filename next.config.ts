@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Prerender awal lalu stream bagian yang dinamis (tahun copyright).
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
