@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Seo } from "../components/Seo.jsx";
 import {
   Button,
-  Container,
   IconCircle,
   ImageBlock,
   Section,
@@ -17,6 +16,9 @@ const description = "Hubungi Gaharu Creative untuk konsultasi gratis, penawaran,
 
 const emptyForm = { nama: "", perusahaan: "", layanan: "", pesan: "" };
 
+/* DESAIN.md 4.6: halaman ini tanpa hero, langsung dimulai dari section
+ * "Hubungi Kami" tepat di bawah navbar. Form di kiri, kartu Area Kontak
+ * di kanan, lalu Informasi Kontak dan Peta. */
 export default function KontakPage() {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
@@ -51,59 +53,17 @@ export default function KontakPage() {
     <>
       <Seo title={title} description={description} />
 
-      <section className="border-b border-line">
-        <Container className="py-14 sm:py-20">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">{site.name}</h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted">
-              Agency 360 untuk strategi, desain, dan pengembangan digital.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button to={links.layanan} kind="secondary">
-                Lihat Layanan
-              </Button>
-              <Button to="#form-kontak" kind="primary">
-                Konsultasi Gratis
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <Section id="hubungi" divider>
+      <Section id="hubungi">
         <SectionHead
-          label="Hubungi Kami"
-          title="Mulai dari percakapan singkat"
+          as="h1"
+          title="Hubungi Kami"
           subtitle="Isi form di bawah atau hubungi lewat kanal yang tersedia. Tim kami merespons di hari kerja."
         />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {kontakInfo.map((item) => (
-            <article key={item.title} className="rounded-lg border border-line bg-paper p-5">
-              <IconCircle name={item.icon} className="mb-4" />
-              <h2 className="text-sm font-bold text-ink">{item.title}</h2>
-              {item.href ? (
-                <a
-                  href={infoHref(item.href)}
-                  {...(item.href === "whatsapp" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="mt-2 inline-block text-sm text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
-                >
-                  {item.value}
-                </a>
-              ) : (
-                <p className="mt-2 text-sm leading-relaxed text-muted">{item.value}</p>
-              )}
-            </article>
-          ))}
-        </div>
-        <p data-placeholder="Nomor dan alamat masih contoh wireframe" className="mt-6 text-sm text-muted">
-          WhatsApp dan alamat di atas adalah contoh dari wireframe. Data resmi menunggu konfirmasi
-          klien sebelum halaman ini dibuka untuk publik.
-        </p>
-      </Section>
-
-      <Section id="form-kontak" divider className="bg-block">
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-          <div className="rounded-lg border border-line bg-paper p-6 sm:p-8">
+        <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+          <div
+            id="form-kontak"
+            className="scroll-mt-24 rounded-lg border border-line bg-paper p-6 sm:p-8"
+          >
             <SectionHead
               align="left"
               title="Form Kontak"
@@ -146,7 +106,7 @@ export default function KontakPage() {
                   autoComplete="organization"
                   value={form.perusahaan}
                   onChange={(e) => field("perusahaan", e.target.value)}
-                  placeholder="Nama perusahaan atau institusi"
+                  placeholder="Nama perusahaan / institusi"
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
                 />
               </div>
@@ -215,7 +175,7 @@ export default function KontakPage() {
                 >
                   Pemeriksaan kolom sudah lolos. Pesan Anda tersimpan di layar ini tapi belum terkirim,
                   karena layanan form belum dipasang dan nomor kontak resmi belum dikonfirmasi. Pakai
-                  WhatsApp atau email di bagian atas halaman untuk mengirim sekarang.
+                  WhatsApp atau email di bagian Informasi Kontak untuk mengirim sekarang.
                 </p>
               ) : null}
 
@@ -240,6 +200,36 @@ export default function KontakPage() {
             </div>
           </aside>
         </div>
+      </Section>
+
+      <Section id="informasi-kontak" divider className="bg-block">
+        <SectionHead
+          title="Informasi Kontak"
+          subtitle="Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional."
+        />
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {kontakInfo.map((item) => (
+            <article key={item.title} className="rounded-lg border border-line bg-paper p-5">
+              <IconCircle name={item.icon} className="mb-4" />
+              <h2 className="text-sm font-bold text-ink">{item.title}</h2>
+              {item.href ? (
+                <a
+                  href={infoHref(item.href)}
+                  {...(item.href === "whatsapp" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="mt-2 inline-block text-sm text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
+                >
+                  {item.value}
+                </a>
+              ) : (
+                <p className="mt-2 text-sm leading-relaxed text-muted">{item.value}</p>
+              )}
+            </article>
+          ))}
+        </div>
+        <p data-placeholder="Nomor dan alamat masih contoh wireframe" className="mt-6 text-sm text-muted">
+          WhatsApp dan alamat di atas adalah contoh dari wireframe. Data resmi menunggu konfirmasi
+          klien sebelum halaman ini dibuka untuk publik.
+        </p>
       </Section>
 
       <Section id="peta" divider>

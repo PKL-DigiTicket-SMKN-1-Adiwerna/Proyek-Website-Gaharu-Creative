@@ -126,20 +126,27 @@ export function ImageBlock({ label, hint = "", ratio = "aspect-[4/3]", className
 }
 
 /* Header section: label kecil di atas, H2 tebal rata tengah, subjudul kecil. */
-export function SectionHead({ label, title, subtitle, align = "center", className = "" }) {
+export function SectionHead({ label, title, subtitle, align = "center", as = "h2", className = "" }) {
   const centered = align === "center";
+  /* `as` dipakai halaman tanpa hero (Layanan, Kontak) supaya judul section
+   * pertama tetap jadi H1 tunggal halaman itu. */
+  const Heading = as === "h1" ? "h1" : "h2";
+  const titleSize =
+    as === "h1"
+      ? "text-3xl sm:text-4xl"
+      : "text-2xl sm:text-3xl";
   return (
     <div className={`${centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
       {label ? (
         <p className="text-xs font-semibold uppercase tracking-widest text-muted">{label}</p>
       ) : null}
-      <h2
-        className={`mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl ${
+      <Heading
+        className={`mt-2 ${titleSize} font-bold tracking-tight text-ink ${
           centered ? "" : "text-left"
         }`}
       >
         {title}
-      </h2>
+      </Heading>
       {subtitle ? (
         <p className={`mt-3 text-base leading-relaxed text-muted ${centered ? "mx-auto" : ""}`}>
           {subtitle}

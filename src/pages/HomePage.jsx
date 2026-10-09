@@ -65,14 +65,6 @@ export default function HomePage() {
               performance marketing, dan pengembangan produk digital agar hasilnya terukur dan
               berkelanjutan.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button to={links.konsultasi} kind="primary">
-                Konsultasi Gratis
-              </Button>
-              <Button to={links.portofolio} kind="secondary">
-                Lihat Portofolio
-              </Button>
-            </div>
           </article>
           <ImageBlock
             label="Visual layanan menyeluruh"
@@ -88,15 +80,6 @@ export default function HomePage() {
           title="5 Layanan Utama"
           subtitle="Layanan yang saling terhubung untuk pertumbuhan bisnis Anda."
         />
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button to={links.portofolio} kind="secondary">
-            Lihat Portofolio
-          </Button>
-          <Button to={links.konsultasi} kind="primary">
-            Konsultasi Gratis
-          </Button>
-        </div>
-
         {/* Grid 3 kartu di atas, 2 kartu lebih lebar di baris kedua. */}
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.slice(0, 3).map((svc) => (
@@ -156,14 +139,6 @@ export default function HomePage() {
           title="Portofolio Unggulan"
           subtitle="Contoh proyek berdasarkan kategori industri."
         />
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button to={links.konsultasi} kind="primary">
-            Konsultasi Gratis
-          </Button>
-          <Button to={links.portofolio} kind="secondary">
-            Lihat Portofolio
-          </Button>
-        </div>
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {featuredWork.map((item) => (
             <article key={item.title} className="rounded-lg border border-line bg-paper p-5">

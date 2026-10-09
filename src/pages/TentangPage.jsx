@@ -172,15 +172,6 @@ export default function TentangPage() {
           title="Legalitas"
           subtitle="Dokumen dan informasi penting untuk meningkatkan kepercayaan dalam kerja sama."
         />
-        <div className="mt-8 flex justify-center">
-          <Button
-            href={links.mail}
-            kind="primary"
-            title="Kirim email permintaan dokumen, lampiran belum tersedia untuk diunduh."
-          >
-            Minta Dokumen Legal
-          </Button>
-        </div>
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
           {legality.map((item) => (
             <article key={item.title} className="flex gap-4 rounded-lg border border-line bg-paper p-5">
