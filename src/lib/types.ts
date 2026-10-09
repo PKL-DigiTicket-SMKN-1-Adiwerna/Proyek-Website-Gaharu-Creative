@@ -39,10 +39,13 @@ export type SiteConfig = {
   description: string;
   keywords: string[];
   waNumber: string;
+  waNumberVerified: boolean;
   email: string;
+  emailVerified: boolean;
   phone: string;
   address: string;
+  addressVerified: false | boolean;
   hours: string;
-  socials: { label: string; href: string }[];
+  socials: { label: string; href: string; verified: boolean }[];
   legal: { company: string; legalNote: string };
 };

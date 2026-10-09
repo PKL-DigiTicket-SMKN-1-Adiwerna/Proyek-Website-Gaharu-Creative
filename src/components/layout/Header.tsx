@@ -1,146 +1,155 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { site } from "@/lib/site";
 
 const navLinks = [
   { href: "/", label: "Beranda" },
-  { href: "/tentang", label: "Tentang Kami" },
+  { href: "/tentang", label: "Tentang" },
   { href: "/layanan", label: "Layanan" },
   { href: "/portofolio", label: "Portofolio" },
   { href: "/insight", label: "Insight" },
   { href: "/kontak", label: "Kontak" },
 ];
 
+const waHref = `https://wa.me/${site.waNumber}?text=${encodeURIComponent(
+  "Halo Gaharu Creative, saya ingin konsultasi gratis."
+)}`;
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => setIsScrolled(window.scrollY > 8);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 4);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (!mounted) {
-    return (
-      <header
-        className="sticky top-0 z-50 bg-surface/80 backdrop-blur-sm border-b border-line"
-        style={{ minHeight: "64px" }}
-        role="banner"
-      >
-        <div className="mx-auto max-w-7xl px-4" />
-      </header>
-    );
-  }
+  // Escape menutup menu, dan body tidak bisa di-scroll di belakang overlay.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors ${
-        isScrolled
-          ? "bg-surface/90 backdrop-blur-md border-b border-line shadow-sm"
-          : "bg-surface/80 backdrop-blur-sm border-b border-line"
+      className={`sticky top-0 z-50 border-b bg-card/90 backdrop-blur-md ${
+        isScrolled ? "border-border shadow-sm" : "border-border/60"
       }`}
-      role="banner"
     >
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-display font-semibold text-xl text-brand focus-visible:outline-none"
-            aria-label={`${site.name} - Beranda`}
-          >
-            <svg
-              className="h-7 w-7 text-brand"
-              viewBox="0 0 32 32"
-              fill="none"
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="flex h-16 items-center justify-between gap-4">
+          <Link href="/" className="group flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
+            <span
               aria-hidden="true"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-action font-display text-sm font-bold text-on-action"
             >
-              <rect width="32" height="32" rx="6" fill="currentColor" />
-              <path
-                d="M8 12h16M8 16h12M8 20h8"
-                stroke="white"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span className="hidden sm:block">{site.name}</span>
+              G
+            </span>
+            <span className="font-display text-base font-semibold tracking-tight text-text">
+              {site.name}
+            </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6" aria-label="Navigasi utama">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-ink hover:text-brand transition-colors focus-visible:outline-none"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-accent/10 hover:text-text"
               >
                 {link.label}
               </Link>
             ))}
             <a
-              href={`https://wa.me/${site.waNumber}?text=Halo%20Gaharu%20Creative%2C%20saya%20ingin%20konsultasi%20gratis.`}
+              href={waHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#059669] rounded-lg hover:bg-[#047857] transition-colors focus-visible:outline-none"
+              className="ml-2 rounded-md bg-action px-4 py-2 text-sm font-semibold text-on-action transition-colors hover:bg-action-hover"
             >
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.673m-5.421 7.403c-.756.275-1.296.422-1.637.438-.202.008-2.178-.13-2.493-.144C3.897 21.226 2.25 18.717 2.013 17.747c-.123-.502-.122-2.496 1.408-5.068 1.191-1.97 2.64-3.345 4.412-3.93.562-.184 1.53-.21 2.686-.131.886.058 1.712.372 2.311.94.6.568.947 1.335 1.074 2.118.08.498.08 2.312-.074 2.43-.099.08-.248.13-.57.13h-.025z" />
-              </svg>
-              Konsultasi Gratis
+              Konsultasi
             </a>
           </nav>
 
           <button
             type="button"
-            className="md:hidden p-2 rounded-lg text-ink hover:bg-line focus-visible:outline-none"
+            onClick={() => setIsOpen((v) => !v)}
             aria-expanded={isOpen}
-            aria-controls="mobile-menu"
+            aria-controls="menu-mobile"
             aria-label={isOpen ? "Tutup menu" : "Buka menu"}
-            onClick={() => setIsOpen(!isOpen)}
+            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-text transition-colors hover:bg-accent/10 lg:hidden"
           >
-            {isOpen ? (
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M3 12h18M3 6h18M3 18h18" />
-              </svg>
-            )}
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              {isOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
           </button>
         </div>
+      </div>
 
-        <nav
-          id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-all duration-200 ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
-          aria-label="Menu mobile"
-        >
-          <div className="py-4 space-y-2 border-t border-line">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block px-2 py-3 text-base font-medium text-ink hover:text-brand rounded-lg focus-visible:outline-none"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+      {/* Panel menu mobile: bukan sekadar nav yang transparan, tapi sheet
+          yang menutup layar dan bisa ditutup dengan Escape. */}
+      {isOpen && (
+        <div className="fixed inset-x-0 top-16 bottom-0 z-40 lg:hidden">
+          <button
+            type="button"
+            aria-label="Tutup menu"
+            tabIndex={-1}
+            onClick={() => setIsOpen(false)}
+            className="absolute inset-0 bg-black/40"
+          />
+          <nav
+            id="menu-mobile"
+            aria-label="Navigasi mobile"
+            className="absolute inset-x-0 top-0 max-h-full overflow-y-auto border-b border-border bg-card px-5 pb-6 pt-2 shadow-xl"
+          >
+            <ul className="flex flex-col">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="flex min-h-12 items-center border-b border-border/60 text-base font-medium text-text"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
             <a
-              href={`https://wa.me/${site.waNumber}?text=Halo%20Gaharu%20Creative%2C%20saya%20ingin%20konsultasi%20gratis.`}
+              href={waHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full mt-2 px-4 py-3 text-center text-sm font-medium text-white bg-[#059669] rounded-lg hover:bg-[#047857] transition-colors focus-visible:outline-none"
               onClick={() => setIsOpen(false)}
+              className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-action px-5 text-base font-semibold text-on-action transition-colors hover:bg-action-hover"
             >
-              Konsultasi Gratis
+              Konsultasi gratis
             </a>
-          </div>
-        </nav>
-      </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

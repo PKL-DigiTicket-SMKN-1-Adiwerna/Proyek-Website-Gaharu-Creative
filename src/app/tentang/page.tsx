@@ -1,12 +1,29 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Tentang Gaharu Creative",
+  description: "Profil perusahaan, cara kerja, dan siapa yang di balik Gaharu Creative.",
+};
+
 export default function TentangPage() {
   return (
-    <div className="bg-paper text-ink">
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-4xl px-4">
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">Tentang Kami</h1>
-          <p className="text-lg text-ink-soft">Halaman ini sedang dikembangkan.</p>
-        </div>
-      </section>
+    <div className="mx-auto max-w-3xl px-5 py-24 sm:px-6">
+      <h1 className="font-display text-4xl font-semibold tracking-tight text-text">Tentang Gaharu Creative</h1>
+      <p className="mt-4 text-lg leading-relaxed text-muted">Profil perusahaan, cara kerja, dan siapa yang di balik Gaharu Creative.</p>
+
+      <div className="mt-10 rounded-lg border border-border bg-card p-6">
+        <p className="text-xs font-semibold uppercase tracking-widest text-flag">Status halaman</p>
+        <p className="mt-3 leading-relaxed text-muted">Bagian ini menunggu data profil resmi dari klien. Brief proyek sudah ada, tapi detail tim, jumlah karyawan, dan legalitas badan usaha belum dikirim.</p>
+      </div>
+
+      <p className="mt-8 text-sm text-muted">
+        sementara itu, 
+        <Link href="/" className="inline-block py-1 font-semibold text-action-text underline underline-offset-4">
+          kembali ke beranda
+        </Link>
+        .
+      </p>
     </div>
   );
 }

@@ -2,184 +2,187 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 import { services } from "@/content/services";
 
+const waHref = `https://wa.me/${site.waNumber}?text=${encodeURIComponent(
+  "Halo Gaharu Creative, saya ingin konsultasi gratis."
+)}`;
+
 export default function Home() {
   return (
-    <div className="bg-paper text-ink">
+    <>
       {/* Hero */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="max-w-3xl">
-            <p className="text-sm font-medium text-accent-text uppercase tracking-wider mb-4">
-              Digital Agency 360°
-            </p>
-            <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Gaharu Creative adalah partner digital 360° yang membuat pertumbuhan digital jadi sederhana, efektif, dan berdampak.
-            </h1>
-            <p className="text-lg text-ink-soft leading-relaxed mb-8">
-              {site.description}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={`https://wa.me/${site.waNumber}?text=Halo%20Gaharu%20Creative%2C%20saya%20ingin%20konsultasi%20gratis.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#059669] rounded-lg hover:bg-[#047857] transition-colors focus-visible:outline-none"
-              >
-                Konsultasi Gratis
-              </a>
-              <Link
-                href="/layanan"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-ink bg-surface border border-line rounded-lg hover:bg-line transition-colors focus-visible:outline-none"
-              >
-                Lihat Layanan
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust stats */}
-      <section className="bg-surface border-y border-line py-10">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-brand">2020</p>
-              <p className="text-sm text-ink-soft mt-1">Tahun berdiri</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-brand">5</p>
-              <p className="text-sm text-ink-soft mt-1">Layanan inti</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-brand" data-placeholder="Data belum diverifikasi">
-                KLIEN-01
-              </p>
-              <p className="text-sm text-ink-soft mt-1">Klien terlayani</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-brand" data-placeholder="Data belum diverifikasi">
-                PROYEK-01
-              </p>
-              <p className="text-sm text-ink-soft mt-1">Proyek selesai</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services summary */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">Layanan Inti</h2>
-          <p className="text-ink-soft mb-10 max-w-2xl">
-            Lima layanan end-to-end yang menutupi kebutuhan digital bisnis Anda dari identitas sampai performa.
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28">
+          <p className="text-sm font-medium uppercase tracking-widest text-action-text">
+            Digital agency 360&deg; di Semarang
           </p>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <article
-                key={service.slug}
-                className="rounded-lg border border-line bg-surface p-6 flex flex-col"
-              >
-                <h3 className="font-display text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-sm text-ink-soft flex-1">{service.short}</p>
-                <Link
-                  href={`/layanan#${service.slug}`}
-                  className="mt-4 text-sm font-medium text-brand hover:text-brand-2 transition-colors focus-visible:outline-none"
-                >
-                  Detail layanan
-                </Link>
-              </article>
-            ))}
-          </div>
-          <div className="mt-10">
+          <h1 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.1] tracking-tight text-text sm:text-5xl">
+            Identitas, konten, dan iklan yang kerjakannya bisa diukur.
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+            Kami mulai dari masalah yang sudah Anda behalf, bukan dari daftar jasa. Dari situ baru
+            menentukan maneuver yang perlu dikerjakan dan bagaimana hasilnya diukur.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center rounded-md bg-action px-6 text-base font-semibold text-on-action transition-colors hover:bg-action-hover"
+            >
+              Konsultasi gratis
+            </a>
             <Link
               href="/layanan"
-              className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#059669] rounded-lg hover:bg-[#047857] transition-colors focus-visible:outline-none"
+              className="inline-flex min-h-12 items-center justify-center rounded-md border border-border bg-card px-6 text-base font-semibold text-text transition-colors hover:bg-accent/10"
             >
-              Lihat Semua Layanan
+              Lihat layanan
             </Link>
           </div>
+          <p className="mt-6 text-sm text-muted">
+            Email <span className="text-text">{site.email}</span>{" "}
+            <span className="text-flag">(domain belum dikonfirmasi)</span>
+          </p>
         </div>
       </section>
 
-      {/* Portfolio preview */}
-      <section className="bg-surface border-t border-line py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex items-end justify-between mb-10 gap-4">
-            <div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">Pengalaman Terpilih</h2>
-              <p className="text-ink-soft max-w-2xl">
-                Studi kasus yang sudah terverifikasi akan tampil di sini.
+      {/* Layanan. Grid kartu dengan judul generic adalah pola yang paling
+          sering dipakai template, jadi replaced dengan daftar bernomor
+          yang lebih mudah dipindai. */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6">
+          <div className="max-w-2xl">
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-text">
+              Lima layanan, satu alur kerja
+            </h2>
+            <p className="mt-4 leading-relaxed text-muted">
+              Kebanyakan klien butuh lebih dari satu layanan. Kerjakan berurutan dari identitas,
+              baru konten dan kanalnya, terakhir Biasanya iklan.
+            </p>
+          </div>
+
+          <ol className="mt-12 divide-y divide-border border-t border-border">
+            {services.map((service, i) => (
+              <li key={service.slug} className="group">
+                <Link
+                  href={`/layanan#${service.slug}`}
+                  className="flex flex-col gap-3 py-7 sm:flex-row sm:items-baseline sm:gap-8"
+                >
+                  <span className="w-10 shrink-0 font-display text-sm font-semibold tabular-nums text-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="flex-1">
+                    <span className="font-display text-xl font-semibold text-text transition-colors group-hover:text-action-text">
+                      {service.title}
+                    </span>
+                    <span className="mt-2 block max-w-2xl leading-relaxed text-muted">
+                      {service.short}
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="shrink-0 text-sm font-medium text-action-text opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    Detail &rarr;
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Cara kerja. Menggantikan blok testimoni dan blok statistik,
+          karena keduanya butuh data klien yang belum ada. */}
+      <section className="border-b border-border bg-card">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6">
+          <div className="max-w-2xl">
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-text">
+              Cara kami bekerja
+            </h2>
+            <p className="mt-4 leading-relaxed text-muted">
+              Empat tahap yang sama untuk setiap proyek, dengan skala yang berbeda.
+            </p>
+          </div>
+
+          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                step: "Audits",
+                body: "Kami periksa dulu kanal, data, dan competitor yang sudah ada. Banyak masalah bereser dari sini.",
+              },
+              {
+                step: "Rencana",
+                body: "Pekerjaan, target, dan batas lingkup ditulis lengkap sebelum ada yang dikerjakan.",
+              },
+              {
+                step: "Eksekusi",
+                body: "Produksi berjalan per tahap. Anda melihat hasilnya, bukan cuma laporan akhir.",
+              },
+              {
+                step: "Evaluasi",
+                body: "Ukuran keberhasilan disepakati di awal, lalu dicek ulang tiap bulan.",
+              },
+            ].map((item, i) => (
+              <li key={item.step}>
+                <p className="font-display text-sm font-semibold tabular-nums text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-3 font-display text-lg font-semibold text-text">{item.step}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Portofolio. Dibiarkan kosong dan diberi tahu ke pembaca, bukan
+          diisi dengan studi kasus fiktif. */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <h2 className="font-display text-3xl font-semibold tracking-tight text-text">
+                Portofolio
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted">
+                Daftar klien dan hasil kerjasamanya belum dikirim. Halaman ini akan diisi begitu
+                datanya lengkap dan disetujui.
               </p>
             </div>
             <Link
               href="/portofolio"
-              className="text-sm font-medium text-brand hover:text-brand-2 transition-colors focus-visible:outline-none shrink-0"
+              className="text-sm font-semibold text-action-text underline underline-offset-4"
             >
-              Semua portofolio
+              Buka halaman portofolio
             </Link>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <article
-                key={i}
-                className="rounded-lg border border-line bg-paper p-6"
-                data-placeholder="Data belum diverifikasi"
-              >
-                <p className="text-xs uppercase tracking-wider text-accent-text font-semibold mb-2">
-                  KLIEN-0{i}
-                </p>
-                <h3 className="font-display text-lg font-semibold mb-2">
-                  Studi kasus {i} (data asli belum dikirim)
-                </h3>
-                <p className="text-sm text-ink-soft">
-                  Tantangan, solusi, dan hasil berangka akan ditampilkan di sini setelah data diverifikasi.
-                </p>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Testimonial */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-10">Testimoni Klien</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {[1, 2].map((i) => (
-              <figure
-                key={i}
-                className="rounded-lg border border-line bg-surface p-6"
-                data-placeholder="Data belum diverifikasi"
-              >
-                <blockquote className="text-ink-soft">
-                  "Testimoni klien akan tampil di sini setelah tim kami menerima data asli."
-                </blockquote>
-                <figcaption className="mt-4 text-sm font-semibold">KONTAK-{i} (data asli belum dikirim)</figcaption>
-              </figure>
-            ))}
+      {/* CTA penutup */}
+      <section className="bg-card">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6">
+          <div className="flex flex-col gap-8 border-t border-border pt-12 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-xl">
+              <h2 className="font-display text-3xl font-semibold tracking-tight text-text">
+                Punya masalah yang belum selesai?
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted">
+                Ceritakan situasinya lewat WhatsApp. Konsultasi pertama tidak perlu diayar dan tidak
+                mengikat.
+              </p>
+            </div>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-md bg-action px-7 text-base font-semibold text-on-action transition-colors hover:bg-action-hover"
+            >
+              Konsultasi gratis
+            </a>
           </div>
         </div>
       </section>
-
-      {/* CTA */}
-      <section className="bg-[#10B981] py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-4 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-            Siap tumbuh bersama kami?
-          </h2>
-          <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Ceritakan kebutuhan Anda dan dapatkan konsultasi gratis tanpa komitmen.
-          </p>
-          <a
-            href={`https://wa.me/${site.waNumber}?text=Halo%20Gaharu%20Creative%2C%20saya%20ingin%20konsultasi%20gratis.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-[#10B981] bg-white rounded-lg hover:bg-white/90 transition-colors focus-visible:outline-none"
-          >
-            Konsultasi Gratis via WhatsApp
-          </a>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }

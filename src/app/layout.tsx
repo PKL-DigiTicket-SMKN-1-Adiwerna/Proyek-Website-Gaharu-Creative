@@ -4,69 +4,57 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
+import { site } from "@/lib/site";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const sans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
   display: "swap",
 });
 
-const bricolageGrotesque = Bricolage_Grotesque({
+const display = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Gaharu Creative | Digital Agency 360°",
-  description:
-    "Gaharu Creative adalah digital agency 360° di Semarang. Branding, content, social media, performance marketing, dan digital product development untuk UMKM, korporasi, dan mitra pemerintah.",
-  keywords: [
-    "digital agency Semarang",
-    "jasa digital marketing",
-    "branding agency Semarang",
-    "social media management Semarang",
-    "web development agency Semarang",
-  ],
+  metadataBase: new URL("https://gaharucreative.com"),
+  title: {
+    default: `${site.name} | Digital agency 360° di Semarang`,
+    template: `%s | ${site.name}`,
+  },
+  description: site.description,
+  keywords: site.keywords,
+  authors: [{ name: site.name }],
   openGraph: {
-    title: "Gaharu Creative | Digital Agency 360°",
-    description:
-      "Gaharu Creative adalah digital agency 360° di Semarang. Branding, content, social media, performance marketing, dan digital product development untuk UMKM, korporasi, dan mitra pemerintah.",
     type: "website",
     locale: "id_ID",
-    siteName: "Gaharu Creative",
+    url: "/",
+    siteName: site.name,
+    title: `${site.name} | Digital agency 360° di Semarang`,
+    description: site.description,
   },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="id"
-      className={`${plusJakartaSans.variable} ${bricolageGrotesque.variable} h-full antialiased`}
+      className={`${sans.variable} ${display.variable} h-full`}
       suppressHydrationWarning
     >
       <head>
+        {/* Terapkan tema sebelum hydrate supaya tidak kedipan putih. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  if (theme === 'dark' || (!theme && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
+            __html:
+              "try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d))document.documentElement.classList.add('dark')}catch(e){}",
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-paper text-ink">
+      <body className="flex min-h-full flex-col bg-bg font-sans text-text antialiased">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
