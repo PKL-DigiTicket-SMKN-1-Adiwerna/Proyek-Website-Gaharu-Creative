@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { site, navLinks, links, clientLanguages } from "../data/site.js";
 import { Button, Container } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
+import Logo from "./Logo.jsx";
 
 /*
  * Navbar (DESAIN.md 3.1): logo kiri, menu tengah, pemilih bahasa dan tombol
@@ -93,12 +94,7 @@ export default function Header() {
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
-            <span
-              aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink text-sm font-bold text-ink"
-            >
-              G
-            </span>
+            <Logo className="h-9 w-9 shrink-0" />
             <span className="text-base font-bold tracking-tight text-ink">{site.name}</span>
           </Link>
 

@@ -28,6 +28,12 @@
   --tag-bg: #efefef;
   --tag-ink: #404040;
   --focus: #111111;
+
+  /* Logo brand. Satu-satunya warna di tahap wireframe: logo identitas bukan
+     elemen desain, harus sama dengan favicon di tab browser. Efek hover tombol
+     nav dan elemen branding lain nanti ikut token ini. */
+  --brand: #047857;
+  --brand-ink: #ffffff;
 }
 
 /* Nilai ditranslasikan ke utility Tailwind (bg-paper, text-ink, dan lain-lain).
@@ -43,6 +49,8 @@
   --color-block: var(--block);
   --color-tag: var(--tag-bg);
   --color-tag-ink: var(--tag-ink);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
 }

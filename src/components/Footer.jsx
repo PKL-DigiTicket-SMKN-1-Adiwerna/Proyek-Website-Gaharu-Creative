@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { site, footerServices, footerExtraLinks, links } from "../data/site.js";
 import { Container } from "./ui.jsx";
 import CopyrightYear from "./CopyrightYear.jsx";
+import Logo from "./Logo.jsx";
 
 /*
  * Satu komponen footer untuk semua halaman. DESAIN.md 6.3 mencatat footer
@@ -17,7 +18,10 @@ export default function Footer({ variant = "ringkas" }) {
   return (
     <footer className="border-t border-line bg-paper">
       <Container className="py-12 text-center sm:py-14">
-        <p className="text-base font-bold text-ink">{site.name}</p>
+        <div className="flex flex-col items-center gap-3">
+          <Logo className="h-10 w-10" />
+          <p className="text-base font-bold text-ink">{site.name}</p>
+        </div>
         <p className="mt-2 text-sm leading-relaxed text-muted">{site.tagline}</p>
 
         <div className="mt-8 flex flex-col gap-6 text-sm">
