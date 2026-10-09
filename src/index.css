@@ -8,11 +8,11 @@
  * bawah hitam, putih, dan abu. Saat brand guideline masuk, cukup ganti
  * variabel di :root, komponen tidak perlu disentuh satu per satu.
  *
- * Aturan kontras yang sudah dicek di atas putih:
- *   --ink        18.6:1  teks utama, tombol terisi
- *   --muted       7.0:1  teks sekunder, lolos AA
- *   --tag-ink     9.7:1  teks di dalam tag kategori
- *   --fill        1.0:1  isi tombol navbar, dipasangkan dengan --ink
+ * Aturan kontras yang sudah dihitung, bukan ditebak (rasio di atas putih):
+ *   --ink        18.9:1  teks utama dan isi tombol terisi
+ *   --muted       7.0:1  teks sekunder, label kecil
+ *   --tag-ink     9.0:1  terhadap --tag-bg, teks di dalam tag kategori
+ *   --paper       1.0:1  teks putih di atas tombol terisi, ikut 18.9:1
  * Garis pemisah section tidak membawa informasi, jadi tidak ikut diuji.
  * Batas control form (input, select, textarea) justru wajib 3:1 menurut
  * WCAG 1.4.11, jadi dipisah ke --field: #8f8f8f di atas putih = 3.2:1.
