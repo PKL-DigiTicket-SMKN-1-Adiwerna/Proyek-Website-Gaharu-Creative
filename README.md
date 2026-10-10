@@ -3,6 +3,8 @@
 Website company profile Gaharu Creative, konsultan dan eksekutor 360 digital agency.
 Proyek PKL, dikerjakan tim enam orang (PM, dua frontend, satu backend, satu UI/UX, satu QA).
 
+Situs berjalan di https://proyek-website-gaharu-creative.vercel.app
+
 ## Stack
 
 - Vite 8
@@ -33,17 +35,20 @@ Butuh Node.js 20 atau lebih baru.
 ## Struktur
 
 ```
-index.html           shell HTML dan meta tag default
+index.html           shell HTML, meta tag default, link favicon
 vite.config.js       plugin React dan Tailwind
 vercel.json          preset deploy dan rewrite untuk SPA
 src/
   main.jsx           titik masuk, membungkus App dengan BrowserRouter
   App.jsx            daftar route, banner CTA per halaman, footer
-  index.css          token warna wireframe, focus ring, badge placeholder
+  index.css          token warna, focus ring, badge placeholder
   pages/             satu file per halaman
-  components/        Header, Footer, CtaBanner, WhatsAppButton, ui, Icons, Seo
+  components/        Header, Footer, Logo, CtaBanner, WhatsAppButton, ui, Icons, Seo, CopyrightYear
   data/              site.js, services.js, portfolio.js, insights.js, tentang.js, cta.js
-public/              icon.svg
+public/
+  icon.svg           logo dan favicon, warna literal
+  icon-32.png        favicon 32px
+  icon-192.png       favicon 192px untuk apple-touch-icon
 docs/                daftar data yang dibutuhkan sebelum tayang
 ```
 
@@ -54,6 +59,36 @@ Route tidak dikenal diarahkan ke halaman 404 di `src/pages/NotFoundPage.jsx`.
 
 Banner CTA penutup dipasang di `src/App.jsx`, bukan di tiap halaman, supaya judulnya bisa
 diatur per rute dari satu tempat (`src/data/cta.js`).
+
+Dua halaman tidak punya hero dan langsung masuk ke konten, sesuai wireframe terbaru:
+
+- **Layanan** mulai dari section "5 Layanan Utama"
+- **Kontak** mulai dari section "Hubungi Kami"
+
+Karena tidak ada hero, kedua halaman itu memakai `<SectionHead as="h1">` supaya setiap
+halaman tetap punya satu H1.
+
+## Branch
+
+`main` adalah branch default dan satu-satunya yang ter-deploy ke Vercel.
+
+Enam branch `page/*` dibuat sebagai penanda halaman, isinya identik dengan `main`
+(pin di commit yang sama):
+
+| Branch | Halaman |
+| --- | --- |
+| `page/beranda` | Beranda |
+| `page/tentang-kami` | Tentang Kami |
+| `page/layanan` | Layanan |
+| `page/portofolio` | Portofolio |
+| `page/insight` | Insight / Blog |
+| `page/kontak` | Kontak |
+
+Branch `page/*` tidak otomatis ter-deploy. Kalau mau tiap branch punya preview sendiri,
+aktifkan Preview Deployments di Vercel.
+
+Branch `backup/*` (`backup/pre-wireframe`, `backup/pre-squash`, `backup/pre-rewrite`) ada
+lokal saja dan tidak pernah di-push.
 
 ## Menambah halaman baru
 
@@ -66,9 +101,14 @@ diatur per rute dari satu tempat (`src/data/cta.js`).
 
 ## Tahap desain sekarang
 
-Tampilan masih mengikuti wireframe: hitam, putih, dan abu. DESAIN.md belum menetapkan warna
-brand, jadi semua warna duduk di variabel `:root` pada `src/index.css`. Saat brand guideline
-masuk, ganti variabel itu dan seluruh situs ikut berubah tanpa menyentuh komponen.
+Tampilan masih mengikuti wireframe: hitam, putih, dan abu. Spesifikasi desain ada di
+[docs/DESAIN.md](docs/DESAIN.md). Warna brand belum ditetapkan, jadi semua warna duduk di
+variabel `:root` pada `src/index.css`. Saat brand guideline masuk, ganti variabel itu dan
+seluruh situs ikut berubah tanpa menyentuh komponen.
+
+Hijau hanya dipakai di logo (kotak berisi huruf G) dan favicon. Halaman selain itu tetap
+grayscale. Warna logo tidak lewat `var()` di file SVG favicon karena favicon berdiri sendiri
+tanpa CSS halaman, jadi hex-nya ditulis langsung di `public/icon.svg`.
 
 Yang sudah diterapkan dari wireframe:
 
@@ -80,9 +120,10 @@ Yang sudah diterapkan dari wireframe:
 - Kartu layanan memakai format Problem, Solusi, Deliverables.
 - Filter kategori Portofolio dan Insight bekerja tanpa pindah halaman.
 
-Tombol `Baca Selengkapnya` di Insight, `Unduh Company Profile`, dan `Minta Dokumen Legal`
-masih mengarah ke email karena berkasnya belum ada. Form kontak dan berlangganan memvalidasi
-isian lalu berhenti dengan pesan yang jujur; pengiriman nyata menunggu layanan form dipilih.
+Tombol `Baca Selengkapnya` di Insight dan `Unduh Company Profile` di Tentang masih
+mengarah ke email karena berkas dan naskahnya belum ada. Form kontak dan berlangganan
+memvalidasi isian lalu berhenti dengan pesan yang jujur; pengiriman nyata menunggu layanan
+form dipilih.
 
 ## Kontras
 
@@ -95,6 +136,8 @@ Angka dihitung di atas putih, bukan ditebak:
 
 Garis pemisah antar section sengaja lebih terang (#d9d9d9) karena tidak membawa teks atau
 menandai batas control.
+
+Warna logo dihitung terpisah: putih di atas hijau `#047857` 5.5:1, lolos AA.
 
 ## SEO
 
@@ -124,11 +167,18 @@ boolean (`emailVerified`, `waNumberVerified`, `addressVerified`). Set flag itu `
 data asli masuk. Elemen yang ditandai `data-placeholder` otomatis diberi badge kecil bertuliskan
 belum diverifikasi, jadi tidak ada data contoh yang tampil seolah-olah fakta.
 
+## Deploy
+
+Vercel, preset dikunci lewat `vercel.json` di root (`framework: vite`, output `dist`, rewrite
+SPA ke `/index.html`). Repo private, push ke `origin/main`.
+
 ## Catatan tim
 
 `Footer` dan tombol WhatsApp adalah client component. `CopyrightYear` memakai
 `new Date().getFullYear()` supaya tahun copyright selalu benar tanpa update manual.
 
-## Brief
+`SectionHead` menerima prop `as` untuk memilih heading (`h1` atau `h2`, default `h2`).
+Halaman tanpa hero memakainya supaya H1 tetap satu per halaman.
 
-Ringkasan proyek ada di [docs/DATA-YANG-DIBUTUHKAN.md](docs/DATA-YANG-DIBUTUHKAN.md).
+Logo ada di satu komponen (`src/components/Logo.jsx`) dan dipakai ulang di Header, Footer,
+serta favicon. Kalau logo berubah, perbarui ketiga tempat itu.
