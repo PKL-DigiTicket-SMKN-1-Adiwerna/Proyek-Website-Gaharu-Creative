@@ -1,110 +1,128 @@
 # Gaharu Creative
 
-Website company profile Gaharu Creative, digital agency 360 yang berbasis di Semarang.
-Proyek PKL, dikerjakan tim enam orang (PM, dua frontend, satu backend, satu UI/UX, satu QA).
+Website company profile Gaharu Creative. Proyek PKL, dikerjakan enam orang selama empat minggu.
+Live di https://proyek-website-gaharu-creative.vercel.app
 
-## Stack
+Vite 8, React 19, React Router 7, Tailwind CSS v4. JavaScript saja, tidak ada TypeScript.
+Tidak ada database dan tidak ada CMS. Semua konten ada di `src/data/`.
 
-- Vite 8
-- React 19
-- React Router 7
-- Tailwind CSS v4
-
-JavaScript murni. Tidak ada TypeScript, tidak ada file `.ts` atau `.tsx` di project ini.
-Tanpa database, tanpa CMS. Semua data konten disimpan di `src/data/`.
-
-## Menjalankan lokal
+## Jalanin
 
 ```bash
 npm install
-npm run dev
-```
-
-Buka http://localhost:5173.
-
-```bash
-npm run build   # cek produksi
-npm run preview # jalankan hasil build
+npm run dev      # http://localhost:5173
 npm run lint
+npm run build
+npm run preview
 ```
 
-Butuh Node.js 20 atau lebih baru.
+Node.js 20 ke atas.
 
-## Struktur
+## Isi folder
 
 ```
-index.html           shell HTML, meta tag default, dan skrip anti-kedip tema
-vite.config.js       plugin React dan Tailwind
+index.html          shell HTML, meta tag, link favicon
+vite.config.js      plugin React dan Tailwind
+vercel.json         preset deploy dan rewrite SPA
+docs/
+  DESAIN.md                  spesifikasi desain, sumber kebenaran semua copy
+  DATA-YANG-DIBUTUHKAN.md    daftar data yang masih perlu dari klien
 src/
-  main.jsx           titik masuk, membungkus App dengan BrowserRouter
-  App.jsx            daftar route, header, footer, tombol WhatsApp
-  index.css          token desain, dark mode, focus ring
-  pages/             satu file per halaman
-  components/        Header, Footer, tombol WhatsApp, CopyrightYear, Seo
-  data/              site.js, services.js, types.js
-public/              icon.svg
-docs/                daftar data yang dibutuhkan sebelum tayang
+  main.jsx          createRoot + BrowserRouter
+  App.jsx           daftar route, banner CTA per route, varian footer
+  index.css         token warna, focus ring, badge placeholder
+  pages/            satu file per halaman
+  components/       Header, Footer, Logo, CtaBanner, WhatsAppButton, ui, Icons, Seo, CopyrightYear
+  data/             site, services, portfolio, insights, tentang, cta
+public/
+  icon.svg          logo dan favicon
+  icon-32.png
+  icon-192.png      apple-touch-icon
 ```
 
-## Menambah halaman baru
+## Halaman
 
-1. Buat `src/pages/NamaPage.jsx`, export default sebuah komponen.
-2. Di dalam komponen, panggil `<Seo title="..." description="..." />`.
-3. Daftarkan route-nya di `src/App.jsx` dan tambahkan link-nya di `src/components/Header.jsx`.
+Enam: Beranda, Tentang, Layanan, Portofolio, Insight, Kontak. Route tidak dikenal masuk ke
+`src/pages/NotFoundPage.jsx`.
 
-## Catatan penting untuk SEO
+Layanan dan Kontak tidak punya hero, keduanya langsung masuk ke konten. Karena tidak ada
+hero, `SectionHead` dipakai dengan `as="h1"` supaya tiap halaman tetap punya satu H1.
 
-Beranda sudah punya `<title>` dan `<meta name="description">` di `index.html`. Halaman
-selain beranda rendered di browser, jadi meta tag-nya di-set lewat `src/components/Seo.jsx`
-setiap kali pindah halaman. Kalau nanti judged Google dan meta tag halaman tidak ikut
-terbaca, tambahkan tiap route ke `vite.config.js`:
+Banner CTA penutup dipasang di `src/App.jsx`, bukan di tiap halaman, supaya judul per rute
+disimpan di satu tempat: `src/data/cta.js`.
 
-```js
-build: {
-  rollupOptions: {
-    input: {
-      main: "index.html",
-      tentang: "layanan.html",
-      // seterusnya
-    },
-  },
-}
-```
+## Branch
 
-## Konten
+`main` yang ke-deploy ke Vercel.
 
-## Konten
+Ada enam branch `page/*`, satu per halaman, isinya sama persis dengan `main`:
 
-Semua copy masih berupa kerangka. Data klien, portofolio, artikel, dan detail legal belum
-diterima, jadi halaman terkait sengaja belum diisi. Daftar lengkap yang dibutuhkan ada di
-[docs/DATA-YANG-DIBUTUHKAN.md](docs/DATA-YANG-DIBUTUHKAN.md).
+| Branch | Halaman |
+| --- | --- |
+| `page/beranda` | Beranda |
+| `page/tentang-kami` | Tentang Kami |
+| `page/layanan` | Layanan |
+| `page/portofolio` | Portofolio |
+| `page/insight` | Insight / Blog |
+| `page/kontak` | Kontak |
 
-Setiap nilai di `src/data/site.js` yang belum dikonfirmasi ditandai komentar `TBD` dan punya
-flag boolean (`emailVerified`, `waNumberVerified`, `addressVerified`). Set flag itu `true`
-setelah data asli masuk, lalu hapus catatan tidak terverifikasi yang mengikutinya.
+Branch `page/*` tidak ikut deploy. Kalau mau tiap branch punya preview sendiri, aktifkan
+Preview Deployments di Vercel.
 
-## Warna
+Branch `backup/*` hanya ada di lokal, tidak pernah di-push.
 
-Token ada di `src/index.css`. Dua aturan yang perlu dijaga:
+## Menambah halaman
 
-- `accent` (#10B981) hanya untuk graphic dan garis. Rasio kontrasnya terhadap latar terang
-  cuma 2.43:1, jadi tidak boleh dipakai untuk teks.
-- `action` (#047857 di light, #34d399 di dark) untuk tombol dan link, selalu berpasangan
-  dengan `on-action`. Keduanya lolos WCAG AA.
+1. `src/pages/NamaPage.jsx`, export default satu komponen.
+2. Panggil `<Seo title="..." description="..." />` di dalamnya.
+3. Daftarkan route di `src/App.jsx`. Kalau perlu menu, tambah juga di `navLinks` pada
+   `src/data/site.js`.
+4. Tambah key di `ctaByPath` (`src/App.jsx`) dan isi tiga slide di `src/data/cta.js`.
 
-Jangan menukar warna tanpa menghitung ulang kontrasnya. Angka lengkap ada di komentar
-`src/index.css`.
+## Sejauh ini
 
-## Dark mode
+Tampilan masih grayscale: hitam, putih, abu. Warna brand belum masuk, jadi semua warna
+berada di `:root` pada `src/index.css`. Waktu brand guideline masuk, ganti variabel di sana
+dan seluruh situs ikut berubah tanpa menyentuh komponen.
 
-Class `.dark` di elemen `<html>`, disimpan di `localStorage` dengan key `theme`. default ikut `prefers-color-scheme` saat kunjungan pertama. Belum ada tombol toggle di UI,
-jadi sementara mengikuti setelan sistem.
+Hijau cuma dipakai di logo dan favicon. Di `public/icon.svg` warnanya ditulis sebagai hex,
+bukan `var()`, karena file itu berdiri sendiri tanpa CSS halaman.
 
-## Catatan tim
+Kontras dihitung, bukan dikira-kira:
 
-`Footer` dan tombol WhatsApp adalah client component. `Footer` memakai
-`new Date().getFullYear()` supaya tahun copyright selalu benar tanpa update manual.
+| Token | Nilai | Rasio ke putih |
+| --- | --- | --- |
+| `--ink` | #111111 | 18.9:1 |
+| `--muted` | #595959 | 7.0:1 |
+| `--tag-ink` | #404040 | 9.0:1 ke atas `--tag-bg` #efefef |
+| `--field` | #8f8f8f | 3.2:1, dipakai buat border control form |
+| `--brand-ink` | #ffffff | 5.5:1 ke atas hijau #047857 |
 
-## Brief
+`--line` #d9d9d9 lebih terang dari sengaja karena cuma pemisah section dan tidak membawa teks.
 
-Ringkasan proyek ada di [docs/DATA-YANG-DIBUTUHKAN.md](docs/DATA-YANG-DIBUTUHKAN.md).
+## Yang belum ada
+
+Tombol `Baca Selengkapnya` di Insight dan `Unduh Company Profile` di Tentang masih mengarah ke
+email karena naskah dan berkasnya belum ada. Form kontak dan berlangganan sudah validasi isian,
+lalu berhenti dengan pesan jujur. Pengiriman nyata menunggu pilihan layanan form.
+
+Detail halaman studi kasus, detail artikel, dan halaman Kebijakan Privasi, Syarat & Ketentuan,
+serta Karier belum dibuat. Wireframe cuma berisi enam halaman.
+
+## Data yang perlu
+
+Nilai di `src/data/site.js` yang belum dipastikan ditandai `TBD` dan punya flag boolean:
+`emailVerified`, `waNumberVerified`, `phoneVerified`, `addressVerified`. Set `true` begitu
+data asli masuk. Elemen ber-`data-placeholder` dapat badge kecil bertuliskan belum diverifikasi,
+jadi data contoh tidak pernah tampil seolah-olah fakta.
+
+Daftar lengkap ada di [docs/DATA-YANG-DIBUTUHKAN.md](docs/DATA-YANG-DIBUTUHKAN.md).
+Spesifikasi desain ada di [docs/DESAIN.md](docs/DESAIN.md).
+
+## Catatan
+
+`CopyrightYear` pakai `new Date().getFullYear()`, jadi tahun copyright tidak perlu di-update
+manual.
+
+Logo ada di satu tempat: `src/components/Logo.jsx`. Navbar, footer, dan favicon pakai sumber
+yang sama. Kalau logo berubah, perbarui ketiga-duanya.

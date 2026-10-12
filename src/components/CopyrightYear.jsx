@@ -1,9 +1,5 @@
-/*
- * Tahun copyright dihitung sekali saat komponen dirender.
- *
- * Tahun baca langsung saat komponen dirender, tanpa state.
- * Hasilnya selalu tahun berjalan, tidak perlu di-build ulang tiap Januari.
- */
-export default function CopyrightYear() {
-  return <>{new Date().getFullYear()}</>;
+/* Tahun dibaca saat render. `from` untuk rentang tahun di footer. */
+export default function CopyrightYear({ from = null }) {
+  const now = new Date().getFullYear();
+  return <>{from ? `${from}-${now}` : now}</>;
 }

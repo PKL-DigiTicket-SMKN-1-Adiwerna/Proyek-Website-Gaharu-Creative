@@ -1,22 +1,11 @@
-/*
- * Bentuk data untuk site.js dan services.js.
- *
- * Project ini JavaScript murni, jadi tidak ada keyword type. Bentuk data
- * dicatat di sini sebagai JSDoc supaya IDE tetap memberi petunjuk saat
- * menambah field baru.
+/* Bentuk data untuk site.js, services.js, portfolio.js, dan insights.js.
+ * JavaScript murni, jadi tidak ada keyword type. Bentuk dicatat sebagai JSDoc
+ * supaya IDE tetap memberi petunjuk saat menambah field.
  */
 
-/**
- * @typedef {Object} SocialLink
- * @property {string} label
- * @property {string} href
- * @property {boolean} verified
- */
+/** @typedef {Object} SocialLink */
 
 /**
- * Bentuk config utama situs. Nilai yang belum dikonfirmasi ditandai
- * `verified: false` dan tidak boleh dipublikasikan sebelum diganti.
- *
  * @typedef {Object} SiteConfig
  * @property {string} name
  * @property {string} tagline
@@ -47,8 +36,8 @@
  */
 
 /**
- * Bentuk item portofolio. Belum dipakai karena data klien belum ada,
- * tapi strukturnya sudah disiapkan supaya tidak diisi ulang nanti.
+ * Bentuk item portofolio. Strukturnya sudah disiapkan supaya tidak diisi ulang
+ * nanti.
  *
  * @typedef {Object} PortfolioItem
  * @property {string} slug
