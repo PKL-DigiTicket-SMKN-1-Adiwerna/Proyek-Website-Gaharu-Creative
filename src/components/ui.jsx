@@ -13,7 +13,7 @@ const buttonBase =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors";
 
 const buttonStyles = {
-  primary: "bg-ink text-paper hover:bg-green",
+  primary: "bg-ink text-paper hover:bg-black",
   secondary: "border border-ink bg-paper text-ink hover:bg-block",
   nav: "bg-fill text-ink hover:bg-line",
 };
