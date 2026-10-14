@@ -22,8 +22,10 @@
   --brand: #047857;
   --brand-ink: #ffffff;
   /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
+  /* Tombol utama seluruh situs: hijau brand — selaras DESAIN.md.
+   * Dipakai juga komponen Diagnosa. Teks putih memastasi WCAG AA. */
   --button: #0b7a4b;
-  --button-ink: #111111;
+  --button-ink: #ffffff;
   --button-text: #ffffff;
 }
 
