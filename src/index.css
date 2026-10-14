@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+/* Token warna, kontrasnya sudah dihitung di atas putih:
+ * --ink 18.9:1, --muted 7.0:1, --tag-ink 9.0:1 di atas --tag-bg,
+ * --field 3.2:1 untuk border control form (WCAG 1.4.11).
+ * Ganti nilai di sini, komponen tidak perlu disentuh satu per satu.
+ */
+:root {
+  --paper: #ffffff;
+  --ink: #111111;
+  --muted: #4b5563;
+  --line: #d9d9d9;
+  --field: #8f8f8f;
+  --fill: #e6e6e6;
+  --block: #f2f2f2;
+  --tag-bg: #efefef;
+  --tag-ink: #1f3b2a;
+  --focus: #111111;
+
+  /* Warna logo, harus sama dengan favicon di tab browser. */
+  --brand: #047857;
+  --brand-ink: #ffffff;
+
+  /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
+  --button: #111111;
+  --button-ink: #ffffff;
+}
+
+/* Nilai di atas diterjemahkan jadi utility Tailwind, jadi bg-paper dan text-ink
+ * tetap sinkron kalau token diubah.
+ */
+@theme {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-field: var(--field);
+  --color-fill: var(--fill);
+  --color-block: var(--block);
+  --color-tag: var(--tag-bg);
+  --color-tag-ink: var(--tag-ink);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-button: var(--button);
+  --color-button-ink: var(--button-ink);
+
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* :where() membuat specificity nol supaya utility lain tidak menimpa. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Badge "belum diverifikasi" diambil dari atribut data-placeholder. */
+[data-placeholder]::after {
+  content: attr(data-placeholder);
+  display: inline-block;
+  margin-top: 0.5rem;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  background: var(--block);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
