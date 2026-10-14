@@ -21,6 +21,10 @@
   /* Warna logo, harus sama dengan favicon di tab browser. */
   --brand: #367804;
   --brand-ink: #ffffff;
+
+  /* Tombol utama seluruh situs. */
+  --button: #0b7a4b;
+  --button-ink: #111111;
 }
 
 /* Nilai di atas diterjemahkan jadi utility Tailwind, jadi bg-paper dan text-ink
@@ -38,6 +42,8 @@
   --color-tag-ink: var(--tag-ink);
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
+  --color-button: var(--button);
+  --color-button-ink: var(--button-ink);
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
 }
