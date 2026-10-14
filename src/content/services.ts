@@ -1,109 +1,148 @@
-import type { Service } from "../lib/types";
+import { Service } from "@/lib/types";
 
-export const services: Service[] = [
+export const servicesData: Service[] = [
   {
     slug: "branding",
-    title: "Branding",
-    short: "Identitas yang membuat orang ingat dan percaya sebelum bicara promo.",
-    problem:
-      "Produk sudah bagus, tapi orang belum percaya. Nama, logo, dan cerita brand terasa berbeda di tiap titik: social media, kemasan, presentasi, balasan WhatsApp.",
+    title: "Branding yang Membangun Identitas Bisnis yang Kuat",
+    subtitle: "Solusi Identitas Bisnis",
+    badge: "Branding & Creative Strategy",
+    description:
+      "Membantu merancang logo, sistem visual, dan tone of voice yang memikat untuk meningkatkan kredibilitas instan di benak audiens sasaran.",
+    problems: [
+      {
+        title: "Identitas Tidak Konsisten",
+        desc: "Tampilan visual dan pesan berubah-ubah sehingga membingungkan audiens.",
+      },
+      {
+        title: "Kalah Bersaing di Pasar",
+        desc: "Produk/layanan bagus tapi kurang berkarakter dibandingkan kompetitor.",
+      },
+      {
+        title: "Brand Awareness Rendah", desc: "Sulit diingat dan kurang dipercaya oleh calon konsumen potensial.",
+      },
+    ],
     deliverables: [
-      "Logo utama beserta varian",
-      "Tipografi dan palet warna",
-      "Brand guideline ringkas",
-      "Template materi promosi",
-      "Messaging dan nada bicara brand",
+      { title: "Logo System", tag: "Visual Identity", desc: "Sistem identitas visual adaptif untuk berbagai media cetak dan digital." },
+      { title: "Brand Guidelines", tag: "Standardization", desc: "Dokumentasi standar penggunaan aset visual dan panduan gaya komunikasi." },
+      { title: "Brand Assets", tag: "Collateral", desc: "Desain kartu nama, kop surat, hingga elemen pendukung promosi." },
     ],
-    process: [
-      { title: "Riset dan positioning", detail: "Wawancara dengan tim, analisis pasar, dan pemetaan kompetitor." },
-      { title: "Konsep", detail: "Arah visual dan verbal disetujui lebih dulu sebelum masuk detail eksekusi." },
-      { title: "Pengembangan aset", detail: "Logo, warna, tipografi, dan sistem visual yang saling menyambung." },
-      { title: "Serah terima", detail: "File siap pakai plus panduan singkat agar brand tetap konsisten." },
+    workflow: [
+      { step: "01", title: "Discovery", desc: "Riset awal audiens, kompetitor, dan posisi pasar." },
+      { step: "02", title: "Strategy", desc: "Perancangan fondasi strategi branding dan konsep awal." },
+      { step: "03", title: "Design", desc: "Eksekusi visual logo, warna, tipografi, dan elemen brand." },
+      { step: "04", title: "Delivery", desc: "Serah terima master file beserta panduan Brand Guidelines." },
     ],
-    outcome: "Brand yang tampil sama di semua kanal, dari iklan sampai balasan chat.",
-  },
-  {
-    slug: "content",
-    title: "Content",
-    short: "Konten yang menjelaskan produk dengan jelas, bukan sekadar ingin menjual.",
-    problem:
-      "Akun sudah jalan tapi isinya sering tidak dibaca. Calon pembeli punya banyak pertanyaan sebelum checkout, dan selama pertanyaan itu belum terjawab, penjualan melambat.",
-    deliverables: [
-      "Kalender konten bulanan",
-      "Copywriting dan artikel",
-      "Foto dan video produk",
-      "Email marketing",
-      "Template visual feed",
+    faqs: [
+      { question: "Berapa lama proses pengerjaan branding?", answer: "Proses pengerjaan biasanya memakan waktu sekitar 3–6 minggu tergantung pada kompleksitas kebutuhan." },
+      { question: "Apakah bisa mengajukan revisi?", answer: "Ya, kami menyediakan sesi revisi terstruktur pada setiap tahapan persetujuan." },
     ],
-    process: [
-      { title: "Riset audiens", detail: "Memahami siapa yang membeli, apa yang mereka khawatirkan, dan bahasa yang mereka pakai." },
-      { title: "Ide dan naskah", detail: "Topik diambil dari keluhan yang paling sering muncul, bukan dari daftar ide generik." },
-      { title: "Produksi", detail: "Fotografi, video, dan penulisan naskah dalam satu alur kerja." },
-      { title: "Evaluasi", detail: "Performasi tiap topik ditinjau untuk menentukan arah konten berikutnya." },
-    ],
-    outcome: "Audiens yang paham produk dan sudah siap bicara dengan tim Anda.",
-  },
-  {
-    slug: "social-media",
-    title: "Social Media",
-    short: "Kanal yang hidup terus dengan bahasa yang jelas dan konsisten.",
-    problem:
-      "Posting tidak terjadwal, komentar dibiarkan, dan brand terlihat hilang saat sibuk. Calon klien bertanya lewat WhatsApp tapi belum menemukan akun yang bisa dipercaya.",
-    deliverables: [
-      "Manajemen kalender",
-      "Community management",
-      "Laporan berkala",
-      "Konten reels dan story",
-      "Rancangan kemitraan",
-    ],
-    process: [
-      { title: "Audit kanal", detail: "Bandingkan performa tiap kanal dengan target, bukan dengan akun lain." },
-      { title: "Strategi konten", detail: "Pilar konten dan jadwal publikasi disepakati sebelum produksi." },
-      { title: "Eksekusi dan interaksi", detail: "Publikasi terjadwal plus balasan komentar dan DM pada jam kerja." },
-      { title: "Laporan bulanan", detail: "Angka, insight, dan rencana bulan berikutnya." },
-    ],
-    outcome: "Kanal yang aktif dan punya momentum, bukan sekadar arsip.",
   },
   {
     slug: "performance-marketing",
-    title: "Performance Marketing",
-    short: "Iklan yang diukur dari klik sampai transaksi, bukan dari tayangan.",
-    problem:
-      "Iklan berjalan, tapi tim tidak tahu berapa yang benar-benar menghasilkan transaksi. Pelacakan rusak, halaman tujuan lambat, dan laporan hanya menampilkan angka klik.",
+    title: "Performance Marketing Berbasis Data dan Hasil",
+    subtitle: "Iklan & Akuisisi Terukur",
+    badge: "Performance Marketing",
+    description:
+      "Strategi akuisisi berbasis corong presisi (funnel tracking) di Meta, Google, dan TikTok dengan optimasi Cost Per Acquisition (CPA) yang efisien.",
+    problems: [
+      { title: "Budget Iklan Terbuang", desc: "Biaya iklan tinggi tanpa hasil penjualan atau leads yang jelas." },
+      { title: "Targeting Tidak Tepat", desc: "Iklan tidak menjangkau calon pembeli yang memiliki niat beli tinggi." },
+      { title: "Tracking Buruk", desc: "Tidak ada data akurat untuk mengukur Return on Ad Spend (ROAS)." },
+    ],
     deliverables: [
-      "Setup iklan Meta dan TikTok",
-      "Google Ads",
-      "Landing page",
-      "Pelacakan konversi",
-      "Optimasi mingguan",
+      { title: "Meta & Google Ads", tag: "Paid Traffic", desc: "Setup dan optimasi kampanye iklan berkinerja tinggi." },
+      { title: "Funnel Tracking", tag: "Analytics", desc: "Pemasangan piksel dan analisis konversi terintegrasi." },
+      { title: "Reporting Dashboard", tag: "Report", desc: "Laporan performa harian/mingguan yang transparan." },
     ],
-    process: [
-      { title: "Audit akun dan data", detail: "Cek pixel, purchase event, dan halaman tujuan sebelum menambah anggaran." },
-      { title: "Struktur kampanye", detail: "Segmentasi dipisah agar laporan mudah dibaca dan bisa ditindaklanjuti." },
-      { title: "Pelaksanaan", detail: "Kreatif dan naskah iklan diuji secara berkala." },
-      { title: "Optimasi", detail: "Anggaran digeser ke kombinasi yang menghasilkan transaksi paling baik." },
+    workflow: [
+      { step: "01", title: "Audit & Setup", desc: "Analisis akun iklan dan pemasangan tracking pixel." },
+      { step: "02", title: "Funnel Strategy", desc: "Perancangan alur kualifikasi audiens dari awareness hingga konversi." },
+      { step: "03", title: "Optimization", desc: "Pengujian A/B testing materi iklan dan pengelolaan budget." },
+      { step: "04", title: "Scale Up", desc: "Meningkatkan anggaran pada materi iklan dengan ROAS terbaik." },
     ],
-    outcome: "Pengeluaran iklan yang bisa ditelusuri sampai ke transaksi.",
+    faqs: [
+      { question: "Berapa minimal budget iklan yang direkomendasikan?", answer: "Budget disesuaikan dengan target bisnis Anda, kami membantu menentukan alokasi paling efektif." },
+    ],
   },
   {
     slug: "digital-product-development",
-    title: "Digital Product Development",
-    short: "Produk digital yang dipakai benar-benar, bukan cuma terlihat bagus.",
-    problem:
-      "Website atau aplikasi sudah ada tapi lambat, sering error, dan sulit dipakai. Tim internal tidak bisa memperbarui isinya sendiri karena terikat pada satu developer.",
+    title: "Solusi Digital untuk Kebutuhan Bisnis Anda",
+    subtitle: "Web & Custom Software",
+    badge: "Digital Product Development",
+    description:
+      "Rekayasa perangkat lunak adaptif, mulai dari landing page konversi tinggi hingga sistem platform internal/SaaS yang tangguh.",
+    problems: [
+      { title: "Website Ketinggalan Zaman", desc: "Performa lambat dan tidak responsif di perangkat mobile." },
+      { title: "Navigasi Sulit", desc: "Pengalaman pengguna buruk sehingga calon pembeli keluar dari website." },
+      { title: "Sistem Tidak Scalable", desc: "Platform sulit dikembangkan seiring bertambahnya jumlah pengguna." },
+    ],
     deliverables: [
-      "Website dan landing page",
-      "Sistem manajemen konten",
-      "Dasbor admin",
-      "Integrasi API dan form",
-      "Dokumentasi dan serah terima",
+      { title: "Landing Page & Web App", tag: "Development", desc: "Website modern dengan waktu muat cepat dan SEO friendly." },
+      { title: "Design System", tag: "UI/UX", desc: "Antarmuka intuitif yang disesuaikan dengan kebutuhan pengguna." },
+      { title: "API Integration", tag: "Backend", desc: "Integrasi sistem pembayaran, CRM, dan tools pihak ketiga." },
     ],
-    process: [
-      { title: "Discovery", detail: "Memahami alur kerja dan masalah yang paling sering dikeluhkan pengguna." },
-      { title: "Desain dan arsitektur", detail: "Wireframe, alur pengguna, dan keputusan teknis." },
-      { title: "Pengembangan", detail: "Kode, integrasi, dan pengujian." },
-      { title: "Peluncuran", detail: "Deploy, monitoring, dan pelatihan tim internal." },
+    workflow: [
+      { step: "01", title: "Discovery", desc: "Riset kebutuhan pengguna dan spesifikasi teknis." },
+      { step: "02", title: "UI/UX Design", desc: "Pembuatan wireframe dan prototipe interaktif." },
+      { step: "03", title: "Development", desc: "Koding bersih berbasis Next.js/React dan arsitektur modern." },
+      { step: "04", title: "Testing & Launch", desc: "Uji coba bebas bug dan peluncuran sistem ke publik." },
     ],
-    outcome: "Produk digital yang cepat, stabil, dan mudah dirawat tim sendiri.",
+    faqs: [
+      { question: "Berapa lama estimasi pengerjaan website?", answer: "Landing page biasanya selesai dalam 1-2 minggu, sedangkan sistem web/SaaS membutuhkan 4-8 minggu." },
+    ],
+  },
+  {
+    slug: "content",
+    title: "Konten Digital yang Relevan dan Menarik",
+    subtitle: "Multimedia & Narrative Studio",
+    badge: "Content Creation",
+    description:
+      "Produksi multimedia berselera tinggi yang memadukan estetika sinematik dengan narasi persuasif terukur.",
+    problems: [
+      { title: "Konten Kurang Menarik", desc: "Kualitas visual standar yang tidak memikat perhatian audiens." },
+      { title: "Pesan Tidak Sampai", desc: "Pesan promosi terlalu jualan dan kurang memberikan value." },
+      { title: "Tidak Konsisten", desc: "Jadwal tayang konten tidak teratur karena kendala produksi." },
+    ],
+    deliverables: [
+      { title: "Content Calendar", tag: "Planning", desc: "Perencanaan ide dan jadwal rilis konten bulanan." },
+      { title: "Short-Form Video", tag: "Reels / TikTok", desc: "Video editan kreatif untuk tingkatkan daya jangkau." },
+      { title: "Visual Assets", tag: "Design", desc: "Desain grafis feed, banner, dan materi promosi digital." },
+    ],
+    workflow: [
+      { step: "01", title: "Research", desc: "Analisis tren dan preferensi konten audiens." },
+      { step: "02", title: "Production", desc: "Proses shooting video dan pembuatan desain grafis." },
+      { step: "03", title: "Editing", desc: "Penyuntingan suara, warna, dan penambahan animasi." },
+      { step: "04", title: "Publishing", desc: "Penjadwalan tayang dan analisis performa konten." },
+    ],
+    faqs: [
+      { question: "Apakah tim Gaharu menyediakan tim shooting?", answer: "Ya, kami memiliki tim produksi lengkap termasuk videografer, fotografer, dan editor." },
+    ],
+  },
+  {
+    slug: "social-media",
+    title: "Kelola Social Media dengan Strategi yang Terarah",
+    subtitle: "Management & Engagement",
+    badge: "Social Media Management",
+    description:
+      "Aktivasi interaksi harian, kolaborasi KOL, serta manajemen persona media sosial terpadu untuk membangun komunitas setia.",
+    problems: [
+      { title: "Engagement Rendah", desc: "Jumlah pengikut banyak tetapi sedikit interaksi pada postingan." },
+      { title: "Format Tidak Sesuai", desc: "Tampilan postingan acak-acakan tanpa karakter visual jelas." },
+      { title: "Respon Lambat", desc: "Komentar dan pertanyaan calon pembeli sering tidak terbalas." },
+    ],
+    deliverables: [
+      { title: "Full Management", tag: "End-to-End", desc: "Pengelolaan penuh dari perencanaan ide hingga upload." },
+      { title: "KOL Activation", tag: "Influencer", desc: "Kolaborasi dengan influencer yang relevan dengan target audiens." },
+      { title: "Community Care", tag: "Interaction", desc: "Manajemen balasan komentar dan pesan masuk (DM)." },
+    ],
+    workflow: [
+      { step: "01", title: "Audit & Strategy", desc: "Evaluasi performa akun media sosial saat ini." },
+      { step: "02", title: "Content Plan", desc: "Penyusunan gaya bahasa (tone of voice) dan jadwal posting." },
+      { step: "03", title: "Execution", desc: "Produksi visual dan pengelolaan interaksi harian." },
+      { step: "04", title: "Evaluation", desc: "Laporan pertumbuhan follower dan keterlibatan audiens." },
+    ],
+    faqs: [
+      { question: "Platform media sosial apa saja yang dikelola?", answer: "Kami mengelola Instagram, TikTok, LinkedIn, YouTube Shorts, dan Facebook." },
+    ],
   },
 ];
