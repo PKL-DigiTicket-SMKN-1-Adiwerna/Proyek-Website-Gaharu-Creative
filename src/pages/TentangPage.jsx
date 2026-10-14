@@ -47,14 +47,28 @@ export default function TentangPage() {
       </section>
 
       <Section divider>
-        <div className="rounded-lg border border-line bg-block p-6 text-center sm:p-10">
-          <Tag>{tentangIntro.subtitle}</Tag>
-          <h2 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            {tentangIntro.title}
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
-            {tentangIntro.description}
-          </p>
+        <div className="relative overflow-hidden rounded-lg border border-emerald-900/30 border-b-4 border-b-emerald-950/50 bg-[linear-gradient(135deg,#10b981_0%,#047857_45%,#065f46_100%)] p-6 text-center text-white shadow-[0_24px_45px_-15px_rgba(4,120,87,0.55)] sm:p-10">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-16 -top-20 h-56 w-56 rounded-full bg-emerald-300/30 blur-3xl"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-24 -right-10 h-64 w-64 rounded-full bg-lime-300/25 blur-3xl"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/40"
+          />
+          <div className="relative">
+            <Tag className="bg-white/15 text-white">{tentangIntro.subtitle}</Tag>
+            <h2 className="mt-4 text-2xl font-bold tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)] sm:text-3xl">
+              {tentangIntro.title}
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-emerald-50">
+              {tentangIntro.description}
+            </p>
+          </div>
         </div>
       </Section>
 
