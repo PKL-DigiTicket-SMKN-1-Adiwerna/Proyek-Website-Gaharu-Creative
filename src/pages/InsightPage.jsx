@@ -168,7 +168,7 @@ export default function InsightPage() {
           </form>
 
           <p className="mt-6 flex items-center justify-center gap-2 text-xs text-muted">
-            <Icon name="shield" className="h-4 w-4" />
+            <Icon name="shield" className="h-5 w-5" />
             Kami tidak membagikan alamat email ke pihak lain.
           </p>
         </div>

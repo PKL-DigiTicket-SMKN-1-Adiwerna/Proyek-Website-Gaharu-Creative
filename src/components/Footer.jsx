@@ -14,7 +14,7 @@ export default function Footer({ variant = "ringkas" }) {
     <footer className="border-t border-line bg-paper">
       <Container className="py-12 text-center sm:py-14">
         <div className="flex flex-col items-center gap-3">
-          <Logo className="h-10 w-10" />
+          <Logo className="h-12 w-auto" />
           <p className="text-base font-bold text-ink">{site.name}</p>
         </div>
         <p className="mt-2 text-sm leading-relaxed text-muted">{site.tagline}</p>
