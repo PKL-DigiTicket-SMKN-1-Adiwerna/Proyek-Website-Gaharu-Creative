@@ -1,6 +1,6 @@
 # DESAIN.md — Website Gaharu Creative
 
-Dokumen ini adalah konversi dari file wireframe `Desain Gaharu Creative.pdf` (6 halaman) menjadi spesifikasi desain tertulis. Versi ini **masih tanpa warna** (hitam, putih, abu) sesuai wireframe asli. Pewarnaan menyusul di tahap berikutnya.
+Dokumen ini adalah konversi dari file wireframe `Desain Gaharu Creative.pdf` (6 halaman) menjadi spesifikasi desain tertulis. Bagian 2.1 dan 2.2 masih mendeskripsikan wireframe aslinya yang **grayscale** (hitam, putih, abu). Warna final untuk versi yang sudah tayang sudah diputuskan — baca **2.5**.
 
 **Versi:** diperbarui mengikuti wireframe terbaru (`Desain Gaharu Creative (1).pdf`). Ringkasan perubahan ada di bagian 7.
 
@@ -33,7 +33,7 @@ Dokumen ini adalah konversi dari file wireframe `Desain Gaharu Creative.pdf` (6 
 | Placeholder | Abu terang | Kotak gambar, banner, peta, foto profil |
 | Tombol navbar | Abu | Tombol "Hubungi Kami" |
 
-Catatan: pewarnaan ditunda. Saat nanti dimulai, semua peran di atas sebaiknya dijadikan variabel warna di Figma agar mudah diganti sekaligus.
+Catatan: tabel di atas adalah kondisi wireframe asli (grayscale). Pewarnaan sudah diputuskan kemudian — lihat **2.5** untuk warna yang dipakai di versi tayang.
 
 ### 2.2 Gaya tombol dan elemen (tanpa warna)
 
@@ -44,6 +44,8 @@ Catatan: pewarnaan ditunda. Saat nanti dimulai, semua peran di atas sebaiknya di
 | Tombol navbar (Hubungi Kami) | Terisi abu, teks hitam |
 | Ikon (lingkaran) | Ikon hitam di lingkaran abu muda |
 | Tag kategori | Label kecil berlatar abu muda |
+
+Catatan: kolom "Tampilan di wireframe" menggambarkan coretan hitam-putihnya saja. Bentuknya tetap berlaku (primer terisi, sekunder outline), tapi **warnanya mengikuti 2.5**, bukan hitam.
 
 ### 2.3 Tipografi
 
@@ -61,6 +63,31 @@ Catatan: pewarnaan ditunda. Saat nanti dimulai, semua peran di atas sebaiknya di
 - Section dipisahkan garis tipis horizontal dan ruang kosong yang lega.
 - Kartu: sudut membulat sedang, border tipis, tanpa bayangan besar.
 - Tombol: sudut membulat kecil, dua gaya (terisi dan outline).
+
+### 2.5 Warna final (versi tayang) — **keputusan terkunci**
+
+Warna sudah ditetapkan dan **jangan diubah lagi tanpa musyawarah tim**. Sumber tunggalnya blok `:root` di `src/index.css`; jangan menulis kode warna langsung (`#0b7a4b`, `bg-black`, dsb.) di komponen — pakai utilitas Tailwind yang lahir dari token (`bg-button`, `text-button`, `border-button`).
+
+| Token | Nilai | Untuk apa |
+|---|---|---|
+| `--brand` | `#047857` | Warna logo + favicon saja |
+| `--button` | `#0b7a4b` | **Tombol terisi seluruh situs** dan aksen hijau: label kecil SectionHead, angka statistik, tautan "Lihat detail", chip filter aktif, komponen Diagnosa |
+| `--button-text` | `#ffffff` | Teks di dalam tombol terisi |
+| `--ink` | `#111111` | Teks utama (judul, isi) — **bukan** warna tombol |
+| `--muted` | `#4b5563` | Teks sekunder |
+| `--line` | `#d9d9d9` | Border kartu, pemisah section |
+| `--field` | `#8f8f8f` | Border control form |
+| `--fill` / `--block` / `--tag-bg` | `#e6e6e6` / `#f2f2f2` / `#efefef` | Lingkaran ikon, latar blok, latar tag |
+| `--paper` | `#ffffff` | Latar halaman dan kartu |
+
+Aturan praktis:
+
+1. Satu warna hijau untuk semua tombol hijau: `#0b7a4b`. Tidak ada tombol hitam di situs ini.
+2. Tombol sekunder = outline hijau (`border-button text-button bg-paper`), bukan outline hitam.
+3. Kontras: `#0b7a4b` di atas putih ≈ 5.4:1 (lulus AA untuk teks putih di atasnya).
+4. Yang berubah dari wireframe: dulu navbar "Hubungi Kami" terisi abu, sekarang hijau (`bg-button`) seperti tombol primer.
+
+> Riwayat: warna tombol sempat diganti jadi hitam lalu dikembalikan ke hijau (commit `e8eea72` → `762a4f5`). Bagian ini ditulis supaya bolak-balik itu tidak terulang.
 
 ---
 
