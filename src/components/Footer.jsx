@@ -3,6 +3,7 @@ import { site, footerServices, footerExtraLinks, links } from "../data/site.js";
 import { Container } from "./ui.jsx";
 import CopyrightYear from "./CopyrightYear.jsx";
 import Logo from "./Logo.jsx";
+import Wordmark from "./Wordmark.jsx";
 
 /* Kebijakan Privasi, Syarat & Ketentuan, dan Karier belum punya halaman,
  * jadi ditampilkan sebagai teks dan bukan tautan.
@@ -15,7 +16,7 @@ export default function Footer({ variant = "ringkas" }) {
       <Container className="py-12 text-center sm:py-14">
         <div className="flex flex-col items-center gap-3">
           <Logo className="h-12 w-auto" />
-          <p className="text-base font-bold text-ink">{site.name}</p>
+          <Wordmark className="h-9 w-auto" />
         </div>
         <p className="mt-2 text-sm leading-relaxed text-muted">{site.tagline}</p>
 
