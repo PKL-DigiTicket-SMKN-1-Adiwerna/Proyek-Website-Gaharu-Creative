@@ -116,7 +116,7 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       {icon ? (
         <span
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
-            active ? "bg-button text-button-ink" : "bg-fill text-ink"
+            active ? "bg-button text-button-text" : "bg-fill text-ink"
           }`}
           aria-hidden="true"
         >
@@ -130,7 +130,7 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       {multi ? (
         <span
           className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${
-            active ? "border-button bg-button text-button-ink" : "border-field bg-paper text-transparent"
+            active ? "border-button bg-button text-button-text" : "border-field bg-paper text-transparent"
           }`}
           aria-hidden="true"
         >
@@ -268,7 +268,7 @@ export default function Diagnosa() {
           reset();
           setOpen(true);
         }}
-        className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-button bg-button px-4 py-3 text-sm font-semibold text-button-ink shadow-sm transition-colors hover:opacity-90"
+        className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-button bg-button px-4 py-3 text-sm font-semibold text-button-text shadow-sm transition-colors hover:opacity-90"
         aria-label="Buka diagnosa digital 360"
       >
         <Icon name="compass" className="h-4 w-4" />
@@ -454,7 +454,7 @@ export default function Diagnosa() {
                     className="rounded-md border border-line bg-block p-4"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-button text-button-ink">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-button text-button-text">
                         <Icon name={service.icon} className="h-4 w-4" />
                       </span>
                       <span>

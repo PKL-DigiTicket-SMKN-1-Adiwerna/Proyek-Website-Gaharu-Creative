@@ -21,7 +21,10 @@
   /* Warna logo, harus sama dengan favicon di tab browser. */
   --brand: #047857;
   --brand-ink: #ffffff;
-
+  /* Tombol utama seluruh situs. */
+  --button: #0b7a4b;
+  --button-ink: #111111;
+  --button-text: #ffffff;
   /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
   --button: #111111;
   --button-ink: #ffffff;
@@ -44,6 +47,7 @@
   --color-brand-ink: var(--brand-ink);
   --color-button: var(--button);
   --color-button-ink: var(--button-ink);
+  --color-button-text: var(--button-text);
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
 }
