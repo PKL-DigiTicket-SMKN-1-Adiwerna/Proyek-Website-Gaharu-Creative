@@ -17,23 +17,48 @@ export default function CtaBanner({ page }) {
   const [index, setIndex] = useState(0);
 
   const slide = slides[index];
+  const green = slide.title === "Siap Mengembangkan Bisnis Anda?";
 
   return (
     <section aria-label="Ajakan" className="border-t border-line bg-paper py-14 sm:py-16">
       <Container>
-        <div className="rounded-lg border border-line bg-block px-6 py-10 text-center sm:px-10 sm:py-12">
-          <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">{slide.title}</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-muted">
+        <div
+          className={`rounded-lg border px-6 py-10 text-center sm:px-10 sm:py-12 ${
+            green
+              ? "border-emerald-700 bg-[#047857] text-white shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)] border-b-4 border-b-emerald-900/40"
+              : "border-line bg-block"
+          }`}
+        >
+          <h2
+            className={`text-2xl font-bold tracking-tight sm:text-3xl ${
+              green ? "text-white" : "text-ink"
+            }`}
+          >
+            {slide.title}
+          </h2>
+          <p
+            className={`mx-auto mt-3 max-w-2xl text-base leading-relaxed ${
+              green ? "text-white/90" : "text-muted"
+            }`}
+          >
             {slide.detail}
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             {slide.actions.map((action) =>
               action.href.startsWith("/") ? (
-                <Button key={action.label} to={action.href} kind={action.kind}>
+                <Button
+                  key={action.label}
+                  to={action.href}
+                  kind={green && action.kind === "primary" ? "secondary" : action.kind}
+                >
                   {action.label}
                 </Button>
               ) : (
-                <Button key={action.label} href={slideHref(action.href)} kind={action.kind}>
+                <Button
+                  key={action.label}
+                  href={slideHref(action.href)}
+                  kind={green && action.kind === "primary" ? "secondary" : action.kind}
+                >
                   {action.label}
                 </Button>
               )
