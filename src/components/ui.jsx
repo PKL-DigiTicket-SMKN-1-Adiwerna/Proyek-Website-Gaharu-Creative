@@ -75,7 +75,7 @@ export function FilterChip({ active = false, onClick, children }) {
       aria-pressed={active}
       className={`inline-flex min-h-11 items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
         active
-          ? "border-button bg-button text-button-ink"
+          ? "border-button bg-button text-button-text"
           : "border-field bg-paper text-ink hover:bg-block"
       }`}
     >
