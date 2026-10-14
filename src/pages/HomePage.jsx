@@ -122,8 +122,8 @@ export default function HomePage() {
         <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
           {clientLogos.map((name) => (
             <li key={name} className="flex items-center gap-2 text-muted">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper">
-                <Icon name="store" className="h-5 w-5" />
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-paper">
+                <Icon name="store" className="h-6 w-6" />
               </span>
               <span className="text-sm font-semibold">{name}</span>
             </li>
@@ -171,7 +171,7 @@ export default function HomePage() {
               <figcaption className="mt-5 flex items-center gap-3">
                 <span
                   aria-hidden="true"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-dashed border-line bg-block text-xs text-muted"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-line bg-block text-xs text-muted"
                 >
                   Foto
                 </span>
@@ -206,7 +206,7 @@ function ServiceCard({ service, wide = false }) {
           className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
         >
           Lihat detail
-          <Icon name="arrowRight" className="h-4 w-4" />
+          <Icon name="arrowRight" className="h-5 w-5" />
         </Link>
       </div>
     </article>

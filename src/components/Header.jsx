@@ -36,9 +36,9 @@ function LanguagePicker() {
         aria-label="Pilih bahasa"
         className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-field px-3 text-sm font-semibold text-ink transition-colors hover:bg-block"
       >
-        <Icon name="globe" className="h-4 w-4" />
+        <Icon name="globe" className="h-5 w-5" />
         ID
-        <Icon name="chevronDown" className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+        <Icon name="chevronDown" className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open ? (
@@ -51,7 +51,7 @@ function LanguagePicker() {
                   className="flex min-h-11 items-center justify-between rounded px-3 py-2 text-sm font-semibold text-ink"
                 >
                   {lang.label}
-                  <Icon name="check" className="h-4 w-4" />
+                  <Icon name="check" className="h-5 w-5" />
                 </span>
               ) : (
                 <span
@@ -91,7 +91,7 @@ export default function Header() {
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
-            <Logo className="h-9 w-9 shrink-0" />
+            <Logo className="h-12 w-auto shrink-0" />
             <span className="text-base font-bold tracking-tight text-ink">{site.name}</span>
           </Link>
 

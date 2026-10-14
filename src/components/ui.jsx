@@ -86,8 +86,8 @@ export function FilterChip({ active = false, onClick, children }) {
 
 /* Ikon di dalam lingkaran abu muda. Dekoratif: nama selalu ada di teks sebelahnya. */
 export function IconCircle({ name, size = "md", className = "" }) {
-  const box = size === "sm" ? "h-7 w-7" : "h-11 w-11";
-  const glyph = size === "sm" ? "h-4 w-4" : "h-5 w-5";
+  const box = size === "sm" ? "h-8 w-8" : "h-12 w-12";
+  const glyph = size === "sm" ? "h-5 w-5" : "h-6 w-6";
   return (
     <span
       className={`flex ${box} shrink-0 items-center justify-center rounded-full bg-fill text-ink ${className}`}
@@ -105,7 +105,7 @@ export function ImageBlock({ label, hint = "", ratio = "aspect-[4/3]", className
       data-placeholder="Data belum diverifikasi"
       className={`flex flex-col items-center justify-center gap-1 rounded-md border border-dashed border-line bg-block p-6 text-center ${ratio} ${className}`}
     >
-      <Icon name="layers" className="h-6 w-6 text-muted" />
+      <Icon name="layers" className="h-8 w-8 text-muted" />
       <span className="text-sm font-semibold text-muted">{label}</span>
       {hint ? <span className="text-xs text-muted">{hint}</span> : null}
     </div>
