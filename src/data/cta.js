@@ -5,7 +5,7 @@ export const ctaSlides = {
       title: "Siap Mengembangkan Bisnis Anda?",
       detail: "Ceritakan target Anda, kami balas dengan gambaran langkah dan prioritas yang masuk akal.",
       actions: [
-        { label: "Konsultasi Gratis", kind: "primary", href: "/kontak" },
+        { label: "Konsultasi Gratis", kind: "primary", href: "whatsapp" },
         { label: "Lihat Portofolio", kind: "secondary", href: "/portofolio" },
       ],
     },
@@ -13,7 +13,7 @@ export const ctaSlides = {
       title: "Butuh audit kanal digital?",
       detail: "Kami tinjau konten, iklan, dan kanal sosial yang sudah jalan sebelum menambah anggaran baru.",
       actions: [
-        { label: "Ajukan Konsultasi", kind: "primary", href: "/kontak" },
+        { label: "Ajukan Konsultasi", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -21,7 +21,7 @@ export const ctaSlides = {
       title: "Punya deadline peluncuran?",
       detail: "Untuk produk atau kampanye dengan tanggal rilis tetap, kami susun alur kerja terbalik dari tenggat.",
       actions: [
-        { label: "Minta Penawaran", kind: "primary", href: "/kontak" },
+        { label: "Minta Penawaran", kind: "primary", href: "whatsapp" },
         { label: "Lihat Portofolio", kind: "secondary", href: "/portofolio" },
       ],
     },
@@ -31,7 +31,7 @@ export const ctaSlides = {
       title: "Diskusikan Kebutuhan Anda",
       detail: "Ceritakan masalahnya, kami usulkan layanan yang benar-benar diperlukan, tidak termasuk sisanya.",
       actions: [
-        { label: "Konsultasi Gratis", kind: "primary", href: "/kontak" },
+        { label: "Konsultasi Gratis", kind: "primary", href: "whatsapp" },
         { label: "Minta Penawaran", kind: "secondary", href: "/kontak" },
       ],
     },
@@ -39,7 +39,7 @@ export const ctaSlides = {
       title: "Belum tahu layanan mana yang cocok?",
       detail: "Kirim deskripsi singkat bisnis Anda, kami bantu petakan titik awal yang paling berdampak.",
       actions: [
-        { label: "Ajukan Konsultasi", kind: "primary", href: "/kontak" },
+        { label: "Ajukan Konsultasi", kind: "primary", href: "whatsapp" },
         { label: "Lihat Portofolio", kind: "secondary", href: "/portofolio" },
       ],
     },
@@ -47,7 +47,7 @@ export const ctaSlides = {
       title: "Roadmap 360 untuk tim Anda",
       detail: "Urutan kerja antar layanan kami pecah jadi tahap yang bisa dijalankan bertahap.",
       actions: [
-        { label: "Minta Penawaran", kind: "primary", href: "/kontak" },
+        { label: "Minta Penawaran", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -57,7 +57,7 @@ export const ctaSlides = {
       title: "Punya Proyek Serupa?",
       detail: "Gaharu Creative dapat membantu dari strategi 360, produksi konten, hingga optimasi performa berbasis data agar hasilnya jelas dan terukur.",
       actions: [
-        { label: "Ajukan Konsultasi", kind: "primary", href: "/kontak" },
+        { label: "Ajukan Konsultasi", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -65,7 +65,7 @@ export const ctaSlides = {
       title: "Ingin angka yang bisa dilacak?",
       detail: "Setiap kampanye kami jalankan dengan metrik yang disepakati sebelum budget dikeluarkan.",
       actions: [
-        { label: "Konsultasi Gratis", kind: "primary", href: "/kontak" },
+        { label: "Konsultasi Gratis", kind: "primary", href: "whatsapp" },
         { label: "Lihat Portofolio", kind: "secondary", href: "/portofolio" },
       ],
     },
@@ -73,7 +73,7 @@ export const ctaSlides = {
       title: "Kategori industri kami beda-beda",
       detail: "UMKM, korporat, dan layanan publik punya ukuran sukses yang berbeda. Kami sesuaikan lebih dulu.",
       actions: [
-        { label: "Minta Penawaran", kind: "primary", href: "/kontak" },
+        { label: "Minta Penawaran", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -83,7 +83,7 @@ export const ctaSlides = {
       title: "Siap Bekerja Sama?",
       detail: "Ceritakan kebutuhan Anda. Tim Gaharu Creative akan merespons dengan analisis awal dan rekomendasi langkah berikutnya.",
       actions: [
-        { label: "Konsultasi Gratis", kind: "primary", href: "/kontak" },
+        { label: "Konsultasi Gratis", kind: "primary", href: "whatsapp" },
         { label: "Minta Penawaran", kind: "secondary", href: "/kontak" },
       ],
     },
@@ -91,7 +91,7 @@ export const ctaSlides = {
       title: "Ingin kenalan dengan timnya dulu?",
       detail: "Konsultasi pertama dipakai untuk mendengar kebutuhan Anda, tanpa keharusan lanjut ke kontrak.",
       actions: [
-        { label: "Ajukan Konsultasi", kind: "primary", href: "/kontak" },
+        { label: "Ajukan Konsultasi", kind: "primary", href: "whatsapp" },
         { label: "Lihat Portofolio", kind: "secondary", href: "/portofolio" },
       ],
     },
@@ -99,7 +99,7 @@ export const ctaSlides = {
       title: "Perlu dokumen kerja sama?",
       detail: "Skema kerja, ruang lingkup, dan ketentuan layanan bisa kami kirim sebelum mulai proyek.",
       actions: [
-        { label: "Minta Dokumen Legal", kind: "primary", href: "/kontak" },
+        { label: "Minta Dokumen Legal", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -109,7 +109,7 @@ export const ctaSlides = {
       title: "Mau dibantu terjemahkan insight-nya?",
       detail: "Artikel di halaman ini arah umum. Untuk kasus bisnis Anda, diskusi langsung lebih cepat sampai ke solusi.",
       actions: [
-        { label: "Konsultasi Gratis", kind: "primary", href: "/kontak" },
+        { label: "Konsultasi Gratis", kind: "primary", href: "whatsapp" },
         { label: "Lihat Portofolio", kind: "secondary", href: "/portofolio" },
       ],
     },
@@ -117,7 +117,7 @@ export const ctaSlides = {
       title: "Belum dapat ide untuk kuartal depan?",
       detail: "Kami bantu susun kalender konten dan rencana kampanye yang bisa dijaga tim Anda.",
       actions: [
-        { label: "Minta Penawaran", kind: "primary", href: "/kontak" },
+        { label: "Minta Penawaran", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -125,7 +125,7 @@ export const ctaSlides = {
       title: "Butuh bahan internal?",
       detail: "Workshop singkat untuk tim marketing biasanya mempercepat keputusan yang menggantung.",
       actions: [
-        { label: "Ajukan Konsultasi", kind: "primary", href: "/kontak" },
+        { label: "Ajukan Konsultasi", kind: "primary", href: "whatsapp" },
         { label: "Lihat Layanan", kind: "secondary", href: "/layanan" },
       ],
     },
@@ -162,9 +162,9 @@ export const kontakInfo = [
   {
     icon: "chat",
     title: "WhatsApp",
-    value: "+62 812-3456-7890",
+    value: "+62 896-0517-7985",
     href: "whatsapp",
-    verified: false,
+    verified: true,
   },
   { icon: "mail", title: "Email", value: "halo@gaharucreative.co.id", href: "email", verified: false },
   { icon: "pin", title: "Alamat", value: "Jl. Contoh No. 12, Jakarta Selatan", href: null, verified: false },

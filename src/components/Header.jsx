@@ -116,7 +116,7 @@ export default function Header() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <LanguagePicker />
-            <Button to={links.konsultasi} kind="nav" className="px-4">
+            <Button href={links.konsultasi} kind="nav" className="px-4">
               Hubungi Kami
             </Button>
           </div>
@@ -160,7 +160,7 @@ export default function Header() {
             <div className="mt-4 flex items-center gap-3 border-t border-line pt-4">
               <LanguagePicker />
               <Button
-                to={links.konsultasi}
+                href={links.konsultasi}
                 kind="nav"
                 className="flex-1"
                 onClick={() => setOpen(false)}

@@ -67,10 +67,10 @@ export default function LayananPage() {
           subtitle="Lima layanan yang saling terhubung untuk mendorong pertumbuhan bisnis Anda."
         />
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button to={links.konsultasi} kind="primary">
+          <Button href={links.konsultasi} kind="primary">
             Konsultasi Gratis
           </Button>
-          <Button to={links.penawaran} kind="secondary">
+          <Button href={links.penawaran} kind="secondary">
             Minta Penawaran
           </Button>
         </div>

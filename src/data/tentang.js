@@ -8,10 +8,10 @@ export const tentangIntro = {
 
 export const ceritaCards = [
   {
-    title: "Sejak 2020",
+    title: "Sejak 2016",
     label: "Awal mula dan komitmen",
     detail:
-      "Berdiri pada 2020 dengan tujuan menghadirkan layanan digital yang menyeluruh namun tetap relevan untuk kebutuhan brand. Setiap tahap, dari riset hingga eksekusi, harus terhubung agar strategi tidak berhenti di dokumen.",
+      "Rekam jejak pendampingan UMKM dimulai pada 2016. Setiap tahap, dari riset hingga eksekusi, harus terhubung agar strategi tidak berhenti di dokumen dan bisa dijalankan bersama tim klien.",
   },
   {
     title: "Fokus pada dampak nyata",

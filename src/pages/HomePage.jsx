@@ -12,11 +12,12 @@ import {
 import { Icon } from "../components/Icons.jsx";
 import { site, links } from "../data/site.js";
 import { services } from "../data/services.js";
-import { featuredWork, stats, clientLogos, testimonials } from "../data/portfolio.js";
+import { featuredWork, stats, testimonials } from "../data/portfolio.js";
+import RekamJejak from "../components/RekamJejak.jsx";
 
 const title = site.name;
 const description =
-  "Gaharu Creative, konsultan dan eksekutor 360 digital agency sejak 2020. Branding, content, social media, performance marketing, dan digital product development.";
+  "Gaharu Creative, konsultan dan eksekutor 360 digital agency sejak 2016. Branding, content, social media, performance marketing, dan digital product development.";
 
 export default function HomePage() {
   return (
@@ -39,7 +40,7 @@ export default function HomePage() {
                 <Button to={links.portofolio} kind="secondary">
                   Lihat Portofolio
                 </Button>
-                <Button to={links.konsultasi} kind="primary">
+                <Button href={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -95,16 +96,12 @@ export default function HomePage() {
 
       <Section divider>
         <SectionHead
-          title="Sejak 2020, fokus pada hasil yang konsisten"
+          title="Sejak 2016, membantu 25.000+ usaha naik kelas"
           subtitle="Ringkasan pencapaian Gaharu Creative."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
           {stats.map((item) => (
-            <div
-              key={item.label}
-              data-placeholder="Angka belum diverifikasi"
-              className="rounded-lg border border-line bg-paper p-6 text-center"
-            >
+            <div key={item.label} className="rounded-lg border border-line bg-paper p-6 text-center">
               <p className="text-xs font-semibold uppercase tracking-widest text-muted">
                 {item.label}
               </p>
@@ -114,25 +111,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section divider className="bg-block">
-        <SectionHead
-          title="Dipercaya oleh berbagai klien di seluruh Indonesia"
-          subtitle="Placeholder logo klien, monokrom."
-        />
-        <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
-          {clientLogos.map((name) => (
-            <li key={name} className="flex items-center gap-2 text-muted">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-paper">
-                <Icon name="store" className="h-6 w-6" />
-              </span>
-              <span className="text-sm font-semibold">{name}</span>
-            </li>
-          ))}
-        </ul>
-        <p data-placeholder="Nama klien belum dikirim" className="mt-8 text-center text-sm text-muted">
-          Logo di atas placeholder. Nama klien asli menyusul.
-        </p>
-      </Section>
+      <RekamJejak />
 
       <Section id="portofolio-unggulan" divider>
         <SectionHead

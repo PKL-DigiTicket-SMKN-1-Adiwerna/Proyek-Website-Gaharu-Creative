@@ -1,3 +1,5 @@
+import { jumlahMitra } from "./klien.js";
+
 /* Nama proyek, angka, dan hasil belum dikonfirmasi klien, jadi setiap item
  * ditandai verified: false dan tampil dengan badge. Ganti dengan proyek nyata
  * sebelum rilis.
@@ -111,20 +113,13 @@ export const featuredWork = [
   },
 ];
 
-/* Angka pencapaian belum ada sumbernya. */
+/* Angka pencapaian dari perusahaan. Jumlah mitra dihitung otomatis dari daftar
+ * di src/data/klien.js supaya tidak ada angka yang lupa diperbarui.
+ */
 export const stats = [
-  { label: "Tahun Berdiri", value: "Sejak 2020", note: true },
-  { label: "Klien", value: "100+ Klien", note: true },
-  { label: "Proyek", value: "500+ Proyek", note: true },
-];
-
-/* Logo klien belum dikirim. */
-export const clientLogos = [
-  "Logo Klien 1",
-  "Logo Klien 2",
-  "Logo Klien 3",
-  "Logo Klien 4",
-  "Logo Klien 5",
+  { label: "Tahun Berdiri", value: "Sejak 2016" },
+  { label: "Usaha Terbantu", value: "25.000+ Usaha" },
+  { label: "Mitra Strategis", value: `${jumlahMitra} Institusi` },
 ];
 
 /* Testimoni belum ada identitas pemberi. */

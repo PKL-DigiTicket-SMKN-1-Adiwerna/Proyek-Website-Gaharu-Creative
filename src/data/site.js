@@ -4,7 +4,7 @@
 export const site = {
   name: "Gaharu Creative",
   tagline: "Konsultan dan Eksekutor 360 Digital Agency",
-  founded: 2020,
+  founded: 2016,
   description:
     "Gaharu Creative membantu bisnis dari strategi sampai eksekusi: branding, konten, social media, performance marketing, dan pengembangan produk digital.",
   keywords: [
@@ -15,11 +15,10 @@ export const site = {
     "digital product development",
   ],
 
-  // Nomor resminya belum dikirim, angka di bawah masih contoh dan akan
-  // mengirim pesan ke orang yang salah kalau dipakai.
-  waNumber: "6281234567890",
-  waDisplay: "+62 812-3456-7890",
-  waNumberVerified: false,
+  // Nomor resmi dari perusahaan, dikirim 14 Okt 2026.
+  waNumber: "6289605177985",
+  waDisplay: "+62 896-0517-7985",
+  waNumberVerified: true,
   waMessage: "Halo Gaharu Creative, saya ingin konsultasi gratis.",
 
   // Ada beberapa versi email di catatan awal, ditahan sampai klien memilih satu.
@@ -47,15 +46,22 @@ export const site = {
   },
 };
 
-/* Tautan yang dipakai tombol di seluruh situs. Semuanya menunjuk ke halaman atau
- * kanal yang benar-benar ada.
+/* Base wa.me tanpa pesan, supaya pemanggil bisa menempel pesan sendiri
+ * (?text=) tanpa menabrak pesan bawaan.
+ */
+export const waBase = `https://wa.me/${site.waNumber}`;
+const waLink = `${waBase}?text=${encodeURIComponent(site.waMessage)}`;
+
+/* Ajakan konsultasi dan penawaran langsung ke WhatsApp resmi. Tombol yang butuh
+ * konteks form tetap mengarah ke halaman Kontak.
  */
 export const links = {
-  konsultasi: "/kontak",
-  penawaran: "/kontak",
+  konsultasi: waLink,
+  penawaran: waLink,
   portofolio: "/portofolio",
   layanan: "/layanan",
-  whatsapp: `https://wa.me/${site.waNumber}?text=${encodeURIComponent(site.waMessage)}`,
+  kontak: "/kontak",
+  whatsapp: waLink,
   mail: `mailto:${site.email}`,
 };
 

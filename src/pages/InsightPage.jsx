@@ -53,7 +53,7 @@ export default function InsightPage() {
               <Button to={links.portofolio} kind="secondary">
                 Lihat Portofolio
               </Button>
-              <Button to={links.konsultasi} kind="primary">
+              <Button href={links.konsultasi} kind="primary">
                 Konsultasi Gratis
               </Button>
             </div>

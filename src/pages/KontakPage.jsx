@@ -8,11 +8,11 @@ import {
   SectionHead,
   Tag,
 } from "../components/ui.jsx";
-import { site, links } from "../data/site.js";
+import { site, links, waBase } from "../data/site.js";
 import { kontakInfo, inquiryServices } from "../data/cta.js";
 
 const title = "Kontak";
-const description = "Hubungi Gaharu Creative untuk konsultasi gratis, penawaran, atau diskusi kebutuhan.";
+const description = "Hubungi Gaharu Creative lewat WhatsApp, email, atau form konsultasi.";
 
 const emptyForm = { nama: "", perusahaan: "", layanan: "", pesan: "" };
 
@@ -43,8 +43,21 @@ export default function KontakPage() {
     }
 
     setErrors({});
-    // Kirim data menunggu penyedia form dipilih. Jangan mengaku terkirim.
-    setState("blocked");
+    // Pesan diteruskan ke WhatsApp resmi supaya tidak ada klaim terkirim palsu.
+    const isi = [
+      "Halo Gaharu Creative, saya ingin konsultasi.",
+      "",
+      `Nama: ${form.nama.trim()}`,
+      form.perusahaan.trim() ? `Perusahaan: ${form.perusahaan.trim()}` : null,
+      form.layanan ? `Layanan: ${form.layanan}` : null,
+      "",
+      form.pesan.trim(),
+    ]
+      .filter((line) => line !== null)
+      .join("\n");
+
+    window.open(`${waBase}?text=${encodeURIComponent(isi)}`, "_blank", "noopener");
+    setState("sent");
   };
 
   const infoHref = (kind) => (kind === "whatsapp" ? links.whatsapp : kind === "email" ? links.mail : null);
@@ -67,7 +80,7 @@ export default function KontakPage() {
             <SectionHead
               align="left"
               title="Form Kontak"
-              subtitle="Isi data berikut untuk menghubungi Gaharu Creative."
+              subtitle="Isi data berikut, lalu pesan diteruskan ke WhatsApp tim kami."
             />
 
             <form className="mt-8 grid gap-5 sm:grid-cols-2" onSubmit={submit} noValidate>
@@ -167,21 +180,19 @@ export default function KontakPage() {
                 </p>
               ) : null}
 
-              {state === "blocked" ? (
+              {state === "sent" ? (
                 <p
                   role="status"
-                  data-placeholder="Pengiriman belum aktif"
                   className="rounded-md border border-dashed border-line bg-block p-4 text-sm leading-relaxed text-ink sm:col-span-2"
                 >
-                  Pemeriksaan kolom sudah lolos. Pesan Anda tersimpan di layar ini tapi belum terkirim,
-                  karena layanan form belum dipasang dan nomor kontak resmi belum dikonfirmasi. Pakai
-                  WhatsApp atau email di bagian Informasi Kontak untuk mengirim sekarang.
+                  Pesan sudah disiapkan di tab WhatsApp. Kalau tab tidak terbuka, hubungi langsung
+                  nomor {site.waDisplay}.
                 </p>
               ) : null}
 
               <div className="flex justify-center sm:col-span-2">
                 <Button kind="primary" type="submit" className="w-full sm:w-auto">
-                  Kirim Pesan
+                  Kirim lewat WhatsApp
                 </Button>
               </div>
             </form>
@@ -191,12 +202,20 @@ export default function KontakPage() {
             <Tag>Bentuk komunikasi cepat</Tag>
             <h2 className="mt-4 text-lg font-bold text-ink">Area Kontak</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              Silakan isi form di sebelah kiri. Tim kami akan merespons secepatnya (hari kerja).
+              Cara tercepat lewat WhatsApp. Isi form di sebelah kiri, atau chat langsung ke nomor
+              resmi kami.
             </p>
             <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted">Respon hari kerja</p>
             <div className="mt-5 space-y-3 border-t border-line pt-5 text-sm text-muted">
               <p>{site.hours}</p>
-              <p>{site.address}</p>
+              <a
+                href={links.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
+              >
+                {site.waDisplay}
+              </a>
             </div>
           </aside>
         </div>
@@ -226,9 +245,9 @@ export default function KontakPage() {
             </article>
           ))}
         </div>
-        <p data-placeholder="Nomor dan alamat masih contoh" className="mt-6 text-sm text-muted">
-          WhatsApp dan alamat di atas masih contoh. Data resmi menunggu konfirmasi
-          klien sebelum halaman ini dibuka untuk publik.
+        <p data-placeholder="Email dan alamat masih contoh" className="mt-6 text-sm text-muted">
+          Nomor WhatsApp sudah resmi dari perusahaan. Email, telepon, dan alamat kantor masih contoh
+          dan menunggu konfirmasi sebelum halaman ini dibuka untuk publik.
         </p>
       </Section>
 

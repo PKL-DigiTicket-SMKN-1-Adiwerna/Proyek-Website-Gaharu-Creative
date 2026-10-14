@@ -40,7 +40,7 @@ export default function PortofolioPage() {
                 <Button to={links.layanan} kind="secondary">
                   Lihat Layanan
                 </Button>
-                <Button to={links.konsultasi} kind="primary">
+                <Button href={links.konsultasi} kind="primary">
                   Ajukan Konsultasi
                 </Button>
               </div>
@@ -110,7 +110,7 @@ export default function PortofolioPage() {
               Studi kasus untuk kategori ini belum disusun. Kirim pesan lewat halaman kontak kalau
               Anda ingin melihat contoh yang paling mendekati.
             </p>
-            <Button to={links.konsultasi} kind="secondary" className="mt-5">
+            <Button href={links.konsultasi} kind="secondary" className="mt-5">
               Hubungi Kami
             </Button>
           </div>

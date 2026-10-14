@@ -1,4 +1,5 @@
 import { Seo } from "../components/Seo.jsx";
+import RekamJejak from "../components/RekamJejak.jsx";
 import {
   Button,
   Container,
@@ -20,7 +21,7 @@ import {
 
 const title = "Tentang";
 const description =
-  "Gaharu Creative, agensi digital 360 yang berdiri sejak 2020: strategi, desain, pengembangan, dan pemasaran.";
+  "Gaharu Creative, agensi digital 360 yang berdiri sejak 2016: strategi, desain, pengembangan, dan pemasaran.";
 
 export default function TentangPage() {
   return (
@@ -36,7 +37,7 @@ export default function TentangPage() {
                 Agensi Digital 360, berbasis di Indonesia.
               </p>
               <div className="mt-8">
-                <Button to={links.konsultasi} kind="primary">
+                <Button href={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -98,6 +99,8 @@ export default function TentangPage() {
         </div>
       </Section>
 
+      <RekamJejak />
+
       <Section divider className="bg-block">
         <SectionHead
           title="Misi dan Tujuan"
@@ -118,7 +121,7 @@ export default function TentangPage() {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <Button to={links.konsultasi} kind="primary">
+          <Button href={links.konsultasi} kind="primary">
             Diskusikan Kebutuhan Anda
           </Button>
         </div>
