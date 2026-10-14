@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-[#F8FAFC] text-[#1E293B] antialiased font-sans;
+  }
+}
+
+.primary-btn {
+  @apply bg-[#007A55] hover:bg-[#005F42] text-white font-medium px-5 py-2.5 rounded-full transition-all duration-200 inline-flex items-center justify-center gap-2;
+}
+
+.secondary-btn {
+  @apply bg-white hover:bg-slate-100 text-[#007A55] border border-[#007A55] font-medium px-5 py-2.5 rounded-full transition-all duration-200 inline-flex items-center justify-center gap-2;
+}
