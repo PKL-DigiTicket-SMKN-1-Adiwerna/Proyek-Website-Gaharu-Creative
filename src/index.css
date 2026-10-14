@@ -9,13 +9,13 @@
 :root {
   --paper: #ffffff;
   --ink: #111111;
-  --muted: #595959;
+  --muted: #4b5563;
   --line: #d9d9d9;
   --field: #8f8f8f;
   --fill: #e6e6e6;
   --block: #f2f2f2;
   --tag-bg: #efefef;
-  --tag-ink: #404040;
+  --tag-ink: #1f3b2a;
   --focus: #111111;
 
   /* Warna logo, harus sama dengan favicon di tab browser. */
