@@ -21,6 +21,9 @@
   /* Warna logo dan aksen hijau seluruh situs (teks, tautan, garis bawah). */
   --brand: #047857;
   --brand-ink: #ffffff;
+  /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
+  --button: #0b7a4b;
+  --button-ink: #ffffff;
   /* Tombol terisi seluruh situs: latar hitam, teks putih. Dipakai juga
    * komponen Diagnosa. Aksen hijau tidak lewat sini, tapi lewat --brand. */
   --button: #111111;
