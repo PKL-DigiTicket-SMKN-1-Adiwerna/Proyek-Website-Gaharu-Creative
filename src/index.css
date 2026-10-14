@@ -21,13 +21,10 @@
   /* Warna logo, harus sama dengan favicon di tab browser. */
   --brand: #047857;
   --brand-ink: #ffffff;
-  /* Tombol utama seluruh situs. */
+  /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
   --button: #0b7a4b;
   --button-ink: #111111;
   --button-text: #ffffff;
-  /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
-  --button: #111111;
-  --button-ink: #ffffff;
 }
 
 /* Nilai di atas diterjemahkan jadi utility Tailwind, jadi bg-paper dan text-ink
