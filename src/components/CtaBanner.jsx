@@ -25,44 +25,63 @@ export default function CtaBanner({ page }) {
         <div
           className={`rounded-lg border px-6 py-10 text-center sm:px-10 sm:py-12 ${
             green
-              ? "border-emerald-700 bg-[#047857] text-white shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)] border-b-4 border-b-emerald-900/40"
+              ? "relative overflow-hidden border-emerald-900/30 bg-[linear-gradient(135deg,#10b981_0%,#047857_45%,#065f46_100%)] text-white shadow-[0_24px_45px_-15px_rgba(4,120,87,0.55)] border-b-4 border-b-emerald-950/50"
               : "border-line bg-block"
           }`}
         >
-          <h2
-            className={`text-2xl font-bold tracking-tight sm:text-3xl ${
-              green ? "text-white" : "text-ink"
-            }`}
-          >
-            {slide.title}
-          </h2>
-          <p
-            className={`mx-auto mt-3 max-w-2xl text-base leading-relaxed ${
-              green ? "text-white/90" : "text-muted"
-            }`}
-          >
-            {slide.detail}
-          </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            {slide.actions.map((action) =>
-              action.href.startsWith("/") ? (
-                <Button
-                  key={action.label}
-                  to={action.href}
-                  kind={green && action.kind === "primary" ? "secondary" : action.kind}
-                >
-                  {action.label}
-                </Button>
-              ) : (
-                <Button
-                  key={action.label}
-                  href={slideHref(action.href)}
-                  kind={green && action.kind === "primary" ? "secondary" : action.kind}
-                >
-                  {action.label}
-                </Button>
-              )
-            )}
+          {green ? (
+            <>
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-16 -top-20 h-56 w-56 rounded-full bg-emerald-300/30 blur-3xl"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-24 -right-10 h-64 w-64 rounded-full bg-lime-300/25 blur-3xl"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/40"
+              />
+            </>
+          ) : null}
+
+          <div className="relative">
+            <h2
+              className={`text-2xl font-bold tracking-tight sm:text-3xl ${
+                green ? "text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]" : "text-ink"
+              }`}
+            >
+              {slide.title}
+            </h2>
+            <p
+              className={`mx-auto mt-3 max-w-2xl text-base leading-relaxed ${
+                green ? "text-emerald-50" : "text-muted"
+              }`}
+            >
+              {slide.detail}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              {slide.actions.map((action) =>
+                action.href.startsWith("/") ? (
+                  <Button
+                    key={action.label}
+                    to={action.href}
+                    kind={green && action.kind === "primary" ? "secondary" : action.kind}
+                  >
+                    {action.label}
+                  </Button>
+                ) : (
+                  <Button
+                    key={action.label}
+                    href={slideHref(action.href)}
+                    kind={green && action.kind === "primary" ? "secondary" : action.kind}
+                  >
+                    {action.label}
+                  </Button>
+                )
+              )}
+            </div>
           </div>
         </div>
 
