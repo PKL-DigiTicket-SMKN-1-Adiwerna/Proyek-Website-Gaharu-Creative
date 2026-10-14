@@ -4,6 +4,7 @@ import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import CtaBanner from "./components/CtaBanner.jsx";
 import WhatsAppButton from "./components/WhatsAppButton.jsx";
+import Diagnosa from "./components/Diagnosa.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import TentangPage from "./pages/TentangPage.jsx";
 import LayananPage from "./pages/LayananPage.jsx";
@@ -74,6 +75,7 @@ export default function App() {
       {ctaPage ? <CtaBanner key={ctaPage} page={ctaPage} /> : null}
       <Footer variant={footerVariant} />
       <WhatsAppButton />
+      <Diagnosa />
     </div>
   );
 }
