@@ -21,7 +21,6 @@
   /* Warna logo, harus sama dengan favicon di tab browser. */
   --brand: #047857;
   --brand-ink: #ffffff;
-
   /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
   --button: #0b7a4b;
   --button-ink: #111111;
