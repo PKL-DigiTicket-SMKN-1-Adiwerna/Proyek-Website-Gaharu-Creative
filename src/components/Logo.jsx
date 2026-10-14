@@ -1,18 +1,14 @@
-/* Logo: kotak hijau berisi huruf G putih, sama dengan favicon di tab browser.
- * Glyph digeser naik 2.98 unit supaya optiknya duduk di tengah kotak; nilai
- * yang sama dipakai di public/icon.svg dan icon-*.png.
+/* Logo baru memakai berkas gambar di public/icon-11.png.
+ * Karena Logo dipakai di header, footer, dan tempat lain, cukup ubah file ini
+ * dan semua penggunaan logo ikut berubah.
  */
-const GLYPH = "M22.5 12.4a7.2 7.2 0 1 0 .5 6.6h-6.9v-2.9h10v2.9a10.2 10.2 0 1 1-3.6-7.8z";
-
 export default function Logo({ className = "h-9 w-9" }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      className={className}
+    <img
+      src="/icon-11.png"
+      alt=""
       aria-hidden="true"
-      focusable="false">
-      <rect width="32" height="32" rx="7" fill="var(--brand)" />
-      <path d={GLYPH} transform="translate(0.1 -2.98)" fill="var(--brand-ink)" />
-    </svg>
+      className={`${className} object-contain`}
+    />
   );
 }
