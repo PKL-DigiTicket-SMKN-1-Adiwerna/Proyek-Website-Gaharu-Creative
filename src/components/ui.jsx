@@ -13,9 +13,9 @@ const buttonBase =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors";
 
 const buttonStyles = {
-  primary: "bg-ink text-paper hover:bg-black",
-  secondary: "border border-ink bg-paper text-ink hover:bg-block",
-  nav: "bg-fill text-ink hover:bg-line",
+  primary: "bg-button text-button-ink hover:opacity-90",
+  secondary: "border border-button bg-paper text-button-ink hover:bg-button/10",
+  nav: "bg-button text-button-ink hover:opacity-90",
 };
 
 /* Tombol bisa berubah jadi tautan router, tautan luar, atau tombol form. */
@@ -75,7 +75,7 @@ export function FilterChip({ active = false, onClick, children }) {
       aria-pressed={active}
       className={`inline-flex min-h-11 items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold transition-colors ${
         active
-          ? "border-ink bg-ink text-paper"
+          ? "border-button bg-button text-button-ink"
           : "border-field bg-paper text-ink hover:bg-block"
       }`}
     >

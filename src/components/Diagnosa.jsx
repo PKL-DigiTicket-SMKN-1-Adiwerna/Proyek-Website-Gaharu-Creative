@@ -110,13 +110,13 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       onClick={onClick}
       aria-pressed={active}
       className={`flex min-h-11 w-full items-start gap-3 rounded-md border p-4 text-left transition-colors ${
-        active ? "border-ink bg-block text-ink" : "border-field bg-paper text-ink hover:border-ink"
+        active ? "border-button bg-button/10 text-ink" : "border-field bg-paper text-ink hover:border-button"
       }`}
     >
       {icon ? (
         <span
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
-            active ? "bg-ink text-paper" : "bg-fill text-ink"
+            active ? "bg-button text-button-ink" : "bg-fill text-ink"
           }`}
           aria-hidden="true"
         >
@@ -130,7 +130,7 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       {multi ? (
         <span
           className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${
-            active ? "border-ink bg-ink text-paper" : "border-field bg-paper text-transparent"
+            active ? "border-button bg-button text-button-ink" : "border-field bg-paper text-transparent"
           }`}
           aria-hidden="true"
         >
@@ -268,7 +268,7 @@ export default function Diagnosa() {
           reset();
           setOpen(true);
         }}
-        className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-ink bg-ink px-4 py-3 text-sm font-semibold text-paper shadow-sm transition-colors hover:bg-black"
+        className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-button bg-button px-4 py-3 text-sm font-semibold text-button-ink shadow-sm transition-colors hover:opacity-90"
         aria-label="Buka diagnosa digital 360"
       >
         <Icon name="compass" className="h-4 w-4" />
@@ -319,7 +319,7 @@ export default function Diagnosa() {
           </div>
           <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-fill">
             <div
-              className="h-full rounded-full bg-ink transition-[width] duration-300"
+              className="h-full rounded-full bg-button transition-[width] duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -454,7 +454,7 @@ export default function Diagnosa() {
                     className="rounded-md border border-line bg-block p-4"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-paper">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-button text-button-ink">
                         <Icon name={service.icon} className="h-4 w-4" />
                       </span>
                       <span>
