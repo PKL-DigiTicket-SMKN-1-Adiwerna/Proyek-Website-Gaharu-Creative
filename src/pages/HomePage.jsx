@@ -108,7 +108,7 @@ export default function HomePage() {
               <p className="text-xs font-semibold uppercase tracking-widest text-muted">
                 {item.label}
               </p>
-              <p className="mt-3 text-2xl font-bold text-button">{item.value}</p>
+              <p className="mt-3 text-2xl font-bold text-brand">{item.value}</p>
             </div>
           ))}
         </div>
@@ -203,7 +203,7 @@ function ServiceCard({ service, wide = false }) {
         <p className="mt-2 text-sm leading-relaxed text-muted">{service.short}</p>
         <Link
           to={`/layanan#${service.slug}`}
-          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-button underline decoration-line underline-offset-4 hover:decoration-button"
+          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand underline decoration-line underline-offset-4 hover:decoration-brand"
         >
           Lihat detail
           <Icon name="arrowRight" className="h-5 w-5" />
