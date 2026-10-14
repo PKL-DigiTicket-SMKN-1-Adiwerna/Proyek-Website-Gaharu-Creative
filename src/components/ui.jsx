@@ -124,7 +124,7 @@ export function SectionHead({ label, title, subtitle, align = "center", as = "h2
   return (
     <div className={`${centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
       {label ? (
-        <p className="text-xs font-semibold uppercase tracking-widest text-brand">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-button">{label}</p>
       ) : null}
       <Heading
         className={`mt-2 ${titleSize} font-bold tracking-tight text-ink ${
