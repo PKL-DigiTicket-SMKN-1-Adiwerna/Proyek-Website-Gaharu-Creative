@@ -13,9 +13,9 @@ const buttonBase =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors";
 
 const buttonStyles = {
-  primary: "bg-button text-button-ink hover:opacity-90",
-  secondary: "border border-button bg-paper text-button-ink hover:bg-button/10",
-  nav: "bg-button text-button-ink hover:opacity-90",
+  primary: "bg-button text-button-text hover:opacity-90",
+  secondary: "border border-button bg-paper text-button hover:bg-button/10",
+  nav: "bg-button text-button-text hover:opacity-90",
 };
 
 /* Tombol bisa berubah jadi tautan router, tautan luar, atau tombol form. */

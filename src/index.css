@@ -25,6 +25,7 @@
   /* Tombol utama seluruh situs. */
   --button: #0b7a4b;
   --button-ink: #111111;
+  --button-text: #ffffff;
 }
 
 /* Nilai di atas diterjemahkan jadi utility Tailwind, jadi bg-paper dan text-ink
@@ -44,6 +45,7 @@
   --color-brand-ink: var(--brand-ink);
   --color-button: var(--button);
   --color-button-ink: var(--button-ink);
+  --color-button-text: var(--button-text);
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
 }
