@@ -42,9 +42,6 @@ export default function HomePage() {
                 <Button to={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
-                <Button kind="nav" onClick={() => window.dispatchEvent(new Event("open-diagnosa"))}>
-                  Mulai Diagnosa Digital
-                </Button>
               </div>
             </div>
             <ImageBlock
