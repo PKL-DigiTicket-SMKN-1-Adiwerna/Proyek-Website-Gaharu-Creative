@@ -102,10 +102,10 @@ export default function Header() {
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-ink ${
+                  `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? "text-ink underline decoration-2 underline-offset-8"
-                      : "text-muted"
+                      ? "text-brand underline decoration-brand decoration-2 underline-offset-8"
+                      : "text-muted hover:text-brand"
                   }`
                 }
               >
@@ -149,7 +149,7 @@ export default function Header() {
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
                     `min-h-11 rounded-md px-3 py-3 text-base font-medium ${
-                      isActive ? "bg-block text-ink" : "text-muted"
+                      isActive ? "bg-brand/10 text-brand" : "text-muted hover:text-brand"
                     }`
                   }
                 >

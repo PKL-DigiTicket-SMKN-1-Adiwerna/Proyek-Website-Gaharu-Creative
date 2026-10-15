@@ -60,7 +60,7 @@ export default function LayananPage() {
     <>
       <Seo title={title} description={description} />
 
-      <Section id="layanan">
+      <Section id="layanan" className="border-b border-emerald-200 bg-emerald-50">
         <SectionHead
           as="h1"
           title="5 Layanan Jasa Digital Marketing Utama"

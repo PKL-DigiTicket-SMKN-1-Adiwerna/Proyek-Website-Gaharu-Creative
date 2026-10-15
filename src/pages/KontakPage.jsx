@@ -66,7 +66,7 @@ export default function KontakPage() {
     <>
       <Seo title={title} description={description} />
 
-      <Section id="hubungi">
+      <Section id="hubungi" className="border-b border-emerald-200 bg-emerald-50">
         <SectionHead
           as="h1"
           title="Hubungi Kami"

@@ -6,7 +6,7 @@ export default function NotFoundPage() {
   return (
     <>
       <Seo title="Halaman tidak ditemukan" description="Halaman yang dicari tidak ada di Gaharu Creative." />
-      <section className="border-b border-line">
+      <section className="border-b border-emerald-200 bg-emerald-50">
         <Container className="py-20 sm:py-28">
           <div className="mx-auto max-w-xl text-center">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted">Kesalahan 404</p>
