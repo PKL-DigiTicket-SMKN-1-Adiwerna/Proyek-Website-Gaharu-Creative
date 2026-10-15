@@ -3,7 +3,8 @@
 
 /* Token warna, kontrasnya sudah dihitung di atas putih:
  * --ink 18.9:1, --muted 7.0:1, --tag-ink 9.0:1 di atas --tag-bg,
- * --field 3.2:1 untuk border control form (WCAG 1.4.11).
+ * --field 3.2:1 untuk border control form (WCAG 1.4.11),
+ * --focus 5.5:1 hijau brand untuk outline fokus keyboard (WCAG 1.4.11).
  * Ganti nilai di sini, komponen tidak perlu disentuh satu per satu.
  */
 :root {
@@ -16,7 +17,7 @@
   --block: #f2f2f2;
   --tag-bg: #efefef;
   --tag-ink: #1f3b2a;
-  --focus: #111111;
+  --focus: #047857;
 
   /* Warna logo, harus sama dengan favicon di tab browser. */
   --brand: #047857;
