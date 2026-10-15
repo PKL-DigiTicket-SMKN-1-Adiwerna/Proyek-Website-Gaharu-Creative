@@ -9,9 +9,9 @@ import {
 import { links } from "../data/site.js";
 import { services, whyChooseUs } from "../data/services.js";
 
-const title = "Layanan";
+const title = "Jasa Digital Marketing & Agensi Kreatif Terbaik Semarang";
 const description =
-  "Branding, content, social media, performance marketing, dan digital product development dalam satu sistem 360.";
+  "Gaharu Creative menyediakan solusi terpadu: jasa digital marketing, digital branding, kelola sosial media, performance marketing, hingga pembuatan website di Semarang.";
 
 /* Kartu layanan: Problem, Solusi, Deliverables. */
 function ServiceBlock({ service }) {
@@ -63,14 +63,14 @@ export default function LayananPage() {
       <Section id="layanan">
         <SectionHead
           as="h1"
-          title="5 Layanan Utama"
-          subtitle="Lima layanan yang saling terhubung untuk mendorong pertumbuhan bisnis Anda."
+          title="5 Layanan Jasa Digital Marketing Utama"
+          subtitle="Lima solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda di Semarang dan Indonesia."
         />
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button href={links.konsultasi} kind="primary">
+          <Button to={links.konsultasi} kind="primary">
             Konsultasi Gratis
           </Button>
-          <Button href={links.penawaran} kind="secondary">
+          <Button to={links.penawaran} kind="secondary">
             Minta Penawaran
           </Button>
         </div>
@@ -83,8 +83,8 @@ export default function LayananPage() {
 
       <Section divider className="bg-block">
         <SectionHead
-          title="Kenapa Memilih Gaharu"
-          subtitle="Pendekatan yang memastikan strategi jelas, eksekusi rapi, dan dampak dapat diukur."
+          title="Kenapa Memilih Gaharu Creative"
+          subtitle="Pendekatan berbasis data yang memastikan strategi jelas, eksekusi rapi, dan dampak pemasaran digital dapat diukur secara transparan."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {whyChooseUs.map((item) => (

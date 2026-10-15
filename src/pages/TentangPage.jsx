@@ -19,9 +19,9 @@ import {
   legality,
 } from "../data/tentang.js";
 
-const title = "Tentang";
+const title = "Tentang Kami – Konsultan Digital Marketing Semarang & Agensi Kreatif";
 const description =
-  "Gaharu Creative, agensi digital 360 yang berdiri sejak 2016: strategi, desain, pengembangan, dan pemasaran.";
+  "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2020: strategi, digital branding, pembuatan website, dan pemasaran digital.";
 
 export default function TentangPage() {
   return (
@@ -32,12 +32,15 @@ export default function TentangPage() {
         <Container className="py-14 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">{site.name}</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+                <font color="#047857">Gaharu Creative</font><br></br> 
+                Konsultan Digital Marketing Semarang
+              </h1>
               <p className="mt-4 max-w-md text-lg leading-relaxed text-muted">
-                Agensi Digital 360, berbasis di Indonesia.
+                Agensi kreatif dan konsultan digital marketing 360 berbasis di Semarang dan Indonesia yang berfokus pada pertumbuhan bisnis secara terukur.
               </p>
               <div className="mt-8">
-                <Button href={links.konsultasi} kind="primary">
+                <Button to={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -48,28 +51,14 @@ export default function TentangPage() {
       </section>
 
       <Section divider>
-        <div className="relative overflow-hidden rounded-lg border border-emerald-900/30 border-b-4 border-b-emerald-950/50 bg-[linear-gradient(135deg,#10b981_0%,#047857_45%,#065f46_100%)] p-6 text-center text-white shadow-[0_24px_45px_-15px_rgba(4,120,87,0.55)] sm:p-10">
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-16 -top-20 h-56 w-56 rounded-full bg-emerald-300/30 blur-3xl"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-24 -right-10 h-64 w-64 rounded-full bg-lime-300/25 blur-3xl"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/40"
-          />
-          <div className="relative">
-            <Tag className="bg-white/15 text-white">{tentangIntro.subtitle}</Tag>
-            <h2 className="mt-4 text-2xl font-bold tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)] sm:text-3xl">
-              {tentangIntro.title}
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-emerald-50">
-              {tentangIntro.description}
-            </p>
-          </div>
+        <div className="rounded-lg border border-line bg-block p-6 text-center sm:p-10">
+          <Tag>{tentangIntro.subtitle}</Tag>
+          <h2 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            {tentangIntro.title}
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
+            {tentangIntro.description}
+          </p>
         </div>
       </Section>
 
@@ -83,8 +72,7 @@ export default function TentangPage() {
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">Cerita Kami</h2>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              Perjalanan dimulai sejak {site.founded}, berkembang menjadi tim yang fokus pada hasil
-              dan kolaborasi.
+              Perjalanan dimulai sejak {site.founded} sebagai agensi kreatif dan konsultan digital marketing Semarang, berkembang menjadi tim yang fokus pada hasil dan kolaborasi strategis.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
@@ -118,7 +106,7 @@ export default function TentangPage() {
       <Section divider className="bg-block">
         <SectionHead
           title="Misi dan Tujuan"
-          subtitle="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan)."
+          subtitle="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
         />
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           {missionGoals.map((item) => (
@@ -135,7 +123,7 @@ export default function TentangPage() {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <Button href={links.konsultasi} kind="primary">
+          <Button to={links.konsultasi} kind="primary">
             Diskusikan Kebutuhan Anda
           </Button>
         </div>
@@ -144,7 +132,7 @@ export default function TentangPage() {
       <Section divider>
         <SectionHead
           title="Nilai Perusahaan"
-          subtitle="Prinsip kerja yang menuntun setiap proyek, dari perencanaan sampai pengukuran hasil."
+          subtitle="Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {values.map((item) => (
@@ -159,7 +147,7 @@ export default function TentangPage() {
       <Section divider className="bg-block">
         <SectionHead
           title="Tim Inti"
-          subtitle="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran, dan teknis berjalan seimbang."
+          subtitle="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {team.map((item) => (

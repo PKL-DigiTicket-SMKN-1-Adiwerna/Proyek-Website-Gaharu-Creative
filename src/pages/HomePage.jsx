@@ -15,9 +15,9 @@ import { services } from "../data/services.js";
 import { featuredWork, stats, testimonials } from "../data/portfolio.js";
 import RekamJejak from "../components/RekamJejak.jsx";
 
-const title = site.name;
+const title = `${site.name} – Digital Agency Partner & Agensi Kreatif Indonesia`;
 const description =
-  "Gaharu Creative, konsultan dan eksekutor 360 digital agency sejak 2016. Branding, content, social media, performance marketing, dan digital product development.";
+  "Gaharu Creative adalah digital agency & agensi kreatif terpercaya sejak 2020. Kami menyediakan layanan digital marketing, digital branding, jasa pembuatan website, hingga performance marketing untuk UMKM dan Enterprise.";
 
 export default function HomePage() {
   return (
@@ -30,17 +30,22 @@ export default function HomePage() {
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-muted">
-                Sejak {site.founded}
+                KONSULTAN & EKSEKUTOR 360° DIGITAL AGENCY
               </p>
               <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-                {site.name}
+                <font color="#047857">Gaharu Creative</font><br></br> 
+                  Digital Agency Partner untuk Skala Bisnis Anda
               </h1>
-              <p className="mt-4 max-w-md text-lg leading-relaxed text-muted">{site.tagline}</p>
+              <p className="mt-4 max-w-md text-lg leading-relaxed text-muted">
+                Kami adalah digital agency dan agensi kreatif yang membantu brand Anda tumbuh lewat
+                solusi pemasaran digital holistik, eksekusi visual presisi, hingga optimasi
+                performa berbasis data terukur untuk enterprise, instansi, serta UMKM di Indonesia.
+              </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button to={links.portofolio} kind="secondary">
                   Lihat Portofolio
                 </Button>
-                <Button href={links.konsultasi} kind="primary">
+                <Button to={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -59,12 +64,12 @@ export default function HomePage() {
           <article className="rounded-lg border border-line bg-paper p-6 sm:p-8">
             <Tag>360 Digital Agency</Tag>
             <h2 className="mt-4 text-2xl font-bold leading-snug tracking-tight text-ink">
-              Partner Digital 360 untuk Pertumbuhan Bisnis Anda
+              Partner Digital Marketing 360° untuk Pertumbuhan Bisnis Anda
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              Kami membantu bisnis dari strategi hingga eksekusi: branding, konten, social media,
-              performance marketing, dan pengembangan produk digital agar hasilnya terukur dan
-              berkelanjutan.
+              Dari tahap riset mendalam, penetapan digital branding, pembuatan ekosistem kanal
+              digital, hingga eksekusi strategi pemasaran digital multi-channel yang terukur
+              untuk mengkonversi audiens menjadi pelanggan setia.
             </p>
           </article>
           <ImageBlock
@@ -78,8 +83,8 @@ export default function HomePage() {
       <Section id="layanan-utama" divider className="bg-block">
         <SectionHead
           label="Layanan"
-          title="5 Layanan Utama"
-          subtitle="Layanan yang saling terhubung untuk pertumbuhan bisnis Anda."
+          title="5 Layanan Digital Marketing Utama"
+          subtitle="Layanan pemasaran digital terpadu yang saling terhubung untuk pertumbuhan bisnis Anda secara berkelanjutan."
         />
         {/* Grid 3 kartu di atas, 2 kartu lebih lebar di baris kedua. */}
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -96,16 +101,20 @@ export default function HomePage() {
 
       <Section divider>
         <SectionHead
-          title="Sejak 2016, membantu 25.000+ usaha naik kelas"
-          subtitle="Ringkasan pencapaian Gaharu Creative."
+          title="Sejak 2020 – Berfokus pada Hasil Nyata dan Pertumbuhan Komprehensif"
+          subtitle="Didedikasikan sebagai agensi kreatif berpengalaman yang mendampingi setiap tahap eksekusi digital branding hingga peluncuran aset digital berkinerja tinggi."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
           {stats.map((item) => (
-            <div key={item.label} className="rounded-lg border border-line bg-paper p-6 text-center">
+            <div
+              key={item.label}
+              data-placeholder="Angka belum diverifikasi"
+              className="rounded-lg border border-line bg-paper p-6 text-center"
+            >
               <p className="text-xs font-semibold uppercase tracking-widest text-muted">
                 {item.label}
               </p>
-              <p className="mt-3 text-2xl font-bold text-button">{item.value}</p>
+              <p className="mt-3 text-2xl font-bold text-ink">{item.value}</p>
             </div>
           ))}
         </div>
@@ -115,8 +124,8 @@ export default function HomePage() {
 
       <Section id="portofolio-unggulan" divider>
         <SectionHead
-          title="Portofolio Unggulan"
-          subtitle="Contoh proyek berdasarkan kategori industri."
+          title="Portofolio Unggulan – Bukti Hasil Nyata Strategi Digital Marketing"
+          subtitle="Eksplorasi studi kasus transformasi digital marketing untuk UMKM, korporat, hingga instansi pemerintah dalam meningkatkan penjualan online."
         />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {featuredWork.map((item) => (
@@ -135,7 +144,7 @@ export default function HomePage() {
       <Section divider className="bg-block">
         <SectionHead
           title="Testimoni Klien"
-          subtitle="Pengalaman klien terhadap kerja sama dengan Gaharu Creative."
+          subtitle="Apresiasi klien atas eksekusi strategi pemasaran digital dan pendampingan bisnis dari tim kami."
         />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {testimonials.map((item) => (
@@ -182,7 +191,7 @@ function ServiceCard({ service, wide = false }) {
         <p className="mt-2 text-sm leading-relaxed text-muted">{service.short}</p>
         <Link
           to={`/layanan#${service.slug}`}
-          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-button underline decoration-line underline-offset-4 hover:decoration-button"
+          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
         >
           Lihat detail
           <Icon name="arrowRight" className="h-5 w-5" />
