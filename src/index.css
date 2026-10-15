@@ -22,6 +22,9 @@
   /* Warna logo dan aksen hijau seluruh situs (teks, tautan, garis bawah). */
   --brand: #047857;
   --brand-ink: #ffffff;
+  /* Hijau terang khusus border kartu saat hover/aktif. Bukan untuk teks:
+   * kontrasnya 2.5:1 di atas putih, di bawah WCAG untuk teks. */
+  --brand-bright: #10b981;
   /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
   --button: #0b7a4b;
   --button-ink: #ffffff;
@@ -47,6 +50,7 @@
   --color-tag-ink: var(--tag-ink);
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
+  --color-brand-bright: var(--brand-bright);
   --color-button: var(--button);
   --color-button-ink: var(--button-ink);
   --color-button-text: var(--button-text);

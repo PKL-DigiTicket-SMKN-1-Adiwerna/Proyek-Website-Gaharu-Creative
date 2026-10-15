@@ -110,7 +110,7 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       onClick={onClick}
       aria-pressed={active}
       className={`flex min-h-11 w-full items-start gap-3 rounded-md border p-4 text-left transition-colors ${
-        active ? "border-brand bg-button/10 text-ink" : "border-field bg-paper text-ink hover:border-brand"
+        active ? "border-brand-bright bg-button/10 text-ink" : "border-field bg-paper text-ink hover:border-brand-bright"
       }`}
     >
       {icon ? (
