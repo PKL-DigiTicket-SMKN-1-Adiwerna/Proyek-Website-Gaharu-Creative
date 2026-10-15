@@ -81,13 +81,12 @@ Branch `backup/*` hanya ada di lokal, tidak pernah di-push.
 
 ## Sejauh ini
 
-Tema hijau sudah masuk: aksen teks dan garis pakai hijau brand, border kartu dan pemisah
-section hijau muda. Semua warna tetap berada di `:root` pada `src/index.css`. Waktu brand
-guideline resmi masuk, ganti variabel di sana dan seluruh situs ikut berubah tanpa menyentuh
-komponen.
+Tampilan masih grayscale: hitam, putih, abu. Warna brand belum masuk, jadi semua warna
+berada di `:root` pada `src/index.css`. Waktu brand guideline masuk, ganti variabel di sana
+dan seluruh situs ikut berubah tanpa menyentuh komponen.
 
-Hijau logo dan favicon ditulis sebagai hex di `public/icon.svg`, bukan `var()`, karena file
-itu berdiri sendiri tanpa CSS halaman.
+Hijau cuma dipakai di logo dan favicon. Di `public/icon.svg` warnanya ditulis sebagai hex,
+bukan `var()`, karena file itu berdiri sendiri tanpa CSS halaman.
 
 Kontras dihitung, bukan dikira-kira:
 
@@ -99,8 +98,7 @@ Kontras dihitung, bukan dikira-kira:
 | `--field` | #8f8f8f | 3.2:1, dipakai buat border control form |
 | `--brand-ink` | #ffffff | 5.5:1 ke atas hijau #047857 |
 
-`--line` #a7f3d0 hijau muda: dipakai border kartu, pemisah section, dan garis pendukung.
-Warnanya tidak membawa teks, jadi tidak masuk hitungan kontras.
+`--line` #d9d9d9 lebih terang dari sengaja karena cuma pemisah section dan tidak membawa teks.
 
 ## Yang belum ada
 
