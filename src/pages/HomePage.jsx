@@ -24,11 +24,11 @@ export default function HomePage() {
       <Seo title={title} description={description} />
 
       {/* Hero: nama brand, tagline, dua tombol, gambar kanan. */}
-      <section className="border-b border-line">
+      <section className="border-b border-emerald-200 bg-emerald-50">
         <Container className="py-14 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted">
+              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">
                 Sejak {site.founded}
               </p>
               <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl">

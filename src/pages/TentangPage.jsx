@@ -27,7 +27,7 @@ export default function TentangPage() {
     <>
       <Seo title={title} description={description} />
 
-      <section className="border-b border-line">
+      <section className="border-b border-emerald-200 bg-emerald-50">
         <Container className="py-14 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>

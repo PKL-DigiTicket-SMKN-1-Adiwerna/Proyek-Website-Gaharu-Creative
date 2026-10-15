@@ -42,7 +42,7 @@ export default function InsightPage() {
     <>
       <Seo title={title} description={description} />
 
-      <section className="border-b border-line">
+      <section className="border-b border-emerald-200 bg-emerald-50">
         <Container className="py-14 sm:py-20">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">Insight</h1>
