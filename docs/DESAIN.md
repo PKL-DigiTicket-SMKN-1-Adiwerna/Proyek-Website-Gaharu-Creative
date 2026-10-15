@@ -29,7 +29,7 @@ Dokumen ini adalah konversi dari file wireframe `Desain Gaharu Creative.pdf` (6 
 | Background utama | Putih | Halaman, navbar, kartu |
 | Teks utama | Hitam | Judul, isi, tombol terisi |
 | Teks sekunder | Abu tua | Subjudul, deskripsi, label kecil |
-| Garis/border | Hijau muda | Border kartu, pemisah section, field form |
+| Garis/border | Abu muda | Border kartu, pemisah section, field form |
 | Placeholder | Abu terang | Kotak gambar, banner, peta, foto profil |
 | Tombol navbar | Abu | Tombol "Hubungi Kami" |
 
