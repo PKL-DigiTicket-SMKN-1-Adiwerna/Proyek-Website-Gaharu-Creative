@@ -79,8 +79,8 @@ export default function PortofolioPage() {
               aria-pressed={active === item.key}
               className={`flex min-h-11 items-start gap-4 rounded-lg border p-5 text-left transition-colors ${
                 active === item.key
-                  ? "border-ink bg-block"
-                  : "border-field bg-paper hover:border-ink"
+                  ? "border-brand bg-block"
+                  : "border-field bg-paper hover:border-brand"
               }`}
             >
               <IconCircle name={item.icon} />
@@ -119,7 +119,7 @@ export default function PortofolioPage() {
             {visible.map((item) => (
               <article
                 key={item.slug}
-                className="rounded-lg border border-line bg-paper p-5 transition-colors hover:border-ink"
+                className="rounded-lg border border-line bg-paper p-5 transition-colors hover:border-brand"
               >
                 <Tag>{item.tag}</Tag>
                 <ImageBlock label="Gambar proyek" ratio="aspect-[16/9]" className="mt-4" />

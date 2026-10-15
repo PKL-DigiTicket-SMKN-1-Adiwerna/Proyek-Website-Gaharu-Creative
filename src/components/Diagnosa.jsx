@@ -110,13 +110,13 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       onClick={onClick}
       aria-pressed={active}
       className={`flex min-h-11 w-full items-start gap-3 rounded-md border p-4 text-left transition-colors ${
-        active ? "border-button bg-button/10 text-ink" : "border-field bg-paper text-ink hover:border-button"
+        active ? "border-brand bg-button/10 text-ink" : "border-field bg-paper text-ink hover:border-brand"
       }`}
     >
       {icon ? (
         <span
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-            active ? "bg-button text-button-text" : "bg-fill text-ink"
+            active ? "bg-brand text-brand-ink" : "bg-fill text-ink"
           }`}
           aria-hidden="true"
         >
@@ -130,7 +130,7 @@ function OptionCard({ active, onClick, icon, title, detail, multi = false }) {
       {multi ? (
         <span
           className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${
-            active ? "border-button bg-button text-button-text" : "border-field bg-paper text-transparent"
+            active ? "border-brand bg-brand text-brand-ink" : "border-field bg-paper text-transparent"
           }`}
           aria-hidden="true"
         >
