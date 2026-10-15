@@ -17,7 +17,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Konsultasi lewat WhatsApp"
-      className="fixed bottom-5 right-5 z-40 flex h-16 w-16 items-center justify-center rounded-full border border-ink bg-fill text-ink shadow-sm transition-colors hover:bg-line"
+      className="fixed bottom-5 right-5 z-40 flex h-16 w-16 items-center justify-center rounded-full border border-brand bg-brand text-brand-ink shadow-sm transition-colors hover:bg-brand-bright"
     >
       <Icon name="chat" className="h-7 w-7" />
     </a>
