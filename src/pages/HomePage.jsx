@@ -192,7 +192,7 @@ export default function HomePage() {
 function ServiceCard({ service, wide = false }) {
   return (
     <article
-      className={`rounded-lg border border-line bg-paper p-6 transition-colors hover:border-ink ${
+      className={`rounded-lg border border-line bg-paper p-6 transition-colors hover:border-brand ${
         wide ? "flex gap-6" : ""
       }`}
     >
