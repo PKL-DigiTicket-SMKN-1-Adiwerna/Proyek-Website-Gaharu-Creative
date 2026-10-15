@@ -75,7 +75,9 @@ export default function CtaBanner({ page }) {
               aria-label={`Tampilkan slide ${i + 1}: ${item.title}`}
               onClick={() => setIndex(i)}
               className={`h-11 w-6 rounded-full transition-colors ${
-                i === index ? "bg-ink" : "bg-fill hover:bg-line"
+                i === index
+                  ? "bg-[linear-gradient(160deg,#a7f3d0_0%,#34d399_35%,#10b981_65%,#065f46_100%)] ring-2 ring-emerald-950/25 shadow-[0_0_10px_rgba(16,185,129,0.85),0_0_20px_rgba(5,150,105,0.55),0_2px_6px_rgba(6,95,70,0.45)]"
+                  : "bg-emerald-900/10 hover:bg-emerald-400/50"
               }`}
             />
           ))}
