@@ -1,12 +1,14 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function TentangPage() {
   return (
-    <div className="space-y-24 py-12">
+    <div className="space-y-24 py-12 overflow-hidden">
       {/* 1. Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <span className="inline-block bg-emerald-50 text-[#007A55] text-xs font-semibold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          <span className="inline-flex items-center gap-2 bg-emerald-50 text-[#007A55] text-xs font-semibold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-200/60 shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-[#007A55] animate-ping" />
             TENTANG GAHARU CREATIVE
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight">
@@ -16,40 +18,50 @@ export default function TentangPage() {
             Agensi Digital 360° yang menghadirkan strategi terintegrasi, transformasi digital, dan pertumbuhan bisnis terukur untuk enterprise, institusi, dan UMKM di seluruh Indonesia.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
-            <Link href="/kontak" className="primary-btn">
+            <Link 
+              href="/kontak" 
+              className="bg-[#007A55] hover:bg-[#006244] text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all duration-300 shadow-md shadow-emerald-700/20 hover:-translate-y-0.5"
+            >
               Konsultasi Gratis →
             </Link>
-            <Link href="/layanan" className="secondary-btn">
+            <Link 
+              href="/layanan" 
+              className="border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold px-6 py-3 rounded-xl text-sm transition-all duration-300 shadow-sm hover:-translate-y-0.5"
+            >
               Lihat Layanan
             </Link>
           </div>
           <div className="pt-6 border-t border-slate-100 grid grid-cols-3 gap-4 text-center">
-            <div>
+            <div className="group transition-transform duration-300 hover:scale-105">
               <p className="text-2xl font-extrabold text-[#007A55]">100+</p>
-              <p className="text-[11px] text-slate-500">Klien Terlayani</p>
+              <p className="text-[11px] text-slate-500 font-medium">Klien Terlayani</p>
             </div>
-            <div>
+            <div className="group transition-transform duration-300 hover:scale-105">
               <p className="text-2xl font-extrabold text-[#007A55]">98%</p>
-              <p className="text-[11px] text-slate-500">Kepuasan Klien</p>
+              <p className="text-[11px] text-slate-500 font-medium">Kepuasan Klien</p>
             </div>
-            <div>
+            <div className="group transition-transform duration-300 hover:scale-105">
               <p className="text-2xl font-extrabold text-[#007A55]">4+ Thn</p>
-              <p className="text-[11px] text-slate-500">Pengalaman</p>
+              <p className="text-[11px] text-slate-500 font-medium">Pengalaman</p>
             </div>
           </div>
         </div>
 
-        <div className="relative rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 aspect-video lg:aspect-auto lg:h-[420px] flex items-center justify-center">
-          <div className="text-center p-6 text-slate-400">
-            <p className="font-semibold text-slate-500">[ Foto Tim Gaharu Creative ]</p>
-            <p className="text-xs mt-1">Tim profesional Gaharu Creative berkolaborasi</p>
-          </div>
+        {/* Gambar Hero Menggunakan /Tentang Kami.webp */}
+        <div className="group relative rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80 aspect-video lg:aspect-auto lg:h-[420px] shadow-xl shadow-slate-200/50">
+          <Image
+            src="/Tentang Kami.webp"
+            alt="Tim Gaharu Creative"
+            fill
+            priority
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+          />
         </div>
       </section>
 
       {/* 2. Partner Digital 360 */}
       <section className="bg-slate-50 py-16 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 max-w-3xl mx-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 max-w-3xl">
           <span className="text-xs font-semibold text-[#007A55] uppercase tracking-wider">
             REKAPITULASI DEDIKASI
           </span>
@@ -64,9 +76,16 @@ export default function TentangPage() {
 
       {/* 3. Cerita Kami */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 aspect-video lg:h-[360px] flex items-center justify-center text-slate-400 text-sm">
-          [ Foto Suasana Kantor / Diskusi Tim ]
+        {/* Gambar Cerita Kami Menggunakan /Tentang Kami-Cerita Kami.webp */}
+        <div className="group relative rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 aspect-video lg:h-[360px] shadow-lg">
+          <Image
+            src="/Tentang Kami-Cerita Kami.webp"
+            alt="Perjalanan Gaharu Creative"
+            fill
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+          />
         </div>
+
         <div className="space-y-6">
           <div className="space-y-2">
             <span className="text-xs font-bold text-[#007A55] uppercase tracking-wider">PERJALANAN KAMI</span>
@@ -76,11 +95,11 @@ export default function TentangPage() {
             Berdiri sejak tahun 2020, Gaharu Creative bermula dari sebuah ide untuk membantu pelaku usaha mengeksekusi kehadiran digital secara lebih terarah. Kami percaya bahwa setiap brand memiliki keunikan narasi yang patut disuarakan dengan strategi visual dan eksekusi yang tepat.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100 space-y-1">
+            <div className="p-4 bg-emerald-50/60 rounded-xl border border-emerald-100/80 space-y-1 transition-all duration-300 hover:border-emerald-300 hover:shadow-md">
               <p className="font-bold text-[#007A55] text-sm">Sejak 2020</p>
               <p className="text-xs text-slate-600">Konsisten bertransformasi mengikuti perkembangan tren dan teknologi digital.</p>
             </div>
-            <div className="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100 space-y-1">
+            <div className="p-4 bg-emerald-50/60 rounded-xl border border-emerald-100/80 space-y-1 transition-all duration-300 hover:border-emerald-300 hover:shadow-md">
               <p className="font-bold text-[#007A55] text-sm">Fokus Dampak Nyata</p>
               <p className="text-xs text-slate-600">Meningkatkan nilai merek serta performa penjualan terukur bagi mitra bisnis.</p>
             </div>
@@ -99,15 +118,15 @@ export default function TentangPage() {
             </p>
           </div>
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#007A55] flex items-center justify-center font-bold">🚀</div>
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#007A55] flex items-center justify-center font-bold text-lg">🚀</div>
               <h3 className="font-bold text-slate-800 text-base">Membantu Skala Bisnis Digital</h3>
               <p className="text-slate-600 text-xs leading-relaxed">
                 Menyediakan fondasi strategi, identitas merek, dan infrastruktur perangkat lunak yang tangguh untuk akselerasi pertumbuhan bisnis.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#007A55] flex items-center justify-center font-bold">🎯</div>
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#007A55] flex items-center justify-center font-bold text-lg">🎯</div>
               <h3 className="font-bold text-slate-800 text-base">Mendorong Pertumbuhan Terukur</h3>
               <p className="text-slate-600 text-xs leading-relaxed">
                 Memastikan setiap investasi pemasaran dan inovasi produk memberikan imbal hasil (ROI) yang jelas dan berdampak jangka panjang.
@@ -131,7 +150,7 @@ export default function TentangPage() {
             { title: "Berorientasi Hasil", icon: "📈", desc: "Fokus pada pencapaian indikator kinerja utama (KPI) yang disepakati bersama." },
             { title: "Kolaborasi Bersama", icon: "🤝", desc: "Bekerja berdampingan sebagai partner strategis internal bagi bisnis Anda." },
           ].map((val, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md">
               <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-lg">{val.icon}</div>
               <h3 className="font-bold text-slate-800 text-base">{val.title}</h3>
               <p className="text-slate-500 text-xs leading-relaxed">{val.desc}</p>
@@ -155,12 +174,17 @@ export default function TentangPage() {
               { name: "Muhammad Rizky", role: "Lead Developer", desc: "Spesialis rekayasa perangkat lunak dan arsitektur sistem cloud." },
               { name: "Ananda Firdaus", role: "Head of Marketing", desc: "Praktisi performance marketing dan analitik corong akuisisi." },
             ].map((member, idx) => (
-              <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm space-y-4 p-4">
-                <div className="bg-slate-200 h-56 rounded-xl flex items-center justify-center text-slate-400 text-xs">
-                  [ Foto {member.name} ]
+              <div key={idx} className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm space-y-4 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg">
+                <div className="relative bg-slate-100 h-56 rounded-xl overflow-hidden flex items-center justify-center">
+                  <Image
+                    src="/icon-192.png"
+                    alt={member.name}
+                    fill
+                    className="object-cover object-center p-6 opacity-90 transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-bold text-slate-800 text-base">{member.name}</h3>
+                  <h3 className="font-bold text-slate-800 text-base group-hover:text-[#007A55] transition-colors">{member.name}</h3>
                   <p className="text-[11px] font-semibold text-[#007A55]">{member.role}</p>
                   <p className="text-slate-500 text-xs leading-relaxed pt-1">{member.desc}</p>
                 </div>
@@ -183,7 +207,7 @@ export default function TentangPage() {
             { title: "Izin Operasional Resmi", desc: "Memiliki kelengkapan NIB dan izin operasional di sektor teknologi dan kreatif." },
             { title: "Kepatuhan Pajak & Administrasi", desc: "Disiplin dalam pemenuhan kewajiban administrasi dan transaksi bisnis transparan." },
           ].map((leg, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md">
               <div className="w-8 h-8 rounded-full bg-emerald-50 text-[#007A55] flex items-center justify-center font-bold text-sm">✓</div>
               <h3 className="font-bold text-slate-800 text-base">{leg.title}</h3>
               <p className="text-slate-500 text-xs leading-relaxed">{leg.desc}</p>
@@ -194,20 +218,29 @@ export default function TentangPage() {
 
       {/* 8. CTA Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#007A55] rounded-3xl p-10 lg:p-14 text-center text-white space-y-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold">
-            Siap Bekerja Sama dan Mempercepat Pertumbuhan Brand Anda?
-          </h2>
-          <p className="text-emerald-100 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
-            Mulai langkah awal transformasi digital bisnis Anda bersama tim profesional Gaharu Creative.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/kontak" className="bg-white text-[#007A55] hover:bg-slate-100 font-semibold px-8 py-3 rounded-full text-xs sm:text-sm transition shadow-lg">
-              Konsultasi Gratis →
-            </Link>
-            <Link href="/portofolio" className="border border-white/40 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-full text-xs sm:text-sm transition">
-              Lihat Portofolio
-            </Link>
+        <div className="relative overflow-hidden bg-gradient-to-r from-[#007A55] to-emerald-800 rounded-3xl p-10 lg:p-14 text-center text-white space-y-6 shadow-xl shadow-emerald-900/10">
+          <div className="absolute -top-24 -right-24 w-72 h-72 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="relative z-10 space-y-6">
+            <h2 className="text-2xl sm:text-3xl font-extrabold">
+              Siap Bekerja Sama dan Mempercepat Pertumbuhan Brand Anda?
+            </h2>
+            <p className="text-emerald-100 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+              Mulai langkah awal transformasi digital bisnis Anda bersama tim profesional Gaharu Creative.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link 
+                href="/kontak" 
+                className="bg-white text-[#007A55] hover:bg-emerald-50 font-semibold px-8 py-3 rounded-full text-xs sm:text-sm transition-all duration-300 shadow-lg hover:scale-105"
+              >
+                Konsultasi Gratis →
+              </Link>
+              <Link 
+                href="/portofolio" 
+                className="border border-white/40 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-full text-xs sm:text-sm transition-all duration-300 hover:scale-105"
+              >
+                Lihat Portofolio
+              </Link>
+            </div>
           </div>
         </div>
       </section>

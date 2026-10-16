@@ -8,12 +8,19 @@ import Diagnosa from "./components/Diagnosa.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import TentangPage from "./pages/TentangPage.jsx";
 import LayananPage from "./pages/LayananPage.jsx";
+import LayananDetailPage from "./pages/LayananDetailPage.jsx";
 import PortofolioPage from "./pages/PortofolioPage.jsx";
+
+// Import Halaman Portofolio Statis
+import PortofolioUmkmPage from "./pages/PortofolioUmkmPage.jsx";
+import PortofolioKorporatPage from "./pages/PortofolioKorporatPage.jsx";
+import PortofolioPemerintahPage from "./pages/PortofolioPemerintahPage.jsx";
+
 import InsightPage from "./pages/InsightPage.jsx";
+import InsightDetailPage from "./pages/InsightDetailPage.jsx";
 import KontakPage from "./pages/KontakPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
-/* Judul banner CTA per rute. Route 404 tidak punya banner. */
 export const ctaByPath = {
   "/": "beranda",
   "/layanan": "layanan",
@@ -23,7 +30,6 @@ export const ctaByPath = {
   "/kontak": "kontak",
 };
 
-/* Varian footer: Portofolio dan Kontak minta tautan legal ditampilkan. */
 export const footerVariantByPath = {
   "/portofolio": "lengkap",
   "/kontak": "lengkap",
@@ -31,6 +37,9 @@ export const footerVariantByPath = {
 
 function useCtaForPath(pathname) {
   const clean = pathname.replace(/\/+$/, "") || "/";
+  if (clean.startsWith("/layanan")) return ctaByPath["/layanan"];
+  if (clean.startsWith("/portofolio")) return ctaByPath["/portofolio"];
+  if (clean.startsWith("/insight")) return ctaByPath["/insight"];
   return ctaByPath[clean] || null;
 }
 
@@ -39,8 +48,6 @@ export default function App() {
   const ctaPage = useCtaForPath(pathname);
   const footerVariant = footerVariantByPath[pathname] || "ringkas";
 
-  // Tiap route mulai dari atas. Tautan anchor (#slug) tetap dilompat ke
-  // elemennya setelah navigasi selesai.
   useEffect(() => {
     if (hash) {
       const el = document.getElementById(hash.slice(1));
@@ -54,20 +61,26 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-paper">
-      <a
-        href="#konten"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-paper"
-      >
-        Lewati ke konten
-      </a>
       <Header />
       <main id="konten" className="flex-1">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/tentang" element={<TentangPage />} />
+          
+          {/* Rute Utama & Detail Layanan */}
           <Route path="/layanan" element={<LayananPage />} />
+          <Route path="/layanan/:slug" element={<LayananDetailPage />} />
+
+          {/* Rute Portofolio */}
           <Route path="/portofolio" element={<PortofolioPage />} />
+          <Route path="/portofolio/umkm-ecommerce-lokal" element={<PortofolioUmkmPage />} />
+          <Route path="/portofolio/korporat-gaharu-cloud" element={<PortofolioKorporatPage />} />
+          <Route path="/portofolio/pemerintah-literasi-digital" element={<PortofolioPemerintahPage />} />
+
+          {/* Rute Insight */}
           <Route path="/insight" element={<InsightPage />} />
+          <Route path="/insight/:slug" element={<InsightDetailPage />} />
+
           <Route path="/kontak" element={<KontakPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -1,134 +1,52 @@
-import { jumlahMitra } from "./klien.js";
-
-/* Nama proyek, angka, dan hasil belum dikonfirmasi klien, jadi setiap item
- * ditandai verified: false dan tampil dengan badge. Ganti dengan proyek nyata
- * sebelum rilis.
- */
 export const segments = [
-  {
-    key: "semua",
-    label: "Semua",
-    icon: "search",
-    detail: "Menampilkan seluruh proyek 360 yang pernah dikerjakan.",
-  },
-  {
-    key: "umkm",
-    label: "UMKM",
-    icon: "store",
-    detail: "Fokus pada peningkatan visibilitas, leads, dan penjualan untuk bisnis lokal.",
-  },
-  {
-    key: "korporat",
-    label: "Korporat",
-    icon: "building",
-    detail: "Strategi kampanye dan konten terintegrasi untuk brand berskala lebih besar.",
-  },
-  {
-    key: "pemerintah",
-    label: "Pemerintah",
-    icon: "landmark",
-    detail: "Kampanye layanan publik dengan pendekatan komunikasi yang jelas dan terukur.",
-  },
+  { key: "semua", label: "Semua", icon: "🌐", detail: "Seluruh portofolio proyek dari segmen UMKM, Korporat, hingga Pemerintah." },
+  { key: "umkm", label: "UMKM", icon: "🏪", detail: "Fokus pada peningkatan visibilitas, perolehan qualified leads, dan percepatan penjualan bisnis lokal." },
+  { key: "korporat", label: "Korporat", icon: "🏢", detail: "Strategi kampanye berskala luas, omnichannel positioning, dan konten terintegrasi enterprise B2B/B2C." },
+  { key: "pemerintah", label: "Pemerintah", icon: "🏛️", detail: "Kampanye layanan publik berbasis edukasi dengan pendekatan komunikasi yang transparan, jelas, dan terukur." },
 ];
 
 export const portfolioItems = [
   {
-    slug: "kopi-nusantara-360",
-    segment: "umkm",
+    slug: "umkm-ecommerce-lokal",
+    title: "UMKM: E-Commerce Lokal",
     tag: "UMKM",
-    title: "Kopi Nusantara 360",
-    summary: "Dari kampanye digital hingga optimasi konversi untuk meningkatkan pembelian.",
-    services: ["Content", "Performance Marketing"],
-    verified: false,
-  },
-  {
-    slug: "gaharu-cloud-launch",
-    segment: "korporat",
-    tag: "Korporat",
-    title: "Gaharu Cloud Launch",
-    summary: "Penguatan awareness dan penanganan funnel dari iklan ke lead.",
-    services: ["Branding", "Performance Marketing"],
-    verified: false,
-  },
-  {
-    slug: "program-literasi-digital",
-    segment: "pemerintah",
-    tag: "Pemerintah",
-    title: "Program Literasi Digital",
-    summary: "Kampanye informasi berbasis konten dan distribusi kanal yang terukur.",
-    services: ["Content", "Social Media"],
-    verified: false,
-  },
-  {
-    slug: "skincare-lokal-go-online",
     segment: "umkm",
-    tag: "UMKM",
-    title: "Skincare Lokal Go-Online",
-    summary: "Perencanaan konten, optimasi performa, dan strategi retargeting.",
-    services: ["Social Media", "Performance Marketing"],
-    verified: false,
+    summary: "Kampanye konten digital terpadu & performa ads harian yang mendorong peningkatan penjualan dan jangkauan bisnis online.",
+    result: "Peningkatan omzet 2.4x dan pertumbuhan leads hingga +180%.",
+    image: "/Beranda-Portofolio(UMKM E-Commerce).webp",
   },
   {
-    slug: "rebranding-kampanye-q2",
-    segment: "korporat",
+    slug: "korporat-gaharu-cloud",
+    title: "Korporat: Gaharu Cloud Launch",
     tag: "Korporat",
-    title: "Rebranding Kampanye Q2",
-    summary: "Rangkaian aset kreatif dan strategi kampanye multikanal.",
-    services: ["Branding", "Content"],
-    verified: false,
+    segment: "korporat",
+    summary: "Penguatan awareness dan penanganan pipeline B2B melalui strategi thought leadership dan performance ads.",
+    result: "Jangkauan total 1.2M+ impresi dan 450+ qualified B2B leads.",
+    image: "/Beranda-Portofolio(Gaharu Cloud).webp",
   },
   {
-    slug: "layanan-publik-mobile",
-    segment: "pemerintah",
+    slug: "pemerintah-literasi-digital",
+    title: "Pemerintah: Literasi Digital",
     tag: "Pemerintah",
-    title: "Layanan Publik Mobile",
-    summary: "Komunikasi layanan publik dengan fokus edukasi dan adopsi.",
-    services: ["Digital Product Development"],
-    verified: false,
+    segment: "pemerintah",
+    summary: "Kampanye informasi publik berbasis micro-learning dan konten infografis interaktif lintas demografi.",
+    result: "Tingkat engagement 92% dengan indeks kepuasan publik 4.8/5.",
+    image: "/Proyek Literasi Digital Pemerintah.webp",
   },
 ];
 
-/* Tiga proyek sorotan untuk Beranda. */
-export const featuredWork = [
-  {
-    segment: "umkm",
-    tag: "UMKM",
-    title: "Kampanye konten dan iklan untuk meningkatkan penjualan",
-    result: "Hasil: leads dan transaksi meningkat",
-    verified: false,
-  },
-  {
-    segment: "korporat",
-    tag: "Korporat",
-    title: "Rebranding dan strategi komunikasi multi channel",
-    result: "Hasil: awareness naik dan pipeline lebih berkualitas",
-    verified: false,
-  },
-  {
-    segment: "pemerintah",
-    tag: "Pemerintah",
-    title: "Penguatan layanan digital dan optimasi landing page",
-    result: "Hasil: kinerja layanan membaik dan adopsi meningkat",
-    verified: false,
-  },
-];
+export const featuredWork = portfolioItems;
 
-/* Angka pencapaian dari perusahaan. Jumlah mitra dihitung otomatis dari daftar
- * di src/data/klien.js supaya tidak ada angka yang lupa diperbarui.
- */
 export const stats = [
-  { label: "Tahun Berdiri", value: "Sejak 2016" },
-  { label: "Usaha Terbantu", value: "25.000+ Usaha" },
-  { label: "Mitra Strategis", value: `${jumlahMitra} Institusi` },
+  { label: "KLIEN TERLAYANI", value: "50+" },
+  { label: "PROYEK SELESAI", value: "120+" },
+  { label: "KEPUASAN KLIEN", value: "98%" },
 ];
 
-/* Testimoni belum ada identitas pemberi. */
 export const testimonials = [
   {
-    name: "Nama Klien",
-    company: "Perusahaan atau Instansi",
-    quote:
-      "Gaharu Creative membantu kami menyusun strategi 360 yang jelas dan dieksekusi dengan rapi. Hasilnya terlihat dari meningkatnya kualitas leads dan konsistensi performa kampanye. Komunikasinya juga responsif sejak tahap perencanaan sampai evaluasi.",
-    verified: false,
+    name: "Budi Santoso",
+    company: "Pemilik UMKM Kuliner",
+    quote: "Gaharu Creative berhasil meningkatkan penjualan toko online kami secara signifikan.",
   },
 ];

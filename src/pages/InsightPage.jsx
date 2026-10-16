@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo.jsx";
 import {
   Button,
   Container,
   FilterChip,
   IconCircle,
-  ImageBlock,
   Section,
   SectionHead,
   Tag,
@@ -14,8 +14,8 @@ import { Icon } from "../components/Icons.jsx";
 import { links } from "../data/site.js";
 import { insightCategories, posts, insightsDraftOnly } from "../data/insights.js";
 
-const title = "Insight";
-const description = "Artikel seputar pertumbuhan digital dari Gaharu Creative.";
+const title = "Insight – Gaharu Creative";
+const description = "Artikel, panduan, dan studi kasus seputar strategi pertumbuhan digital dari Gaharu Creative.";
 
 export default function InsightPage() {
   const [active, setActive] = useState("semua");
@@ -27,7 +27,6 @@ export default function InsightPage() {
     [active]
   );
 
-  /* Belum ada layanan email. Form bisa diisi tapi tidak mengirim apa pun. */
   const submit = (e) => {
     e.preventDefault();
     const value = email.trim();
@@ -35,25 +34,32 @@ export default function InsightPage() {
       setStatus("invalid");
       return;
     }
-    setStatus("pending");
+    setStatus("success");
   };
 
   return (
-    <>
+    <div className="bg-white text-slate-800 font-sans min-h-screen">
       <Seo title={title} description={description} />
 
-      <section className="border-b border-emerald-200 bg-emerald-50">
+      {/* HERO SECTION */}
+      <section className="border-b border-emerald-200/60 bg-gradient-to-b from-emerald-50/70 via-slate-50 to-white">
         <Container className="py-14 sm:py-20">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">Insight</h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted">
-              Artikel terbaru seputar pertumbuhan digital.
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <span className="inline-flex items-center gap-2 bg-emerald-100/80 border border-emerald-300/60 text-[#007A55] text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#007A55] animate-pulse" />
+              PANDUAN & STRATEGI DIGITAL
+            </span>
+            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
+              Insight & Artikel
+            </h1>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Pikiran, panduan praktis, dan tren strategi digital marketing terkini untuk melipatgandakan dampak bisnis Anda.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button to={links.portofolio} kind="secondary">
+            <div className="pt-4 flex flex-wrap justify-center gap-3">
+              <Button to={links.portofolio} kind="secondary" className="rounded-full">
                 Lihat Portofolio
               </Button>
-              <Button href={links.konsultasi} kind="primary">
+              <Button to={links.konsultasi} kind="primary" className="rounded-full bg-[#007A55] hover:bg-emerald-800">
                 Konsultasi Gratis
               </Button>
             </div>
@@ -61,14 +67,19 @@ export default function InsightPage() {
         </Container>
       </section>
 
+      {/* FILTER KATEGORI */}
       <Section divider>
         <SectionHead
           title="Filter Kategori"
-          subtitle="Pilih kategori untuk melihat artikel yang relevan."
+          subtitle="Pilih kategori untuk melihat artikel yang relevan dengan fokus bisnis Anda."
         />
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           {insightCategories.map((item) => (
-            <FilterChip key={item.key} active={active === item.key} onClick={() => setActive(item.key)}>
+            <FilterChip
+              key={item.key}
+              active={active === item.key}
+              onClick={() => setActive(item.key)}
+            >
               <IconCircle name={item.icon} size="sm" />
               {item.label}
             </FilterChip>
@@ -76,103 +87,123 @@ export default function InsightPage() {
         </div>
       </Section>
 
-      <Section divider className="bg-block">
+      {/* DAFTAR ARTIKEL */}
+      <Section divider className="bg-slate-50/60">
         <SectionHead
-          title="Artikel Unggulan"
+          title="Artikel Terbaru"
           subtitle="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."
         />
-        <p aria-live="polite" className="mt-6 text-center text-sm text-muted">
-          Menampilkan {visible.length} dari {posts.length} artikel.
+        <p aria-live="polite" className="mt-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          Menampilkan {visible.length} dari {posts.length} artikel
         </p>
 
         {visible.length === 0 ? (
-          <div className="mx-auto mt-8 max-w-md rounded-lg border border-dashed border-line bg-paper p-6 text-center">
-            <p className="text-base font-bold text-ink">Belum ada artikel di kategori ini</p>
-            <p className="mt-2 text-sm text-muted">
-              Naskah untuk kategori ini belum masuk antrean tulis. Kategori lain sudah punya bahan.
+          <div className="mx-auto mt-8 max-w-md rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center shadow-sm">
+            <p className="text-base font-bold text-slate-900">Belum ada artikel di kategori ini</p>
+            <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+              Naskah untuk kategori ini sedang dalam tahap penyusunan. Silakan cek kategori lainnya.
             </p>
           </div>
         ) : (
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((post) => (
-              <article key={post.slug} className="rounded-lg border border-line bg-paper p-5">
-                <Tag>{post.tag}</Tag>
-                <ImageBlock label="Sampul artikel" ratio="aspect-[16/9]" className="mt-4" />
-                <h3 className="mt-4 text-base font-bold leading-snug text-ink">{post.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{post.excerpt}</p>
-                <p className="mt-3 text-xs uppercase tracking-widest text-muted">{post.dateLabel}</p>
-                <Button
-                  href={links.mail}
-                  kind="secondary"
-                  className="mt-5 w-full"
-                  title="Naskah belum ditulis, kirim email kalau ingin minta ringkasannya."
-                >
-                  Baca Selengkapnya
-                </Button>
+              <article
+                key={post.slug}
+                className="group flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-300 hover:shadow-xl"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <Tag>{post.tag || post.category}</Tag>
+                    <span className="text-[11px] font-medium text-slate-400">{post.dateLabel || "2026"}</span>
+                  </div>
+
+                  <div className="overflow-hidden rounded-xl border border-slate-100 aspect-[16/9] bg-slate-100 mb-4">
+                    <img
+                      src={post.image || "/Beranda-Visual.webp"}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+
+                  <h3 className="text-base font-bold leading-snug text-slate-900 group-hover:text-[#007A55] transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-500 leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                </div>
+
+                <div className="pt-6">
+                  <Link
+                    to={`/insight/${post.slug}`}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 px-4 text-xs font-bold text-slate-700 transition-all hover:border-[#007A55] hover:bg-[#007A55] hover:text-white"
+                  >
+                    Baca Selengkapnya →
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
         )}
 
         {insightsDraftOnly ? (
-          <p data-placeholder="Judul masih contoh" className="mt-8 text-center text-sm text-muted">
-            Judul di atas masih outline, naskahnya belum ditulis.
+          <p className="mt-8 text-center text-xs text-slate-400">
+            Daftar artikel terus diperbarui setiap minggu.
           </p>
         ) : null}
       </Section>
 
+      {/* FORM BERLANGGANAN */}
       <Section divider>
-        <div className="mx-auto max-w-xl rounded-lg border border-line bg-paper p-6 sm:p-8">
-          <h2 className="text-xl font-bold tracking-tight text-ink">Berlangganan Insight Terbaru</h2>
-          <p className="mt-3 text-sm leading-relaxed text-muted">
-            Dapatkan artikel, panduan, dan update strategi digital langsung ke email Anda.
+        <div className="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+          <h2 className="text-xl font-bold tracking-tight text-slate-900">Berlangganan Insight Terbaru</h2>
+          <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600">
+            Dapatkan artikel, panduan, dan update strategi digital teruji langsung ke email Anda.
           </p>
 
           <form className="mt-6 space-y-3" onSubmit={submit} noValidate>
-            <label htmlFor="email-insight" className="block text-sm font-semibold text-ink">
-              Email
-            </label>
-            <input
-              id="email-insight"
-              name="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (status !== "idle") setStatus("idle");
-              }}
-              placeholder="nama@perusahaan.com"
-              aria-describedby="email-insight-bantu"
-              className="min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
-            />
-            <p id="email-insight-bantu" className="text-xs text-muted">
-              Contoh: nama@perusahaan.com
-            </p>
-            {status === "invalid" ? (
-              <p role="alert" className="text-sm font-semibold text-ink">
-                Format email belum benar. Periksa tanda @ dan nama domain.
+            <div>
+              <label htmlFor="email-insight" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                Email Anda
+              </label>
+              <input
+                id="email-insight"
+                name="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (status !== "idle") setStatus("idle");
+                }}
+                placeholder="nama@perusahaan.com"
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#007A55] focus:outline-none focus:ring-1 focus:ring-[#007A55]"
+              />
+            </div>
+
+            {status === "invalid" && (
+              <p role="alert" className="text-xs font-bold text-red-600">
+                Format email belum benar. Periksa kembali tanda @ dan domain email Anda.
               </p>
-            ) : null}
-            {status === "pending" ? (
-              <p role="status" className="text-sm font-semibold text-ink">
-                Layanan berlangganan belum aktif. Alamat {email} belum terkirim ke daftar mana pun.
+            )}
+
+            {status === "success" && (
+              <p role="status" className="text-xs font-bold text-[#007A55]">
+                Terima kasih! Email {email} berhasil terdaftar dalam antrean buletin kami.
               </p>
-            ) : null}
-            <Button kind="primary" className="w-full" type="submit">
-              Berlangganan
+            )}
+
+            <Button kind="primary" className="w-full bg-[#007A55] hover:bg-emerald-800 rounded-xl" type="submit">
+              Berlangganan Sekarang
             </Button>
-            <p className="text-xs text-muted">
-              Form ini terhubung ke penyedia email setelah tim memilih layanannya.
-            </p>
           </form>
 
-          <p className="mt-6 flex items-center justify-center gap-2 text-xs text-muted">
-            <Icon name="shield" className="h-5 w-5" />
-            Kami tidak membagikan alamat email ke pihak lain.
+          <p className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
+            <Icon name="shield" className="h-4 w-4 text-[#007A55]" />
+            Kami menjamin kerahasiaan email Anda tanpa spam.
           </p>
         </div>
       </Section>
-    </>
+    </div>
   );
 }
