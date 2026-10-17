@@ -201,11 +201,22 @@ body {
   }
 }
 
-[data-reveal] {
+/* --------------------------------------------------------------------------
+   Keadaan reveal disimpan pada atribut data-reveal-state, bukan kelas CSS.
+   React menulis ulang atribut class setiap kali prop className berubah (kartu
+   filter yang jadi aktif, tab terpilih, dan sejenisnya). Kelas yang ditambahkan
+   mesin reveal dari luar React ikut terhapus, sementara data-reveal tetap ada,
+   sehingga elemen terjebak di opacity 0 dan "hilang" setelah dipilih. Atribut
+   yang tidak pernah dirender React aman dari penulisan ulang itu. Elemen tanpa
+   data-reveal-state tampil normal, jadi kegagalan mesin pun tidak menyembunyikan
+   konten.
+   ========================================================================== */
+
+[data-reveal][data-reveal-state="pending"] {
   opacity: 0;
 }
 
-[data-reveal].is-revealing {
+[data-reveal][data-reveal-state="in"] {
   animation:
     gc-fade-in 0.55s ease-out both,
     gc-rise 0.85s var(--ease-smooth) both;
@@ -214,8 +225,8 @@ body {
   will-change: opacity, transform;
 }
 
-/* Setelah animasi selesai, kelas ditukar agar transform tidak aktif lagi. */
-[data-reveal].is-revealed {
+/* Setelah animasi selesai, keadaan ditukar agar transform tidak aktif lagi. */
+[data-reveal][data-reveal-state="done"] {
   opacity: 1;
   will-change: auto;
 }

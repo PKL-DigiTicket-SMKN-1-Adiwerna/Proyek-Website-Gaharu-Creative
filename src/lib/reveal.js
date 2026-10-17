@@ -4,10 +4,18 @@
  * 1. Semua blok konten di dalam [data-reveal-root] diberi atribut data-reveal
  *    beserta --reveal-delay bertingkat, sehingga tiap blok muncul berurutan
  *    (stagger) dan tidak terasa monoton.
- * 2. IntersectionObserver memantau tiap blok. Saat masuk viewport, kelas
- *    .is-revealing ditambahkan agar keyframes di src/index.css berjalan.
- * 3. Ketika animasi selesai, .is-revealing ditukar jadi .is-revealed supaya
- *    properti transform tidak lagi menempel di elemen (hover tetap normal).
+ * 2. IntersectionObserver memantau tiap blok. Saat blok masuk viewport,
+ *    keadaannya ditandai "in" agar keyframes di src/index.css berjalan.
+ * 3. Ketika animasi selesai, keadaan ditukar jadi "done" supaya properti
+ *    transform tidak lagi menempel di elemen (hover tetap normal).
+ *
+ * Keadaan reveal disimpan pada atribut data-reveal-state, BUKAN kelas CSS.
+ * Alasannya: React menulis ulang seluruh atribut class setiap kali nilai prop
+ * className berubah, misalnya saat kartu filter berubah jadi aktif. Kelas yang
+ * ditambahkan mesin ini dari luar React ikut terhapus, sementara atribut
+ * data-reveal tetap ada, sehingga CSS menahan elemen di opacity 0 dan kartu
+ * "hilang" setelah dipilih. Atribut yang tidak pernah dirender React tidak bisa
+ * terhapus dengan cara itu.
  *
  * Pemilihan elemen sengaja memakai :scope + querySelectorAll supaya ringan,
  * lalu hasilnya disaring oleh pruneAncestors: elemen yang membungkus elemen
@@ -16,6 +24,10 @@
 
 const STEP_MS = 80;
 const MAX_STEPS = 5;
+
+const PENDING = "pending";
+const IN = "in";
+const DONE = "done";
 
 /* Blok yang layak beranimasi: isi section, isi container di dalam section,
  * dan kartu-kartu di dalam grid.
@@ -62,6 +74,19 @@ function stagedDelay(el, pool) {
   return Math.min(index, MAX_STEPS) * STEP_MS;
 }
 
+function stateOf(el) {
+  return el.getAttribute("data-reveal-state");
+}
+
+function mark(el, state) {
+  el.setAttribute("data-reveal-state", state);
+}
+
+function delayOf(el) {
+  const value = Number.parseFloat(el.style.getPropertyValue("--reveal-delay"));
+  return Number.isFinite(value) ? value : 0;
+}
+
 export function initScrollReveal(roots) {
   const rootList = Array.from(roots || []).filter(
     (node) => node && node.nodeType === 1
@@ -76,8 +101,16 @@ export function initScrollReveal(roots) {
           (entries) => {
             for (const entry of entries) {
               if (!entry.isIntersecting) continue;
-              entry.target.classList.add("is-revealing");
-              observer.unobserve(entry.target);
+              const el = entry.target;
+              observer.unobserve(el);
+              if (stateOf(el) === DONE) continue;
+              mark(el, IN);
+              /* Jaring aman: kalau animationend tidak pernah sampai (misalnya
+               * elemen disembunyikan saat animasi berjalan), keadaan tetap
+               * dipromosikan agar isi halaman tidak tertinggal tak terlihat. */
+              window.setTimeout(() => {
+                if (stateOf(el) === IN) mark(el, DONE);
+              }, delayOf(el) + 1200);
             }
           },
           { threshold: 0.05, rootMargin: "0px 0px -5% 0px" }
@@ -90,9 +123,8 @@ export function initScrollReveal(roots) {
   const onAnimationEnd = (event) => {
     if (event.animationName !== "gc-rise") return;
     const el = event.target;
-    if (el && el.classList && el.classList.contains("is-revealing")) {
-      el.classList.add("is-revealed");
-      el.classList.remove("is-revealing");
+    if (el && typeof el.setAttribute === "function" && stateOf(el) === IN) {
+      mark(el, DONE);
     }
   };
 
@@ -102,10 +134,7 @@ export function initScrollReveal(roots) {
 
   function tag(nodes) {
     const fresh = nodes.filter(
-      (el) =>
-        !tagged.has(el) &&
-        !el.classList.contains("is-revealed") &&
-        !el.classList.contains("is-revealing")
+      (el) => !tagged.has(el) && stateOf(el) !== DONE && stateOf(el) !== IN
     );
     if (fresh.length === 0) return;
 
@@ -115,9 +144,10 @@ export function initScrollReveal(roots) {
       el.setAttribute("data-reveal", "rise");
       el.style.setProperty("--reveal-delay", `${stagedDelay(el, pool)}ms`);
       if (observer) {
+        mark(el, PENDING);
         observer.observe(el);
       } else {
-        el.classList.add("is-revealed");
+        mark(el, DONE);
       }
     }
   }
@@ -133,7 +163,7 @@ export function initScrollReveal(roots) {
 
   // Konten yang muncul belakangan (hasil filter, ganti slide, dsb.) tetap
   // ikut dianimasikan. MutationObserver hanya memantau perubahan anak, jadi
-  // atribut/kelas yang kita tambahkan sendiri tidak memicu putaran baru.
+  // atribut yang kita tambahkan sendiri tidak memicu putaran baru.
   const mutation =
     observer && typeof MutationObserver !== "undefined"
       ? new MutationObserver((records) => {
