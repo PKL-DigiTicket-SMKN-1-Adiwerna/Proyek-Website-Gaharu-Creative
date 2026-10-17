@@ -71,32 +71,29 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="relative">
-              {/* Foto dipotong langsung oleh bingkai kartu. Sebelumnya ada padding
-               * 8px dan radius dalam, jadi sisi fotonya terbaca seperti bingkai ganda. */}
-              <div className="aspect-[3/2] overflow-hidden rounded-3xl border border-line">
-                <div data-parallax="1" className="h-full w-full">
-                  <img
-                    src="/Beranda.webp"
-                    alt="Tim Gaharu Creative sedang bekerja di depan monitor"
-                    width={1913}
-                    height={1275}
-                    className="h-full w-full scale-110 object-cover object-center"
-                  />
-                </div>
-              </div>
-              {/* Keterangan mengambang di bawah foto. Sisipan dibuat 16px di ponsel dan
-               * 24px di layar lebar supaya kalimatnya muat satu baris, tidak menyisakan
-               * satu kata menggantung di baris terakhir. text-balance menjaga baris tetap
-               * seimbang saat lebarnya sempit. */}
-              <div className="mx-4 -mt-8 rounded-2xl border border-line bg-paper p-5 shadow-sm sm:mx-6">
-                <Tag>Solusi Digital Terpadu</Tag>
-                <p className="mt-3 text-balance text-sm leading-relaxed text-muted">
-                  Dari strategi sampai eksekusi terintegrasi, dalam satu tim yang sama.
-                </p>
-              </div>
-            </div>
-          </div>
+            {/* Pilihan CeO: satu bingkai menyatu. Foto di atas, keterangan di
+                         * bawah dalam kartu yang sama, dipisah garis tipis. Bingkai ganda
+                         * dan bayangan besar tidak dipakai (DESAIN.md 2.4). */}
+                        <div className="overflow-hidden rounded-3xl border border-line bg-paper">
+                          <div className="aspect-[3/2] overflow-hidden border-b border-line">
+                            <div data-parallax="1" className="h-full w-full">
+                              <img
+                                src="/Beranda.webp"
+                                alt="Tim Gaharu Creative sedang bekerja di depan monitor"
+                                width={1913}
+                                height={1275}
+                                className="h-full w-full scale-110 object-cover object-center"
+                              />
+                            </div>
+                          </div>
+                          <div className="p-5">
+                            <Tag>Solusi Digital Terpadu</Tag>
+                            <p className="mt-3 text-balance text-sm leading-relaxed text-muted">
+                              Dari strategi sampai eksekusi terintegrasi, dalam satu tim yang sama.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
         </Container>
       </section>
 
