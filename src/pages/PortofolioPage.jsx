@@ -46,12 +46,14 @@ export default function PortofolioPage() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link
+                <a
                   href={links.konsultasi}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-[#007A55] hover:bg-emerald-800 text-white font-bold px-7 py-3 rounded-full text-sm transition-all shadow-md hover:scale-105"
                 >
                   Ajukan Konsultasi →
-                </Link>
+                </a>
                 <Link
                   to={links.layanan}
                   className="bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-bold px-7 py-3 rounded-full text-sm transition-all shadow-sm hover:scale-105 flex items-center gap-1.5"

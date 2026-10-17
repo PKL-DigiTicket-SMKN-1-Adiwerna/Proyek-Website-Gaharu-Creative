@@ -45,10 +45,19 @@ export const stats = [
   { label: "Mitra Strategis", value: `${jumlahMitra} Institusi` },
 ];
 
-export const testimonials = [
+/* Testimoni yang tayang harus sudah disetujui pemilik bisnis. Belum ada yang
+ * disetujui, jadi daftarnya kosong dan section Testimoni di Beranda tidak
+ * dirender sama sekali (audit staging 12 Okt 2026, temuan C03: sembunyikan
+ * blok yang belum siap, jangan cuma hapus label peringatannya).
+ * Contoh lama disimpan sebagai draft supaya tidak hilang.
+ */
+export const testimonials = [];
+
+export const testimonialsDraft = [
   {
     name: "Budi Santoso",
     company: "Pemilik UMKM Kuliner",
     quote: "Gaharu Creative berhasil meningkatkan penjualan toko online kami secara signifikan.",
+    approved: false,
   },
 ];

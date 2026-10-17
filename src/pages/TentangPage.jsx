@@ -103,12 +103,12 @@ export default function TentangPage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
-                href={links.mail}
+                href={links.whatsapp}
                 kind="secondary"
-                title="Company profile belum tersedia, kirim email untuk memintanya."
+                title="Berkas company profile belum tersedia untuk diunduh, jadi permintaan diarahkan ke WhatsApp."
                 className="transition-transform hover:-translate-y-0.5"
               >
-                Unduh Company Profile
+                Minta Company Profile
               </Button>
               <Button to={links.layanan} kind="primary" className="transition-transform hover:-translate-y-0.5">
                 Lihat Layanan

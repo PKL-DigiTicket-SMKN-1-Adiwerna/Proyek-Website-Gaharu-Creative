@@ -21,23 +21,33 @@ export const site = {
   waNumberVerified: true,
   waMessage: "Halo Gaharu Creative, saya ingin konsultasi gratis.",
 
-  // Ada beberapa versi email di catatan awal, ditahan sampai klien memilih satu.
-  email: "halo@gaharucreative.co.id",
+  /* Audit staging 12 Okt 2026 (temuan C01: nilai contoh dilarang tayang. Field yang
+   * belum dikonfirmasi disimpan null supaya tidak bisa bocor ke halaman; bukan
+   * cuma dihapus labelnya. Isi kembali setelah klien mengirim data resmi.
+   */
+  email: null,
   emailVerified: false,
 
-  phone: "(021) 0000 0000",
+  phone: null,
   phoneVerified: false,
 
-  // Alamat kantor belum dikirim.
-  address: "Jl. Contoh No. 12, Jakarta Selatan",
+  address: null,
   addressVerified: false,
 
+  /* Satu sumber kebenaran jam kerja. Footer dan halaman Kontak membaca dari
+   * sini supaya tidak ada dua versi jam yang berbeda. */
   hours: "Senin sampai Jumat, 09.00 sampai 17.00 WIB",
+  hoursVerified: false,
 
+  /* Basis URL kanonik. Diisi lewat VITE_SITE_URL saat build produksi supaya
+   * canonical tidak pernah menunjuk ke domain staging. */
+  url: ((import.meta.env && import.meta.env.VITE_SITE_URL) || "").replace(/\/$/, ""),
+
+  /* Tautan sosial resmi belum dikonfirmasi, jadi belum dipasang. */
   socials: [
-    { label: "Instagram", href: "https://instagram.com/gaharucreative", verified: false },
-    { label: "LinkedIn", href: "https://linkedin.com/company/gaharucreative", verified: false },
-    { label: "X", href: "https://x.com/gaharucreative", verified: false },
+    { label: "Instagram", href: null, verified: false },
+    { label: "LinkedIn", href: null, verified: false },
+    { label: "YouTube", href: null, verified: false },
   ],
 
   legal: {
@@ -62,7 +72,8 @@ export const links = {
   layanan: "/layanan",
   kontak: "/kontak",
   whatsapp: waLink,
-  mail: `mailto:${site.email}`,
+  /* Email resmi belum dikonfirmasi, jadi tautan email juga belum ada. */
+  mail: site.emailVerified && site.email ? `mailto:${site.email}` : null,
 };
 
 export const navLinks = [
@@ -74,19 +85,24 @@ export const navLinks = [
   { to: "/kontak", label: "Kontak" },
 ];
 
-/* Tautan ini hanya muncul di footer Portofolio dan Kontak. */
+/* Tautan legal ini muncul di footer. Halamannya belum ada, jadi ditulis
+ * sebagai teks "belum tersedia", bukan tautan yang mati saat diklik.
+ */
 export const footerExtraLinks = [
   { label: "Kebijakan Privasi", state: "belum tersedia" },
   { label: "Syarat & Ketentuan", state: "belum tersedia" },
-  { label: "Karier", state: "belum tersedia" },
+  { label: "Peta Situs", state: "belum tersedia" },
 ];
 
+/* Daftar layanan footer sekarang menunjuk ke halaman layanan yang benar-benar
+ * ada, bukan nama yang tidak punya halaman (mis. "SEO & Growth Analytics").
+ */
 export const footerServices = [
-  "Branding",
-  "Content",
-  "Social Media",
-  "Performance Marketing",
-  "Digital Product Development",
+  { label: "Branding", to: "/layanan/branding" },
+  { label: "Content", to: "/layanan/content" },
+  { label: "Social Media", to: "/layanan/social-media" },
+  { label: "Performance Marketing", to: "/layanan/performance-marketing" },
+  { label: "Digital Product Development", to: "/layanan/digital-product-development" },
 ];
 
 export const clientLanguages = [

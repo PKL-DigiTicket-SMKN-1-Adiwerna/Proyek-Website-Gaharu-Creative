@@ -186,7 +186,9 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Testimoni Klien */}
+      {/* Testimoni Klien: hanya tampil kalau ada testimoni yang sudah disetujui
+          pemilik bisnis (temuan audit C03). */}
+      {testimonials.length > 0 ? (
       <Section divider className="bg-block">
         <SectionHead
           title="Testimoni Klien"
@@ -216,6 +218,7 @@ export default function HomePage() {
           ))}
         </div>
       </Section>
+      ) : null}
     </>
   );
 }

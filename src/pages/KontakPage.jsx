@@ -14,7 +14,10 @@ import { kontakInfo, inquiryServices } from "../data/cta.js";
 const title = "Kontak";
 const description = "Hubungi Gaharu Creative lewat WhatsApp, email, atau form konsultasi.";
 
-const emptyForm = { nama: "", perusahaan: "", layanan: "", pesan: "" };
+/* kontak = kanal balasan calon klien. Audit staging 12 Okt 2026 (temuan C02: tanpa
+ * kolom ini, inquiry tidak bisa ditindaklanjuti kalau nomor tidak ikut terkirim.
+ */
+const emptyForm = { nama: "", perusahaan: "", kontak: "", layanan: "", pesan: "" };
 
 /* Tanpa hero, langsung dari section Hubungi Kami. Form di kiri, kartu Area
  * Kontak di kanan, lalu Informasi Kontak dan Peta.
@@ -34,6 +37,8 @@ export default function KontakPage() {
     event.preventDefault();
     const next = {};
     if (!form.nama.trim()) next.nama = "Nama lengkap belum diisi.";
+    if (!form.kontak.trim()) next.kontak = "Nomor WhatsApp atau email belum diisi.";
+    if (!form.layanan) next.layanan = "Pilih salah satu layanan.";
     if (!form.pesan.trim()) next.pesan = "Ceritakan singkat kebutuhan proyek Anda.";
 
     if (Object.keys(next).length > 0) {
@@ -49,6 +54,7 @@ export default function KontakPage() {
       "",
       `Nama: ${form.nama.trim()}`,
       form.perusahaan.trim() ? `Perusahaan: ${form.perusahaan.trim()}` : null,
+      `Kontak balasan: ${form.kontak.trim()}`,
       form.layanan ? `Layanan: ${form.layanan}` : null,
       "",
       form.pesan.trim(),
@@ -86,7 +92,7 @@ export default function KontakPage() {
             <form className="mt-8 grid gap-5 sm:grid-cols-2" onSubmit={submit} noValidate>
               <div>
                 <label htmlFor="nama" className="block text-sm font-semibold text-ink">
-                  Nama Lengkap
+                  Nama Lengkap <span aria-hidden="true">*</span>
                 </label>
                 <input
                   id="nama"
@@ -125,14 +131,44 @@ export default function KontakPage() {
               </div>
 
               <div className="sm:col-span-2">
+                <label htmlFor="kontak" className="block text-sm font-semibold text-ink">
+                  WhatsApp atau Email untuk Balasan <span aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="kontak"
+                  name="kontak"
+                  type="text"
+                  required
+                  autoComplete="tel"
+                  value={form.kontak}
+                  onChange={(e) => field("kontak", e.target.value)}
+                  placeholder="Contoh: 08xx xxxx xxxx atau nama@email.com"
+                  aria-invalid={errors.kontak ? "true" : undefined}
+                  aria-describedby={errors.kontak ? "kontak-error" : "kontak-help"}
+                  className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
+                />
+                <p id="kontak-help" className="mt-2 text-xs text-muted">
+                  Dipakai hanya untuk membalas kebutuhan proyek Anda.
+                </p>
+                {errors.kontak ? (
+                  <p id="kontak-error" className="mt-2 text-sm font-semibold text-ink">
+                    {errors.kontak}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="sm:col-span-2">
                 <label htmlFor="layanan" className="block text-sm font-semibold text-ink">
-                  Layanan Digital
+                  Layanan Digital <span aria-hidden="true">*</span>
                 </label>
                 <select
                   id="layanan"
                   name="layanan"
+                  required
                   value={form.layanan}
                   onChange={(e) => field("layanan", e.target.value)}
+                  aria-invalid={errors.layanan ? "true" : undefined}
+                  aria-describedby={errors.layanan ? "layanan-error" : "layanan-help"}
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink"
                 >
                   <option value="">Pilih layanan yang dibutuhkan</option>
@@ -142,14 +178,20 @@ export default function KontakPage() {
                     </option>
                   ))}
                 </select>
-                <p className="mt-2 text-xs text-muted">
-                  Mis. Branding, Website, UI/UX, Pengembangan, Digital Campaign.
+                <p id="layanan-help" className="mt-2 text-xs text-muted">
+                  Pilihan diambil dari lima layanan resmi kami. Pilih &quot;Belum tahu&quot; kalau
+                  Anda ingin kami merekomendasikan lebih dulu.
                 </p>
+                {errors.layanan ? (
+                  <p id="layanan-error" className="mt-2 text-sm font-semibold text-ink">
+                    {errors.layanan}
+                  </p>
+                ) : null}
               </div>
 
               <div className="sm:col-span-2">
                 <label htmlFor="pesan" className="block text-sm font-semibold text-ink">
-                  Pesan
+                  Pesan <span aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id="pesan"
@@ -231,7 +273,7 @@ export default function KontakPage() {
             <article key={item.title} className="rounded-lg border border-line bg-paper p-5">
               <IconCircle name={item.icon} className="mb-4" />
               <h2 className="text-sm font-bold text-ink">{item.title}</h2>
-              {item.href ? (
+              {item.verified && item.href ? (
                 <a
                   href={infoHref(item.href)}
                   {...(item.href === "whatsapp" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -240,14 +282,18 @@ export default function KontakPage() {
                   {item.value}
                 </a>
               ) : (
-                <p className="mt-2 text-sm leading-relaxed text-muted">{item.value}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {item.verified ? item.value : "Belum tersedia"}
+                </p>
               )}
+              {item.note ? <p className="mt-2 text-xs text-muted">{item.note}</p> : null}
             </article>
           ))}
         </div>
-        <p data-placeholder="Email dan alamat masih contoh" className="mt-6 text-sm text-muted">
-          Nomor WhatsApp sudah resmi dari perusahaan. Email, telepon, dan alamat kantor masih contoh
-          dan menunggu konfirmasi sebelum halaman ini dibuka untuk publik.
+        <p className="mt-6 text-sm text-muted">
+          Baru WhatsApp dan jam operasional yang sudah resmi dari perusahaan. Email dan alamat
+          kantor belum dikonfirmasi, jadi sengaja tidak dicantumkan supaya tidak ada data contoh
+          yang tayang.
         </p>
       </Section>
 

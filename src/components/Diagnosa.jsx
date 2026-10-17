@@ -258,7 +258,12 @@ export default function Diagnosa() {
   };
 
   const waHref = `https://wa.me/${site.waNumber}?text=${encodeURIComponent(summary)}`;
-  const mailHref = `mailto:${site.email}?subject=${encodeURIComponent("Hasil Diagnosa Digital 360")}&body=${encodeURIComponent(summary)}`;
+  /* Email resmi belum dikonfirmasi, jadi tombol email baru muncul kalau
+   * site.emailVerified true (temuan audit C01, diterima 17 Okt 2026). */
+  const mailHref =
+    site.emailVerified && site.email
+      ? `mailto:${site.email}?subject=${encodeURIComponent("Hasil Diagnosa Digital 360")}&body=${encodeURIComponent(summary)}`
+      : null;
 
   if (!open) {
     return (
@@ -491,9 +496,11 @@ export default function Diagnosa() {
                 <Button href={waHref} kind="primary">
                   Kirim ke WhatsApp
                 </Button>
-                <Button href={mailHref} kind="secondary">
-                  Kirim lewat Email
-                </Button>
+                {mailHref ? (
+                  <Button href={mailHref} kind="secondary">
+                    Kirim lewat Email
+                  </Button>
+                ) : null}
                 <Button kind="nav" onClick={copySummary}>
                   {copyState === "copied"
                     ? "Ringkasan tersalin"

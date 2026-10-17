@@ -1,8 +1,8 @@
 import { site } from "../data/site.js";
 import { Icon } from "./Icons.jsx";
 
-/* Nomor di site.js masih contoh dan belum diverifikasi, jadi catatan di bawah
- * tombol dirujuk lewat aria-describedby.
+/* Tombol mengapung ke WhatsApp resmi perusahaan. Nomor diambil dari
+ * src/data/site.js supaya hanya ada satu sumber kebenaran.
  */
 export default function WhatsAppButton() {
   const href = site.waNumber

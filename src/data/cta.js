@@ -1,3 +1,5 @@
+import { site } from "./site.js";
+
 /* Tiga slide banner CTA per halaman. */
 export const ctaSlides = {
   beranda: [
@@ -151,24 +153,51 @@ export const ctaSlides = {
       title: "Kirim kebutuhan dalam bentuk dokumen",
       detail: "Kalau brief Anda sudah panjang, kami minta waktu membacanya sebelum memberi angka penawaran.",
       actions: [
-        { label: "Kirim lewat Email", kind: "primary", href: "email" },
+        { label: "Kirim Brief lewat WhatsApp", kind: "primary", href: "whatsapp" },
         { label: "Minta Penawaran", kind: "secondary", href: "/kontak" },
       ],
     },
   ],
 };
 
+/* Kanal kontak. Nilai diambil dari src/data/site.js supaya hanya ada satu
+ * sumber kebenaran. Yang belum dikonfirmasi klien bernilai null + verified
+ * false, dan dirender sebagai "belum tersedia" — bukan angka contoh.
+ * Audit staging 12 Okt 2026 (temuan C01.
+ */
 export const kontakInfo = [
   {
     icon: "chat",
     title: "WhatsApp",
-    value: "+62 896-0517-7985",
+    value: site.waDisplay,
     href: "whatsapp",
     verified: true,
+    note: "Kanal tercepat. Aktif di hari kerja.",
   },
-  { icon: "mail", title: "Email", value: "halo@gaharucreative.co.id", href: "email", verified: false },
-  { icon: "pin", title: "Alamat", value: "Jl. Contoh No. 12, Jakarta Selatan", href: null, verified: false },
-  { icon: "clock", title: "Jam Operasional", value: "Senin sampai Jumat, 09.00 sampai 17.00 WIB", href: null, verified: true },
+  {
+    icon: "clock",
+    title: "Jam Operasional",
+    value: site.hours,
+    href: null,
+    verified: true,
+    note: "Di luar jam kerja, pesan dibalas keesokan harinya.",
+  },
+  {
+    icon: "mail",
+    title: "Email",
+    value: null,
+    href: null,
+    verified: false,
+    note: "Domain resmi belum ditetapkan, jadi email belum kami cantumkan.",
+  },
+  {
+    icon: "pin",
+    title: "Alamat",
+    value: null,
+    href: null,
+    verified: false,
+    note: "Alamat kantor belum dikonfirmasi untuk publikasi.",
+  },
 ];
 
 /* Pilihan layanan di form kontak. */
