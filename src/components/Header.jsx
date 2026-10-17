@@ -5,7 +5,7 @@ import { Button, Container } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
 import Logo from "./Logo.jsx";
 
-/* Logo kiri, menu tengah, pemilih bahasa dan tombol Hubungi Kami kanan. */
+/* Logo kiri, menu langsung di sebelah kanan logo, pemilih bahasa dan tombol Hubungi Kami di kanan. */
 function LanguagePicker() {
   const [open, setOpen] = useState(false);
   const box = useRef(null);
@@ -89,7 +89,7 @@ export default function Header() {
   return (
     <header className="site-header sticky top-0 z-50 border-b border-line bg-paper">
       <Container>
-        <div className="flex h-[72px] items-center justify-between gap-4">
+        <div className="flex h-[72px] items-center gap-8">
           <Link to="/" className="flex shrink-0 items-center" aria-label={`${site.name}, beranda`}>
             <Logo className="h-12 w-auto" />
           </Link>
@@ -112,7 +112,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="ml-auto hidden items-center gap-3 lg:flex">
             <LanguagePicker />
             <Button href={links.konsultasi} kind="nav" className="px-4">
               Hubungi Kami
@@ -124,7 +124,7 @@ export default function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="menu-mobile"
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-field text-ink lg:hidden"
+            className="ml-auto inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-field text-ink lg:hidden"
             aria-label={open ? "Tutup menu" : "Buka menu"}
           >
             <span aria-hidden="true" className="relative block h-4 w-5">
