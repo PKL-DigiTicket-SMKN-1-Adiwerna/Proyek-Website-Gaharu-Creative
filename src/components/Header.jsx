@@ -4,7 +4,6 @@ import { site, navLinks, links, clientLanguages } from "../data/site.js";
 import { Button, Container } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
 import Logo from "./Logo.jsx";
-import Wordmark from "./Wordmark.jsx";
 
 /* Logo kiri, menu tengah, pemilih bahasa dan tombol Hubungi Kami kanan. */
 function LanguagePicker() {
@@ -91,9 +90,8 @@ export default function Header() {
     <header className="site-header sticky top-0 z-50 border-b border-line bg-paper">
       <Container>
         <div className="flex h-[72px] items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
-            <Logo className="h-12 w-auto shrink-0" />
-            <Wordmark className="h-8 w-auto shrink-0 sm:h-9 sm:w-auto" />
+          <Link to="/" className="flex shrink-0 items-center" aria-label={`${site.name}, beranda`}>
+            <Logo className="h-9 w-auto sm:h-10" />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
