@@ -31,6 +31,12 @@
   --button: #0b7a4b;
   --button-ink: #ffffff;
   --button-text: #ffffff;
+
+  /* Kurva gerak untuk animasi masuk & reveal.
+   * ease-smooth = deselerasi panjang (terasa halus saat elemen "mendarat"),
+   * ease-soft   = untuk gerakan kecil seperti tombol mengambang. */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Nilai di atas diterjemahkan jadi utility Tailwind, jadi bg-paper dan text-ink
@@ -91,6 +97,126 @@ body {
   border-radius: 4px;
 }
 
+/* ==========================================================================
+   Animasi masuk & reveal saat scroll
+   --------------------------------------------------------------------------
+   Elemen bertanda [data-reveal] awalnya tersembunyi, lalu dipicu oleh
+   IntersectionObserver (lihat src/lib/reveal.js). Animasi memakai keyframes
+   supaya properti transform tidak tertinggal dan tidak menimpa utility
+   Tailwind (translate/scale/rotate) yang dipakai untuk efek hover. Karena itu
+   animasi reveal hanya memutar transform, sedangkan hover tetap memakai
+   translate/scale terpisah.
+
+   Supaya terasa halus, gerakan dan opasitas dipisah: elemen memudar lebih
+   cepat, sementara pergeserannya melandai lebih lambat (deselerasi panjang).
+   Jarak geser dibuat kecil agar tidak "melompat".
+   ========================================================================== */
+
+/* Pergeseran vertikal saja (konten naik ke posisi semula). */
+@keyframes gc-rise {
+  from {
+    transform: translate3d(0, 1.1rem, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Opasitas saja, selesai lebih dulu dari pergeseran. */
+@keyframes gc-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Perpindahan halaman: muncul halus setiap kali rute berganti. */
+@keyframes gc-page {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Header turun sekali saat halaman pertama dimuat. */
+@keyframes gc-header {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -0.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-reveal] {
+  opacity: 0;
+}
+
+[data-reveal].is-revealing {
+  animation:
+    gc-fade-in 0.55s ease-out both,
+    gc-rise 0.85s var(--ease-smooth) both;
+  animation-delay: var(--reveal-delay, 0ms);
+  /* Hint ke compositor agar animasi berjalan mulus, dilepas setelah selesai. */
+  will-change: opacity, transform;
+}
+
+/* Setelah animasi selesai, kelas ditukar agar transform tidak aktif lagi. */
+[data-reveal].is-revealed {
+  opacity: 1;
+  will-change: auto;
+}
+
+.page-enter {
+  animation: gc-page 0.55s var(--ease-smooth) both;
+}
+
+.site-header {
+  animation: gc-header 0.6s var(--ease-smooth) both;
+}
+
+/* Tombol aksi mengambang (WhatsApp & Diagnosa) muncul setelah konten utama.
+ * fill-mode "backwards" dipakai supaya transform tidak menempel permanen. */
+@keyframes gc-float-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.75rem, 0) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.float-in {
+  animation: gc-float-in 0.6s var(--ease-smooth) 0.3s backwards;
+}
+
+.float-in-late {
+  animation: gc-float-in 0.6s var(--ease-smooth) 0.45s backwards;
+}
+
+/* ==========================================================================
+   Parallax saat scroll
+   --------------------------------------------------------------------------
+   Elemen bertanda [data-parallax] digeser sedikit mengikuti posisinya di
+   viewport (lihat src/lib/parallax.js). Nilainya ditulis ke --parallax-y,
+   jadi transform di sini tetap bisa berdampingan dengan utility lain seperti
+   scale untuk hover. Tanpa JS nilai default 0px membuatnya diam di tempat.
+   ========================================================================== */
+[data-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -101,5 +227,17 @@ body {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  /* Kalau animasi dimatikan, konten langsung tampil. */
+  [data-reveal] {
+    opacity: 1;
+  }
+
+  /* Parallax ikut dimatikan agar tidak ada gerakan latar. */
+  [data-parallax] {
+    transform: none;
+    will-change: auto;
   }
 }

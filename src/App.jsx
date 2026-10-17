@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { initScrollReveal } from "./lib/reveal.js";
+import { initParallax } from "./lib/parallax.js";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import CtaBanner from "./components/CtaBanner.jsx";
@@ -59,34 +61,54 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [pathname, hash]);
 
+  /* Animasi reveal & parallax dipasang sebelum cat pertama supaya konten tidak
+   * sempat berkedip tampil lalu tersembunyi lagi. Dijalankan ulang tiap pindah
+   * rute karena isi halaman berganti. */
+  useLayoutEffect(() => {
+    const stopReveal = initScrollReveal(
+      document.querySelectorAll("[data-reveal-root]")
+    );
+    const stopParallax = initParallax(
+      document.querySelectorAll("[data-parallax]")
+    );
+    return () => {
+      stopReveal();
+      stopParallax();
+    };
+  }, [pathname]);
+
   return (
     <div className="flex min-h-screen flex-col bg-paper">
       <Header />
-      <main id="konten" className="flex-1">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/tentang" element={<TentangPage />} />
-          
-          {/* Rute Utama & Detail Layanan */}
-          <Route path="/layanan" element={<LayananPage />} />
-          <Route path="/layanan/:slug" element={<LayananDetailPage />} />
+      <main id="konten" data-reveal-root className="flex-1">
+        <div key={pathname} className="page-enter">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/tentang" element={<TentangPage />} />
+            
+            {/* Rute Utama & Detail Layanan */}
+            <Route path="/layanan" element={<LayananPage />} />
+            <Route path="/layanan/:slug" element={<LayananDetailPage />} />
 
-          {/* Rute Portofolio */}
-          <Route path="/portofolio" element={<PortofolioPage />} />
-          <Route path="/portofolio/umkm-ecommerce-lokal" element={<PortofolioUmkmPage />} />
-          <Route path="/portofolio/korporat-gaharu-cloud" element={<PortofolioKorporatPage />} />
-          <Route path="/portofolio/pemerintah-literasi-digital" element={<PortofolioPemerintahPage />} />
+            {/* Rute Portofolio */}
+            <Route path="/portofolio" element={<PortofolioPage />} />
+            <Route path="/portofolio/umkm-ecommerce-lokal" element={<PortofolioUmkmPage />} />
+            <Route path="/portofolio/korporat-gaharu-cloud" element={<PortofolioKorporatPage />} />
+            <Route path="/portofolio/pemerintah-literasi-digital" element={<PortofolioPemerintahPage />} />
 
-          {/* Rute Insight */}
-          <Route path="/insight" element={<InsightPage />} />
-          <Route path="/insight/:slug" element={<InsightDetailPage />} />
+            {/* Rute Insight */}
+            <Route path="/insight" element={<InsightPage />} />
+            <Route path="/insight/:slug" element={<InsightDetailPage />} />
 
-          <Route path="/kontak" element={<KontakPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+            <Route path="/kontak" element={<KontakPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
       </main>
-      {ctaPage ? <CtaBanner key={ctaPage} page={ctaPage} /> : null}
-      <Footer variant={footerVariant} />
+      <div data-reveal-root>
+        {ctaPage ? <CtaBanner key={ctaPage} page={ctaPage} /> : null}
+        <Footer variant={footerVariant} />
+      </div>
       <WhatsAppButton />
       <Diagnosa />
     </div>

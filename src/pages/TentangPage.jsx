@@ -55,13 +55,16 @@ export default function TentangPage() {
             </div>
 
             {/* Gambar Hero Menggunakan /Tentang Kami.webp */}
-            <div className="group relative overflow-hidden rounded-2xl border border-emerald-200/80 bg-white p-2 shadow-xl shadow-emerald-900/5 transition-all duration-500 hover:shadow-2xl">
+            <div className="group relative overflow-hidden rounded-2xl border border-emerald-200/80 bg-white p-2 shadow-xl shadow-emerald-900/5 transition-shadow duration-500 hover:shadow-2xl">
               <div className="overflow-hidden rounded-xl">
-                <img
-                  src="/Tentang Kami.webp"
-                  alt="Tim Gaharu Creative"
-                  className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                />
+                {/* Lapisan parallax ringan pada gambar hero. */}
+                <div data-parallax="1" className="h-full w-full">
+                  <img
+                    src="/Tentang Kami.webp"
+                    alt="Tim Gaharu Creative"
+                    className="h-full w-full scale-110 object-cover object-center transition-transform duration-700 group-hover:scale-[1.15]"
+                  />
+                </div>
               </div>
             </div>
           </div>

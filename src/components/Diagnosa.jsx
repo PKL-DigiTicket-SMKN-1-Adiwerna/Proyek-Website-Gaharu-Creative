@@ -268,7 +268,7 @@ export default function Diagnosa() {
           reset();
           setOpen(true);
         }}
-        className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-button bg-button px-4 py-3 text-sm font-semibold text-button-text shadow-sm transition-colors hover:opacity-90"
+        className="float-in-late fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-button bg-button px-4 py-3 text-sm font-semibold text-button-text shadow-sm transition-colors hover:opacity-90"
         aria-label="Buka diagnosa digital 360"
       >
         <Icon name="compass" className="h-5 w-5" />

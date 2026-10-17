@@ -88,7 +88,7 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper">
+    <header className="site-header sticky top-0 z-50 border-b border-line bg-paper">
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
