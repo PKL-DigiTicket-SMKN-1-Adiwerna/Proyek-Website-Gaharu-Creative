@@ -1,11 +1,12 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { Icon } from "../components/Icons.jsx";
 import { Seo } from "../components/Seo.jsx";
 import { IconCircle } from "../components/ui.jsx";
 import { links } from "../data/site.js";
 import { segments, portfolioItems } from "../data/portfolio.js";
 
-const title = "Portofolio – Gaharu Creative";
+const title = "Portofolio | Gaharu Creative";
 const description =
   "Studi kasus, hasil, dan karya terbaru. Transformasi digital terukur yang melipatgandakan dampak bisnis bagi ekosistem UMKM, korporasi, hingga institusi publik di Indonesia.";
 
@@ -22,26 +23,26 @@ export default function PortofolioPage() {
   }, [active]);
 
   return (
-    <div className="bg-white text-slate-800 font-sans min-h-screen">
+    <div className="bg-white text-ink font-sans min-h-screen">
       <Seo title={title} description={description} />
 
       {/* 1. HERO SECTION */}
-      <section className="bg-gradient-to-b from-emerald-50/70 via-slate-50 to-white py-16 sm:py-24 border-b border-slate-200/60">
+      <section className="bg-gradient-to-b from-brand-50 to-paper py-16 sm:py-24 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
               <div>
-                <span className="inline-flex items-center gap-2 bg-emerald-100/80 border border-emerald-300/60 text-[#007A55] text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-[#007A55] animate-pulse" />
+                <span className="inline-flex items-center gap-2 bg-brand-100 border border-brand-100 text-button text-xs font-semibold px-4 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-button " />
                   KARYA TERPILIH & EKSEKUSI NYATA
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-ink leading-tight">
                 Portofolio
               </h1>
 
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
+              <p className="text-muted text-sm sm:text-base leading-relaxed max-w-xl">
                 Studi kasus, hasil, dan karya terbaru. Transformasi digital terukur yang melipatgandakan dampak bisnis bagi ekosistem UMKM, korporasi, hingga institusi publik di Indonesia.
               </p>
 
@@ -50,29 +51,29 @@ export default function PortofolioPage() {
                   href={links.konsultasi}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#007A55] hover:bg-emerald-800 text-white font-bold px-7 py-3 rounded-full text-sm transition-all shadow-md hover:scale-105"
+                  className="bg-button hover:bg-brand-800 text-white font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-md "
                 >
                   Ajukan Konsultasi →
                 </a>
                 <Link
                   to={links.layanan}
-                  className="bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-bold px-7 py-3 rounded-full text-sm transition-all shadow-sm hover:scale-105 flex items-center gap-1.5"
+                  className="bg-white hover:bg-block border border-field text-ink font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-sm  flex items-center gap-1.5"
                 >
                   Lihat Layanan →
                 </Link>
               </div>
 
               <div className="pt-4 flex items-center gap-3 text-xs">
-                <span className="text-slate-500 font-semibold uppercase tracking-widest text-[10px]">PINTAS:</span>
+                <span className="text-muted font-semibold uppercase tracking-widest text-[10px]">PINTAS:</span>
                 <div className="flex flex-wrap gap-2">
                   {segments.map((item) => (
                     <button
                       key={item.key}
                       onClick={() => setActive(item.key)}
-                      className={`px-4 py-1.5 rounded-full font-semibold transition-all text-xs ${
+                      className={`px-4 py-1.5 rounded-lg font-semibold transition-all text-xs ${
                         active === item.key
-                          ? "bg-[#007A55] text-white shadow-sm"
-                          : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+                          ? "bg-button text-white shadow-sm"
+                          : "bg-white border border-line text-muted hover:bg-block"
                       }`}
                     >
                       {item.label}
@@ -83,7 +84,7 @@ export default function PortofolioPage() {
             </div>
 
             <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
+              <div className="relative rounded-3xl overflow-hidden border border-line shadow-xl">
                 <img
                   src="/Beranda.webp"
                   alt="Portofolio Gaharu Creative"
@@ -96,13 +97,13 @@ export default function PortofolioPage() {
       </section>
 
       {/* 2. SECTION FILTER CEPAT */}
-      <section className="bg-slate-50/80 py-16 border-b border-slate-200/60">
+      <section className="bg-block/80 py-16 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-4 space-y-4">
-              <span className="text-xs font-bold text-[#007A55] uppercase tracking-widest">NAVIGASI FOKUS</span>
-              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Filter Cepat</h2>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              <span className="text-xs font-bold text-button uppercase tracking-widest">NAVIGASI FOKUS</span>
+              <h2 className="text-3xl font-extrabold text-ink tracking-tight">Filter Cepat</h2>
+              <p className="text-muted text-xs sm:text-sm leading-relaxed">
                 Pilih kategori untuk melihat studi kasus yang relevan dengan skala kebutuhan dan model objektif instansi Anda.
               </p>
             </div>
@@ -115,18 +116,18 @@ export default function PortofolioPage() {
                   onClick={() => setActive(item.key)}
                   className={`group relative text-left p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                     active === item.key
-                      ? "bg-white border-[#007A55] ring-2 ring-[#007A55]/20 shadow-lg"
-                      : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-md"
+                      ? "bg-white border-button ring-2 ring-button/20 shadow-lg"
+                      : "bg-white border-line hover:border-field hover:shadow-md"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#007A55] flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-brand-50 text-button flex items-center justify-center font-bold">
                       <IconCircle name={item.icon} className="bg-transparent border-0" />
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900 text-base">{item.label}</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed mt-1">{item.detail}</p>
+                    <h3 className="font-bold text-ink text-base">{item.label}</h3>
+                    <p className="text-xs text-muted leading-relaxed mt-1">{item.detail}</p>
                   </div>
                 </button>
               ))}
@@ -139,66 +140,55 @@ export default function PortofolioPage() {
       <section id="studi-kasus" className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-xs font-bold text-[#007A55] uppercase tracking-widest">HASIL NYATA & DAMPAK BISNIS</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">Studi Kasus Terbaru</h2>
-            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-              Klik kartu proyek di bawah ini untuk melihat strategi dan hasil detail proyek secara utuh.
+            <span className="text-xs font-bold text-button uppercase tracking-widest">HASIL NYATA & DAMPAK BISNIS</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink">Studi Kasus Terbaru</h2>
+            <p className="text-muted text-xs sm:text-sm leading-relaxed">
+              Klik kartu proyek untuk melihat strategi dan hasil detail proyek.
+            </p>
+            <p className="text-xs text-subtle">
+              Angka hasil per proyek belum ditampilkan karena masih menunggu konfirmasi pemilik proyek.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {visible.map((item) => {
               let imageSrc = item.image || "/Beranda-Portofolio(UMKM E-Commerce).webp";
-              let metric1 = { label: "NEW LEADS", val: "+180%" };
-              let metric2 = { label: "OMZET NAIK", val: "2.4x" };
-
-              if (item.slug?.includes("cloud")) {
-                metric1 = { label: "TOTAL REACH", val: "1.2M" };
-                metric2 = { label: "B2B LEADS", val: "450+" };
-              } else if (item.slug?.includes("literasi")) {
-                metric1 = { label: "ENGAGEMENT", val: "92%" };
-                metric2 = { label: "INDEKS KEPUASAN", val: "4.8/5" };
-              }
+              /* Angka hasil per proyek belum dikonfirmasi pemilik proyek, jadi
+               * tidak ada angka yang dirender di kartu listing (aturan R-17). */
 
               return (
                 <Link
                   key={item.slug}
                   to={`/portofolio/${item.slug}`}
-                  className="group bg-white text-slate-800 rounded-3xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-emerald-300 flex flex-col justify-between"
+                  className="group bg-white text-ink rounded-3xl overflow-hidden border border-line shadow-sm transition-all duration-300 hover:shadow-xl hover:border-brand-600 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                      <span className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md text-[#007A55] text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm uppercase">
+                    <div className="relative overflow-hidden aspect-[16/10] bg-chip">
+                      <span className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md text-button text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm uppercase">
                         {item.tag || item.segment}
                       </span>
                       <img
                         src={imageSrc}
                         alt={item.title}
-                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-"
                       />
                     </div>
 
                     <div className="p-6 space-y-2.5">
-                      <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-[#007A55] transition-colors leading-snug">
+                      <h3 className="text-base sm:text-lg font-extrabold text-ink group-hover:text-button transition-colors leading-snug">
                         {item.title}
                       </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed line-clamp-3">
-                        {item.summary || item.result}
+                      <p className="text-xs text-muted leading-relaxed line-clamp-3">
+                        {item.summary}
                       </p>
                     </div>
                   </div>
 
                   <div className="p-6 pt-0">
-                    <div className="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-3.5 grid grid-cols-2 gap-2 text-center">
-                      <div>
-                        <p className="text-base font-extrabold text-[#007A55]">{metric1.val}</p>
-                        <p className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mt-0.5">{metric1.label}</p>
-                      </div>
-                      <div className="border-l border-emerald-200 pl-2">
-                        <p className="text-base font-extrabold text-[#007A55]">{metric2.val}</p>
-                        <p className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mt-0.5">{metric2.label}</p>
-                      </div>
-                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700">
+                      Lihat studi kasus
+                      <Icon name="arrowRight" className="h-4 w-4" />
+                    </span>
                   </div>
                 </Link>
               );

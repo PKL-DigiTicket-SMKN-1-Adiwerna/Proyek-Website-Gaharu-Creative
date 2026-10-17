@@ -1,34 +1,60 @@
 @import "tailwindcss";
 @import "@fontsource-variable/plus-jakarta-sans";
 
-/* Token warna, kontrasnya sudah dihitung di atas putih:
- * --ink 18.9:1, --muted 7.0:1, --tag-ink 9.0:1 di atas --tag-bg,
- * --field 3.2:1 untuk border control form (WCAG 1.4.11),
- * --focus 5.5:1 hijau brand untuk outline fokus keyboard (WCAG 1.4.11).
+/* Token warna mengikuti DESAIN.md v2 bagian 2.1 (skala brand, ink, lavender,
+ * mint). Angka kontras di bawah dihitung terhadap latar pemakaiannya:
+ *   --ink       #0f1d2b  17.06:1 di putih (judul)
+ *   --muted     #334155  10.35:1 di putih (teks isi)
+ *   --subtle    #64748b   4.76:1 di putih (meta, label kecil)
+ *   --brand     #047857   5.48:1 di putih (aman untuk teks kecil)
+ *   --button    #065f46   7.68:1 di putih (tombol primer, teks putih aman)
+ *   --brand-mid #059669   3.77:1 -> hanya teks besar (DESAIN.md bagian 8)
+ *   --brand-bright #10b981 2.54:1 -> dekoratif, jangan untuk teks
+ *   --field     #8f8f8f   3.23:1 batas kontrol form (WCAG 1.4.11)
  * Ganti nilai di sini, komponen tidak perlu disentuh satu per satu.
  */
 :root {
   --paper: #ffffff;
-  --ink: #111111;
-  --muted: #4b5563;
-  --line: #d9d9d9;
+  --ink: #0f1d2b;
+  --muted: #334155;
+  --subtle: #64748b;
+  --line: #e2e8f0;
+  --line-soft: #eef2f6;
   --field: #8f8f8f;
-  --fill: #e6e6e6;
-  --block: #f2f2f2;
-  --tag-bg: #efefef;
-  --tag-ink: #1f3b2a;
+  --fill: #d1fae5;
+  --block: #f1f5f9;
+  --tag-bg: #d1fae5;
+  --tag-ink: #065f46;
   --focus: #047857;
 
-  /* Warna logo, harus sama dengan favicon di tab browser. */
-  --brand: #047857;
+  /* Skala hijau DESAIN.md v2: brand-800 tombol primer, brand-700 item aktif,
+   * brand-600 aksen, brand-500 dekoratif saja. */
+  --brand-900: #053b2b;
+  --brand-800: #065f46;
+  --brand-700: #047857;
+  --brand-600: #059669;
+  --brand-500: #10b981;
+  --brand-100: #d1fae5;
+  --brand-50: #ecfdf5;
+  --brand: var(--brand-700);
+  --brand-mid: var(--brand-600);
+  --brand-strong: var(--brand-800);
   --brand-ink: #ffffff;
-  /* Hijau terang khusus border kartu saat hover/aktif. Bukan untuk teks:
-   * kontrasnya 2.5:1 di atas putih, di bawah WCAG untuk teks. */
-  --brand-bright: #10b981;
-  /* Tombol utama seluruh situs. Dipakai juga komponen Diagnosa. */
-  /* Tombol utama seluruh situs: hijau brand — selaras DESAIN.md.
-   * Dipakai juga komponen Diagnosa. Teks putih memastasi WCAG AA. */
-  --button: #0b7a4b;
+  --brand-bright: var(--brand-500);
+
+  /* Latar section lavender dan mint (DESAIN.md bagian 2.1). */
+  --lav-50: #eef2ff;
+  --lav-100: #e0e7ff;
+  --mint: #e7f7ef;
+  --chip: #f1f5f9;
+  --chip-ink: #475569;
+  --danger-50: #fef2f2;
+  --danger-600: #e11d48;
+  --warn-500: #f59e0b;
+
+  /* Tombol utama seluruh situs: brand-800 #065f46 (DESAIN.md v2, "Tombol
+   * primer"). Dipakai juga komponen Diagnosa. Teks putih 7.68:1, lolos WCAG AA. */
+  --button: var(--brand-800);
   --button-ink: #ffffff;
   --button-text: #ffffff;
 
@@ -46,20 +72,39 @@
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
   --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
   --color-field: var(--field);
   --color-fill: var(--fill);
   --color-block: var(--block);
   --color-tag: var(--tag-bg);
   --color-tag-ink: var(--tag-ink);
+  --color-chip: var(--chip);
+  --color-chip-ink: var(--chip-ink);
+  --color-brand-900: var(--brand-900);
+  --color-brand-800: var(--brand-800);
+  --color-brand-700: var(--brand-700);
+  --color-brand-600: var(--brand-600);
+  --color-brand-500: var(--brand-500);
+  --color-brand-100: var(--brand-100);
+  --color-brand-50: var(--brand-50);
   --color-brand: var(--brand);
+  --color-brand-mid: var(--brand-mid);
+  --color-brand-strong: var(--brand-strong);
   --color-brand-ink: var(--brand-ink);
   --color-brand-bright: var(--brand-bright);
+  --color-lav-50: var(--lav-50);
+  --color-lav-100: var(--lav-100);
+  --color-mint: var(--mint);
+  --color-danger-50: var(--danger-50);
+  --color-danger-600: var(--danger-600);
+  --color-warn-500: var(--warn-500);
   --color-button: var(--button);
   --color-button-ink: var(--button-ink);
   --color-button-text: var(--button-text);
 
-  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 html {

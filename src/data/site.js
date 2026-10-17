@@ -99,10 +99,10 @@ export const footerExtraLinks = [
  */
 export const footerServices = [
   { label: "Branding", to: "/layanan/branding" },
-  { label: "Content", to: "/layanan/content" },
+  { label: "Content", to: "/layanan/konten" },
   { label: "Social Media", to: "/layanan/social-media" },
   { label: "Performance Marketing", to: "/layanan/performance-marketing" },
-  { label: "Digital Product Development", to: "/layanan/digital-product-development" },
+  { label: "Digital Product Development", to: "/layanan/pengembangan-produk-digital" },
 ];
 
 export const clientLanguages = [

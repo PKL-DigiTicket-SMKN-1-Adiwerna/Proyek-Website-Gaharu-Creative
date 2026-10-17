@@ -90,7 +90,7 @@ export default function Header() {
   return (
     <header className="site-header sticky top-0 z-50 border-b border-line bg-paper">
       <Container>
-        <div className="flex h-16 items-center justify-between gap-4">
+        <div className="flex h-[72px] items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5" aria-label={`${site.name}, beranda`}>
             <Logo className="h-12 w-auto shrink-0" />
             <Wordmark className="h-8 w-auto shrink-0 sm:h-9 sm:w-auto" />

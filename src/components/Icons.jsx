@@ -155,6 +155,12 @@ const paths = {
       <path d="M13 7l5 5-5 5" />
     </>
   ),
+  arrowUpRight: (
+    <>
+      <path d="M8 16L16 8" />
+      <path d="M9 8h7v7" />
+    </>
+  ),
   chevronDown: <path d="M6 9l6 6 6-6" />,
   check: <path d="M5 13l4 4 10-10" />,
 };

@@ -1,84 +1,93 @@
 import { useParams, Link } from "react-router-dom";
 import { posts } from "../data/insights.js";
 import { Seo } from "../components/Seo.jsx";
+import { Button, Container, Section } from "../components/ui.jsx";
+import { links } from "../data/site.js";
 
+/* Halaman artikel. Naskah lengkap ketiga artikel belum ditulis, jadi yang
+ * tampil baru judul dan ringkasan, disertai keterangan bahwa naskahnya sedang
+ * disiapkan. Tidak ada paragraf isi yang dikarang supaya tidak jadi konten
+ * template (audit: konten harus dari data nyata atau diberi keterangan jelas).
+ */
 export default function InsightDetailPage() {
   const { slug } = useParams();
+  const post = posts.find((item) => item.slug === slug);
 
-  // Mencari artikel berdasarkan slug, jika tidak ada fallback ke artikel pertama atau objek default
-  const post = posts?.find((p) => p.slug === slug) || posts?.[0] || {
-    title: "Detail Artikel Insight",
-    tag: "Insight",
-    excerpt: "Artikel strategi digital marketing dari Gaharu Creative.",
-    dateLabel: "2026",
-    image: "/Beranda-Visual.webp",
-  };
+  if (!post) {
+    return (
+      <Section>
+        <div className="mx-auto max-w-xl text-center">
+          <h1 className="text-3xl font-bold text-ink">Artikel tidak ditemukan</h1>
+          <p className="mt-3 text-base leading-relaxed text-muted">
+            Artikel dengan alamat tersebut belum ada di daftar Insight kami.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button to="/insight" kind="primary">
+              Lihat semua artikel
+            </Button>
+            <Button href={links.konsultasi} kind="secondary">
+              Tanya lewat WhatsApp
+            </Button>
+          </div>
+        </div>
+      </Section>
+    );
+  }
 
   return (
-    <div className="bg-white text-slate-800 min-h-screen font-sans">
-      <Seo title={`${post.title} – Insight Gaharu Creative`} description={post.excerpt} />
+    <>
+      <Seo title={`${post.title} | Gaharu Creative`} description={post.excerpt} />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-emerald-50/70 via-slate-50 to-white py-12 sm:py-16 border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <nav className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-            <Link to="/insight" className="hover:text-[#007A55] transition-colors">Insight</Link>
-            <span>/</span>
-            <span className="text-[#007A55] font-bold">{post.tag || "Artikel"}</span>
+      <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
+        <Container className="py-12 sm:py-16">
+          <nav aria-label="Breadcrumb" className="text-xs text-subtle">
+            <Link to="/" className="hover:text-brand-700">
+              Beranda
+            </Link>
+            <span className="px-2">›</span>
+            <Link to="/insight" className="hover:text-brand-700">
+              Insight
+            </Link>
+            <span className="px-2">›</span>
+            <span className="text-ink">{post.tag}</span>
           </nav>
 
-          <div className="space-y-4">
-            <span className="inline-block bg-emerald-100/80 border border-emerald-300 text-[#007A55] text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
-              {post.tag || "Insight"}
+          <div className="mt-6 max-w-3xl">
+            <span className="inline-flex items-center rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-800">
+              {post.tag}
             </span>
-
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
               {post.title}
             </h1>
+            <p className="mt-4 text-base leading-relaxed text-muted">{post.excerpt}</p>
+            <p className="mt-4 text-xs text-subtle">
+              Tim Gaharu Creative · {post.dateLabel}
+            </p>
+          </div>
+        </Container>
+      </section>
 
-            <div className="flex items-center gap-4 text-xs text-slate-500 pt-2 border-t border-slate-200">
-              <span className="font-bold text-slate-800">Tim Gaharu Creative</span>
-              <span>•</span>
-              <span>{post.dateLabel || "2026"}</span>
+      <Section>
+        <div className="max-w-3xl">
+          <div className="rounded-lg border border-line bg-block p-6">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
+              Naskah menyusul
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-muted">
+              Isi lengkap artikel ini sedang ditulis. Kalau Anda butuh pembahasan untuk kasus
+              bisnis Anda sekarang, tanyakan langsung supaya bisa dibahas dengan konteks Anda.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button href={links.konsultasi} kind="primary">
+                Tanya lewat WhatsApp
+              </Button>
+              <Button to="/insight" kind="secondary">
+                Lihat artikel lain
+              </Button>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Konten Artikel */}
-      <section className="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-100 aspect-[16/9]">
-          <img
-            src={post.image || "/Beranda-Visual.webp"}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="space-y-6 text-sm sm:text-base leading-relaxed text-slate-700">
-          <p className="text-lg font-medium text-slate-800 leading-relaxed">
-            {post.excerpt}
-          </p>
-          <p>
-            Strategi pemasaran digital modern menuntut konsistensi antara perencanaan materi, target audiens yang spesifik, serta evaluasi data secara berkala untuk mencapai pertumbuhan bisnis yang berkelanjutan.
-          </p>
-        </div>
-
-        <div className="pt-8 border-t border-slate-200 flex items-center justify-between">
-          <Link
-            to="/insight"
-            className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-6 py-2.5 rounded-full text-xs transition-all"
-          >
-            ← Kembali ke Insight
-          </Link>
-          <Link
-            to="/kontak"
-            className="bg-[#007A55] hover:bg-emerald-800 text-white font-bold px-6 py-2.5 rounded-full text-xs transition-all shadow-sm"
-          >
-            Konsultasi Strategi →
-          </Link>
-        </div>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }

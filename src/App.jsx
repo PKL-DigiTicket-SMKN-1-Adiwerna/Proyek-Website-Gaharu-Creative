@@ -79,6 +79,13 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-paper">
+      {/* Tautan lompat untuk pengguna keyboard (DESAIN.md bagian 8). */}
+      <a
+        href="#konten"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-button focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Lewati ke konten
+      </a>
       <Header />
       <main id="konten" data-reveal-root className="flex-1">
         <div key={pathname} className="page-enter">

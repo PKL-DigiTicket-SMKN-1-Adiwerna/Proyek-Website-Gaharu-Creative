@@ -1,54 +1,55 @@
 import { Link } from "react-router-dom";
+import { Icon } from "../components/Icons.jsx";
 import { Seo } from "../components/Seo.jsx";
 
 export default function PortofolioKorporatPage() {
   return (
-    <div className="bg-white text-slate-800 min-h-screen font-sans">
-      <Seo title="Korporat: Gaharu Cloud Launch – Gaharu Creative" description="Studi kasus peluncuran platform Gaharu Cloud B2B." />
+    <div className="bg-white text-ink min-h-screen font-sans">
+      <Seo title="Korporat: Gaharu Cloud Launch | Gaharu Creative" description="Studi kasus peluncuran platform Gaharu Cloud B2B." />
 
-      <section className="bg-gradient-to-b from-emerald-50/80 via-slate-50 to-white py-12 sm:py-16 border-b border-slate-200">
+      <section className="bg-gradient-to-b from-brand-50 to-paper py-12 sm:py-16 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <nav className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-            <Link to="/portofolio" className="hover:text-[#007A55] transition-colors">Portofolio</Link>
+          <nav className="flex items-center gap-2 text-xs font-semibold text-muted">
+            <Link to="/portofolio" className="hover:text-button transition-colors">Portofolio</Link>
             <span>/</span>
-            <span className="text-[#007A55] font-bold">Korporat: Gaharu Cloud Launch</span>
+            <span className="text-button font-bold">Korporat: Gaharu Cloud Launch</span>
           </nav>
 
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
             <div className="w-full lg:w-7/12 space-y-5">
               <div>
-                <span className="inline-flex items-center gap-2 bg-emerald-100/80 border border-emerald-300 text-[#007A55] text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-[#007A55] animate-pulse" />
+                <span className="inline-flex items-center gap-2 bg-brand-100 border border-brand-600 text-button text-xs font-bold px-3.5 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-button " />
                   KORPORAT • B2B CLOUD PLATFORM
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Korporat: Gaharu Cloud Launch – Penanganan Pipeline B2B & Thought Leadership
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink tracking-tight leading-tight">
+                Korporat Gaharu Cloud Launch: Penanganan Pipeline B2B dan Thought Leadership
               </h1>
 
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              <p className="text-muted text-sm sm:text-base leading-relaxed">
                 Strategi peluncuran Gaharu Cloud berbasis positioning tepercaya untuk meningkatkan keterlibatan B2B, kredibilitas industri, dan penanganan prospek berkualitas.
               </p>
 
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200 text-xs text-slate-600">
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-line text-xs text-muted">
                 <div>
-                  <span className="block text-slate-400 font-semibold uppercase tracking-wider text-[10px]">Kategori</span>
-                  <span className="font-bold text-slate-900 mt-0.5 block">Korporat</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Kategori</span>
+                  <span className="font-bold text-ink mt-0.5 block">Korporat</span>
                 </div>
                 <div>
-                  <span className="block text-slate-400 font-semibold uppercase tracking-wider text-[10px]">Tahun</span>
-                  <span className="font-bold text-slate-900 mt-0.5 block">2026</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Tahun</span>
+                  <span className="font-bold text-ink mt-0.5 block">2026</span>
                 </div>
                 <div>
-                  <span className="block text-slate-400 font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
-                  <span className="font-bold text-slate-900 mt-0.5 block">Indonesia</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
+                  <span className="font-bold text-ink mt-0.5 block">Indonesia</span>
                 </div>
               </div>
             </div>
 
             <div className="w-full lg:w-5/12">
-              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-100">
+              <div className="rounded-2xl overflow-hidden border border-line shadow-md bg-chip">
                 <img
                   src="/Beranda-Portofolio(Gaharu Cloud).webp"
                   alt="Gaharu Cloud Launch"
@@ -64,60 +65,61 @@ export default function PortofolioKorporatPage() {
         <div className="flex flex-col lg:flex-row gap-10 items-start">
           <div className="w-full lg:w-7/12 space-y-6">
             <div className="space-y-2">
-              <span className="text-xs font-bold text-[#007A55] uppercase tracking-widest">PENDEKATAN STRATEGIS</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Tentang Proyek</h2>
-              <p className="text-slate-600 text-sm leading-relaxed">
+              <span className="text-xs font-bold text-button uppercase tracking-widest">PENDEKATAN STRATEGIS</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Tentang Proyek</h2>
+              <p className="text-muted text-sm leading-relaxed">
                 Gaharu Cloud merupakan solusi infrastruktur digital enterprise. Peluncurannya membutuhkan kredibilitas tinggi, edukasi pasar terstruktur, dan strategi perolehan lead B2B yang presisi.
               </p>
             </div>
 
-            <div className="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-6 space-y-3 shadow-sm">
-              <div className="flex items-center gap-2 text-[#007A55] font-extrabold text-sm">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-[#007A55] text-xs font-bold">✓</span>
+            <div className="bg-brand-50 border border-brand-100 rounded-2xl p-6 space-y-3 shadow-sm">
+              <div className="flex items-center gap-2 text-button font-extrabold text-sm">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-800"><Icon name="check" className="h-4 w-4" /></span>
                 <h3>Solusi yang Kami Berikan</h3>
               </div>
-              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-1">
-                <li className="flex items-start gap-2.5"><span className="text-[#007A55] font-bold">•</span> Penyusunan positioning dan key message spesifik platform cloud.</li>
-                <li className="flex items-start gap-2.5"><span className="text-[#007A55] font-bold">•</span> Penerbitan materi thought leadership & studi B2B.</li>
-                <li className="flex items-start gap-2.5"><span className="text-[#007A55] font-bold">•</span> Peluncuran kampanye iklan terarah untuk segmen enterprise.</li>
+              <ul className="space-y-2.5 text-xs sm:text-sm text-muted pt-1">
+                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Penyusunan positioning dan key message spesifik platform cloud.</li>
+                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Penerbitan materi thought leadership & studi B2B.</li>
+                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Peluncuran kampanye iklan terarah untuk segmen enterprise.</li>
               </ul>
             </div>
           </div>
 
           <div className="w-full lg:w-5/12 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm">
+            <div className="rounded-2xl overflow-hidden border border-line bg-block shadow-sm">
               <img src="/Portofolio-Gaharu Cloud.webp" alt="Dokumentasi 1" className="w-full h-44 object-cover object-center" />
             </div>
-            <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm">
+            <div className="rounded-2xl overflow-hidden border border-line bg-block shadow-sm">
               <img src="/Portofolio-Gaharu Cloud (Tentang Proyek).webp" alt="Dokumentasi 2" className="w-full h-44 object-cover object-center" />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-slate-50 border-y border-slate-200/80">
+      <section className="py-12 bg-block border-y border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-1 max-w-md mx-auto">
-            <span className="text-xs font-bold text-[#007A55] uppercase tracking-widest">METRIK KINERJA TERUKUR</span>
-            <h2 className="text-2xl font-extrabold text-slate-900">Ringkasan Dampak Bisnis</h2>
+            <span className="text-xs font-bold text-button uppercase tracking-widest">METRIK KINERJA TERUKUR</span>
+            <h2 className="text-2xl font-extrabold text-ink">Ringkasan Dampak Bisnis</h2>
+            <p className="text-xs text-subtle">Angka di bagian ini masih contoh tampilan dari desain, belum dikonfirmasi pemilik proyek.</p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#007A55]">+210%</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">QUALIFIED LEADS</p>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">+210%</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">QUALIFIED LEADS</p>
             </div>
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#007A55]">1.2M</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">TOTAL REACH</p>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">1.2M</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">TOTAL REACH</p>
             </div>
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#007A55]">450+</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">B2B LEADS</p>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">450+</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">B2B LEADS</p>
             </div>
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#007A55]">3.2x</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">ENGAGEMENT</p>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">3.2x</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">ENGAGEMENT</p>
             </div>
           </div>
         </div>
@@ -125,43 +127,43 @@ export default function PortofolioKorporatPage() {
 
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-            <h2 className="text-2xl font-extrabold text-slate-900">Proyek Lainnya</h2>
-            <Link to="/portofolio" className="text-xs font-bold text-[#007A55] hover:underline">
+          <div className="flex items-center justify-between border-b border-line pb-4">
+            <h2 className="text-2xl font-extrabold text-ink">Proyek Lainnya</h2>
+            <Link to="/portofolio" className="text-xs font-bold text-button hover:underline">
               Lihat Semua Portofolio →
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link to="/portofolio/umkm-ecommerce-lokal" className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-4 flex flex-col justify-between">
+            <Link to="/portofolio/umkm-ecommerce-lokal" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
-                <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-slate-100">
-                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
+                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" className="w-full h-full object-cover group- transition-transform duration-300" />
                 </div>
-                <h3 className="font-bold text-slate-900 text-sm group-hover:text-[#007A55]">UMKM: E-Commerce Lokal</h3>
-                <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mt-1">Mendorong penjualan dan pertumbuhan bisnis.</p>
+                <h3 className="font-bold text-ink text-sm group-hover:text-button">UMKM: E-Commerce Lokal</h3>
+                <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Mendorong penjualan dan pertumbuhan bisnis.</p>
               </div>
-              <span className="text-xs font-bold text-[#007A55] mt-4 block">Lihat Detail Proyek →</span>
+              <span className="text-xs font-bold text-button mt-4 block">Lihat Detail Proyek →</span>
             </Link>
 
-            <Link to="/portofolio/pemerintah-literasi-digital" className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-4 flex flex-col justify-between">
+            <Link to="/portofolio/pemerintah-literasi-digital" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
-                <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-slate-100">
-                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
+                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" className="w-full h-full object-cover group- transition-transform duration-300" />
                 </div>
-                <h3 className="font-bold text-slate-900 text-sm group-hover:text-[#007A55]">Pemerintah: Literasi Digital</h3>
-                <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mt-1">Kampanye informasi publik berbasis micro-learning.</p>
+                <h3 className="font-bold text-ink text-sm group-hover:text-button">Pemerintah: Literasi Digital</h3>
+                <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Kampanye informasi publik berbasis micro-learning.</p>
               </div>
-              <span className="text-xs font-bold text-[#007A55] mt-4 block">Lihat Detail Proyek →</span>
+              <span className="text-xs font-bold text-button mt-4 block">Lihat Detail Proyek →</span>
             </Link>
 
-            <div className="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-6 flex flex-col justify-between text-center space-y-4">
+            <div className="bg-brand-50 border border-brand-100 rounded-2xl p-6 flex flex-col justify-between text-center space-y-4">
               <div className="space-y-2 my-auto">
-                <span className="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-[#007A55] flex items-center justify-center font-bold text-base">📁</span>
-                <h3 className="font-bold text-slate-900 text-base">Kembali ke Seluruh Portofolio</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">Jelajahi lebih banyak studi kasus hasil kerja tim Gaharu.</p>
+                <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-brand-800"><Icon name="doc" className="h-5 w-5" /></span>
+                <h3 className="font-bold text-ink text-base">Kembali ke Seluruh Portofolio</h3>
+                <p className="text-xs text-muted leading-relaxed">Jelajahi lebih banyak studi kasus hasil kerja tim Gaharu.</p>
               </div>
-              <Link to="/portofolio" className="bg-[#007A55] text-white font-bold py-2.5 px-5 rounded-full text-xs hover:bg-emerald-700 transition-all shadow-sm">
+              <Link to="/portofolio" className="bg-button text-white font-bold py-2.5 px-5 rounded-lg text-xs hover:bg-brand-700 transition-all shadow-sm">
                 ← Daftar Portofolio
               </Link>
             </div>

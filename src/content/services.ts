@@ -33,7 +33,7 @@ export const servicesData: Service[] = [
       { step: "04", title: "Delivery", desc: "Serah terima master file beserta panduan Brand Guidelines." },
     ],
     faqs: [
-      { question: "Berapa lama proses pengerjaan branding?", answer: "Proses pengerjaan biasanya memakan waktu sekitar 3–6 minggu tergantung pada kompleksitas kebutuhan." },
+      { question: "Berapa lama proses pengerjaan branding?", answer: "Proses pengerjaan biasanya memakan waktu sekitar 3 sampai 6 minggu tergantung pada kompleksitas kebutuhan." },
       { question: "Apakah bisa mengajukan revisi?", answer: "Ya, kami menyediakan sesi revisi terstruktur pada setiap tahapan persetujuan." },
     ],
   },

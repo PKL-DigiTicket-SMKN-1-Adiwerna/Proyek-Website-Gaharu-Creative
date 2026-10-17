@@ -46,7 +46,7 @@ const TIMELINES = [
 const SCALES = [
   { key: "kecil", label: "Ringan", detail: "Satu kanal atau satu aset utama." },
   { key: "sedang", label: "Sedang", detail: "Beberapa kanal terintegrasi." },
-  { key: "besar", label: "Besar", detail: "Transformasi menyeluruh." },
+  { key: "besar", label: "Besar", detail: "Cakupan penuh di beberapa kanal." },
 ];
 
 const GOAL_LABELS = Object.fromEntries(GOALS.map((item) => [item.key, item.label]));
@@ -273,7 +273,7 @@ export default function Diagnosa() {
           reset();
           setOpen(true);
         }}
-        className="float-in-late fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full border border-button bg-button px-4 py-3 text-sm font-semibold text-button-text shadow-sm transition-colors hover:opacity-90"
+        className="float-in-late fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-lg border border-button bg-button px-4 py-3 text-sm font-semibold text-button-text shadow-sm transition-colors hover:opacity-90"
         aria-label="Buka diagnosa digital 360"
       >
         <Icon name="compass" className="h-5 w-5" />

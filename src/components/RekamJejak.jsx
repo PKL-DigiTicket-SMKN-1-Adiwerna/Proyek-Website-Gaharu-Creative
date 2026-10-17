@@ -7,7 +7,7 @@ import { rekamJejak, mitraGroups, penghargaan } from "../data/klien.js";
  */
 export default function RekamJejak({ withHead = true }) {
   return (
-    <Section divider className="bg-block">
+    <Section divider className="bg-lav-50">
       {withHead ? (
         <SectionHead
           label={rekamJejak.label}

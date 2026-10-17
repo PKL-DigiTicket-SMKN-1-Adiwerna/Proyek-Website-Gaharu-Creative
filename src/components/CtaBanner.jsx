@@ -1,83 +1,81 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { links } from "../data/site.js";
 import { ctaSlides } from "../data/cta.js";
-import { Button, Container } from "./ui.jsx";
+import { Container } from "./ui.jsx";
 
-/* Tiga slide per halaman, ganti lewat tombol titik atau keyboard. */
+/* Band CTA penutup halaman (DESAIN.md v2 bagian 3.10): satu gradasi hijau,
+ * eyebrow pill transparan, judul putih, lalu dua tombol. Slide teksnya berbeda
+ * per halaman, komponennya satu.
+ */
 const slideHref = (href) => {
   if (href === "whatsapp") return links.whatsapp;
   if (href === "email") return links.mail;
   return href;
 };
 
+const bandClass =
+  "bg-[linear-gradient(120deg,#0a6b4f_0%,#053b2b_100%)]";
+const buttonPrimary =
+  "inline-flex min-h-11 items-center justify-center rounded-lg bg-paper px-6 py-2.5 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50";
+const buttonSecondary =
+  "inline-flex min-h-11 items-center justify-center rounded-lg border border-white/50 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10";
+
 export default function CtaBanner({ page }) {
   const slides = ctaSlides[page] || ctaSlides.beranda;
-  // App memasang komponen ini dengan key sesuai rute, jadi pindah halaman
-  // otomatis kembali ke slide pertama tanpa perlu effect.
   const [index, setIndex] = useState(0);
-
   const slide = slides[index];
+  const isExternal = (href) => !href.startsWith("/");
 
   return (
-    <section aria-label="Ajakan" className="border-t border-line bg-paper py-14 sm:py-16">
+    <section aria-label="Ajakan konsultasi" className="border-t border-line bg-paper py-16 sm:py-20">
       <Container>
-        <div className="relative overflow-hidden rounded-lg border border-emerald-900/30 border-b-4 border-b-emerald-950/50 bg-[linear-gradient(135deg,#10b981_0%,#047857_45%,#065f46_100%)] px-6 py-10 text-center text-white shadow-[0_24px_45px_-15px_rgba(4,120,87,0.55)] sm:px-10 sm:py-12">
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-16 -top-20 h-56 w-56 rounded-full bg-emerald-300/30 blur-3xl"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-24 -right-10 h-64 w-64 rounded-full bg-lime-300/25 blur-3xl"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/40"
-          />
-
-          <div className="relative">
-            <h2 className="text-2xl font-bold tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)] sm:text-3xl">
-              {slide.title}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-emerald-50">
-              {slide.detail}
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
-              {slide.actions.map((action) =>
-                action.href.startsWith("/") ? (
-                  <Button
-                    key={action.label}
-                    to={action.href}
-                    kind={action.kind === "primary" ? "secondary" : action.kind}
-                  >
-                    {action.label}
-                  </Button>
-                ) : (
-                  <Button
-                    key={action.label}
-                    href={slideHref(action.href)}
-                    kind={action.kind === "primary" ? "secondary" : action.kind}
-                  >
-                    {action.label}
-                  </Button>
-                )
-              )}
-            </div>
+        <div className={`rounded-3xl px-6 py-12 text-center shadow-lg sm:px-12 sm:py-14 ${bandClass}`}>
+          <span className="inline-flex items-center rounded-full border border-white/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white">
+            Konsultasi gratis
+          </span>
+          <h2 className="mx-auto mt-5 max-w-2xl text-2xl font-bold leading-snug text-white sm:text-3xl">
+            {slide.title}
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/85">
+            {slide.detail}
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            {slide.actions.map((action) => {
+              const className = action.kind === "primary" ? buttonPrimary : buttonSecondary;
+              return isExternal(action.href) ? (
+                <a
+                  key={action.label}
+                  href={slideHref(action.href)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={className}
+                >
+                  {action.label}
+                </a>
+              ) : action.href.startsWith("/") ? (
+                <Link key={action.label} to={action.href} className={className}>
+                  {action.label}
+                </Link>
+              ) : (
+                <a key={action.label} href={action.href} className={className}>
+                  {action.label}
+                </a>
+              );
+            })}
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2" aria-label="Pilih slide ajakan">
+        <div className="mt-6 flex items-center justify-center gap-2">
           {slides.map((item, i) => (
             <button
               key={item.title}
               type="button"
               aria-current={i === index ? "true" : undefined}
-              aria-label={`Tampilkan slide ${i + 1}: ${item.title}`}
+              aria-label={`Tampilkan ajakan ${i + 1}: ${item.title}`}
               onClick={() => setIndex(i)}
-              className={`h-11 w-6 rounded-full transition-colors ${
-                i === index
-                  ? "bg-[linear-gradient(160deg,#a7f3d0_0%,#34d399_35%,#10b981_65%,#065f46_100%)] ring-2 ring-emerald-950/25 shadow-[0_0_10px_rgba(16,185,129,0.85),0_0_20px_rgba(5,150,105,0.55),0_2px_6px_rgba(6,95,70,0.45)]"
-                  : "bg-emerald-900/10 hover:bg-emerald-400/50"
+              className={`h-2.5 w-8 rounded-full transition-colors ${
+                i === index ? "bg-brand-700" : "bg-line hover:bg-brand-100"
               }`}
             />
           ))}

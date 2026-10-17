@@ -6,16 +6,16 @@ import { Icon } from "./Icons.jsx";
  */
 
 export function Container({ className = "", children }) {
-  return <div className={`mx-auto w-full max-w-6xl px-5 sm:px-6 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-[75rem] px-5 sm:px-6 ${className}`}>{children}</div>;
 }
 
 const buttonBase =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors";
 
 const buttonStyles = {
-  primary: "bg-button text-button-text hover:opacity-90",
+  primary: "bg-button text-button-text hover:bg-brand-900",
   secondary: "border border-button bg-paper text-button hover:bg-button/10",
-  nav: "bg-button text-button-text hover:opacity-90",
+  nav: "bg-button text-button-text hover:bg-brand-900",
 };
 
 /* Tombol bisa berubah jadi tautan router, tautan luar, atau tombol form. */
@@ -120,11 +120,11 @@ export function SectionHead({ label, title, subtitle, align = "center", as = "h2
   const titleSize =
     as === "h1"
       ? "text-3xl sm:text-4xl"
-      : "text-2xl sm:text-3xl";
+      : "text-3xl sm:text-4xl";
   return (
     <div className={`${centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
       {label ? (
-        <p className="text-xs font-semibold uppercase tracking-widest text-button">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">{label}</p>
       ) : null}
       <Heading
         className={`mt-2 ${titleSize} font-bold tracking-tight text-ink ${
@@ -146,7 +146,7 @@ export function Section({ id, className = "", children, divider = false }) {
   return (
     <section
       id={id}
-      className={`scroll-mt-20 ${divider ? "border-t border-line " : ""}py-14 sm:py-20 ${className}`}
+      className={`scroll-mt-20 ${divider ? "border-t border-line " : ""}py-16 sm:py-24 ${className}`}
     >
       <Container>{children}</Container>
     </section>

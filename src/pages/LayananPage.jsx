@@ -1,178 +1,146 @@
 import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo.jsx";
-import { IconCircle } from "../components/ui.jsx";
+import { Button, Container, IconCircle, Section, SectionHead } from "../components/ui.jsx";
+import { Icon } from "../components/Icons.jsx";
 import { links } from "../data/site.js";
 import { services, whyChooseUs } from "../data/services.js";
 
-const title = "Jasa Digital Marketing & Agensi Kreatif Terbaik Semarang";
+/* Daftar layanan mengikuti DESAIN.md v2 bagian 5.2: header halaman, grid 3 + 2
+ * kartu, lalu alasan memilih. Tiap kartu memuat kategori, ringkasan masalah yang
+ * biasa terjadi, deskripsi singkat, dan daftar deliverables. Semua tautan
+ * mengarah ke halaman detail yang benar-benar ada.
+ */
+const title = "Layanan Branding, Konten, dan Performance Marketing";
 const description =
-  "Gaharu Creative menyediakan solusi terpadu: jasa digital marketing, digital branding, kelola sosial media, performance marketing, hingga pembuatan website di Semarang.";
+  "Lima layanan Gaharu Creative: branding, content, social media, performance marketing, dan pengembangan produk digital. Jelaskan kebutuhannya, kami usulkan cakupan kerjanya.";
 
 export default function LayananPage() {
   return (
-    <div className="bg-white text-slate-800 min-h-screen py-16 font-sans">
+    <>
       <Seo title={title} description={description} />
 
-      {/* Header Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        {/* Pill Badge */}
-        <div>
-          <span className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            SOLUSI DIGITAL TERPADU
+      {/* Header halaman */}
+      <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
+        <Container className="py-14 text-center sm:py-20">
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-800">
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-800" />
+            Solusi digital terpadu
           </span>
-        </div>
-
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-          5 Layanan Utama
-        </h1>
-
-        <p className="max-w-2xl mx-auto text-slate-600 text-sm sm:text-base leading-relaxed">
-          Lima layanan yang saling terhubung untuk mendorong pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
-        </p>
-
-        {/* Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 pt-2">
-          {/* Tombol Konsultasi Gratis Berwarna Putih */}
-          <Link
-            href={links.konsultasi}
-            className="bg-white hover:bg-slate-100 text-slate-900 border border-slate-300 font-bold px-6 py-2.5 rounded-full text-sm transition-all shadow-md hover:scale-105"
-          >
-            Konsultasi Gratis →
-          </Link>
-          <Link
-            href={links.penawaran}
-            className="bg-[#007A55] hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-full text-sm transition-all shadow-md hover:scale-105"
-          >
-            Minta Penawaran
-          </Link>
-        </div>
+          <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+            5 Layanan Utama
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
+            Lima layanan yang saling terhubung untuk mendorong pertumbuhan bisnis Anda secara
+            sistematis dan berkelanjutan.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button href={links.konsultasi} kind="primary">
+              Konsultasi Gratis
+            </Button>
+            <Button to="/kontak" kind="secondary">
+              Minta Penawaran
+            </Button>
+          </div>
+        </Container>
       </section>
 
-      {/* Grid Layanan Utama */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 space-y-6">
-        {/* Baris 1: 3 Kartu */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Grid layanan: 3 kartu di baris pertama, 2 kartu lebih lebar di baris kedua */}
+      <Section>
+        <div className="grid gap-6 md:grid-cols-3">
           {services.slice(0, 3).map((service) => (
             <ServiceCard key={service.slug} service={service} />
           ))}
         </div>
-
-        {/* Baris 2: 2 Kartu Lebih Lebar */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.slice(3, 5).map((service) => (
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          {services.slice(3).map((service) => (
             <ServiceCard key={service.slug} service={service} wide />
           ))}
         </div>
-      </section>
+      </Section>
 
-      {/* Section: Kenapa Memilih Gaharu */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-28 text-center bg-slate-50 py-16 rounded-3xl border border-slate-100">
-        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-          Kenapa Memilih Gaharu
-        </h2>
-        <p className="max-w-xl mx-auto mt-3 text-slate-600 text-sm leading-relaxed">
-          Pendekatan yang memastikan strategi jelas, eksekusi rapi, dan dampak dapat diukur.
-        </p>
-
-        {/* 4 Kolom Keunggulan */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 px-6">
+      {/* Kenapa memilih Gaharu */}
+      <Section className="bg-lav-50">
+        <SectionHead
+          label="ALASAN MEMILIH KAMI"
+          title="Kenapa Memilih Gaharu"
+          subtitle="Pendekatan yang memastikan strategi jelas, eksekusi rapi, dan dampaknya bisa diukur."
+        />
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {whyChooseUs.map((item) => (
-            <div key={item.title} className="flex flex-col items-center text-center space-y-3 group">
-              <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-[#007A55] text-xl group-hover:bg-[#007A55] group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-sm">
-                <IconCircle name={item.icon} className="bg-transparent border-0" />
-              </div>
-              <h3 className="font-bold text-slate-900 text-base pt-2">{item.title}</h3>
-              <p className="text-[11px] font-semibold text-[#007A55] uppercase tracking-widest">
+            <div key={item.title}>
+              <IconCircle name={item.icon} />
+              <h3 className="mt-4 text-base font-semibold text-ink">{item.title}</h3>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-700">
                 {item.label}
               </p>
-              <p className="text-xs text-slate-600 leading-relaxed max-w-xs">
-                {item.detail}
-              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{item.detail}</p>
             </div>
           ))}
         </div>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }
 
-{/* Komponen Kartu Layanan */}
-function ServiceCard({ service }) {
+function ServiceCard({ service, wide = false }) {
+  const problem = service.problems?.[0];
+
   return (
     <article
       id={service.slug}
-      className="group relative bg-white border border-slate-200 text-slate-800 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300"
+      className="flex flex-col rounded-2xl border border-line bg-paper p-6 scroll-mt-24"
     >
-      <div>
-        {/* Header Kartu: Tag Kategori & Arrow Link */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-            {service.tag}
-          </span>
-          <Link
-            to={`/layanan/${service.slug}`}
-            className="text-slate-400 hover:text-[#007A55] transition-colors p-1"
-            aria-label={`Detail ${service.title}`}
-          >
-            <svg
-              className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
-          </Link>
-        </div>
+      <div className="flex items-start justify-between gap-4">
+        <span className="inline-flex items-center gap-2 rounded-md bg-chip px-3 py-1 text-xs font-semibold uppercase tracking-widest text-chip-ink">
+          {service.tag}
+        </span>
+        <Icon name="arrowUpRight" className="h-5 w-5 text-brand-700" />
+      </div>
 
-        {/* Visual Box Placeholder / Banner Ilustrasi Visual Layanan */}
-        <Link to={`/layanan/${service.slug}`} className="block">
-          <div className="mt-4 bg-emerald-50/60 rounded-xl border border-emerald-100 p-6 flex flex-col items-center justify-center text-center space-y-2 min-h-[120px] group-hover:bg-emerald-100/50 transition-colors">
-            <div className="w-10 h-10 rounded-lg bg-white shadow-sm border border-emerald-200 text-[#007A55] flex items-center justify-center font-bold">
-              <IconCircle name={service.icon} className="bg-transparent border-0 text-[#007A55]" />
-            </div>
-            <p className="text-xs font-bold tracking-wider text-emerald-800 uppercase">
-              {service.title} FRAMEWORK
-            </p>
-          </div>
+      {/* Area visual: latar mint, isinya nama layanan dan ikonnya */}
+      <Link
+        to={`/layanan/${service.slug}`}
+        className="mt-4 flex min-h-[120px] flex-col items-center justify-center gap-2 rounded-xl bg-mint p-6 text-center"
+      >
+        <IconCircle name={service.icon} />
+        <span className="text-sm font-semibold uppercase tracking-widest text-brand-800">
+          {service.tag}
+        </span>
+      </Link>
+
+      <h3 className="mt-5 text-lg font-semibold text-ink">
+        <Link to={`/layanan/${service.slug}`} className="hover:text-brand-700">
+          {service.title}
         </Link>
+      </h3>
 
-        {/* Judul dengan Link ke Detail */}
-        <h3 className="mt-5 text-xl font-bold text-slate-900 hover:text-[#007A55] transition-colors">
-          <Link to={`/layanan/${service.slug}`}>
-            {service.title}
-          </Link>
-        </h3>
-
-        {/* Problem Highlight Box */}
-        <div className="mt-3 bg-red-50 border border-red-100 rounded-lg p-3 text-xs leading-relaxed text-slate-700">
-          <span className="font-bold text-red-600">Problem: </span>
-          {service.problem}
+      {problem ? (
+        <div className="mt-3 rounded-lg bg-danger-50 p-3">
+          <p className="text-xs font-semibold text-danger-600">
+            Masalah yang sering muncul: <span className="font-normal text-muted">{problem.title}</span>
+          </p>
         </div>
+      ) : null}
 
-        {/* Solusi Deskripsi Singkat */}
-        <p className="mt-4 text-xs sm:text-sm leading-relaxed text-slate-600">
-          {service.short || service.solution}
-        </p>
-      </div>
+      <p className="mt-4 flex-1 text-sm leading-relaxed text-muted">{service.short}</p>
 
-      {/* Deliverables List */}
-      <div className="mt-6 pt-4 border-t border-slate-100">
-        <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
-          DELIVERABLES:
-        </p>
-        <div className="flex flex-wrap gap-1.5">
-          {service.deliverables && service.deliverables.map((item) => (
-            <span
-              key={item}
-              className="bg-slate-100 text-slate-700 text-[11px] font-medium px-2.5 py-1 rounded-md border border-slate-200/60"
-            >
-              {item}
-            </span>
-          ))}
+      {service.deliverables?.length ? (
+        <div className={wide ? "mt-6 border-t border-line pt-4" : "mt-6 border-t border-line pt-4"}>
+          <p className="text-xs font-semibold uppercase tracking-widest text-subtle">
+            Yang Anda terima
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {service.deliverables.slice(0, wide ? 5 : 4).map((item) => (
+              <li
+                key={item.title}
+                className="rounded-md bg-chip px-2.5 py-1 text-xs font-medium text-chip-ink"
+              >
+                {item.title}
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      ) : null}
     </article>
   );
 }

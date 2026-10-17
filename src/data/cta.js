@@ -162,8 +162,8 @@ export const ctaSlides = {
 
 /* Kanal kontak. Nilai diambil dari src/data/site.js supaya hanya ada satu
  * sumber kebenaran. Yang belum dikonfirmasi klien bernilai null + verified
- * false, dan dirender sebagai "belum tersedia" — bukan angka contoh.
- * Audit staging 12 Okt 2026 (temuan C01.
+ * false, dan dirender sebagai "belum tersedia", bukan angka contoh.
+ * Audit staging 12 Okt 2026 (temuan C01).
  */
 export const kontakInfo = [
   {

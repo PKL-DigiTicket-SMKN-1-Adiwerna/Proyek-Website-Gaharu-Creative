@@ -3,7 +3,7 @@ export const tentangIntro = {
   title: "Tentang Gaharu Creative",
   subtitle: "Partner Digital 360",
   description:
-    "Gaharu Creative membantu brand tumbuh melalui strategi, desain, pengembangan, pemasaran, hingga optimasi berkelanjutan, dengan pendekatan digital 360 yang terukur.",
+    "Gaharu Creative menangani strategi, desain, pengembangan, pemasaran, sampai optimasi lanjutan dalam satu alur kerja yang terukur.",
 };
 
 export const ceritaCards = [
@@ -15,7 +15,7 @@ export const ceritaCards = [
   },
   {
     title: "Fokus pada dampak nyata",
-    label: "Bukan sekadar tampilan",
+    label: "Dampak yang bisa diukur",
     detail:
       "Membangun website, kampanye, dan sistem digital yang mendukung pertumbuhan, meliputi visibilitas, positioning, leads, dan engagement, diukur lewat metrik jelas dan dievaluasi berkala.",
   },

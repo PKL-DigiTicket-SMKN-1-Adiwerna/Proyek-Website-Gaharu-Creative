@@ -1,10 +1,10 @@
 import { jumlahMitra } from "./klien.js";
 
 export const segments = [
-  { key: "semua", label: "Semua", icon: "🌐", detail: "Seluruh portofolio proyek dari segmen UMKM, Korporat, hingga Pemerintah." },
-  { key: "umkm", label: "UMKM", icon: "🏪", detail: "Fokus pada peningkatan visibilitas, perolehan qualified leads, dan percepatan penjualan bisnis lokal." },
-  { key: "korporat", label: "Korporat", icon: "🏢", detail: "Strategi kampanye berskala luas, omnichannel positioning, dan konten terintegrasi enterprise B2B/B2C." },
-  { key: "pemerintah", label: "Pemerintah", icon: "🏛️", detail: "Kampanye layanan publik berbasis edukasi dengan pendekatan komunikasi yang transparan, jelas, dan terukur." },
+  { key: "semua", label: "Semua", icon: "layers", detail: "Seluruh portofolio proyek dari segmen UMKM, Korporat, hingga Pemerintah." },
+  { key: "umkm", label: "UMKM", icon: "building", detail: "Fokus pada peningkatan visibilitas, perolehan qualified leads, dan percepatan penjualan bisnis lokal." },
+  { key: "korporat", label: "Korporat", icon: "building", detail: "Strategi kampanye berskala luas, omnichannel positioning, dan konten terintegrasi enterprise B2B/B2C." },
+  { key: "pemerintah", label: "Pemerintah", icon: "landmark", detail: "Kampanye layanan publik berbasis edukasi dengan pendekatan komunikasi yang transparan, jelas, dan terukur." },
 ];
 
 export const portfolioItems = [
@@ -14,7 +14,9 @@ export const portfolioItems = [
     tag: "UMKM",
     segment: "umkm",
     summary: "Kampanye konten digital terpadu & performa ads harian yang mendorong peningkatan penjualan dan jangkauan bisnis online.",
-    result: "Peningkatan omzet 2.4x dan pertumbuhan leads hingga +180%.",
+    /* Angka hasil dari desain, belum dikonfirmasi pemilik usaha. Disimpan
+     * sebagai draft supaya tidak dirender sebagai klaim (aturan anti-slop R-17). */
+    resultDraft: "Peningkatan omzet 2.4x dan pertumbuhan leads hingga +180%.",
     image: "/Beranda-Portofolio(UMKM E-Commerce).webp",
   },
   {
@@ -23,7 +25,7 @@ export const portfolioItems = [
     tag: "Korporat",
     segment: "korporat",
     summary: "Penguatan awareness dan penanganan pipeline B2B melalui strategi thought leadership dan performance ads.",
-    result: "Jangkauan total 1.2M+ impresi dan 450+ qualified B2B leads.",
+    resultDraft: "Jangkauan total 1.2M+ impresi dan 450+ qualified B2B leads.",
     image: "/Beranda-Portofolio(Gaharu Cloud).webp",
   },
   {
@@ -32,7 +34,7 @@ export const portfolioItems = [
     tag: "Pemerintah",
     segment: "pemerintah",
     summary: "Kampanye informasi publik berbasis micro-learning dan konten infografis interaktif lintas demografi.",
-    result: "Tingkat engagement 92% dengan indeks kepuasan publik 4.8/5.",
+    resultDraft: "Tingkat engagement 92% dengan indeks kepuasan publik 4.8/5.",
     image: "/Proyek Literasi Digital Pemerintah.webp",
   },
 ];
