@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Container } from "./ui.jsx";
-import Logo from "./Logo.jsx";
+import { LogoNama } from "./Logo.jsx";
 import { site, links, footerExtraLinks, footerServices } from "../data/site.js";
 
 /* Kontak footer dibaca dari src/data/site.js supaya hanya ada satu sumber
@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           {/* Kolom 1: Logo, Deskripsi, dan Media Sosial */}
           <div className="space-y-6 lg:col-span-5">
-            <Logo className="h-10 w-auto" />
+            <LogoNama className="h-10 w-auto" />
             <p className="max-w-md text-sm leading-relaxed text-muted">
               Gaharu Creative adalah agensi digital 360° yang menangani strategi, eksekusi konten,
               sampai produk digital untuk enterprise, institusi, dan UMKM di Indonesia.

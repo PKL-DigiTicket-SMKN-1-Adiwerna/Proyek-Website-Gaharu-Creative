@@ -91,7 +91,7 @@ export default function Header() {
       <Container>
         <div className="flex h-[72px] items-center justify-between gap-4">
           <Link to="/" className="flex shrink-0 items-center" aria-label={`${site.name}, beranda`}>
-            <Logo className="h-9 w-auto sm:h-10" />
+            <Logo className="h-12 w-auto" />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
