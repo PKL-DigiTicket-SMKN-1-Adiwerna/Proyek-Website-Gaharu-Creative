@@ -52,15 +52,20 @@ export default function TentangPage() {
               </div>
             </div>
 
-            {/* Gambar Hero Menggunakan /Tentang Kami.webp */}
-            <div className="group relative overflow-hidden rounded-2xl border border-brand-100 bg-white p-2 shadow-md transition-shadow duration-300 hover:shadow-lg">
-              <div className="overflow-hidden rounded-xl">
+            {/* Gambar hero memakai /Tentang Kami.webp. Bingkainya satu lapis saja,
+             * mengikuti pola kartu di beranda: border tipis, tanpa bayangan besar
+             * (DESAIN.md 2.4), dan rasio dikunci supaya tinggi tidak melompat saat
+             * gambar selesai dimuat. */}
+            <div className="group relative overflow-hidden rounded-2xl border border-line transition-colors duration-300 hover:border-brand-600">
+              <div className="aspect-[3/2]">
                 {/* Lapisan parallax ringan pada gambar hero. */}
                 <div data-parallax="1" className="h-full w-full">
                   <img
                     src="/Tentang Kami.webp"
                     alt="Tim Gaharu Creative"
-                    className="h-full w-full scale-110 object-cover object-center transition-transform duration-700 "
+                    width={1966}
+                    height={1313}
+                    className="h-full w-full scale-110 object-cover object-center transition-transform duration-700"
                   />
                 </div>
               </div>
