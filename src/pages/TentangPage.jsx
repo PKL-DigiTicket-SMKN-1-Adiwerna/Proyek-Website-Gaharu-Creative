@@ -20,7 +20,7 @@ import {
 
 const title = "Tentang Kami – Konsultan Digital Marketing Semarang & Agensi Kreatif";
 const description =
-  "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2020: strategi, digital branding, pembuatan website, dan pemasaran digital.";
+  "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2016: strategi, digital branding, pembuatan website, dan pemasaran digital.";
 
 export default function TentangPage() {
   return (
@@ -48,7 +48,7 @@ export default function TentangPage() {
                 Agensi kreatif dan konsultan digital marketing 360 berbasis di Semarang dan Indonesia yang berfokus pada pertumbuhan bisnis secara terukur.
               </p>
               <div className="mt-8">
-                <Button to={links.konsultasi} kind="primary" className="shadow-md shadow-emerald-600/20 transition-transform hover:-translate-y-0.5">
+                <Button href={links.konsultasi} kind="primary" className="shadow-md shadow-emerald-600/20 transition-transform hover:-translate-y-0.5">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -149,7 +149,7 @@ export default function TentangPage() {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <Button to={links.konsultasi} kind="primary" className="shadow-md transition-transform hover:-translate-y-0.5">
+          <Button href={links.konsultasi} kind="primary" className="shadow-md transition-transform hover:-translate-y-0.5">
             Diskusikan Kebutuhan Anda
           </Button>
         </div>

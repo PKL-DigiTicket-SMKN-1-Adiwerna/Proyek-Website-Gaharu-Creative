@@ -47,7 +47,7 @@ export default function PortofolioPage() {
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
-                  to={links.konsultasi}
+                  href={links.konsultasi}
                   className="bg-[#007A55] hover:bg-emerald-800 text-white font-bold px-7 py-3 rounded-full text-sm transition-all shadow-md hover:scale-105"
                 >
                   Ajukan Konsultasi →

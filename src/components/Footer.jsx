@@ -136,7 +136,7 @@ export default function Footer() {
 
         {/* Bagian Bawah: Copyright dan Tautan Legal */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-100 pt-8 text-xs text-slate-500 sm:flex-row">
-          <p>© 2020–2026 Gaharu Creative. Semua hak dilindungi.</p>
+          <p>© 2016–2026 Gaharu Creative. Semua hak dilindungi.</p>
           <div className="flex flex-wrap items-center gap-6">
             <span className="cursor-pointer transition-colors hover:text-slate-800">Kebijakan Privasi</span>
             <span className="cursor-pointer transition-colors hover:text-slate-800">Syarat &amp; Ketentuan</span>

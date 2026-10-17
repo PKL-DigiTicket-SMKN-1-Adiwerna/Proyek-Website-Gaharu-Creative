@@ -35,13 +35,13 @@ export default function LayananPage() {
         <div className="flex flex-wrap justify-center gap-4 pt-2">
           {/* Tombol Konsultasi Gratis Berwarna Putih */}
           <Link
-            to={links.konsultasi}
+            href={links.konsultasi}
             className="bg-white hover:bg-slate-100 text-slate-900 border border-slate-300 font-bold px-6 py-2.5 rounded-full text-sm transition-all shadow-md hover:scale-105"
           >
             Konsultasi Gratis →
           </Link>
           <Link
-            to={links.penawaran}
+            href={links.penawaran}
             className="bg-[#007A55] hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-full text-sm transition-all shadow-md hover:scale-105"
           >
             Minta Penawaran

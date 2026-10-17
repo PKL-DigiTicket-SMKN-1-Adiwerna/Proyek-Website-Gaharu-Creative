@@ -18,7 +18,7 @@ import RekamJejak from "../components/RekamJejak.jsx";
 
 const title = `${site.name} – Digital Agency Partner & Agensi Kreatif Indonesia`;
 const description =
-  "Gaharu Creative adalah digital agency & agensi kreatif terpercaya sejak 2020. Kami menyediakan layanan digital marketing, digital branding, jasa pembuatan website, hingga performance marketing untuk UMKM dan Enterprise.";
+  "Gaharu Creative adalah digital agency & agensi kreatif terpercaya sejak 2016. Kami menyediakan layanan digital marketing, digital branding, jasa pembuatan website, hingga performance marketing untuk UMKM dan Enterprise.";
 
 export default function HomePage() {
   return (
@@ -54,7 +54,7 @@ export default function HomePage() {
                 <Button to={links.portofolio} kind="secondary" className="shadow-sm transition-transform hover:-translate-y-0.5">
                   Lihat Portofolio
                 </Button>
-                <Button to={links.konsultasi} kind="primary" className="shadow-md shadow-emerald-600/20 transition-transform hover:-translate-y-0.5">
+                <Button href={links.konsultasi} kind="primary" className="shadow-md shadow-emerald-600/20 transition-transform hover:-translate-y-0.5">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -121,7 +121,7 @@ export default function HomePage() {
       {/* Statistik */}
       <Section divider>
         <SectionHead
-          title="Sejak 2020 – Berfokus pada Hasil Nyata dan Pertumbuhan Komprehensif"
+          title="Sejak 2016 – Berfokus pada Hasil Nyata dan Pertumbuhan Komprehensif"
           subtitle="Didedikasikan sebagai agensi kreatif berpengalaman yang mendampingi setiap tahap eksekusi digital branding hingga peluncuran aset digital berkinerja tinggi."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-3">

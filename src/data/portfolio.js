@@ -1,3 +1,5 @@
+import { jumlahMitra } from "./klien.js";
+
 export const segments = [
   { key: "semua", label: "Semua", icon: "🌐", detail: "Seluruh portofolio proyek dari segmen UMKM, Korporat, hingga Pemerintah." },
   { key: "umkm", label: "UMKM", icon: "🏪", detail: "Fokus pada peningkatan visibilitas, perolehan qualified leads, dan percepatan penjualan bisnis lokal." },
@@ -38,9 +40,9 @@ export const portfolioItems = [
 export const featuredWork = portfolioItems;
 
 export const stats = [
-  { label: "KLIEN TERLAYANI", value: "50+" },
-  { label: "PROYEK SELESAI", value: "120+" },
-  { label: "KEPUASAN KLIEN", value: "98%" },
+  { label: "Tahun Berdiri", value: "Sejak 2016" },
+  { label: "Usaha Terbantu", value: "25.000+ Usaha" },
+  { label: "Mitra Strategis", value: `${jumlahMitra} Institusi` },
 ];
 
 export const testimonials = [

@@ -59,7 +59,7 @@ export default function InsightPage() {
               <Button to={links.portofolio} kind="secondary" className="rounded-full">
                 Lihat Portofolio
               </Button>
-              <Button to={links.konsultasi} kind="primary" className="rounded-full bg-[#007A55] hover:bg-emerald-800">
+              <Button href={links.konsultasi} kind="primary" className="rounded-full bg-[#007A55] hover:bg-emerald-800">
                 Konsultasi Gratis
               </Button>
             </div>
