@@ -125,6 +125,8 @@ export default function InsightPage() {
                     <img
                       src={post.image || "/Beranda-Visual.webp"}
                       alt={post.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group- transition-transform duration-500"
                     />
                   </div>
@@ -196,6 +198,11 @@ export default function InsightPage() {
                 Permintaan Anda diteruskan ke WhatsApp kami. Balas pesannya supaya email {email} masuk daftar kiriman.
               </p>
             )}
+
+            <p className="text-xs leading-relaxed text-muted">
+              Tombol di bawah membuka WhatsApp dengan pesan berisi alamat email Anda. Tekan kirim
+              di WhatsApp supaya permintaan benar-benar sampai ke tim kami.
+            </p>
 
             <Button kind="primary" className="w-full" type="submit">
               Berlangganan Sekarang

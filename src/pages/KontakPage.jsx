@@ -232,6 +232,20 @@ export default function KontakPage() {
                 </p>
               ) : null}
 
+              <div className="rounded-md border border-line bg-block p-4 sm:col-span-2">
+                <p className="text-sm font-semibold text-ink">Alur pengiriman form ini</p>
+                <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm leading-relaxed text-muted">
+                  <li>Isi kolom wajib di atas, lalu tekan tombol kirim di bawah.</li>
+                  <li>
+                    WhatsApp terbuka di tab baru dengan isi pesan yang sudah tersusun dari isian Anda.
+                  </li>
+                  <li>
+                    Tekan kirim di WhatsApp supaya pesan benar-benar masuk ke tim kami. Situs ini
+                    tidak menyimpan isian form di server, jadi tidak ada pesan yang terkirim sendiri.
+                  </li>
+                </ol>
+              </div>
+
               <div className="flex justify-center sm:col-span-2">
                 <Button kind="primary" type="submit" className="w-full sm:w-auto">
                   Kirim lewat WhatsApp

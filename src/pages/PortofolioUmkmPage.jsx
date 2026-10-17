@@ -39,7 +39,7 @@ export default function PortofolioUmkmPage() {
                   <span className="font-bold text-ink mt-0.5 block">UMKM</span>
                 </div>
                 <div>
-                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Tahun</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Periode</span>
                   <span className="font-bold text-ink mt-0.5 block">2026</span>
                 </div>
                 <div>
@@ -54,6 +54,8 @@ export default function PortofolioUmkmPage() {
                 <img
                   src="/Beranda-Portofolio(UMKM E-Commerce).webp"
                   alt="UMKM E-Commerce Lokal"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-auto aspect-[4/3] object-cover object-center"
                 />
               </div>
@@ -68,7 +70,7 @@ export default function PortofolioUmkmPage() {
           <div className="w-full lg:w-7/12 space-y-6">
             <div className="space-y-2">
               <span className="text-xs font-bold text-button uppercase tracking-widest">PENDEKATAN STRATEGIS</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Tentang Proyek</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Konteks dan Tantangan</h2>
               <p className="text-muted text-sm leading-relaxed">
                 Program akselerasi bisnis lokal berbasis e-commerce ini bertujuan untuk meningkatkan kesadaran merek, memperluas jangkauan pasar, dan mendorong konversi penjualan secara berkelanjutan melalui integrasi media sosial dan performance ads.
               </p>
@@ -77,7 +79,7 @@ export default function PortofolioUmkmPage() {
             <div className="bg-brand-50 border border-brand-100 rounded-2xl p-6 space-y-3 shadow-sm">
               <div className="flex items-center gap-2 text-button font-extrabold text-sm">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-800"><Icon name="check" className="h-4 w-4" /></span>
-                <h3>Solusi yang Kami Berikan</h3>
+                <h3>Peran dan Pekerjaan Gaharu</h3>
               </div>
               <ul className="space-y-2.5 text-xs sm:text-sm text-muted pt-1">
                 <li className="flex items-start gap-2.5">
@@ -98,42 +100,41 @@ export default function PortofolioUmkmPage() {
 
           <div className="w-full lg:w-5/12 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-2xl overflow-hidden border border-line bg-block shadow-sm">
-              <img src="/Portofolio-UMKM E-Commerce lokal.webp" alt="Dokumentasi 1" className="w-full h-44 object-cover object-center" />
+              <img src="/Portofolio-UMKM E-Commerce lokal.webp" alt="Dokumentasi 1" loading="lazy" decoding="async" className="w-full h-44 object-cover object-center" />
             </div>
             <div className="rounded-2xl overflow-hidden border border-line bg-block shadow-sm">
-              <img src="/Portofolio-UMKM E-Commerce(Tentang Proyek).webp" alt="Dokumentasi 2" className="w-full h-44 object-cover object-center" />
+              <img src="/Portofolio-UMKM E-Commerce(Tentang Proyek).webp" alt="Dokumentasi 2" loading="lazy" decoding="async" className="w-full h-44 object-cover object-center" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. RINGKASAN DAMPAK */}
+      {/* 3. OUTPUT DAN CAKUPAN KERJA */}
       <section className="py-12 bg-block border-y border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center space-y-1 max-w-md mx-auto">
-            <span className="text-xs font-bold text-button uppercase tracking-widest">METRIK KINERJA TERUKUR</span>
-            <h2 className="text-2xl font-extrabold text-ink">Ringkasan Dampak Bisnis</h2>
-            <p className="text-xs text-subtle">Angka di bagian ini masih contoh tampilan dari desain, belum dikonfirmasi pemilik proyek.</p>
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-button uppercase tracking-widest">HASIL KERJA YANG DISERAHKAN</span>
+            <h2 className="text-2xl font-extrabold text-ink">Output dan Cakupan Kerja</h2>
+            <p className="text-muted text-xs sm:text-sm leading-relaxed max-w-2xl">
+              Berikut yang diserahkan tim kami pada proyek ini.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-button">+180%</p>
-              <p className="text-xs font-bold text-muted uppercase tracking-wider">NEW LEADS</p>
-            </div>
-            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-button">2.4x</p>
-              <p className="text-xs font-bold text-muted uppercase tracking-wider">OMZET NAIK</p>
-            </div>
-            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-button">45K</p>
-              <p className="text-xs font-bold text-muted uppercase tracking-wider">FOLLOWERS</p>
-            </div>
-            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
-              <p className="text-2xl sm:text-3xl font-extrabold text-button">4.6x</p>
-              <p className="text-xs font-bold text-muted uppercase tracking-wider">ENGAGEMENT</p>
-            </div>
-          </div>
+          <ul className="grid gap-4 sm:grid-cols-3">
+            <li className="rounded-2xl border border-line bg-paper p-5 text-sm leading-relaxed text-muted">
+              Katalog produk dan struktur halaman toko daring.
+            </li>
+            <li className="rounded-2xl border border-line bg-paper p-5 text-sm leading-relaxed text-muted">
+              Materi dan kalender konten media sosial harian.
+            </li>
+            <li className="rounded-2xl border border-line bg-paper p-5 text-sm leading-relaxed text-muted">
+              Kampanye iklan berbayar dengan pemantauan harian.
+            </li>
+          </ul>
+
+          <p className="text-xs text-subtle">
+            Angka hasil proyek belum tayang karena masih menunggu konfirmasi pemilik proyek.
+          </p>
         </div>
       </section>
 
@@ -151,7 +152,7 @@ export default function PortofolioUmkmPage() {
             <Link to="/portofolio/korporat-gaharu-cloud" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" className="w-full h-full object-cover group- transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover group- transition-transform duration-300" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Korporat: Gaharu Cloud Launch</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Penguatan awareness dan penanganan pipeline B2B.</p>
@@ -162,7 +163,7 @@ export default function PortofolioUmkmPage() {
             <Link to="/portofolio/pemerintah-literasi-digital" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" className="w-full h-full object-cover group- transition-transform duration-300" />
+                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" loading="lazy" decoding="async" className="w-full h-full object-cover group- transition-transform duration-300" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Pemerintah: Literasi Digital</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Kampanye informasi publik berbasis micro-learning.</p>

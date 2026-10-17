@@ -82,6 +82,8 @@ export default function HomePage() {
                                 alt="Tim Gaharu Creative sedang bekerja di depan monitor"
                                 width={1913}
                                 height={1275}
+                                fetchPriority="high"
+                                decoding="async"
                                 className="h-full w-full scale-110 object-cover object-center"
                               />
                             </div>
@@ -121,6 +123,8 @@ export default function HomePage() {
             <img
               src="/Beranda-Visual.webp"
               alt="Kolase pekerjaan tim Gaharu Creative"
+              loading="lazy"
+              decoding="async"
               className="aspect-[16/10] w-full object-cover object-center"
             />
           </div>
@@ -184,6 +188,8 @@ export default function HomePage() {
                 <img
                   src={item.image || "/Portofolio.webp"}
                   alt={item.title}
+                  loading="lazy"
+                  decoding="async"
                   className="aspect-[16/9] w-full object-cover object-center"
                 />
               </div>

@@ -24,6 +24,8 @@ export function LogoNama({ className = "h-10 w-auto" }) {
     <img
       src="/logo-nama.png"
       alt="Gaharu Creative"
+      loading="lazy"
+      decoding="async"
       width={416}
       height={112}
       className={`${className} object-contain`}

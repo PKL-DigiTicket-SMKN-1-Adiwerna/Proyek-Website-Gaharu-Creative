@@ -65,6 +65,8 @@ export default function TentangPage() {
                     alt="Tim Gaharu Creative"
                     width={1966}
                     height={1313}
+                    fetchPriority="high"
+                    decoding="async"
                     className="h-full w-full scale-110 object-cover object-center transition-transform duration-700"
                   />
                 </div>
@@ -95,6 +97,8 @@ export default function TentangPage() {
             <img
               src="/Tentang Kami-Cerita Kami.webp"
               alt="Perjalanan Gaharu Creative"
+              loading="lazy"
+              decoding="async"
               className="aspect-[4/3] w-full object-cover object-center transition-transform duration-700 group-"
             />
           </div>

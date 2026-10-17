@@ -12,6 +12,7 @@ const description =
 
 export default function PortofolioPage() {
   const [active, setActive] = useState("semua");
+  const labelAktif = segments.find((item) => item.key === active)?.label ?? "Semua";
 
   // Membatasi secara presisi tepat 3 proyek utama
   const visible = useMemo(() => {
@@ -63,24 +64,6 @@ export default function PortofolioPage() {
                 </Link>
               </div>
 
-              <div className="pt-4 flex items-center gap-3 text-xs">
-                <span className="text-muted font-semibold uppercase tracking-widest text-[10px]">PINTAS:</span>
-                <div className="flex flex-wrap gap-2">
-                  {segments.map((item) => (
-                    <button
-                      key={item.key}
-                      onClick={() => setActive(item.key)}
-                      className={`px-4 py-1.5 rounded-lg font-semibold transition-all text-xs ${
-                        active === item.key
-                          ? "bg-button text-white shadow-sm"
-                          : "bg-white border border-line text-muted hover:bg-block"
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
 
             <div className="lg:col-span-6 relative">
@@ -88,6 +71,8 @@ export default function PortofolioPage() {
                 <img
                   src="/Beranda.webp"
                   alt="Portofolio Gaharu Creative"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full aspect-[4/3] object-cover object-center"
                 />
               </div>
@@ -108,11 +93,17 @@ export default function PortofolioPage() {
               </p>
             </div>
 
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div
+              role="group"
+              aria-label="Filter kategori portofolio"
+              className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
               {segments.map((item) => (
                 <button
                   key={item.key}
                   type="button"
+                  aria-pressed={active === item.key}
+                  aria-controls="studi-kasus"
                   onClick={() => setActive(item.key)}
                   className={`group relative text-left p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                     active === item.key
@@ -145,6 +136,9 @@ export default function PortofolioPage() {
             <p className="text-muted text-xs sm:text-sm leading-relaxed">
               Klik kartu proyek untuk melihat strategi dan hasil detail proyek.
             </p>
+            <p aria-live="polite" className="text-xs font-semibold uppercase tracking-wider text-button">
+              Menampilkan {visible.length} dari {portfolioItems.length} studi kasus kategori {labelAktif}
+            </p>
             <p className="text-xs text-subtle">
               Angka hasil per proyek belum ditampilkan karena masih menunggu konfirmasi pemilik proyek.
             </p>
@@ -170,6 +164,8 @@ export default function PortofolioPage() {
                       <img
                         src={imageSrc}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover object-center transition-transform duration-500 group-"
                       />
                     </div>

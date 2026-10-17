@@ -12,10 +12,21 @@
     <title>Gaharu Creative | Konsultan dan Eksekutor 360 Digital Agency</title>
     <meta name="description" content="Gaharu Creative, konsultan dan eksekutor 360 derajat digital agency sejak 2016. Branding, content, social media, performance marketing, dan digital product development." />
     <meta name="robots" content="index, follow" />
+    <!-- Meta berbagi ditulis statis supaya crawler WhatsApp/Facebook yang tidak
+         menjalankan JavaScript tetap dapat judul, deskripsi, dan gambar.
+         og:url, og:image, dan canonical diisi otomatis saat build oleh plugin
+         gaharu-seo di vite.config.js memakai VITE_SITE_URL. -->
     <meta property="og:site_name" content="Gaharu Creative" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="Gaharu Creative | Konsultan dan Eksekutor 360 Digital Agency" />
+    <meta property="og:description" content="Gaharu Creative, konsultan dan eksekutor 360 derajat digital agency sejak 2016. Branding, content, social media, performance marketing, dan digital product development." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo Gaharu Creative dengan tagline Konsultan dan Eksekutor 360 Digital Agency" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Gaharu Creative | Konsultan dan Eksekutor 360 Digital Agency" />
+    <meta name="twitter:description" content="Branding, content, social media, performance marketing, dan digital product development sejak 2016." />
   </head>
   <body>
     <div id="root"></div>
