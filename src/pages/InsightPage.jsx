@@ -14,7 +14,7 @@ import { Icon } from "../components/Icons.jsx";
 import { links, waBase } from "../data/site.js";
 import { insightCategories, posts, insightsDraftOnly } from "../data/insights.js";
 
-const title = "Insight | Artikel Strategi Digital Gaharu Creative";
+const title = "Insight: Artikel Strategi Digital";
 const description = "Artikel, panduan, dan studi kasus seputar strategi pertumbuhan digital dari Gaharu Creative.";
 
 export default function InsightPage() {
@@ -113,7 +113,7 @@ export default function InsightPage() {
             {visible.map((post) => (
               <article
                 key={post.slug}
-                className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-5 shadow-sm transition-all duration-300 hover:border-brand-600 hover:shadow-xl"
+                className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-5 transition-all duration-300 hover:border-brand-600"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">

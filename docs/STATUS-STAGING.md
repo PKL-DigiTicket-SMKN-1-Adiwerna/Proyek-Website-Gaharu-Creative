@@ -12,7 +12,7 @@ dipakai. Nilai itu menentukan isi empat hal sekaligus:
 
 - `canonical` di halaman beranda (statis, jadi crawler yang tidak menjalankan
   JavaScript tetap membacanya);
-- `og:url` dan `og:image` (gambar pratinjau 1200x630 di `public/og-gaharu-creative.png`);
+- `og:url` dan `og:image` (gambar pratinjau 1200x630 di `public/og-gaharu-creative.jpg`);
 - `Sitemap:` di `robots.txt`;
 - alamat setiap halaman di `sitemap.xml`.
 
@@ -52,8 +52,39 @@ berkasnya ada, jadi selalu periksa isi responsnya.
 Dicatat di sini supaya tidak tayang sebagai data contoh:
 
 - email resmi, alamat kantor, peta, dan akun sosial resmi (lihat `src/data/site.js`);
-- angka hasil pada studi kasus portofolio (blok contoh sudah disembunyikan,
-  bukan sekadar diberi label);
+- angka hasil pada studi kasus portofolio (blok contoh tidak dirender sama sekali);
 - testimoni klien (daftar `testimonials` masih kosong, section tidak dirender);
 - bentuk badan usaha dan NIB;
-- kebijakan privasi, menyusul setelah alamat dan email resmi ada.
+- kanal selain WhatsApp resmi pada halaman Kebijakan Privasi (email dan alamat
+  menyusul; lihat bagian berikutnya).
+
+## Halaman Kebijakan Privasi
+
+`/kebijakan-privasi` sudah tayang sejak perbaikan 18 Oktober 2026 dan ikut masuk
+`sitemap.xml`. Isinya sengaja hanya menyebut WhatsApp resmi sebagai kanal kontak
+karena email dan alamat kantor belum dikonfirmasi. Kalau nanti email resmi sudah
+diterima, dua hal yang harus ikut diperbarui:
+
+1. tabel kontak di `src/data/site.js` (`email` dan `emailVerified`);
+2. bagian "Formulir kontak dan WhatsApp" serta "Mengajukan permintaan atau
+   pertanyaan" di `src/pages/KebijakanPrivasiPage.jsx`.
+
+Bila formulir suatu saat dihubungkan ke layanan form atau server, bagian cookie
+dan pihak ketiga di halaman itu juga harus ditulis ulang; jangan hanya menambah
+satu kalimat di footer.
+
+## Angka acuan untuk perubahan berikutnya
+
+Beberapa hal sudah ditetapkan lewat angka, jadi perlu dicek ulang kalau ada
+perubahan tampilan atau aset:
+
+- Lighthouse ponsel (simulasi jaringan, server dengan gzip):
+  beranda 87, portofolio 91, kontak 91, kebijakan privasi 92. Accessibility,
+  best practices, dan SEO 100 di keempat halaman; CLS 0.
+- Aset yang tidak dirujuk kode tidak ditaruh di `public/`. Yang lama dipindah ke
+  `arsip-aset/` (tidak ikut dibangun ke `dist/`), bukan dihapus dari riwayat.
+- Lebar gambar disimpan maksimal 1400 px, cukup untuk tampil penuh di layar ponsel dan tablet. Asli sebelum
+  dikompres tersimpan di `arsip-aset/asli-gambar/` (tidak di-commit).
+- `src/app/` masih berisi peninggalan Next.js lama. Folder itu tidak dirujuk
+  router aktif, tapi isinya memakai warna hex sendiri; jangan dipakai sebagai
+  contoh warna.

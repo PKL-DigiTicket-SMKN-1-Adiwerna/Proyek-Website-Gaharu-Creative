@@ -5,7 +5,7 @@ import { Seo } from "../components/Seo.jsx";
 export default function PortofolioPemerintahPage() {
   return (
     <div className="bg-white text-ink min-h-screen font-sans">
-      <Seo title="Studi Kasus: Program Literasi Digital | Gaharu Creative" description="Studi kasus lengkap kampanye informasi publik Literasi Digital bersama Gaharu Creative dan Kemenkominfo." />
+      <Seo title="Studi Kasus: Program Literasi Digital" description="Studi kasus lengkap kampanye informasi publik Literasi Digital bersama Gaharu Creative dan Kemenkominfo." />
 
       <section className="bg-gradient-to-b from-brand-50 to-paper py-12 sm:py-16 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -29,7 +29,7 @@ export default function PortofolioPemerintahPage() {
               </h1>
 
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                Kementerian Komunikasi dan Informatika (Kemenkominfo) berkolaborasi dengan Gaharu Creative untuk menjalankan kampanye edukasi publik dan manajemen konten media sosial selama 5 bulan (Maret–Juli 2026).
+                Kementerian Komunikasi dan Informatika (Kemenkominfo) berkolaborasi dengan Gaharu Creative untuk menjalankan kampanye edukasi publik dan manajemen konten media sosial selama 5 bulan (Maret-Juli 2026).
               </p>
 
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-line text-xs text-muted">
@@ -39,7 +39,7 @@ export default function PortofolioPemerintahPage() {
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Periode</span>
-                  <span className="font-bold text-ink mt-0.5 block">Maret–Juli 2026</span>
+                  <span className="font-bold text-ink mt-0.5 block">Maret-Juli 2026</span>
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
@@ -72,7 +72,7 @@ export default function PortofolioPemerintahPage() {
               <span className="text-xs font-bold text-button uppercase tracking-widest">RINGKASAN PROYEK & KLIEN</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Tentang Program Literasi Digital</h2>
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                Kementerian Komunikasi dan Informatika (Kemenkominfo) berkolaborasi dengan Gaharu Creative untuk menjalankan kampanye edukasi publik dan manajemen konten media sosial selama 5 bulan (Maret–Juli 2026). Proyek ini berfokus pada penyebaran informasi, peningkatan kesadaran keamanan siber dasar, serta edukasi etika berinternet secara masif bagi masyarakat umum.
+                Kementerian Komunikasi dan Informatika (Kemenkominfo) berkolaborasi dengan Gaharu Creative untuk menjalankan kampanye edukasi publik dan manajemen konten media sosial selama 5 bulan (Maret-Juli 2026). Proyek ini berfokus pada penyebaran informasi, peningkatan kesadaran keamanan siber dasar, serta edukasi etika berinternet secara masif bagi masyarakat umum.
               </p>
             </div>
 
@@ -116,7 +116,7 @@ export default function PortofolioPemerintahPage() {
               <blockquote className="border-l-4 border-button pl-4 italic text-muted text-sm leading-relaxed mt-4">
                 &ldquo;Pendekatan kreatif Gaharu Creative mampu menyulap materi publik yang rumit menjadi konten yang menarik, komunikatif, dan berdampak nyata bagi pemahaman masyarakat.&rdquo;
               </blockquote>
-              <p className="text-xs font-bold text-ink mt-2">— Perwakilan Koordinator Tim Literasi Digital</p>
+              <p className="text-xs font-bold text-ink mt-2">Perwakilan Koordinator Tim Literasi Digital</p>
             </div>
 
           </div>
@@ -195,7 +195,7 @@ export default function PortofolioPemerintahPage() {
             <Link to="/portofolio/umkm-ecommerce-lokal" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">UMKM: E-Commerce Lokal</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Mendorong penjualan dan pertumbuhan bisnis.</p>
@@ -206,7 +206,7 @@ export default function PortofolioPemerintahPage() {
             <Link to="/portofolio/korporat-gaharu-cloud" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Korporat: Gaharu Cloud Launch</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Penguatan awareness dan penanganan pipeline B2B.</p>

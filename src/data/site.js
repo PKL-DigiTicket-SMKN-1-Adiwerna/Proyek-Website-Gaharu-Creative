@@ -85,11 +85,12 @@ export const navLinks = [
   { to: "/kontak", label: "Kontak" },
 ];
 
-/* Tautan legal ini muncul di footer. Halamannya belum ada, jadi ditulis
- * sebagai teks "belum tersedia", bukan tautan yang mati saat diklik.
+/* Tautan legal di footer. Yang sudah punya halaman memakai `to` (jadi tautan
+ * biasa); yang belum punya halaman memakai `state: "belum tersedia"` supaya
+ * tidak ada tautan mati saat diklik.
  */
 export const footerExtraLinks = [
-  { label: "Kebijakan Privasi", state: "belum tersedia" },
+  { label: "Kebijakan Privasi", to: "/kebijakan-privasi" },
   { label: "Syarat & Ketentuan", state: "belum tersedia" },
   { label: "Peta Situs", state: "belum tersedia" },
 ];

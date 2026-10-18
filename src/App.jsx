@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { initScrollReveal } from "./lib/reveal.js";
 import { initParallax } from "./lib/parallax.js";
@@ -7,21 +7,24 @@ import Footer from "./components/Footer.jsx";
 import CtaBanner from "./components/CtaBanner.jsx";
 import WhatsAppButton from "./components/WhatsAppButton.jsx";
 import Diagnosa from "./components/Diagnosa.jsx";
+/* Halaman rute lain dimuat terpisah (code splitting) supaya bundel awal kecil.
+ * Beranda sengaja tetap dimuat langsung: isinya yang paling besar dan paling
+ * sering dibuka, dan kalau dimuat menyusul, isi halaman mendorong footer turun
+ * sehingga skor pergeseran tata letak (CLS) jeblok. Komponen kerangka (Header,
+ * Footer, band CTA, tombol WhatsApp) juga selalu dimuat langsung. */
 import HomePage from "./pages/HomePage.jsx";
-import TentangPage from "./pages/TentangPage.jsx";
-import LayananPage from "./pages/LayananPage.jsx";
-import LayananDetailPage from "./pages/LayananDetailPage.jsx";
-import PortofolioPage from "./pages/PortofolioPage.jsx";
-
-// Import Halaman Portofolio Statis
-import PortofolioUmkmPage from "./pages/PortofolioUmkmPage.jsx";
-import PortofolioKorporatPage from "./pages/PortofolioKorporatPage.jsx";
-import PortofolioPemerintahPage from "./pages/PortofolioPemerintahPage.jsx";
-
-import InsightPage from "./pages/InsightPage.jsx";
-import InsightDetailPage from "./pages/InsightDetailPage.jsx";
-import KontakPage from "./pages/KontakPage.jsx";
-import NotFoundPage from "./pages/NotFoundPage.jsx";
+const TentangPage = lazy(() => import("./pages/TentangPage.jsx"));
+const LayananPage = lazy(() => import("./pages/LayananPage.jsx"));
+const LayananDetailPage = lazy(() => import("./pages/LayananDetailPage.jsx"));
+const PortofolioPage = lazy(() => import("./pages/PortofolioPage.jsx"));
+const PortofolioUmkmPage = lazy(() => import("./pages/PortofolioUmkmPage.jsx"));
+const PortofolioKorporatPage = lazy(() => import("./pages/PortofolioKorporatPage.jsx"));
+const PortofolioPemerintahPage = lazy(() => import("./pages/PortofolioPemerintahPage.jsx"));
+const InsightPage = lazy(() => import("./pages/InsightPage.jsx"));
+const InsightDetailPage = lazy(() => import("./pages/InsightDetailPage.jsx"));
+const KontakPage = lazy(() => import("./pages/KontakPage.jsx"));
+const KebijakanPrivasiPage = lazy(() => import("./pages/KebijakanPrivasiPage.jsx"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 
 export const ctaByPath = {
   "/": "beranda",
@@ -89,6 +92,12 @@ export default function App() {
       <Header />
       <main id="konten" data-reveal-root className="flex-1">
         <div key={pathname} className="page-enter">
+          {/* Isi rute dimuat terpisah, jadi dibungkus Suspense. Ruang cadangan
+              setinggi layar dipakai sebagai penahan: tanpa itu, footer yang
+              sudah tampil terdorong turun saat isi halaman masuk, dan skor
+              pergeseran tata letak (CLS) langsung jeblok. Kosong dan tanpa
+              teks supaya tidak ada tulisan berkedip saat pindah halaman. */}
+          <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/tentang" element={<TentangPage />} />
@@ -108,8 +117,10 @@ export default function App() {
             <Route path="/insight/:slug" element={<InsightDetailPage />} />
 
             <Route path="/kontak" element={<KontakPage />} />
+            <Route path="/kebijakan-privasi" element={<KebijakanPrivasiPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          </Suspense>
         </div>
       </main>
       <div data-reveal-root>

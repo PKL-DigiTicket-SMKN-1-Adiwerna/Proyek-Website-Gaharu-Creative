@@ -15,7 +15,7 @@ const slideHref = (href) => {
 };
 
 const bandClass =
-  "bg-[linear-gradient(120deg,#0a6b4f_0%,#053b2b_100%)]";
+  "bg-[linear-gradient(120deg,var(--brand-800)_0%,var(--brand-900)_100%)]";
 const buttonPrimary =
   "inline-flex min-h-11 items-center justify-center rounded-lg bg-paper px-6 py-2.5 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50";
 const buttonSecondary =
@@ -30,7 +30,7 @@ export default function CtaBanner({ page }) {
   return (
     <section aria-label="Ajakan konsultasi" className="border-t border-line bg-paper py-16 sm:py-20">
       <Container>
-        <div className={`rounded-3xl px-6 py-12 text-center shadow-lg sm:px-12 sm:py-14 ${bandClass}`}>
+        <div className={`rounded-3xl px-6 py-12 text-center sm:px-12 sm:py-14 ${bandClass}`}>
           <span className="inline-flex items-center rounded-full border border-white/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white">
             Konsultasi gratis
           </span>

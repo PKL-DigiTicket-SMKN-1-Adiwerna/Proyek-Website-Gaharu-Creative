@@ -5,7 +5,7 @@ import { Seo } from "../components/Seo.jsx";
 export default function PortofolioKorporatPage() {
   return (
     <div className="bg-white text-ink min-h-screen font-sans">
-      <Seo title="Korporat: Gaharu Cloud Launch | Gaharu Creative" description="Studi kasus lengkap peluncuran platform Gaharu Cloud B2B bersama Gaharu Creative." />
+      <Seo title="Korporat: Gaharu Cloud Launch" description="Studi kasus lengkap peluncuran platform Gaharu Cloud B2B bersama Gaharu Creative." />
 
       <section className="bg-gradient-to-b from-brand-50 to-paper py-12 sm:py-16 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -29,7 +29,7 @@ export default function PortofolioKorporatPage() {
               </h1>
 
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                Gaharu Cloud Solutions merupakan penyedia platform SaaS dan infrastruktur cloud korporat. Gaharu Creative hadir memberikan layanan digital product development launch, performance marketing, digital branding, dan B2B lead generation selama 4 bulan (Februari–Mei 2026).
+                Gaharu Cloud Solutions merupakan penyedia platform SaaS dan infrastruktur cloud korporat. Gaharu Creative hadir memberikan layanan digital product development launch, performance marketing, digital branding, dan B2B lead generation selama 4 bulan (Februari-Mei 2026).
               </p>
 
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-line text-xs text-muted">
@@ -39,7 +39,7 @@ export default function PortofolioKorporatPage() {
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Periode</span>
-                  <span className="font-bold text-ink mt-0.5 block">Februari–Mei 2026</span>
+                  <span className="font-bold text-ink mt-0.5 block">Februari-Mei 2026</span>
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
@@ -72,7 +72,7 @@ export default function PortofolioKorporatPage() {
               <span className="text-xs font-bold text-button uppercase tracking-widest">RINGKASAN PROYEK & KLIEN</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Tentang Proyek Gaharu Cloud</h2>
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                Gaharu Cloud Solutions merupakan penyedia platform SaaS dan infrastruktur cloud korporat. Gaharu Creative hadir memberikan layanan digital product development launch, performance marketing, digital branding, dan B2B lead generation selama 4 bulan (Februari–Mei 2026) dengan fokus utama menghadirkan solusi digital untuk kebutuhan bisnis korporat skala menengah hingga enterprise.
+                Gaharu Cloud Solutions merupakan penyedia platform SaaS dan infrastruktur cloud korporat. Gaharu Creative hadir memberikan layanan digital product development launch, performance marketing, digital branding, dan B2B lead generation selama 4 bulan (Februari-Mei 2026) dengan fokus utama menghadirkan solusi digital untuk kebutuhan bisnis korporat skala menengah hingga enterprise.
               </p>
             </div>
 
@@ -116,7 +116,7 @@ export default function PortofolioKorporatPage() {
               <blockquote className="border-l-4 border-button pl-4 italic text-muted text-sm leading-relaxed mt-4">
                 &ldquo;Pendampingan Gaharu Creative sebagai konsultan digital marketing membuat peluncuran produk digital ini menjadi salah satu strategi B2B paling sukses dan terukur bagi perusahaan kami.&rdquo;
               </blockquote>
-              <p className="text-xs font-bold text-ink mt-2">— Maya Rosalia (Chief Marketing Officer Gaharu Cloud)</p>
+              <p className="text-xs font-bold text-ink mt-2">Maya Rosalia, Chief Marketing Officer Gaharu Cloud</p>
             </div>
 
           </div>
@@ -195,7 +195,7 @@ export default function PortofolioKorporatPage() {
             <Link to="/portofolio/umkm-ecommerce-lokal" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">UMKM: E-Commerce Lokal</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Mendorong penjualan dan pertumbuhan bisnis.</p>
@@ -206,7 +206,7 @@ export default function PortofolioKorporatPage() {
             <Link to="/portofolio/pemerintah-literasi-digital" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Pemerintah: Literasi Digital</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Kampanye informasi publik berbasis micro-learning.</p>

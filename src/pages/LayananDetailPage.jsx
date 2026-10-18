@@ -306,7 +306,7 @@ export default function LayananDetailPage() {
 
       {/* 8. Band CTA penutup */}
       <Section>
-        <div className="rounded-3xl bg-[linear-gradient(120deg,#0a6b4f_0%,#053b2b_100%)] px-6 py-12 text-center shadow-lg sm:px-12">
+        <div className="rounded-3xl bg-[linear-gradient(120deg,var(--brand-800)_0%,var(--brand-900)_100%)] px-6 py-12 text-center sm:px-12">
           <span className="inline-flex items-center rounded-full border border-white/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white">
             {service.cta.eyebrow}
           </span>

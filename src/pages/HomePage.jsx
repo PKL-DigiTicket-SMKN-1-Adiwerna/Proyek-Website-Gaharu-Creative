@@ -14,7 +14,7 @@ import { services } from "../data/services.js";
 import { portfolioItems as featuredWork, stats, testimonials } from "../data/portfolio.js";
 import RekamJejak from "../components/RekamJejak.jsx";
 
-const title = `${site.name} – Digital Agency Partner & Agensi Kreatif Indonesia`;
+const title = `${site.name}: Digital Agency Partner & Agensi Kreatif Indonesia`;
 const description =
   "Gaharu Creative adalah digital agency & agensi kreatif terpercaya sejak 2020. Kami menyediakan layanan digital marketing, digital branding, jasa pembuatan website, hingga performance marketing untuk UMKM dan Enterprise.";
 
@@ -34,13 +34,13 @@ export default function HomePage() {
               </span>
 
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                <font color="#047857">Gaharu Creative</font><br />
+                <span className="text-brand-700">Gaharu Creative</span><br />
                 Digital Agency Partner untuk Skala Bisnis Anda
               </h1>
 
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
                 Kami adalah digital agency dan agensi kreatif yang membantu brand Anda tumbuh lewat
-                solusi pemasaran digital holistik, eksekusi visual presisi, hingga optimasi
+                solusi pemasaran digital, eksekusi visual yang presisi, hingga optimasi
                 performa berbasis data terukur untuk enterprise, instansi, serta UMKM di Indonesia.
               </p>
 
@@ -76,8 +76,8 @@ export default function HomePage() {
                               <img
                                 src="/Beranda.webp"
                                 alt="Tim Gaharu Creative sedang bekerja di depan monitor"
-                                width={1913}
-                                height={1275}
+                                width={1400}
+                                height={933}
                                 fetchPriority="high"
                                 decoding="async"
                                 className="h-full w-full scale-110 object-cover object-center"
@@ -149,7 +149,7 @@ export default function HomePage() {
       {/* 4. Statistik resmi perusahaan */}
       <Section className="bg-emerald-50/50">
         <SectionHead
-          title="Sejak 2020 – Berfokus pada Hasil Nyata dan Pertumbuhan Komprehensif"
+          title="Sejak 2020: Fokus pada Hasil Nyata dan Pertumbuhan Terukur"
           subtitle="Didedikasikan sebagai agensi kreatif berpengalaman yang mendampingi setiap tahap eksekusi digital branding hingga peluncuran aset digital berkinerja tinggi."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
@@ -169,7 +169,7 @@ export default function HomePage() {
       {/* 5. Portofolio unggulan */}
       <Section>
         <SectionHead
-          title="Portofolio Unggulan – Bukti Hasil Nyata Strategi Digital Marketing"
+          title="Portofolio Unggulan: Bukti Hasil Nyata Strategi Digital Marketing"
           subtitle="Eksplorasi studi kasus transformasi digital marketing untuk UMKM, korporat, hingga instansi pemerintah dalam meningkatkan penjualan online."
         />
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -228,7 +228,7 @@ export default function HomePage() {
 
       {/* 7. Banner CTA Penutup */}
       <Section divider>
-        <div className="relative overflow-hidden rounded-2xl border border-emerald-950/30 bg-[linear-gradient(135deg,#10b981_0%,#047857_45%,#065f46_100%)] p-8 text-center text-white shadow-[0_24px_45px_-15px_rgba(4,120,87,0.55)] sm:p-12">
+        <div className="relative overflow-hidden rounded-2xl border border-emerald-950/30 bg-[linear-gradient(135deg,var(--brand-500)_0%,var(--brand-700)_45%,var(--brand-800)_100%)] p-8 text-center text-white sm:p-12">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">
             Siap Membangun dan Mengembangkan Bisnis Digital Anda?
           </h2>

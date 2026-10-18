@@ -20,8 +20,15 @@ function upsertMeta(selector, attrs) {
 
 export function Seo({ title, description, image = null }) {
   useEffect(() => {
+    /* Nama merek tidak boleh muncul dua kali di satu judul tab. Kalau halaman
+     * sudah menulis "Gaharu Creative" di judulnya, pakai apa adanya.
+     */
     const fullTitle =
-      title === site.name ? `${title} | ${site.tagline}` : `${title} | ${site.name}`;
+      title === site.name
+        ? `${title} | ${site.tagline}`
+        : title.includes(site.name)
+          ? title
+          : `${title} | ${site.name}`;
     document.title = fullTitle;
 
     const meta = document.querySelector('meta[name="description"]');

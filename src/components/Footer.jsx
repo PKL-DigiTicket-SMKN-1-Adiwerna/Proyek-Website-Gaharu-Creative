@@ -159,11 +159,17 @@ export default function Footer() {
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-xs text-muted sm:flex-row">
           <p>© {site.founded}-2026 Gaharu Creative. Semua hak dilindungi.</p>
           <div className="flex flex-wrap items-center gap-4">
-            {footerExtraLinks.map((item) => (
-              <span key={item.label} className="text-subtle" title="Halaman belum tersedia">
-                {item.label} <span className="text-[10px]">(belum tersedia)</span>
-              </span>
-            ))}
+            {footerExtraLinks.map((item) =>
+              item.to ? (
+                <Link key={item.label} to={item.to} className="transition-colors hover:text-ink">
+                  {item.label}
+                </Link>
+              ) : (
+                <span key={item.label} className="text-subtle" title="Halaman belum tersedia">
+                  {item.label} <span className="text-[10px]">(belum tersedia)</span>
+                </span>
+              )
+            )}
           </div>
         </div>
       </Container>

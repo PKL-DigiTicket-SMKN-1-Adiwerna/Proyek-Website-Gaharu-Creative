@@ -17,7 +17,15 @@ const SITE_BASE = (
 /* Daftar rute untuk sitemap: rute statis + rute detail yang diambil dari data
  * supaya slug tidak pernah beda dengan yang dirender react-router.
  */
-const RUTE_STATIS = ["/", "/tentang", "/layanan", "/portofolio", "/insight", "/kontak"];
+const RUTE_STATIS = [
+  "/",
+  "/tentang",
+  "/layanan",
+  "/portofolio",
+  "/insight",
+  "/kontak",
+  "/kebijakan-privasi",
+];
 const RUTE_DINAMIS = [
   ...services.map((service) => `/layanan/${service.slug}`),
   ...portfolioItems.map((item) => `/portofolio/${item.slug}`),
@@ -31,7 +39,7 @@ const RUTE_DINAMIS = [
  *   index.html oleh rewrite SPA di vercel.json.
  */
 function gaharuSeo() {
-  const gambar = `${SITE_BASE}/og-gaharu-creative.png`;
+  const gambar = `${SITE_BASE}/og-gaharu-creative.jpg`;
   return {
     name: "gaharu-seo",
     transformIndexHtml: {

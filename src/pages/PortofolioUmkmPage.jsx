@@ -5,7 +5,7 @@ import { Seo } from "../components/Seo.jsx";
 export default function PortofolioUmkmPage() {
   return (
     <div className="bg-white text-ink min-h-screen font-sans">
-      <Seo title="Studi Kasus: Kopi Nusantara 360 | Gaharu Creative" description="Studi kasus lengkap strategi digital marketing, digital branding, dan performance marketing untuk PT Kopi Nusantara Indonesia bersama Gaharu Creative." />
+      <Seo title="Studi Kasus: Kopi Nusantara 360" description="Studi kasus lengkap strategi digital marketing, digital branding, dan performance marketing untuk PT Kopi Nusantara Indonesia bersama Gaharu Creative." />
 
       {/* 1. HERO SECTION */}
       <section className="bg-gradient-to-b from-brand-50 to-paper py-12 sm:py-16 border-b border-line">
@@ -30,7 +30,7 @@ export default function PortofolioUmkmPage() {
               </h1>
 
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                PT Kopi Nusantara Indonesia merupakan brand F&B dan retail e-commerce yang memproduksi biji kopi premium dari petani lokal. Gaharu Creative hadir memberikan layanan digital branding, performance marketing, social media management, dan web development selama 6 bulan (Januari–Juni 2026) dengan fokus utama menerapkan strategi digital marketing untuk UMKM kuliner agar berkembang dari skala lokal ke nasional.
+                PT Kopi Nusantara Indonesia merupakan brand F&B dan retail e-commerce yang memproduksi biji kopi premium dari petani lokal. Gaharu Creative hadir memberikan layanan digital branding, performance marketing, social media management, dan web development selama 6 bulan (Januari-Juni 2026) dengan fokus utama menerapkan strategi digital marketing untuk UMKM kuliner agar berkembang dari skala lokal ke nasional.
               </p>
 
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-line text-xs text-muted">
@@ -40,7 +40,7 @@ export default function PortofolioUmkmPage() {
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Periode</span>
-                  <span className="font-bold text-ink mt-0.5 block">Januari–Juni 2026</span>
+                  <span className="font-bold text-ink mt-0.5 block">Januari-Juni 2026</span>
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
@@ -74,7 +74,7 @@ export default function PortofolioUmkmPage() {
               <span className="text-xs font-bold text-button uppercase tracking-widest">RINGKASAN PROYEK & KLIEN</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Tentang Kopi Nusantara</h2>
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                PT Kopi Nusantara Indonesia merupakan brand F&B dan retail e-commerce yang memproduksi biji kopi premium dari petani lokal. Gaharu Creative hadir memberikan layanan digital branding, performance marketing, social media management, dan web development selama 6 bulan (Januari–Juni 2026) dengan fokus utama menerapkan strategi digital marketing untuk UMKM kuliner agar berkembang dari skala lokal ke nasional.
+                PT Kopi Nusantara Indonesia merupakan brand F&B dan retail e-commerce yang memproduksi biji kopi premium dari petani lokal. Gaharu Creative hadir memberikan layanan digital branding, performance marketing, social media management, dan web development selama 6 bulan (Januari-Juni 2026) dengan fokus utama menerapkan strategi digital marketing untuk UMKM kuliner agar berkembang dari skala lokal ke nasional.
               </p>
             </div>
 
@@ -90,9 +90,9 @@ export default function PortofolioUmkmPage() {
             {/* Solusi & Strategi */}
             <div className="space-y-3 pt-2">
               <span className="text-xs font-bold text-button uppercase tracking-widest">SOLUSI & STRATEGI</span>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-ink">Pendekatan Holistik 360°</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-ink">Pendekatan 360°</h2>
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                Gaharu Creative merancang strategi digital marketing holistik 360°. Langkah ini meliputi penguatan digital branding melalui penyegaran visual dan tone of voice media sosial, revamp website dengan optimasi konversi agar pengunjung mudah melakukan checkout/order WhatsApp, serta eksekusi kampanye performance marketing multi-channel menggunakan Meta Ads dan TikTok Ads berbasis skema funneling terstruktur.
+                Gaharu Creative merancang strategi digital marketing 360°. Langkah ini meliputi penguatan digital branding melalui penyegaran visual dan tone of voice media sosial, revamp website dengan optimasi konversi agar pengunjung mudah melakukan checkout/order WhatsApp, serta eksekusi kampanye performance marketing multi-channel menggunakan Meta Ads dan TikTok Ads berbasis skema funneling terstruktur.
               </p>
             </div>
 
@@ -127,7 +127,7 @@ export default function PortofolioUmkmPage() {
               <blockquote className="border-l-4 border-button pl-4 italic text-muted text-sm leading-relaxed mt-4">
                 &ldquo;Kerja sama ini menjadi titik balik pertumbuhan brand kami berkat eksekusi visual yang rapi dan strategi iklan yang berdampak langsung pada omzet.&rdquo;
               </blockquote>
-              <p className="text-xs font-bold text-ink mt-2">— Budi Santoso (Founder & CEO Kopi Nusantara)</p>
+              <p className="text-xs font-bold text-ink mt-2">Budi Santoso, Founder & CEO Kopi Nusantara</p>
             </div>
 
           </div>
@@ -207,7 +207,7 @@ export default function PortofolioUmkmPage() {
             <Link to="/portofolio/korporat-gaharu-cloud" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Korporat: Gaharu Cloud Launch</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Penguatan awareness dan penanganan pipeline B2B.</p>
@@ -218,7 +218,7 @@ export default function PortofolioUmkmPage() {
             <Link to="/portofolio/pemerintah-literasi-digital" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Pemerintah: Literasi Digital</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Kampanye informasi publik berbasis micro-learning.</p>

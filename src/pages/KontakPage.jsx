@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo.jsx";
 import {
   Button,
@@ -12,7 +13,7 @@ import { site, links, waBase } from "../data/site.js";
 import { kontakInfo, inquiryServices } from "../data/cta.js";
 
 const title = "Kontak";
-const description = "Hubungi Gaharu Creative lewat WhatsApp, email, atau form konsultasi.";
+const description = "Hubungi Gaharu Creative lewat WhatsApp resmi atau formulir konsultasi. Lihat juga kebijakan privasi kami."
 
 /* kontak = kanal balasan calon klien. Audit staging 12 Okt 2026 (temuan C02: tanpa
  * kolom ini, inquiry tidak bisa ditindaklanjuti kalau nomor tidak ikut terkirim.
@@ -246,10 +247,18 @@ export default function KontakPage() {
                 </ol>
               </div>
 
-              <div className="flex justify-center sm:col-span-2">
+              <div className="flex flex-col items-center gap-3 sm:col-span-2">
                 <Button kind="primary" type="submit" className="w-full sm:w-auto">
                   Kirim lewat WhatsApp
                 </Button>
+                <p className="text-xs leading-relaxed text-muted">
+                  Dengan mengirim pesan, Anda setuju data isian ini dipakai untuk menanggapi
+                  permintaan Anda. Detailnya ada di{" "}
+                  <Link to="/kebijakan-privasi" className="font-semibold text-ink underline decoration-line underline-offset-2 hover:decoration-brand-600">
+                    Kebijakan Privasi
+                  </Link>
+                  .
+                </p>
               </div>
             </form>
           </div>

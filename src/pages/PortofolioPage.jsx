@@ -6,7 +6,7 @@ import { IconCircle } from "../components/ui.jsx";
 import { links } from "../data/site.js";
 import { segments, portfolioItems } from "../data/portfolio.js";
 
-const title = "Portofolio | Gaharu Creative";
+const title = "Portofolio";
 const description =
   "Studi kasus, hasil, dan karya terbaru. Transformasi digital terukur yang melipatgandakan dampak bisnis bagi ekosistem UMKM, korporasi, hingga institusi publik di Indonesia.";
 
@@ -67,7 +67,7 @@ export default function PortofolioPage() {
             </div>
 
             <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden border border-line shadow-xl">
+              <div className="relative rounded-3xl overflow-hidden border border-line">
                 <img
                   src="/Beranda.webp"
                   alt="Portofolio Gaharu Creative"
@@ -154,7 +154,7 @@ export default function PortofolioPage() {
                 <Link
                   key={item.slug}
                   to={`/portofolio/${item.slug}`}
-                  className="group bg-white text-ink rounded-3xl overflow-hidden border border-line shadow-sm transition-all duration-300 hover:shadow-xl hover:border-brand-600 flex flex-col justify-between"
+                  className="group bg-white text-ink rounded-3xl overflow-hidden border border-line transition-all duration-300 hover:border-brand-600 flex flex-col justify-between"
                 >
                   <div>
                     <div className="relative overflow-hidden aspect-[16/10] bg-chip">

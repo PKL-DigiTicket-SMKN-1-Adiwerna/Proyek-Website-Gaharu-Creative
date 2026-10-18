@@ -19,7 +19,7 @@ import {
   legality,
 } from "../data/tentang.js";
 
-const title = "Tentang Kami – Konsultan Digital Marketing Semarang & Agensi Kreatif";
+const title = "Tentang Kami: Konsultan Digital Marketing Semarang & Agensi Kreatif";
 const description =
   "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2020: strategi, digital branding, pembuatan website, dan pemasaran digital.";
 
@@ -38,7 +38,7 @@ export default function TentangPage() {
                 Tentang Gaharu Creative
               </span>
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
-                <font color="#047857">Gaharu Creative</font><br />
+                <span className="text-brand-700">Gaharu Creative</span><br />
                 Konsultan Digital Marketing Semarang
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
@@ -62,8 +62,8 @@ export default function TentangPage() {
                   <img
                     src="/Tentang Kami.webp"
                     alt="Tim Gaharu Creative"
-                    width={1966}
-                    height={1313}
+                    width={1400}
+                    height={935}
                     fetchPriority="high"
                     decoding="async"
                     className="h-full w-full scale-110 object-cover object-center transition-transform duration-700"
@@ -92,7 +92,7 @@ export default function TentangPage() {
       <Section divider>
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
           {/* Gambar Cerita Kami Menggunakan /Tentang Kami-Cerita Kami.webp */}
-          <div className="group overflow-hidden rounded-2xl border border-line bg-paper shadow-md transition-all duration-300 hover:shadow-xl">
+          <div className="group overflow-hidden rounded-2xl border border-line bg-paper transition-all duration-300">
             <img
               src="/Tentang Kami-Cerita Kami.webp"
               alt="Perjalanan Gaharu Creative"
