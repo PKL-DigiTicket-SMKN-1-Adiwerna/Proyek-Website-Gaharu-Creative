@@ -289,7 +289,7 @@ export default function LayananDetailPage() {
               );
             })}
           </div>
-          <p className="mt-6 text-sm text-muted">
+          <p className="mt-6 max-w-3xl text-sm text-muted">
             Pertanyaan lain?{" "}
             <a
               href={links.whatsapp}

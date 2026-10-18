@@ -142,7 +142,7 @@ export default function TentangPage() {
           title="Misi dan Tujuan"
           subtitle="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
         />
-        <div className="mt-10 grid gap-5 lg:grid-cols-2">
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
           {missionGoals.map((item) => (
             <article key={item.title} className="flex gap-4 rounded-xl border border-line bg-paper p-6 transition-all duration-300 hover:border-brand-600 hover:shadow-md">
               <IconCircle name={item.icon} />
@@ -224,7 +224,7 @@ export default function TentangPage() {
             </article>
           ))}
         </div>
-        <p className="mt-6 text-center text-sm text-muted">
+        <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-muted">
           {site.legal.legalNote}
         </p>
       </Section>

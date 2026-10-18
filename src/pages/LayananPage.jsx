@@ -108,7 +108,7 @@ function ServiceCard({ service, wide = false }) {
       </Link>
 
       <h3 className="mt-5 text-lg font-semibold text-ink">
-        <Link to={`/layanan/${service.slug}`} className="hover:text-brand-700">
+        <Link to={`/layanan/${service.slug}`} className="inline-flex min-h-6 items-center hover:text-brand-700">
           {service.title}
         </Link>
       </h3>

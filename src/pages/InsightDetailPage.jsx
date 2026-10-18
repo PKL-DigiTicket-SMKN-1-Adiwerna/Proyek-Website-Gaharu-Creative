@@ -41,11 +41,11 @@ export default function InsightDetailPage() {
       <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
         <Container className="py-12 sm:py-16">
           <nav aria-label="Breadcrumb" className="text-xs text-subtle">
-            <Link to="/" className="hover:text-brand-700">
+            <Link to="/" className="inline-flex min-h-6 items-center hover:text-brand-700">
               Beranda
             </Link>
             <span className="px-2">›</span>
-            <Link to="/insight" className="hover:text-brand-700">
+            <Link to="/insight" className="inline-flex min-h-6 items-center hover:text-brand-700">
               Insight
             </Link>
             <span className="px-2">›</span>

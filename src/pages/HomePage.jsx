@@ -102,7 +102,7 @@ export default function HomePage() {
           title="Partner Digital Marketing 360° untuk Pertumbuhan Bisnis Anda"
           subtitle="Dari tahap riset mendalam, penetapan digital branding, pembuatan ekosistem kanal digital, hingga eksekusi strategi pemasaran digital multi-channel yang terukur untuk mengkonversi audiens menjadi pelanggan setia."
         />
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
           <article className="rounded-2xl border border-line bg-paper p-6 sm:p-8">
             <Tag>360 Digital Agency</Tag>
             <h3 className="mt-4 text-xl font-semibold leading-snug text-ink">
@@ -139,7 +139,7 @@ export default function HomePage() {
             <ServiceCard key={service.slug} service={service} />
           ))}
         </div>
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
           {services.slice(3).map((service) => (
             <ServiceCard key={service.slug} service={service} />
           ))}
@@ -172,7 +172,7 @@ export default function HomePage() {
           title="Portofolio Unggulan: Bukti Hasil Nyata Strategi Digital Marketing"
           subtitle="Eksplorasi studi kasus transformasi digital marketing untuk UMKM, korporat, hingga instansi pemerintah dalam meningkatkan penjualan online."
         />
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {(featuredWork || []).map((item) => (
             <Link
               key={item.slug || item.title}
@@ -210,7 +210,7 @@ export default function HomePage() {
             title="Testimoni Klien"
             subtitle="Apresiasi klien atas eksekusi strategi pemasaran digital dan pendampingan bisnis dari tim kami."
           />
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((item) => (
               <figure key={item.name} className="rounded-2xl border border-line bg-paper p-6">
                 <blockquote className="text-base leading-relaxed text-muted">
@@ -257,7 +257,7 @@ function ServiceCard({ service }) {
         <IconCircle name={service.icon} size="sm" />
       </div>
       <h3 className="mt-4 text-lg font-semibold text-ink">
-        <Link to={`/layanan/${service.slug}`} className="hover:text-emerald-700">
+        <Link to={`/layanan/${service.slug}`} className="inline-flex min-h-6 items-center hover:text-emerald-700">
           {service.title}
         </Link>
       </h3>

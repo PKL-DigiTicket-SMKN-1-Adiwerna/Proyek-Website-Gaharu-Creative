@@ -97,7 +97,7 @@ export default function InsightPage() {
           title="Artikel Terbaru"
           subtitle="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."
         />
-        <p aria-live="polite" className="mt-4 text-center text-xs font-semibold text-muted uppercase tracking-wider">
+        <p aria-live="polite" className="mx-auto mt-4 max-w-3xl text-center text-xs font-semibold text-muted uppercase tracking-wider">
           Menampilkan {visible.length} dari {posts.length} artikel
         </p>
 
@@ -142,7 +142,7 @@ export default function InsightPage() {
                 <div className="pt-6">
                   <Link
                     to={`/insight/${post.slug}`}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-block py-2.5 px-4 text-xs font-bold text-muted transition-all hover:border-button hover:bg-button hover:text-white"
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-line bg-block py-2.5 px-4 text-xs font-bold text-muted transition-all hover:border-button hover:bg-button hover:text-white"
                   >
                     Baca Selengkapnya →
                   </Link>
@@ -153,7 +153,7 @@ export default function InsightPage() {
         )}
 
         {insightsDraftOnly ? (
-          <p className="mt-8 text-center text-xs text-subtle">
+          <p className="mx-auto mt-8 max-w-3xl text-center text-xs text-subtle">
             Daftar artikel diperbarui saat naskahnya selesai ditulis.
           </p>
         ) : null}

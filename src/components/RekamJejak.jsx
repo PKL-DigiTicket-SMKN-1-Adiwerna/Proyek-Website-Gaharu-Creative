@@ -21,7 +21,7 @@ export default function RekamJejak({ withHead = true }) {
         <p className="mt-4 text-base leading-relaxed text-muted">{rekamJejak.intro}</p>
       </div>
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-2">
+      <div className="mt-10 grid gap-5 md:grid-cols-2">
         {mitraGroups.map((group) => (
           <article key={group.key} className="rounded-lg border border-line bg-paper p-6">
             <div className="flex items-start gap-4">

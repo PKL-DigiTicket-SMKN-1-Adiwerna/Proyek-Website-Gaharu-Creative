@@ -130,7 +130,7 @@ export default function KebijakanPrivasiPage() {
             title="Hal yang perlu Anda ketahui sebelum menghubungi kami"
             align="left"
           />
-          <div className="mt-10 space-y-6">
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {BAGIAN.map((bagian, index) => (
               <article
                 key={bagian.judul}
@@ -161,7 +161,7 @@ export default function KebijakanPrivasiPage() {
 
       <Section className="border-t border-line bg-brand-50">
         <Container className="py-14 sm:py-16">
-          <div className="rounded-2xl border border-line bg-white p-6 sm:p-8">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-line bg-white p-6 sm:p-8">
             <h2 className="text-lg font-bold text-ink sm:text-xl">Mengajukan permintaan atau pertanyaan</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
               Satu-satunya kanal resmi yang sudah dikonfirmasi perusahaan adalah WhatsApp{" "}

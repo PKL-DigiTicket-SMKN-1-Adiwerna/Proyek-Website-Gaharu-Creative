@@ -66,7 +66,7 @@ export default function CtaBanner({ page }) {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2">
+        <div className="mt-6 flex items-center justify-center gap-0">
           {slides.map((item, i) => (
             <button
               key={item.title}
@@ -74,10 +74,15 @@ export default function CtaBanner({ page }) {
               aria-current={i === index ? "true" : undefined}
               aria-label={`Tampilkan ajakan ${i + 1}: ${item.title}`}
               onClick={() => setIndex(i)}
-              className={`h-2.5 w-8 rounded-full transition-colors ${
-                i === index ? "bg-brand-700" : "bg-line hover:bg-brand-100"
-              }`}
-            />
+              className="inline-flex min-h-11 items-center px-1"
+            >
+              <span
+                aria-hidden="true"
+                className={`h-2.5 w-8 rounded-full transition-colors ${
+                  i === index ? "bg-brand-700" : "bg-line hover:bg-brand-100"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </Container>

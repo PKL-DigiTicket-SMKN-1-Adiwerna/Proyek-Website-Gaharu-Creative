@@ -277,7 +277,7 @@ export default function KontakPage() {
                 href={links.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
+                className="inline-flex min-h-6 items-center font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
               >
                 {site.waDisplay}
               </a>
@@ -300,7 +300,7 @@ export default function KontakPage() {
                 <a
                   href={infoHref(item.href)}
                   {...(item.href === "whatsapp" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="mt-2 inline-block text-sm text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
+                  className="mt-2 inline-flex min-h-6 items-center text-sm text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
                 >
                   {item.value}
                 </a>
@@ -313,7 +313,7 @@ export default function KontakPage() {
             </article>
           ))}
         </div>
-        <p className="mt-6 text-sm text-muted">
+        <p className="mt-6 max-w-3xl text-sm text-muted">
           Baru WhatsApp dan jam operasional yang sudah resmi dari perusahaan. Email dan alamat
           kantor belum dikonfirmasi, jadi sengaja tidak dicantumkan supaya tidak ada data contoh
           yang tayang.
@@ -332,7 +332,7 @@ export default function KontakPage() {
             ratio="aspect-[16/7]"
           />
         </div>
-        <p className="mt-6 text-sm text-muted">
+        <p className="mt-6 max-w-3xl text-sm text-muted">
           Kami melayani klien di seluruh Indonesia; pertemuan bisa lewat panggilan video atau
           kunjungan sesuai kesepakatan.
         </p>

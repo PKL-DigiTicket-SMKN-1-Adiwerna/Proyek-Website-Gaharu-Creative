@@ -34,15 +34,15 @@ export default function PortofolioKorporatPage() {
 
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-line text-xs text-muted">
                 <div>
-                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Kategori</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[11px]">Kategori</span>
                   <span className="font-bold text-ink mt-0.5 block">Korporat</span>
                 </div>
                 <div>
-                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Periode</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[11px]">Periode</span>
                   <span className="font-bold text-ink mt-0.5 block">Februari-Mei 2026</span>
                 </div>
                 <div>
-                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
+                  <span className="block text-subtle font-semibold uppercase tracking-wider text-[11px]">Lokasi</span>
                   <span className="font-bold text-ink mt-0.5 block">Indonesia</span>
                 </div>
               </div>

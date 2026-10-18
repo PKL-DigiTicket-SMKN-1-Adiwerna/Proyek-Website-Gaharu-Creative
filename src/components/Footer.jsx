@@ -62,24 +62,24 @@ export default function Footer() {
           {/* Kolom 2: Tautan Cepat */}
           <div className="space-y-4 lg:col-span-2">
             <h3 className="text-base font-semibold text-ink">Tautan Cepat</h3>
-            <ul className="space-y-2.5 text-sm text-muted">
+            <ul className="space-y-1 text-sm text-muted sm:space-y-2.5">
               <li>
-                <Link to="/" className="transition-colors hover:text-ink">Beranda</Link>
+                <Link to="/" className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">Beranda</Link>
               </li>
               <li>
-                <Link to="/tentang" className="transition-colors hover:text-ink">Tentang Kami</Link>
+                <Link to="/tentang" className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">Tentang Kami</Link>
               </li>
               <li>
-                <Link to="/layanan" className="transition-colors hover:text-ink">Layanan</Link>
+                <Link to="/layanan" className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">Layanan</Link>
               </li>
               <li>
-                <Link to="/portofolio" className="transition-colors hover:text-ink">Portofolio</Link>
+                <Link to="/portofolio" className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">Portofolio</Link>
               </li>
               <li>
-                <Link to="/insight" className="transition-colors hover:text-ink">Insight / Artikel</Link>
+                <Link to="/insight" className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">Insight / Artikel</Link>
               </li>
               <li>
-                <Link to="/kontak" className="transition-colors hover:text-ink">Kontak</Link>
+                <Link to="/kontak" className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">Kontak</Link>
               </li>
             </ul>
           </div>
@@ -88,10 +88,10 @@ export default function Footer() {
               menunjuk ke halaman yang benar-benar ada. */}
           <div className="space-y-4 lg:col-span-2">
             <h3 className="text-base font-semibold text-ink">Layanan Utama</h3>
-            <ul className="space-y-2.5 text-sm text-muted">
+            <ul className="space-y-1 text-sm text-muted sm:space-y-2.5">
               {footerServices.map((item) => (
                 <li key={item.to}>
-                  <Link to={item.to} className="transition-colors hover:text-ink">
+                  <Link to={item.to} className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">
                     {item.label}
                   </Link>
                 </li>
@@ -112,7 +112,7 @@ export default function Footer() {
                   href={links.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors hover:text-ink"
+                  className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6"
                 >
                   {site.waDisplay}
                 </a>
@@ -124,7 +124,7 @@ export default function Footer() {
                   <svg className="h-5 w-5 shrink-0 text-button" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <a href={`mailto:${site.email}`} className="transition-colors hover:text-ink">
+                  <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">
                     {site.email}
                   </a>
                 </li>
@@ -161,12 +161,12 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-4">
             {footerExtraLinks.map((item) =>
               item.to ? (
-                <Link key={item.label} to={item.to} className="transition-colors hover:text-ink">
+                <Link key={item.label} to={item.to} className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">
                   {item.label}
                 </Link>
               ) : (
                 <span key={item.label} className="text-subtle" title="Halaman belum tersedia">
-                  {item.label} <span className="text-[10px]">(belum tersedia)</span>
+                  {item.label} <span className="text-[11px]">(belum tersedia)</span>
                 </span>
               )
             )}
