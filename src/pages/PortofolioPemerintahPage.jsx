@@ -5,7 +5,7 @@ import { Seo } from "../components/Seo.jsx";
 export default function PortofolioPemerintahPage() {
   return (
     <div className="bg-white text-ink min-h-screen font-sans">
-      <Seo title="Pemerintah: Literasi Digital | Gaharu Creative" description="Studi kasus kampanye informasi publik Literasi Digital." />
+      <Seo title="Studi Kasus: Program Literasi Digital | Gaharu Creative" description="Studi kasus lengkap kampanye informasi publik Literasi Digital bersama Gaharu Creative dan Kemenkominfo." />
 
       <section className="bg-gradient-to-b from-brand-50 to-paper py-12 sm:py-16 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -25,11 +25,11 @@ export default function PortofolioPemerintahPage() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink tracking-tight leading-tight">
-                Pemerintah Literasi Digital: Kampanye Informasi Publik Berbasis Micro-Learning
+                Literasi Digital: Kampanye Informasi Publik Berbasis Micro-Learning
               </h1>
 
               <p className="text-muted text-sm sm:text-base leading-relaxed">
-                Kampanye edukasi digital untuk meningkatkan pemahaman masyarakat mengenai keamanan data, etika berinternet, dan pemanfaatan teknologi secara positif.
+                Kementerian Komunikasi dan Informatika (Kemenkominfo) berkolaborasi dengan Gaharu Creative untuk menjalankan kampanye edukasi publik dan manajemen konten media sosial selama 5 bulan (Maret–Juli 2026).
               </p>
 
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-line text-xs text-muted">
@@ -39,7 +39,7 @@ export default function PortofolioPemerintahPage() {
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Periode</span>
-                  <span className="font-bold text-ink mt-0.5 block">2026</span>
+                  <span className="font-bold text-ink mt-0.5 block">Maret–Juli 2026</span>
                 </div>
                 <div>
                   <span className="block text-subtle font-semibold uppercase tracking-wider text-[10px]">Lokasi</span>
@@ -65,12 +65,32 @@ export default function PortofolioPemerintahPage() {
 
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-10 items-start">
-          <div className="w-full lg:w-7/12 space-y-6">
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-button uppercase tracking-widest">PENDEKATAN STRATEGIS</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Konteks dan Tantangan</h2>
-              <p className="text-muted text-sm leading-relaxed">
-                Program Literasi Digital dirancang untuk meningkatkan pemahaman masyarakat mengenai pentingnya keamanan data, etika berinternet, dan pemanfaatan teknologi secara positif lintas demografi.
+          <div className="w-full lg:w-7/12 space-y-8">
+            
+            {/* Ringkasan Proyek & Klien */}
+            <div className="space-y-3">
+              <span className="text-xs font-bold text-button uppercase tracking-widest">RINGKASAN PROYEK & KLIEN</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-ink">Tentang Program Literasi Digital</h2>
+              <p className="text-muted text-sm sm:text-base leading-relaxed">
+                Kementerian Komunikasi dan Informatika (Kemenkominfo) berkolaborasi dengan Gaharu Creative untuk menjalankan kampanye edukasi publik dan manajemen konten media sosial selama 5 bulan (Maret–Juli 2026). Proyek ini berfokus pada penyebaran informasi, peningkatan kesadaran keamanan siber dasar, serta edukasi etika berinternet secara masif bagi masyarakat umum.
+              </p>
+            </div>
+
+            {/* Tantangan */}
+            <div className="space-y-3 pt-2">
+              <span className="text-xs font-bold text-button uppercase tracking-widest">TANTANGAN BISNIS</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-ink">Kendala Penyampaian Informasi Publik</h2>
+              <p className="text-muted text-sm sm:text-base leading-relaxed">
+                Sebelumnya, penyampaian informasi terkait edukasi digital cenderung kaku, berformat formal, dan sulit dipahami oleh masyarakat awam. Kendala utamanya adalah rendahnya tingkat keterikatan (engagement rate) pada konten media sosial resmi, tingginya angka penyebaran hoaks, serta belum optimalnya distribusi pesan ke berbagai kelompok usia di seluruh wilayah Indonesia.
+              </p>
+            </div>
+
+            {/* Solusi & Strategi */}
+            <div className="space-y-3 pt-2">
+              <span className="text-xs font-bold text-button uppercase tracking-widest">SOLUSI & STRATEGI</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-ink">Strategi Komunikasi Publik Ramah Publik</h2>
+              <p className="text-muted text-sm sm:text-base leading-relaxed">
+                Gaharu Creative merancang strategi komunikasi digital yang ramah publik dan terstruktur. Langkah ini meliputi pemetaan narasi visual berbasis mikro-konten (infografis interaktif, video animasi pendek, dan komik edukatif), pengelolaan distribusi saluran media sosial terpadu, serta pelaksanaan kampanye sosialisasi program pemerintah menggunakan tagar tematik yang relevan dengan tren percakapan warga net.
               </p>
             </div>
 
@@ -80,11 +100,25 @@ export default function PortofolioPemerintahPage() {
                 <h3>Peran dan Pekerjaan Gaharu</h3>
               </div>
               <ul className="space-y-2.5 text-xs sm:text-sm text-muted pt-1">
-                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Strategi konten edukasi publik & infografis interaktif.</li>
-                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Panduan konten berbasis micro-learning yang mudah dipahami.</li>
-                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Kampanye media sosial terstruktur dengan jangkauan luas.</li>
+                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Pemetaan narasi visual berbasis mikro-konten (infografis interaktif, video animasi pendek, dan komik edukatif).</li>
+                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Pengelolaan distribusi saluran media sosial terpadu secara konsisten.</li>
+                <li className="flex items-start gap-2.5"><span className="text-button font-bold">•</span> Pelaksanaan kampanye sosialisasi program pemerintah menggunakan tagar tematik yang relevan.</li>
               </ul>
             </div>
+
+            {/* Hasil Nyata & Testimoni */}
+            <div className="space-y-3 pt-2">
+              <span className="text-xs font-bold text-button uppercase tracking-widest">HASIL NYATA & TESTIMONI</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-ink">Dampak Kampanye dan Testimoni</h2>
+              <p className="text-muted text-sm sm:text-base leading-relaxed">
+                Strategi terpadu ini berhasil menjangkau lebih dari 5.8 juta impression lintas platform digital dengan peningkatan engagement rate hingga +240%. Kampanye ini juga menghasilkan lebih dari 120.000 partisipan yang menyelesaikan modul edukasi singkat, serta memicu ribuan share organik pada konten pencegahan hoaks. Perwakilan Koordinator Tim Literasi Digital menyatakan bahwa pendekatan kreatif Gaharu Creative mampu menyulap materi publik yang rumit menjadi konten yang menarik, komunikatif, dan berdampak nyata bagi pemahaman masyarakat.
+              </p>
+              <blockquote className="border-l-4 border-button pl-4 italic text-muted text-sm leading-relaxed mt-4">
+                &ldquo;Pendekatan kreatif Gaharu Creative mampu menyulap materi publik yang rumit menjadi konten yang menarik, komunikatif, dan berdampak nyata bagi pemahaman masyarakat.&rdquo;
+              </blockquote>
+              <p className="text-xs font-bold text-ink mt-2">— Perwakilan Koordinator Tim Literasi Digital</p>
+            </div>
+
           </div>
 
           <div className="w-full lg:w-5/12 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -98,7 +132,7 @@ export default function PortofolioPemerintahPage() {
         </div>
       </section>
 
-      {/* 3. OUTPUT DAN CAKUPAN KERJA */}
+      {/* 3. OUTPUT DAN CAKUPAN KERJA + RINGKASAN DAMPAK (metrik dari Zimeism) */}
       <section className="py-12 bg-block border-y border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="space-y-2">
@@ -121,9 +155,30 @@ export default function PortofolioPemerintahPage() {
             </li>
           </ul>
 
-          <p className="text-xs text-subtle">
-            Angka hasil proyek belum tayang karena masih menunggu konfirmasi pemilik proyek.
-          </p>
+          <div className="text-center space-y-1 max-w-md mx-auto">
+            <span className="text-xs font-bold text-button uppercase tracking-widest">METRIK KINERJA TERUKUR</span>
+            <h2 className="text-2xl font-extrabold text-ink">Ringkasan Dampak Bisnis</h2>
+            <p className="text-xs text-subtle">Pencapaian nyata dari pelaksanaan kampanye informasi publik.</p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">5.8 Juta</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">TOTAL IMPRESSION</p>
+            </div>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">+240%</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">ENGAGEMENT RATE</p>
+            </div>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">120K+</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">PARTISIPAN MODUL</p>
+            </div>
+            <div className="bg-white rounded-2xl p-5 border border-line shadow-sm text-center space-y-1">
+              <p className="text-2xl sm:text-3xl font-extrabold text-button">Ribuan</p>
+              <p className="text-xs font-bold text-muted uppercase tracking-wider">SHARE ORGANIK</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -140,7 +195,7 @@ export default function PortofolioPemerintahPage() {
             <Link to="/portofolio/umkm-ecommerce-lokal" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" loading="lazy" decoding="async" className="w-full h-full object-cover group- transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(UMKM E-Commerce).webp" alt="E-Commerce Lokal" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">UMKM: E-Commerce Lokal</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Mendorong penjualan dan pertumbuhan bisnis.</p>
@@ -151,7 +206,7 @@ export default function PortofolioPemerintahPage() {
             <Link to="/portofolio/korporat-gaharu-cloud" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
               <div>
                 <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover group- transition-transform duration-300" />
+                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <h3 className="font-bold text-ink text-sm group-hover:text-button">Korporat: Gaharu Cloud Launch</h3>
                 <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Penguatan awareness dan penanganan pipeline B2B.</p>

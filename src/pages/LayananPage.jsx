@@ -10,9 +10,9 @@ import { services, whyChooseUs } from "../data/services.js";
  * biasa terjadi, deskripsi singkat, dan daftar deliverables. Semua tautan
  * mengarah ke halaman detail yang benar-benar ada.
  */
-const title = "Layanan Branding, Konten, dan Performance Marketing";
+const title = "Jasa Digital Marketing & Agensi Kreatif Terbaik Semarang";
 const description =
-  "Lima layanan Gaharu Creative: branding, content, social media, performance marketing, dan pengembangan produk digital. Jelaskan kebutuhannya, kami usulkan cakupan kerjanya.";
+  "Gaharu Creative menyediakan solusi terpadu: jasa digital marketing, digital branding, kelola sosial media, performance marketing, hingga pembuatan website di Semarang.";
 
 export default function LayananPage() {
   return (
@@ -27,11 +27,10 @@ export default function LayananPage() {
             Solusi digital terpadu
           </span>
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-            5 Layanan Utama
+            5 Layanan Utama Jasa Digital Marketing
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
-            Lima layanan yang saling terhubung untuk mendorong pertumbuhan bisnis Anda secara
-            sistematis dan berkelanjutan.
+            Lima solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button href={links.konsultasi} kind="primary">
@@ -62,8 +61,8 @@ export default function LayananPage() {
       <Section className="bg-lav-50">
         <SectionHead
           label="ALASAN MEMILIH KAMI"
-          title="Kenapa Memilih Gaharu"
-          subtitle="Pendekatan yang memastikan strategi jelas, eksekusi rapi, dan dampaknya bisa diukur."
+          title="Kenapa Memilih Gaharu Creative"
+          subtitle="Pendekatan berbasis data yang memastikan strategi jelas, eksekusi rapi, dan dampak pemasaran digital dapat diukur secara transparan."
         />
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {whyChooseUs.map((item) => (
