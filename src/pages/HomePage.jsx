@@ -14,40 +14,34 @@ import { services } from "../data/services.js";
 import { portfolioItems as featuredWork, stats, testimonials } from "../data/portfolio.js";
 import RekamJejak from "../components/RekamJejak.jsx";
 
-/* Urutan section mengikuti DESAIN.md v2 bagian 5.1: hero, dua kartu fondasi,
- * lima layanan, statistik, rekam jejak mitra, portofolio unggulan, testimoni,
- * lalu band CTA yang dipasang dari App.jsx.
- *
- * Angka yang tampil hanya angka resmi perusahaan (tahun berdiri, jumlah usaha,
- * jumlah mitra). Angka hasil proyek tidak ditampilkan sebelum dikonfirmasi.
- */
-const title = `${site.name} | Agensi Digital 360 di Indonesia`;
+const title = `${site.name} – Digital Agency Partner & Agensi Kreatif Indonesia`;
 const description =
-  "Gaharu Creative membantu bisnis dari strategi sampai eksekusi: branding, konten, social media, performance marketing, dan pengembangan produk digital sejak 2016.";
+  "Gaharu Creative adalah digital agency & agensi kreatif terpercaya sejak 2020. Kami menyediakan layanan digital marketing, digital branding, jasa pembuatan website, hingga performance marketing untuk UMKM dan Enterprise.";
 
 export default function HomePage() {
   return (
     <>
       <Seo title={title} description={description} />
 
-      {/* 1. Hero */}
-      <section className="border-b border-line bg-gradient-to-b from-lav-50 to-paper">
+      {/* 1. Hero dengan gradasi hijau/emerald */}
+      <section className="border-b border-emerald-200 bg-emerald-50">
         <Container className="py-14 sm:py-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-800">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-800" />
-                Konsultan dan eksekutor 360 digital agency
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-800">
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-800" />
+                KONSULTAN &amp; EKSEKUTOR 360° DIGITAL AGENCY
               </span>
 
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                Gaharu <span className="text-brand-700">Creative</span>
+                <font color="#047857">Gaharu Creative</font><br />
+                Digital Agency Partner untuk Skala Bisnis Anda
               </h1>
 
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-                Kami mengerjakan strategi, konten, iklan, dan produk digital dalam satu alur kerja,
-                dengan angka yang disepakati sejak awal untuk enterprise, instansi, dan UMKM di
-                Indonesia.
+                Kami adalah digital agency dan agensi kreatif yang membantu brand Anda tumbuh lewat
+                solusi pemasaran digital holistik, eksekusi visual presisi, hingga optimasi
+                performa berbasis data terukur untuk enterprise, instansi, serta UMKM di Indonesia.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -60,14 +54,16 @@ export default function HomePage() {
               </div>
 
               <ul className="mt-8 grid gap-3 sm:grid-cols-3">
-                {["Satu alur kerja dari strategi sampai eksekusi", "Pelaporan berkala, bukan laporan tebal", "Tanpa biaya konsultasi awal"].map(
-                  (item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <IconCircle name="check" size="sm" />
-                      <span className="text-sm leading-relaxed text-muted">{item}</span>
-                    </li>
-                  )
-                )}
+                {[
+                  "Satu alur kerja dari strategi sampai eksekusi",
+                  "Pelaporan berkala, bukan laporan tebal",
+                  "Tanpa biaya konsultasi awal",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <IconCircle name="check" size="sm" />
+                    <span className="text-sm leading-relaxed text-muted">{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -98,11 +94,11 @@ export default function HomePage() {
       </section>
 
       {/* 2. Dua kartu fondasi */}
-      <Section className="bg-lav-50">
+      <Section className="bg-emerald-50/50">
         <SectionHead
           label="360 DIGITAL AGENCY"
-          title="Partner digital 360 untuk pertumbuhan bisnis Anda"
-          subtitle="Solusi tanpa sekat, dari audit dan riset, narasi identitas merek, sampai konversi multi-kanal yang terukur."
+          title="Partner Digital Marketing 360° untuk Pertumbuhan Bisnis Anda"
+          subtitle="Dari tahap riset mendalam, penetapan digital branding, pembuatan ekosistem kanal digital, hingga eksekusi strategi pemasaran digital multi-channel yang terukur untuk mengkonversi audiens menjadi pelanggan setia."
         />
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <article className="rounded-2xl border border-line bg-paper p-6 sm:p-8">
@@ -131,8 +127,8 @@ export default function HomePage() {
       <Section>
         <SectionHead
           label="LAYANAN"
-          title="5 Layanan Utama"
-          subtitle="Layanan yang saling terhubung untuk pertumbuhan bisnis Anda secara berkesinambungan."
+          title="5 Layanan Digital Marketing Utama"
+          subtitle="Layanan pemasaran digital terpadu yang saling terhubung untuk pertumbuhan bisnis Anda secara berkelanjutan."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.slice(0, 3).map((service) => (
@@ -147,10 +143,10 @@ export default function HomePage() {
       </Section>
 
       {/* 4. Statistik resmi perusahaan */}
-      <Section className="bg-lav-50">
+      <Section className="bg-emerald-50/50">
         <SectionHead
-          title="Sejak 2016, fokus pada hasil yang bisa diperiksa"
-          subtitle="Ringkasan rekam jejak yang kami cantumkan untuk publik. Angka lain kami buka saat sesi konsultasi."
+          title="Sejak 2020 – Berfokus pada Hasil Nyata dan Pertumbuhan Komprehensif"
+          subtitle="Didedikasikan sebagai agensi kreatif berpengalaman yang mendampingi setiap tahap eksekusi digital branding hingga peluncuran aset digital berkinerja tinggi."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {(stats || []).map((item) => (
@@ -158,7 +154,7 @@ export default function HomePage() {
               <p className="text-xs font-semibold uppercase tracking-widest text-subtle">
                 {item.label}
               </p>
-              <p className="mt-3 text-3xl font-bold text-brand-700">{item.value}</p>
+              <p className="mt-3 text-3xl font-bold text-emerald-700">{item.value}</p>
             </div>
           ))}
         </div>
@@ -169,15 +165,15 @@ export default function HomePage() {
       {/* 5. Portofolio unggulan */}
       <Section>
         <SectionHead
-          title="Portofolio Unggulan"
-          subtitle="Studi kasus peningkatan performa bisnis di segmen UMKM, korporat, dan instansi publik."
+          title="Portofolio Unggulan – Bukti Hasil Nyata Strategi Digital Marketing"
+          subtitle="Eksplorasi studi kasus transformasi digital marketing untuk UMKM, korporat, hingga instansi pemerintah dalam meningkatkan penjualan online."
         />
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {(featuredWork || []).map((item) => (
             <Link
               key={item.slug || item.title}
               to={`/portofolio/${item.slug}`}
-              className="group flex flex-col rounded-2xl border border-line bg-paper p-5 transition-colors hover:border-brand-600"
+              className="group flex flex-col rounded-2xl border border-line bg-paper p-5 transition-colors hover:border-emerald-600"
             >
               <Tag>{item.tag}</Tag>
               <div className="mt-4 overflow-hidden rounded-xl border border-line">
@@ -187,11 +183,11 @@ export default function HomePage() {
                   className="aspect-[16/9] w-full object-cover object-center"
                 />
               </div>
-              <h3 className="mt-4 text-base font-semibold text-ink group-hover:text-brand-700">
+              <h3 className="mt-4 text-base font-semibold text-ink group-hover:text-emerald-700">
                 {item.title}
               </h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.summary}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700">
                 Baca studi kasus
                 <Icon name="arrowRight" className="h-4 w-4" />
               </span>
@@ -200,14 +196,13 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 6. Testimoni: hanya dirender kalau ada testimoni yang sudah disetujui
-          pemilik bisnis (audit staging 12 Okt 2026, temuan C03). */}
+      {/* 6. Testimoni Klien */}
       {testimonials?.length ? (
-        <Section className="bg-lav-50">
+        <Section className="bg-emerald-50/50">
           <SectionHead
             label="APRESIASI KLIEN"
             title="Testimoni Klien"
-            subtitle="Pengalaman pemangku kepentingan yang bekerja sama dengan tim Gaharu Creative."
+            subtitle="Apresiasi klien atas eksekusi strategi pemasaran digital dan pendampingan bisnis dari tim kami."
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {testimonials.map((item) => (
@@ -224,26 +219,46 @@ export default function HomePage() {
           </div>
         </Section>
       ) : null}
+
+      {/* 7. Banner CTA Penutup */}
+      <Section divider>
+        <div className="relative overflow-hidden rounded-2xl border border-emerald-950/30 bg-[linear-gradient(135deg,#10b981_0%,#047857_45%,#065f46_100%)] p-8 text-center text-white shadow-[0_24px_45px_-15px_rgba(4,120,87,0.55)] sm:p-12">
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            Siap Membangun dan Mengembangkan Bisnis Digital Anda?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-emerald-50">
+            Mulai langkah transformasi bisnis digital Anda bersama tim ahli Gaharu Creative. Dapatkan sesi konsultasi gratis tanpa komitmen awal untuk memetakan pertumbuhan brand Anda.
+          </p>
+          <div className="mt-8 flex justify-center gap-3">
+            <Button to={links.portofolio} kind="secondary" className="bg-white/15 text-white hover:bg-white/25">
+              Lihat Portofolio
+            </Button>
+            <Button href={links.konsultasi} kind="primary" className="bg-white text-emerald-900 hover:bg-emerald-50">
+              Konsultasi Gratis
+            </Button>
+          </div>
+        </div>
+      </Section>
     </>
   );
 }
 
 function ServiceCard({ service }) {
   return (
-    <article className="flex flex-col rounded-2xl border border-line bg-paper p-6 transition-colors hover:border-brand-600">
+    <article className="flex flex-col rounded-2xl border border-line bg-paper p-6 transition-colors hover:border-emerald-600">
       <div className="flex items-start justify-between gap-4">
         <Tag>{service.tag}</Tag>
         <IconCircle name={service.icon} size="sm" />
       </div>
       <h3 className="mt-4 text-lg font-semibold text-ink">
-        <Link to={`/layanan/${service.slug}`} className="hover:text-brand-700">
+        <Link to={`/layanan/${service.slug}`} className="hover:text-emerald-700">
           {service.title}
         </Link>
       </h3>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.short}</p>
       <Link
         to={`/layanan/${service.slug}`}
-        className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-900"
+        className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-emerald-700 hover:text-emerald-900"
       >
         Pelajari detail
         <Icon name="arrowRight" className="h-4 w-4" />

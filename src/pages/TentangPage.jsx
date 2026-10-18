@@ -19,9 +19,9 @@ import {
   legality,
 } from "../data/tentang.js";
 
-const title = "Tentang Kami | Agensi Digital 360 Gaharu Creative";
+const title = "Tentang Kami – Konsultan Digital Marketing Semarang & Agensi Kreatif";
 const description =
-  "Gaharu Creative adalah agensi digital 360 yang menangani strategi, identitas merek, konten, dan pemasaran digital sejak 2016.";
+  "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2020: strategi, digital branding, pembuatan website, dan pemasaran digital.";
 
 export default function TentangPage() {
   return (
@@ -29,24 +29,23 @@ export default function TentangPage() {
       <Seo title={title} description={description} />
 
       {/* Hero: dua kolom, latar gradasi mint (DESAIN.md bagian 2.1) */}
-      <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
+      <section className="border-b border-emerald-200 bg-emerald-50">
         <Container className="py-14 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-800">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-800" />
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-800">
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-800" />
                 Tentang Gaharu Creative
               </span>
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
-                Gaharu <span className="text-brand-700">Creative</span>
-                <br />
-                Agensi digital 360 berbasis di Indonesia
+                <font color="#047857">Gaharu Creative</font><br />
+                Konsultan Digital Marketing Semarang
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-                Kami menangani strategi, produksi, dan pengukuran dalam satu alur kerja, dengan hasil yang bisa diperiksa bersama tim Anda.
+                Agensi kreatif dan konsultan digital marketing 360 berbasis di Semarang dan Indonesia yang berfokus pada pertumbuhan bisnis secara terukur.
               </p>
               <div className="mt-8">
-                <Button href={links.konsultasi} kind="primary">
+                <Button to={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
               </div>
@@ -95,22 +94,22 @@ export default function TentangPage() {
             <img
               src="/Tentang Kami-Cerita Kami.webp"
               alt="Perjalanan Gaharu Creative"
-              className="aspect-[4/3] w-full object-cover object-center transition-transform duration-700 group-"
+              className="aspect-[4/3] w-full object-cover object-center transition-transform duration-700"
             />
           </div>
 
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">Cerita Kami</h2>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              Perjalanan dimulai sejak {site.founded} sebagai tim kecil yang mendampingi UMKM, lalu berkembang menjadi tim yang menangani korporasi dan instansi publik.
+              Perjalanan dimulai sejak {site.founded} sebagai agensi kreatif dan konsultan digital marketing Semarang, berkembang menjadi tim yang fokus pada hasil dan kolaborasi strategis.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
-                href={links.whatsapp}
+                href={links.mail}
                 kind="secondary"
-                title="Berkas company profile belum tersedia untuk diunduh, jadi permintaan diarahkan ke WhatsApp."
+                title="Company profile belum tersedia, kirim email untuk memintanya."
               >
-                Minta Company Profile
+                Unduh Company Profile
               </Button>
               <Button to={links.layanan} kind="primary">
                 Lihat Layanan
@@ -154,7 +153,7 @@ export default function TentangPage() {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <Button href={links.konsultasi} kind="primary" className="shadow-md transition-transform">
+          <Button to={links.konsultasi} kind="primary" className="shadow-md transition-transform">
             Diskusikan Kebutuhan Anda
           </Button>
         </div>
