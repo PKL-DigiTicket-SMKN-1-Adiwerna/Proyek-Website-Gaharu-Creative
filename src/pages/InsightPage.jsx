@@ -121,14 +121,25 @@ export default function InsightPage() {
                     <span className="text-[11px] font-medium text-subtle">{post.dateLabel || "2026"}</span>
                   </div>
 
-                  <div className="overflow-hidden rounded-xl border border-line aspect-[16/9] bg-chip mb-4">
-                    <img
-                      src={post.image || "/Beranda-Visual.webp"}
-                      alt={post.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group- transition-transform duration-500"
-                    />
+                  <div className="mb-4 aspect-[16/9] overflow-hidden rounded-xl border border-line bg-chip">
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt={post.imageAlt || post.title}
+                        width={post.imageWidth}
+                        height={post.imageHeight}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover object-center"
+                      />
+                    ) : (
+                      <div
+                        aria-hidden="true"
+                        className="flex h-full w-full items-center justify-center bg-mint"
+                      >
+                        <Icon name="doc" className="h-8 w-8 text-brand-700" />
+                      </div>
+                    )}
                   </div>
 
                   <h3 className="text-base font-bold leading-snug text-ink group-hover:text-button transition-colors">

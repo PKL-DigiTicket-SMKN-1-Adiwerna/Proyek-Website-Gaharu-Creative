@@ -226,25 +226,6 @@ export default function HomePage() {
         </Section>
       ) : null}
 
-      {/* 7. Banner CTA Penutup */}
-      <Section divider>
-        <div className="relative overflow-hidden rounded-2xl border border-emerald-950/30 bg-[linear-gradient(135deg,var(--brand-500)_0%,var(--brand-700)_45%,var(--brand-800)_100%)] p-8 text-center text-white sm:p-12">
-          <h2 className="text-2xl font-bold text-white sm:text-3xl">
-            Siap Membangun dan Mengembangkan Bisnis Digital Anda?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-emerald-50">
-            Mulai langkah transformasi bisnis digital Anda bersama tim ahli Gaharu Creative. Dapatkan sesi konsultasi gratis tanpa komitmen awal untuk memetakan pertumbuhan brand Anda.
-          </p>
-          <div className="mt-8 flex justify-center gap-3">
-            <Button to={links.portofolio} kind="secondary" className="bg-white/15 text-white hover:bg-white/25">
-              Lihat Portofolio
-            </Button>
-            <Button href={links.konsultasi} kind="primary" className="bg-white text-emerald-900 hover:bg-emerald-50">
-              Konsultasi Gratis
-            </Button>
-          </div>
-        </div>
-      </Section>
     </>
   );
 }

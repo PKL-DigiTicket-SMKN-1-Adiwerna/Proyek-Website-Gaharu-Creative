@@ -63,6 +63,20 @@ export default function InsightDetailPage() {
               Tim Gaharu Creative · {post.dateLabel}
             </p>
           </div>
+
+          {post.image ? (
+            <div className="mt-8 max-w-3xl overflow-hidden rounded-2xl border border-line">
+              <img
+                src={post.image}
+                alt={post.imageAlt || post.title}
+                width={post.imageWidth}
+                height={post.imageHeight}
+                loading="eager"
+                decoding="async"
+                className="aspect-[16/9] w-full object-cover object-center"
+              />
+            </div>
+          ) : null}
         </Container>
       </section>
 

@@ -42,7 +42,11 @@ export const footerVariantByPath = {
 
 function useCtaForPath(pathname) {
   const clean = pathname.replace(/\/+$/, "") || "/";
-  if (clean.startsWith("/layanan")) return ctaByPath["/layanan"];
+  if (clean.startsWith("/layanan")) {
+    /* Halaman detail layanan menutup dirinya dengan band CTA khusus layanan
+     * (service.cta), jadi band umum tidak dipasang di sana supaya tidak dobel. */
+    return clean === "/layanan" ? ctaByPath["/layanan"] : null;
+  }
   if (clean.startsWith("/portofolio")) return ctaByPath["/portofolio"];
   if (clean.startsWith("/insight")) return ctaByPath["/insight"];
   return ctaByPath[clean] || null;

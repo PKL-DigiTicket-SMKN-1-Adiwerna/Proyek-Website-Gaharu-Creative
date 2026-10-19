@@ -13,6 +13,7 @@ export const services = [
     slug: "branding",
     tag: "STRATEGI",
     title: "Branding",
+    icon: "brand",
     short: "Identitas merek, strategi positioning, dan panduan komunikasi yang siap dipakai tim Anda.",
     hero: {
       eyebrow: "Layanan strategi dan identitas",
@@ -142,6 +143,7 @@ export const services = [
     slug: "konten",
     tag: "KREATIF",
     title: "Content",
+    icon: "content",
     short: "Perencanaan konten, produksi video dan visual, serta penulisan naskah untuk tiap tahap funnel.",
     hero: {
       eyebrow: "Content strategy dan production",
@@ -246,6 +248,7 @@ export const services = [
     slug: "social-media",
     tag: "ENGAGEMENT",
     title: "Social Media",
+    icon: "social",
     short: "Pengelolaan kanal sosial, kalender konten, dan interaksi komunitas harian.",
     hero: {
       eyebrow: "Social media management dan growth",
@@ -337,6 +340,7 @@ export const services = [
     slug: "performance-marketing",
     tag: "TERUKUR",
     title: "Performance Marketing",
+    icon: "chart",
     short: "Iklan berbayar berbasis data untuk leads, penjualan, dan biaya akuisisi yang terukur.",
     hero: {
       eyebrow: "Paid advertising berbasis data",
@@ -433,6 +437,7 @@ export const services = [
     slug: "pengembangan-produk-digital",
     tag: "PRODUK",
     title: "Digital Product Development",
+    icon: "code",
     short: "Pengembangan website, aplikasi web, dan platform digital beserta perawatan setelah rilis.",
     hero: {
       eyebrow: "Web dan software engineering",

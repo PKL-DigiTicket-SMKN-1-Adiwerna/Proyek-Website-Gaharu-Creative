@@ -19,6 +19,10 @@ export const posts = [
       "Panduan menyusun strategi yang fokus pada target funnel dan pengukuran yang jelas.",
     date: "2026-08",
     dateLabel: "Agustus 2026",
+    image: "/Portofolio-UMKM E-Commerce lokal.webp",
+    imageAlt: "Seseorang membuka penawaran layanan digital di ponsel di depan laptop",
+    imageWidth: 900,
+    imageHeight: 506,
     verified: true,
     content: `
       <p class="mb-4 leading-relaxed">
@@ -96,6 +100,10 @@ export const posts = [
       "Langkah membangun identitas merek yang konsisten dari positioning sampai visual dan tone of voice.",
     date: "2026-06",
     dateLabel: "Juni 2026",
+    image: "/Beranda-Visual.webp",
+    imageAlt: "Kit identitas merek: buku panduan, kartu nama, dan tampilan digital dalam satu sistem visual",
+    imageWidth: 1200,
+    imageHeight: 400,
     verified: true,
     content: `
       <p class="mb-4 leading-relaxed">
@@ -174,6 +182,10 @@ export const posts = [
       "Pemetaan teknologi yang relevan untuk efisiensi proses, personalisasi, dan pertumbuhan.",
     date: "2026-04",
     dateLabel: "April 2026",
+    image: "/Portofolio-Gaharu Cloud.webp",
+    imageAlt: "Laman platform cloud dengan ilustrasi awan digital dan empat kartu fitur",
+    imageWidth: 900,
+    imageHeight: 556,
     verified: true,
     content: `
       <p class="mb-4 leading-relaxed">

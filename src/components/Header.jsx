@@ -5,7 +5,8 @@ import { Button, Container } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
 import Logo from "./Logo.jsx";
 
-/* Logo kiri, menu langsung di sebelah kanan logo, pemilih bahasa dan tombol Hubungi Kami di kanan. */
+/* Logo kiri, menu rata tengah, pemilih bahasa dan tombol Hubungi Kami di kanan
+ * (DESAIN.md bagian 3.1; permintaan CeO 19 Okt 2026). */
 function LanguagePicker() {
   const [open, setOpen] = useState(false);
   const box = useRef(null);
@@ -89,12 +90,19 @@ export default function Header() {
   return (
     <header className="site-header sticky top-0 z-50 border-b border-line bg-paper">
       <Container>
-        <div className="flex h-[72px] items-center gap-8">
-          <Link to="/" className="flex shrink-0 items-center" aria-label={`${site.name}, beranda`}>
+        <div className="flex h-[72px] items-center gap-8 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
+          <Link
+            to="/"
+            className="flex shrink-0 items-center lg:justify-self-start"
+            aria-label={`${site.name}, beranda`}
+          >
             <Logo className="h-12 w-auto" />
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
+          <nav
+            className="hidden items-center gap-1 lg:flex lg:justify-self-center"
+            aria-label="Navigasi utama"
+          >
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -112,7 +120,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-3 lg:flex">
+          <div className="ml-auto hidden items-center gap-3 lg:ml-0 lg:flex lg:justify-self-end">
             <LanguagePicker />
             <Button href={links.konsultasi} kind="nav" className="px-4">
               Hubungi Kami
