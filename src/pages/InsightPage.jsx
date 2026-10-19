@@ -7,7 +7,7 @@ import {
   FilterChip,
   IconCircle,
   Section,
-  SectionHead,
+  Kepala,
   Tag,
 } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
@@ -46,20 +46,19 @@ export default function InsightPage() {
       <Seo title={title} description={description} />
 
       {/* HERO SECTION */}
-      <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
+      <section className="border-b border-line bg-paper">
         <Container className="py-14 sm:py-20">
-          <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-800">
-              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-800" />
-              PANDUAN & STRATEGI DIGITAL
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-ink">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
+              Panduan & strategi digital
+            </p>
+            <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
               Insight & Artikel
             </h1>
-            <p className="text-muted text-sm sm:text-base leading-relaxed">
+            <p className="mt-4 text-base leading-relaxed text-muted">
               Catatan praktis dan pembacaan tren digital untuk membantu keputusan pemasaran Anda.
             </p>
-            <div className="pt-4 flex flex-wrap justify-center gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Button to={links.portofolio} kind="secondary">
                 Lihat Portofolio
               </Button>
@@ -73,9 +72,10 @@ export default function InsightPage() {
 
       {/* FILTER KATEGORI */}
       <Section divider>
-        <SectionHead
-          title="Filter Kategori"
-          subtitle="Pilih kategori untuk melihat artikel yang relevan dengan fokus bisnis Anda."
+        <Kepala
+          nomor="01 / Filter"
+          judul="Filter Kategori"
+          catatan="Pilih kategori untuk melihat artikel yang relevan dengan fokus bisnis Anda."
         />
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {insightCategories.map((item) => (
@@ -93,9 +93,10 @@ export default function InsightPage() {
 
       {/* DAFTAR ARTIKEL */}
       <Section divider className="bg-block/60">
-        <SectionHead
-          title="Artikel Terbaru"
-          subtitle="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."
+        <Kepala
+          nomor="02 / Artikel"
+          judul="Artikel Terbaru"
+          catatan="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."
         />
         <p aria-live="polite" className="mx-auto mt-4 max-w-3xl text-center text-xs font-semibold text-muted uppercase tracking-wider">
           Menampilkan {visible.length} dari {posts.length} artikel

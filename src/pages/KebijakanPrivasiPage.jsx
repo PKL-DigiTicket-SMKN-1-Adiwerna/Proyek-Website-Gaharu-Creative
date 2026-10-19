@@ -1,5 +1,5 @@
 import { Seo } from "../components/Seo.jsx";
-import { Button, Container, Section, SectionHead } from "../components/ui.jsx";
+import { Button, Container, Section, Kepala } from "../components/ui.jsx";
 import { links, site } from "../data/site.js";
 
 /* Kebijakan privasi ditulis sebatas apa yang benar-benar terjadi di situs ini.
@@ -125,10 +125,10 @@ export default function KebijakanPrivasiPage() {
 
       <Section className="bg-paper">
         <Container className="py-14 sm:py-16">
-          <SectionHead
-            label="Isi kebijakan"
-            title="Hal yang perlu Anda ketahui sebelum menghubungi kami"
-            align="left"
+          <Kepala
+            nomor="Kebijakan"
+            judul="Hal yang perlu Anda ketahui sebelum menghubungi kami"
+            catatan="Isi kebijakan privasi situs Gaharu Creative."
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {BAGIAN.map((bagian, index) => (

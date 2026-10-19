@@ -142,6 +142,36 @@ export function SectionHead({ label, title, subtitle, align = "center", as = "h2
   );
 }
 
+/* Kepala section editorial: nomor kecil kiri, judul rata kiri, satu baris catatan,
+ * tautan kanan. Pola yang sama dengan Beranda supaya semua halaman seragam dan
+ * tidak terasa template tengah. */
+export function Kepala({ nomor, judul, catatan, tautan }) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+      <div className="max-w-2xl">
+        {nomor ? (
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700 tabular-nums">
+            {nomor}
+          </p>
+        ) : null}
+        <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
+          {judul}
+        </h2>
+        {catatan ? <p className="mt-3 text-base leading-relaxed text-muted">{catatan}</p> : null}
+      </div>
+      {tautan ? (
+        <Link
+          to={tautan.to}
+          className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-900"
+        >
+          {tautan.label}
+          <Icon name="arrowRight" className="h-4 w-4" />
+        </Link>
+      ) : null}
+    </div>
+  );
+}
+
 export function Section({ id, className = "", children, divider = false }) {
   return (
     <section

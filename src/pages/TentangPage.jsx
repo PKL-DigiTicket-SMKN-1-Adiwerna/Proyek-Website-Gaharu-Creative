@@ -5,7 +5,7 @@ import {
   Container,
   IconCircle,
   Section,
-  SectionHead,
+  Kepala,
   Tag,
 } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
@@ -29,14 +29,13 @@ export default function TentangPage() {
       <Seo title={title} description={description} />
 
       {/* Hero: dua kolom, latar gradasi mint (DESAIN.md bagian 2.1) */}
-      <section className="border-b border-emerald-200 bg-emerald-50">
+      <section className="border-b border-line bg-paper">
         <Container className="py-14 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-800">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-800" />
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
                 Tentang Gaharu Creative
-              </span>
+              </p>
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
                 <span className="text-brand-700">Gaharu Creative</span><br />
                 Konsultan Digital Marketing Semarang
@@ -55,7 +54,7 @@ export default function TentangPage() {
              * mengikuti pola kartu di beranda: border tipis, tanpa bayangan besar
              * (DESAIN.md 2.4), dan rasio dikunci supaya tinggi tidak melompat saat
              * gambar selesai dimuat. */}
-            <div className="group relative overflow-hidden rounded-2xl border border-line transition-colors duration-300 hover:border-brand-600">
+            <div className="group relative overflow-hidden rounded-lg border border-line transition-colors duration-300 hover:border-brand-700">
               <div className="aspect-[3/2]">
                 {/* Lapisan parallax ringan pada gambar hero. */}
                 <div data-parallax="1" className="h-full w-full">
@@ -77,7 +76,7 @@ export default function TentangPage() {
 
       {/* Ringkasan Dedikasi */}
       <Section divider>
-        <div className="group rounded-2xl border border-line bg-block p-6 text-center transition-all duration-300 hover:border-brand-600 hover:shadow-lg sm:p-10">
+        <div className="group rounded-lg border border-line bg-block p-6 text-center transition-all duration-300 hover:border-brand-700 hover:shadow-lg sm:p-10">
           <Tag>{tentangIntro.subtitle}</Tag>
           <h2 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             {tentangIntro.title}
@@ -92,7 +91,7 @@ export default function TentangPage() {
       <Section divider>
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
           {/* Gambar Cerita Kami Menggunakan /Tentang Kami-Cerita Kami.webp */}
-          <div className="group overflow-hidden rounded-2xl border border-line bg-paper transition-all duration-300">
+          <div className="group overflow-hidden rounded-lg border border-line bg-paper transition-all duration-300">
             <img
               src="/Tentang Kami-Cerita Kami.webp"
               alt="Perjalanan Gaharu Creative"
@@ -121,7 +120,7 @@ export default function TentangPage() {
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
               {ceritaCards.map((item) => (
-                <article key={item.title} className="rounded-xl border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-600 hover:shadow-md">
+                <article key={item.title} className="rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
                   <h3 className="text-base font-bold text-ink">{item.title}</h3>
                   <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-700">
                     {item.label}
@@ -138,13 +137,14 @@ export default function TentangPage() {
 
       {/* Misi dan Tujuan */}
       <Section divider className="bg-lav-50">
-        <SectionHead
-          title="Misi dan Tujuan"
-          subtitle="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
+        <Kepala
+          nomor="01 / Misi & tujuan"
+          judul="Misi dan Tujuan"
+          catatan="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
         />
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {missionGoals.map((item) => (
-            <article key={item.title} className="flex gap-4 rounded-xl border border-line bg-paper p-6 transition-all duration-300 hover:border-brand-600 hover:shadow-md">
+            <article key={item.title} className="flex gap-4 rounded-lg border border-line bg-paper p-6 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <IconCircle name={item.icon} />
               <div className="min-w-0">
                 <h3 className="text-lg font-bold text-ink">{item.title}</h3>
@@ -165,13 +165,14 @@ export default function TentangPage() {
 
       {/* Nilai Perusahaan */}
       <Section divider>
-        <SectionHead
-          title="Nilai Perusahaan"
-          subtitle="Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil."
+        <Kepala
+          nomor="02 / Nilai"
+          judul="Nilai Perusahaan"
+          catatan="Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {values.map((item) => (
-            <article key={item.title} className="rounded-xl border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-600 hover:shadow-md">
+            <article key={item.title} className="rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <h3 className="text-base font-bold text-ink">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
             </article>
@@ -181,15 +182,16 @@ export default function TentangPage() {
 
       {/* Tim Inti */}
       <Section divider className="bg-lav-50">
-        <SectionHead
-          title="Tim Inti"
-          subtitle="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang."
+        <Kepala
+          nomor="03 / Tim"
+          judul="Tim Inti"
+          catatan="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {team.map((item) => (
             <article
               key={item.role}
-              className="rounded-2xl border border-line bg-paper p-5 text-center"
+              className="rounded-lg border border-line bg-paper p-5 text-center"
             >
               <span
                 aria-hidden="true"
@@ -206,13 +208,14 @@ export default function TentangPage() {
 
       {/* Legalitas */}
       <Section divider>
-        <SectionHead
-          title="Legalitas"
-          subtitle="Dokumen dan informasi penting untuk meningkatkan kepercayaan dalam kerja sama."
+        <Kepala
+          nomor="04 / Legalitas"
+          judul="Legalitas"
+          catatan="Dokumen dan informasi penting untuk meningkatkan kepercayaan dalam kerja sama."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
           {legality.map((item) => (
-            <article key={item.title} className="flex gap-4 rounded-xl border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-600 hover:shadow-md">
+            <article key={item.title} className="flex gap-4 rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <IconCircle name={item.icon} />
               <div className="min-w-0">
                 <h3 className="text-sm font-bold text-ink">{item.title}</h3>

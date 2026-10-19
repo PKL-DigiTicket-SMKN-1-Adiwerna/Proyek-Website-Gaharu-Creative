@@ -1,4 +1,4 @@
-import { Section, SectionHead, Tag } from "../components/ui.jsx";
+import { Section, Kepala, Tag } from "./ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { rekamJejak, mitraGroups, penghargaan } from "../data/klien.js";
 
@@ -9,10 +9,10 @@ export default function RekamJejak({ withHead = true }) {
   return (
     <Section divider className="bg-lav-50">
       {withHead ? (
-        <SectionHead
-          label={rekamJejak.label}
-          title={rekamJejak.title}
-          subtitle="Daftar institusi yang telah berkolaborasi dengan kami."
+        <Kepala
+          nomor="Rekam jejak"
+          judul={rekamJejak.title}
+          catatan="Daftar institusi yang telah berkolaborasi dengan kami."
         />
       ) : null}
 

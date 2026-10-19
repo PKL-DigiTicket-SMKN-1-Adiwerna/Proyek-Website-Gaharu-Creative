@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { services } from "../data/services.js";
 import { links } from "../data/site.js";
 import { Seo } from "../components/Seo.jsx";
-import { Button, Container, IconCircle, Section, SectionHead } from "../components/ui.jsx";
+import { Button, Container, IconCircle, Section, Kepala } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 
 /* Satu template untuk kelima layanan (DESAIN.md v2 bagian 5.3). Section yang
@@ -49,14 +49,13 @@ export default function LayananDetailPage() {
       />
 
       {/* 1. Hero: dua kolom, latar gradasi mint (DESAIN.md 2.1) */}
-      <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
+      <section className="border-b border-line bg-paper">
         <Container className="py-14 sm:py-20">
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-800">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-800" />
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
                 {service.hero.eyebrow}
-              </span>
+              </p>
 
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
                 {service.hero.titleBefore}
@@ -110,11 +109,10 @@ export default function LayananDetailPage() {
       {/* 2. Masalah yang sering terjadi */}
       {service.problems?.length ? (
         <Section className="bg-lav-50">
-          <SectionHead
-            align="left"
-            label="MASALAH YANG SERING TERJADI"
-            title="Yang biasanya menghambat"
-            subtitle={`Tiga kondisi yang paling sering muncul sebelum klien memakai layanan ${service.title}.`}
+          <Kepala
+            nomor="02 / Masalah"
+            judul="Yang biasanya menghambat"
+            catatan={`Tiga kondisi yang paling sering muncul sebelum klien memakai layanan ${service.title}.`}
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {service.problems.map((problem) => (
@@ -132,11 +130,10 @@ export default function LayananDetailPage() {
         <Section>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
             <div>
-              <SectionHead
-                align="left"
-                label="SOLUSI & KERANGKA KERJA"
-                title="Solusi yang kami kerjakan"
-                subtitle="Setiap bagian punya keluaran yang jelas, jadi progresnya bisa diperiksa."
+              <Kepala
+                nomor="03 / Solusi"
+                judul="Solusi yang kami kerjakan"
+                catatan="Setiap bagian punya keluaran yang jelas, jadi progresnya bisa diperiksa."
               />
               {service.quote ? (
                 <div className="mt-8 rounded-2xl bg-brand-50 p-6">
@@ -166,11 +163,10 @@ export default function LayananDetailPage() {
       {/* 4. KPI: hanya performance marketing, dan ditandai sebagai contoh tampilan */}
       {service.kpi?.cards?.length ? (
         <Section className="bg-lav-50">
-          <SectionHead
-            align="left"
-            label="METRIK YANG DIPANTAU"
-            title="Indikator kinerja utama"
-            subtitle={service.kpi.caption}
+          <Kepala
+            nomor="04 / KPI"
+            judul="Indikator kinerja utama"
+            catatan={service.kpi.caption}
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {service.kpi.cards.map((card) => (
@@ -205,11 +201,10 @@ export default function LayananDetailPage() {
       {/* 5. Deliverables */}
       {service.deliverables?.length ? (
         <Section>
-          <SectionHead
-            align="left"
-            label="DELIVERABLES"
-            title="Hasil yang Anda terima"
-            subtitle="Setiap keluaran diserahkan dalam format yang bisa langsung dipakai tim Anda."
+          <Kepala
+            nomor="05 / Deliverables"
+            judul="Hasil yang Anda terima"
+            catatan="Setiap keluaran diserahkan dalam format yang bisa langsung dipakai tim Anda."
           />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {service.deliverables.map((item) => (
@@ -236,11 +231,10 @@ export default function LayananDetailPage() {
       {/* 6. Workflow */}
       {service.steps?.length ? (
         <Section className="bg-lav-50">
-          <SectionHead
-            align="left"
-            label="TAHAPAN KERJA"
-            title="Cara kami mengerjakannya"
-            subtitle="Urutan kerja yang sama untuk setiap proyek, supaya Anda tahu posisi pekerjaan kapan saja."
+          <Kepala
+            nomor="06 / Workflow"
+            judul="Cara kami mengerjakannya"
+            catatan="Urutan kerja yang sama untuk setiap proyek, supaya Anda tahu posisi pekerjaan kapan saja."
           />
           <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {service.steps.map((step) => (
@@ -257,11 +251,10 @@ export default function LayananDetailPage() {
       {/* 7. FAQ */}
       {service.faqs?.length ? (
         <Section>
-          <SectionHead
-            align="left"
-            label="FAQ"
-            title={`Pertanyaan seputar ${service.title}`}
-            subtitle="Jawaban singkat untuk pertanyaan yang paling sering masuk."
+          <Kepala
+            nomor="07 / FAQ"
+            judul={`Pertanyaan seputar ${service.title}`}
+            catatan="Jawaban singkat untuk pertanyaan yang paling sering masuk."
           />
           <div className="mt-8 space-y-3">
             {service.faqs.map((faq, index) => {

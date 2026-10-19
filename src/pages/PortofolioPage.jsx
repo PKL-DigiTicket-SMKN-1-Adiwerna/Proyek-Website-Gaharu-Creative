@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "../components/Icons.jsx";
 import { Seo } from "../components/Seo.jsx";
-import { IconCircle } from "../components/ui.jsx";
+import { IconCircle, Kepala } from "../components/ui.jsx";
 import { links } from "../data/site.js";
 import { segments, portfolioItems } from "../data/portfolio.js";
 
@@ -85,12 +85,12 @@ export default function PortofolioPage() {
       <section className="bg-block/80 py-16 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-4 space-y-4">
-              <span className="text-xs font-bold text-button uppercase tracking-widest">NAVIGASI FOKUS</span>
-              <h2 className="text-3xl font-extrabold text-ink tracking-tight">Filter Cepat</h2>
-              <p className="text-muted text-xs sm:text-sm leading-relaxed">
-                Pilih kategori untuk melihat studi kasus yang relevan dengan skala kebutuhan dan model objektif instansi Anda.
-              </p>
+            <div className="lg:col-span-4">
+              <Kepala
+                nomor="01 / Filter"
+                judul="Filter Cepat"
+                catatan="Pilih kategori untuk melihat studi kasus yang relevan dengan skala kebutuhan dan model objektif instansi Anda."
+              />
             </div>
 
             <div
@@ -130,19 +130,17 @@ export default function PortofolioPage() {
       {/* 3. STUDI KASUS TERBARU (Satu klik membuka halaman detail statis) */}
       <section id="studi-kasus" className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-xs font-bold text-button uppercase tracking-widest">HASIL NYATA & DAMPAK BISNIS</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink">Studi Kasus Terbaru</h2>
-            <p className="text-muted text-xs sm:text-sm leading-relaxed">
-              Klik kartu proyek untuk melihat strategi dan hasil detail proyek.
-            </p>
-            <p aria-live="polite" className="text-xs font-semibold uppercase tracking-wider text-button">
-              Menampilkan {visible.length} dari {portfolioItems.length} studi kasus kategori {labelAktif}
-            </p>
-            <p className="text-xs text-subtle">
-              Angka hasil per proyek belum ditampilkan karena masih menunggu konfirmasi pemilik proyek.
-            </p>
-          </div>
+          <Kepala
+            nomor="02 / Studi kasus"
+            judul="Studi Kasus Terbaru"
+            catatan="Klik kartu proyek untuk melihat strategi dan hasil detail proyek."
+          />
+          <p aria-live="polite" className="mt-4 text-xs font-semibold uppercase tracking-wider text-button">
+            Menampilkan {visible.length} dari {portfolioItems.length} studi kasus kategori {labelAktif}
+          </p>
+          <p className="text-xs text-subtle">
+            Angka hasil per proyek belum ditampilkan karena masih menunggu konfirmasi pemilik proyek.
+          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {visible.map((item) => {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo.jsx";
-import { Button, Container, IconCircle, Section, SectionHead } from "../components/ui.jsx";
+import { Button, Container, IconCircle, Section, Kepala } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { links } from "../data/site.js";
 import { services, whyChooseUs } from "../data/services.js";
@@ -20,25 +20,26 @@ export default function LayananPage() {
       <Seo title={title} description={description} />
 
       {/* Header halaman */}
-      <section className="border-b border-line bg-gradient-to-b from-brand-50 to-paper">
-        <Container className="py-14 text-center sm:py-20">
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-800">
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-800" />
-            Solusi digital terpadu
-          </span>
-          <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-            5 Layanan Utama Jasa Digital Marketing
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
-            Lima solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button href={links.konsultasi} kind="primary">
-              Konsultasi Gratis
-            </Button>
-            <Button to="/kontak" kind="secondary">
-              Minta Penawaran
-            </Button>
+      <section className="border-b border-line bg-paper">
+        <Container className="py-14 sm:py-20">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
+              Solusi digital terpadu
+            </p>
+            <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+              5 Layanan Utama Jasa Digital Marketing
+            </h1>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              Lima solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href={links.konsultasi} kind="primary">
+                Konsultasi Gratis
+              </Button>
+              <Button to="/kontak" kind="secondary">
+                Minta Penawaran
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
@@ -58,11 +59,11 @@ export default function LayananPage() {
       </Section>
 
       {/* Kenapa memilih Gaharu */}
-      <Section className="bg-lav-50">
-        <SectionHead
-          label="ALASAN MEMILIH KAMI"
-          title="Kenapa Memilih Gaharu Creative"
-          subtitle="Pendekatan berbasis data yang memastikan strategi jelas, eksekusi rapi, dan dampak pemasaran digital dapat diukur secara transparan."
+      <Section className="bg-mint">
+        <Kepala
+          nomor="02 / Kenapa kami"
+          judul="Kenapa Memilih Gaharu Creative"
+          catatan="Pendekatan berbasis data yang memastikan strategi jelas, eksekusi rapi, dan dampak pemasaran digital dapat diukur secara transparan."
         />
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {whyChooseUs.map((item) => (
@@ -87,7 +88,7 @@ function ServiceCard({ service, wide = false }) {
   return (
     <article
       id={service.slug}
-      className="flex flex-col rounded-2xl border border-line bg-paper p-6 scroll-mt-24"
+      className="flex flex-col rounded-lg border border-line bg-paper p-6 scroll-mt-24"
     >
       <div className="flex items-start justify-between gap-4">
         <span className="inline-flex items-center gap-2 rounded-md bg-chip px-3 py-1 text-xs font-semibold uppercase tracking-widest text-chip-ink">

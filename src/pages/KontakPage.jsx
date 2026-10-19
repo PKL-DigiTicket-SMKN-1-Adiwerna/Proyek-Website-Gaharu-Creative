@@ -6,7 +6,7 @@ import {
   IconCircle,
   ImageBlock,
   Section,
-  SectionHead,
+  Kepala,
   Tag,
 } from "../components/ui.jsx";
 import { site, links, waBase } from "../data/site.js";
@@ -73,21 +73,27 @@ export default function KontakPage() {
     <>
       <Seo title={title} description={description} />
 
-      <Section id="hubungi" className="border-b border-brand-100 bg-brand-50">
-        <SectionHead
-          as="h1"
-          title="Hubungi Kami"
-          subtitle="Isi form di bawah atau hubungi lewat kanal yang tersedia. Tim kami merespons di hari kerja."
-        />
+      <Section id="hubungi" className="border-b border-brand-100 bg-paper">
+        <div className="max-w-2xl">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
+            Hubungi kami
+          </p>
+          <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+            Hubungi Kami
+          </h1>
+          <p className="mt-4 text-base leading-relaxed text-muted">
+            Isi form di bawah atau hubungi lewat kanal yang tersedia. Tim kami merespons di hari kerja.
+          </p>
+        </div>
         <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div
             id="form-kontak"
             className="scroll-mt-24 rounded-lg border border-line bg-paper p-6 sm:p-8"
           >
-            <SectionHead
-              align="left"
-              title="Form Kontak"
-              subtitle="Isi data berikut, lalu pesan diteruskan ke WhatsApp tim kami."
+            <Kepala
+              nomor="Form"
+              judul="Form Kontak"
+              catatan="Isi data berikut, lalu pesan diteruskan ke WhatsApp tim kami."
             />
 
             <form className="mt-8 grid gap-5 sm:grid-cols-2" onSubmit={submit} noValidate>
@@ -287,9 +293,10 @@ export default function KontakPage() {
       </Section>
 
       <Section id="informasi-kontak" divider className="bg-block">
-        <SectionHead
-          title="Informasi Kontak"
-          subtitle="Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional."
+        <Kepala
+          nomor="02 / Kontak"
+          judul="Informasi Kontak"
+          catatan="Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {kontakInfo.map((item) => (
@@ -321,9 +328,10 @@ export default function KontakPage() {
       </Section>
 
       <Section id="peta" divider>
-        <SectionHead
-          title="Peta"
-          subtitle="Lokasi kantor dan area layanan."
+        <Kepala
+          nomor="03 / Peta"
+          judul="Peta"
+          catatan="Lokasi kantor dan area layanan."
         />
         <div className="mt-10">
           <ImageBlock
