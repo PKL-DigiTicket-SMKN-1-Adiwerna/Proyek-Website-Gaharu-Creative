@@ -166,7 +166,7 @@ export const posts = [
     `,
   },
   {
-    slug: "tren-teknologi-digital-2025",
+    slug: "tren-teknologi-digital-2026",
     category: "teknologi",
     tag: "Teknologi",
     title: "Tren Teknologi Digital yang Mempengaruhi Bisnis di 2026",
