@@ -4,13 +4,19 @@ import { Icon } from "../components/Icons.jsx";
 import { Seo } from "../components/Seo.jsx";
 import { Container, IconCircle, Kepala } from "../components/ui.jsx";
 import { links } from "../data/site.js";
-import { segments, portfolioItems } from "../data/portfolio.js";
+import { segments as staticSegments, portfolioItems as staticItems } from "../data/portfolio.js";
+import { api, adaptPortfolioCategories, adaptPortfolioItems } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 
 const title = "Portofolio";
 const description =
   "Studi kasus, hasil, dan karya terbaru. Transformasi digital terukur yang melipatgandakan dampak bisnis bagi ekosistem UMKM, korporasi, hingga institusi publik di Indonesia.";
 
 export default function PortofolioPage() {
+  const { data: apiCats } = useApi(() => api.portfolioCategories().then((j) => adaptPortfolioCategories(j.data)), staticSegments);
+  const { data: apiItems } = useApi(() => api.portfolio().then((j) => adaptPortfolioItems(j.data)), staticItems);
+  const segments = (apiCats && apiCats.length ? apiCats : staticSegments);
+  const portfolioItems = (apiItems && apiItems.length ? apiItems : staticItems);
   const [active, setActive] = useState("semua");
   const labelAktif = segments.find((item) => item.key === active)?.label ?? "Semua";
 
@@ -21,7 +27,7 @@ export default function PortofolioPage() {
         ? portfolioItems
         : portfolioItems.filter((item) => item.segment === active);
     return filtered.slice(0, 3);
-  }, [active]);
+  }, [active, portfolioItems]);
 
   return (
     <div className="bg-white text-ink font-sans min-h-screen">

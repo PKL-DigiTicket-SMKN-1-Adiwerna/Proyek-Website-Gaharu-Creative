@@ -3,7 +3,9 @@ import { Seo } from "../components/Seo.jsx";
 import { Button, Container, IconCircle, Section, Kepala } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { links } from "../data/site.js";
-import { services, whyChooseUs } from "../data/services.js";
+import { services as staticServices, whyChooseUs as staticWhyChooseUs } from "../data/services.js";
+import { api, adaptServices } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 
 /* Daftar layanan mengikuti DESAIN.md v2 bagian 5.2: header halaman, grid 3 + 2
  * kartu, lalu alasan memilih. Tiap kartu memuat kategori, ringkasan masalah yang
@@ -15,6 +17,13 @@ const description =
   "Gaharu Creative menyediakan solusi terpadu: jasa digital marketing, digital branding, kelola sosial media, performance marketing, hingga pembuatan website di Semarang.";
 
 export default function LayananPage() {
+  const { data: apiServices } = useApi(() => api.services().then((j) => adaptServices(j.data)), staticServices);
+  const services = (apiServices && apiServices.length ? apiServices : staticServices).map((s) => {
+    // pertahankan ikon & field kaya dari static bila API tidak menyediakannya
+    const st = staticServices.find((x) => x.slug === s.slug);
+    return st ? { ...st, ...s, icon: s.icon || st.icon, title: s.title || st.title, short: s.short || st.short, tag: s.tag || st.tag } : s;
+  });
+  const whyChooseUs = staticWhyChooseUs;
   return (
     <>
       <Seo title={title} description={description} />

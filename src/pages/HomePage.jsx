@@ -3,8 +3,10 @@ import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { site, links } from "../data/site.js";
-import { services } from "../data/services.js";
-import { angkaBeranda, portfolioItems as karya, testimonials } from "../data/portfolio.js";
+import { services as staticServices } from "../data/services.js";
+import { angkaBeranda as staticAngka, portfolioItems as staticKarya, testimonials as staticTestimonials } from "../data/portfolio.js";
+import { api, adaptHomeServices, adaptPortfolioItems, adaptTestimonials } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 import RekamJejak from "../components/RekamJejak.jsx";
 
 const title = `${site.name}: Branding, Konten, Media Sosial, Iklan, dan Produk Digital`;
@@ -95,7 +97,27 @@ function KaryaCard({ item, ukuran }) {
 }
 
 export default function HomePage() {
-  const [utama, kedua, ketiga] = karya;
+  const { data: homeApi } = useApi(() => api.home(), null);
+  const { data: apiTestimonials } = useApi(() => api.testimonials().then((j) => adaptTestimonials(j.data)), staticTestimonials);
+
+  const services = (homeApi && Array.isArray(homeApi.services && homeApi.services.items) && homeApi.services.items.length)
+    ? adaptHomeServices(homeApi.services.items).map((s) => {
+        const st = staticServices.find((x) => x.slug === s.slug);
+        return st ? { ...st, ...s, icon: s.icon || st.icon, title: s.title || st.title, short: s.short || st.short, tag: s.tag || st.tag } : s;
+      })
+    : staticServices;
+
+  const angkaBeranda = (homeApi && homeApi.stats && Array.isArray(homeApi.stats.items) && homeApi.stats.items.length)
+    ? homeApi.stats.items.map((it) => ({ nilai: it.value, arti: it.suffix ? `${it.label} ${it.suffix}`.trim() : it.label }))
+    : staticAngka;
+
+  const karyaApi = (homeApi && homeApi.featuredPortfolio && Array.isArray(homeApi.featuredPortfolio.items) && homeApi.featuredPortfolio.items.length)
+    ? adaptPortfolioItems(homeApi.featuredPortfolio.items)
+    : null;
+  const karya = (karyaApi && karyaApi.length ? karyaApi : staticKarya.slice(0, 3));
+  const [utama, kedua, ketiga] = karya.length >= 3 ? karya : [staticKarya[0], staticKarya[1], staticKarya[2]];
+
+  const testimonials = (apiTestimonials && apiTestimonials.length ? apiTestimonials : staticTestimonials);
 
   return (
     <>

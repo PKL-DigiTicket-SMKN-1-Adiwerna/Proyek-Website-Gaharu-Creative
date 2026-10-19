@@ -10,7 +10,9 @@ import {
   Tag,
 } from "../components/ui.jsx";
 import { site, links, waBase } from "../data/site.js";
-import { kontakInfo, inquiryServices } from "../data/cta.js";
+import { kontakInfo, inquiryServices as staticInquiryServices } from "../data/cta.js";
+import { api } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 
 const title = "Kontak";
 const description = "Hubungi Gaharu Creative lewat WhatsApp resmi atau formulir konsultasi. Lihat juga kebijakan privasi kami."
@@ -24,6 +26,11 @@ const emptyForm = { nama: "", perusahaan: "", kontak: "", layanan: "", pesan: ""
  * Kontak di kanan, lalu Informasi Kontak dan Peta.
  */
 export default function KontakPage() {
+  const { data: apiContact } = useApi(() => api.contact(), null);
+  const inquiryServices = (apiContact && Array.isArray(apiContact.serviceOptions) && apiContact.serviceOptions.length)
+    ? apiContact.serviceOptions.map((s) => s.label || s.value)
+    : staticInquiryServices;
+
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [state, setState] = useState("idle");
@@ -34,7 +41,7 @@ export default function KontakPage() {
     if (state === "error") setState("idle");
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     const next = {};
     if (!form.nama.trim()) next.nama = "Nama lengkap belum diisi.";
@@ -49,7 +56,36 @@ export default function KontakPage() {
     }
 
     setErrors({});
-    // Pesan diteruskan ke WhatsApp resmi supaya tidak ada klaim terkirim palsu.
+    setState("sending");
+
+    const idempotencyKey = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+    const serviceSlug = (apiContact && Array.isArray(apiContact.serviceOptions))
+      ? (apiContact.serviceOptions.find((s) => (s.label || s.value) === form.layanan)?.value || form.layanan)
+      : form.layanan;
+
+    const payload = {
+      fullName: form.nama.trim(),
+      company: form.perusahaan.trim() || null,
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.kontak.trim()) ? form.kontak.trim() : null,
+      phone: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.kontak.trim()) ? null : form.kontak.trim(),
+      serviceInterest: serviceSlug,
+      message: form.pesan.trim(),
+      locale: "id",
+      consent: true,
+      sourcePage: "/kontak",
+    };
+
+    try {
+      const json = await api.submitInquiry(payload, idempotencyKey);
+      if (json && json.data) {
+        setState("sent");
+        setForm(emptyForm);
+        return;
+      }
+    } catch {
+      // backend tidak tersedia: lanjut ke WhatsApp
+    }
+
     const isi = [
       "Halo Gaharu Creative, saya ingin konsultasi.",
       "",
@@ -65,6 +101,7 @@ export default function KontakPage() {
 
     window.open(`${waBase}?text=${encodeURIComponent(isi)}`, "_blank", "noopener");
     setState("sent");
+    setForm(emptyForm);
   };
 
   const infoHref = (kind) => (kind === "whatsapp" ? links.whatsapp : kind === "email" ? links.mail : null);
