@@ -160,7 +160,7 @@ export default function InsightDetailPage() {
             </div>
           ) : null}
 
-          {/* Box CTA (WhatsApp & Lihat artikel lain) tetap selalu tampil di semua artikel */}
+          {/* Box CTA (WhatsApp & Semua artikel Insight) tetap selalu tampil di semua artikel */}
           <div className="rounded-lg border border-line bg-block p-6">
             <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
               {post.content ? "Diskusi Lebih Lanjut" : "Naskah menyusul"}
