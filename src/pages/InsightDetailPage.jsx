@@ -4,10 +4,9 @@ import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section } from "../components/ui.jsx";
 import { links } from "../data/site.js";
 
-/* Halaman artikel. Naskah lengkap ketiga artikel belum ditulis, jadi yang
- * tampil baru judul dan ringkasan, disertai keterangan bahwa naskahnya sedang
- * disiapkan. Tidak ada paragraf isi yang dikarang supaya tidak jadi konten
- * template (audit: konten harus dari data nyata atau diberi keterangan jelas).
+/* Halaman artikel. Menampilkan isi artikel jika sudah ada naskahnya, 
+ * atau pesan "Naskah menyusul" jika belum.
+ * Box CTA (WhatsApp & Lihat artikel lain) tetap ditampilkan di bagian bawah semua artikel.
  */
 export default function InsightDetailPage() {
   const { slug } = useParams();
@@ -69,13 +68,23 @@ export default function InsightDetailPage() {
 
       <Section>
         <div className="max-w-3xl">
+          {/* Jika naskah artikel sudah ada, tampilkan isinya di bagian atas */}
+          {post.content && (
+            <div
+              className="mb-10 text-base text-muted"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          )}
+
+          {/* Box CTA (WhatsApp & Lihat artikel lain) tetap selalu tampil di semua artikel */}
           <div className="rounded-lg border border-line bg-block p-6">
             <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
-              Naskah menyusul
+              {post.content ? "Diskusi Lebih Lanjut" : "Naskah menyusul"}
             </p>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              Isi lengkap artikel ini sedang ditulis. Kalau Anda butuh pembahasan untuk kasus
-              bisnis Anda sekarang, tanyakan langsung supaya bisa dibahas dengan konteks Anda.
+              {post.content
+                ? "Apakah Anda ingin menerapkan strategi di atas untuk bisnis Anda? Diskusi langsung dengan tim kami untuk mendapatkan solusi yang spesifik."
+                : "Isi lengkap artikel ini sedang ditulis. Kalau Anda butuh pembahasan untuk kasus bisnis Anda sekarang, tanyakan langsung supaya bisa dibahas dengan konteks Anda."}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button href={links.konsultasi} kind="primary">
