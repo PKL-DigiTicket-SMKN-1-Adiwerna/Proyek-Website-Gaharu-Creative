@@ -25,26 +25,26 @@ export default function HomePage() {
 
       {/* 1. Hero dengan gradasi hijau/emerald */}
       <section className="border-b border-emerald-200 bg-emerald-50">
-        <Container className="py-14 sm:py-20">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+        <Container className="py-10 sm:py-14">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-800">
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-emerald-800 sm:px-3.5 sm:py-1.5 sm:text-xs sm:tracking-widest">
                 <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-800" />
                 KONSULTAN &amp; EKSEKUTOR 360° DIGITAL AGENCY
               </span>
 
-              <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              <h1 className="mt-4 text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-5xl">
                 <span className="text-brand-700">Gaharu Creative</span><br />
                 Digital Agency Partner untuk Skala Bisnis Anda
               </h1>
 
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
                 Kami adalah digital agency dan agensi kreatif yang membantu brand Anda tumbuh lewat
                 solusi pemasaran digital, eksekusi visual yang presisi, hingga optimasi
                 performa berbasis data terukur untuk enterprise, instansi, serta UMKM di Indonesia.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-3">
                 <Button href={links.konsultasi} kind="primary">
                   Konsultasi Gratis
                 </Button>
@@ -53,7 +53,7 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+              <ul className="mt-6 grid gap-2.5 sm:grid-cols-3 sm:gap-3">
                 {[
                   "Satu alur kerja dari strategi sampai eksekusi",
                   "Pelaporan berkala, bukan laporan tebal",
