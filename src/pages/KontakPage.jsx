@@ -74,7 +74,7 @@ export default function KontakPage() {
       <Seo title={title} description={description} />
 
       <Section id="hubungi" className="border-b border-brand-100 bg-paper">
-        <div className="max-w-2xl">
+        <div className="mx-auto max-w-2xl text-center">
           <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
             Hubungi kami
           </p>

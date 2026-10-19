@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "../components/Icons.jsx";
 import { Seo } from "../components/Seo.jsx";
-import { IconCircle, Kepala } from "../components/ui.jsx";
+import { Container, IconCircle, Kepala } from "../components/ui.jsx";
 import { links } from "../data/site.js";
 import { segments, portfolioItems } from "../data/portfolio.js";
 
@@ -28,57 +28,56 @@ export default function PortofolioPage() {
       <Seo title={title} description={description} />
 
       {/* 1. HERO SECTION */}
-      <section className="bg-gradient-to-b from-brand-50 to-paper py-16 sm:py-24 border-b border-line">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
-              <div>
-                <span className="inline-flex items-center gap-2 bg-brand-100 border border-brand-100 text-button text-xs font-semibold px-4 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-button " />
-                  KARYA TERPILIH & EKSEKUSI NYATA
-                </span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-ink leading-tight">
+      <section className="border-b border-line bg-paper">
+        <Container className="py-10 sm:py-14">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-12">
+            <div className="lg:col-span-7">
+              <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold uppercase tracking-normal text-brand-700 sm:tracking-widest">
+                <span>Karya terpilih</span>
+                <span aria-hidden="true" className="hidden h-px w-8 bg-line sm:block" />
+                <span className="text-subtle">Studi kasus nyata</span>
+              </p>
+              <h1 className="mt-5 max-w-[22ch] text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-5xl">
                 Portofolio
               </h1>
-
-              <p className="text-muted text-sm sm:text-base leading-relaxed max-w-xl">
-                Studi kasus, hasil, dan karya terbaru. Transformasi digital terukur yang melipatgandakan dampak bisnis bagi ekosistem UMKM, korporasi, hingga institusi publik di Indonesia.
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+                Studi kasus, hasil, dan karya terbaru. Transformasi digital terukur yang melipatgandakan dampak bisnis bagi ekosistem UMKM, korporat, hingga institusi publik di Indonesia.
               </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href={links.konsultasi}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-button hover:bg-brand-800 text-white font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-md "
+                  className="bg-button hover:bg-brand-800 text-white font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-md"
                 >
                   Ajukan Konsultasi →
                 </a>
                 <Link
                   to={links.layanan}
-                  className="bg-white hover:bg-block border border-field text-ink font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-sm  flex items-center gap-1.5"
+                  className="bg-white hover:bg-block border border-field text-ink font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-sm flex items-center gap-1.5"
                 >
                   Lihat Layanan →
                 </Link>
               </div>
-
             </div>
 
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden border border-line">
-                <img
-                  src="/Beranda.webp"
-                  alt="Portofolio Gaharu Creative"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="w-full aspect-[4/3] object-cover object-center"
-                />
-              </div>
+            <div className="lg:col-span-5">
+              <figure className="overflow-hidden rounded-3xl border border-line bg-paper">
+                <div className="aspect-[3/2] overflow-hidden border-b border-line">
+                  <img
+                    src="/Beranda.webp"
+                    alt="Portofolio Gaharu Creative"
+                    width={1400}
+                    height={933}
+                    fetchPriority="high"
+                    decoding="async"
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+              </figure>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* 2. SECTION FILTER CEPAT */}

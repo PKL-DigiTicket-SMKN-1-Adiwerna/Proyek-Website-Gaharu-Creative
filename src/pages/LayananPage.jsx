@@ -22,7 +22,7 @@ export default function LayananPage() {
       {/* Header halaman */}
       <section className="border-b border-line bg-paper">
         <Container className="py-14 sm:py-20">
-          <div className="max-w-2xl">
+          <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
               Solusi digital terpadu
             </p>
@@ -32,7 +32,7 @@ export default function LayananPage() {
             <p className="mt-4 text-base leading-relaxed text-muted">
               Lima solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button href={links.konsultasi} kind="primary">
                 Konsultasi Gratis
               </Button>

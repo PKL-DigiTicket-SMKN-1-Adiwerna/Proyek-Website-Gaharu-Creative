@@ -48,7 +48,7 @@ export default function InsightPage() {
       {/* HERO SECTION */}
       <section className="border-b border-line bg-paper">
         <Container className="py-14 sm:py-20">
-          <div className="max-w-2xl">
+          <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
               Panduan & strategi digital
             </p>
@@ -58,7 +58,7 @@ export default function InsightPage() {
             <p className="mt-4 text-base leading-relaxed text-muted">
               Catatan praktis dan pembacaan tren digital untuk membantu keputusan pemasaran Anda.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button to={links.portofolio} kind="secondary">
                 Lihat Portofolio
               </Button>
