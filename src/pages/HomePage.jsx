@@ -99,22 +99,37 @@ function KaryaCard({ item, ukuran }) {
 
 export default function HomePage() {
   const { data: homeApi } = useApi(() => api.home(), null);
-  const { data: apiTestimonials } = useApi(() => api.testimonials().then((j) => adaptTestimonials(j.data)), staticTestimonials);
+  const { data: apiTestimonials } = useApi(() => api.testimonials().then((j) => ({ data: adaptTestimonials(j.data) })), staticTestimonials);
+  const { data: apiHomeServices } = useApi(() => api.services().then((j) => ({ data: adaptHomeServices(j.data) })), null);
+  const { data: apiHomeStats } = useApi(() => api.stats().then((j) => ({ data: j.data })), null);
+  const { data: apiHomePortfolio } = useApi(() => api.portfolio().then((j) => ({ data: adaptPortfolioItems(j.data) })), null);
 
   const csServices = getContent("services");
   const csStats = getContent("stats");
-  const services = (homeApi && Array.isArray(homeApi.services && homeApi.services.items) && homeApi.services.items.length)
+  const apiServicesArr = (apiHomeServices && Array.isArray(apiHomeServices) && apiHomeServices.length) ? apiHomeServices : null;
+  const services = (apiServicesArr)
+    ? apiServicesArr.map((s) => {
+        const st = staticServices.find((x) => x.slug === s.slug);
+        return st ? { ...st, ...s, icon: s.icon || st.icon, title: s.title || st.title, short: s.short || st.short, tag: s.tag || st.tag } : s;
+      })
+    : (homeApi && Array.isArray(homeApi.services && homeApi.services.items) && homeApi.services.items.length)
     ? adaptHomeServices(homeApi.services.items).map((s) => {
         const st = staticServices.find((x) => x.slug === s.slug);
         return st ? { ...st, ...s, icon: s.icon || st.icon, title: s.title || st.title, short: s.short || st.short, tag: s.tag || st.tag } : s;
       })
     : (csServices && csServices.length ? csServices : staticServices);
 
-  const angkaBeranda = (homeApi && homeApi.stats && Array.isArray(homeApi.stats.items) && homeApi.stats.items.length)
+  const apiStatsArr = (apiHomeStats && Array.isArray(apiHomeStats) && apiHomeStats.length) ? apiHomeStats : null;
+  const angkaBeranda = (apiStatsArr)
+    ? apiStatsArr.map((it) => ({ nilai: it.value, arti: it.suffix ? `${it.label} ${it.suffix}`.trim() : it.label }))
+    : (homeApi && homeApi.stats && Array.isArray(homeApi.stats.items) && homeApi.stats.items.length)
     ? homeApi.stats.items.map((it) => ({ nilai: it.value, arti: it.suffix ? `${it.label} ${it.suffix}`.trim() : it.label }))
     : (csStats && csStats.length ? csStats.map((it) => ({ nilai: it.value, arti: it.label })) : staticAngka);
 
-  const karyaApi = (homeApi && homeApi.featuredPortfolio && Array.isArray(homeApi.featuredPortfolio.items) && homeApi.featuredPortfolio.items.length)
+  const apiPortfolioArr = (apiHomePortfolio && Array.isArray(apiHomePortfolio) && apiHomePortfolio.length) ? apiHomePortfolio : null;
+  const karyaApi = (apiPortfolioArr)
+    ? apiPortfolioArr
+    : (homeApi && homeApi.featuredPortfolio && Array.isArray(homeApi.featuredPortfolio.items) && homeApi.featuredPortfolio.items.length)
     ? adaptPortfolioItems(homeApi.featuredPortfolio.items)
     : null;
   const karya = (karyaApi && karyaApi.length ? karyaApi : staticKarya.slice(0, 3));

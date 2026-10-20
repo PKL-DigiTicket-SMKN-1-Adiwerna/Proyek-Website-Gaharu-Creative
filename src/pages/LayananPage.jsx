@@ -17,7 +17,7 @@ const description =
   "Gaharu Creative menyediakan solusi terpadu: jasa digital marketing, digital branding, kelola sosial media, performance marketing, hingga pembuatan website di Semarang.";
 
 export default function LayananPage() {
-  const { data: apiServices } = useApi(() => api.services().then((j) => adaptServices(j.data)), staticServices);
+  const { data: apiServices } = useApi(() => api.services().then((j) => ({ data: adaptServices(j.data) })), staticServices);
   const services = (apiServices && apiServices.length ? apiServices : staticServices).map((s) => {
     // pertahankan ikon & field kaya dari static bila API tidak menyediakannya
     const st = staticServices.find((x) => x.slug === s.slug);

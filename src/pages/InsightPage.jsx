@@ -20,8 +20,8 @@ const title = "Insight: Artikel Strategi Digital";
 const description = "Artikel, panduan, dan studi kasus seputar strategi pertumbuhan digital dari Gaharu Creative.";
 
 export default function InsightPage() {
-  const { data: apiCats } = useApi(() => api.articleCategories().then((j) => adaptArticleCategories(j.data)), staticCategories);
-  const { data: apiPosts } = useApi(() => api.articles().then((j) => adaptArticles(j.data)), staticPosts);
+  const { data: apiCats } = useApi(() => api.articleCategories().then((j) => ({ data: adaptArticleCategories(j.data) })), staticCategories);
+  const { data: apiPosts } = useApi(() => api.articles().then((j) => ({ data: adaptArticles(j.data) })), staticPosts);
   const insightCategories = (apiCats && apiCats.length ? apiCats : staticCategories);
   const posts = (apiPosts && apiPosts.length ? apiPosts : staticPosts);
   const [active, setActive] = useState("semua");
