@@ -12,7 +12,7 @@ export default function AdminInquiriesPage() {
     setError("");
     try {
       const res = await adminApi.listInquiries();
-      setItems(res.data || []);
+      setItems(res?.data || []);
     } catch (e) {
       setError(e?.message || "Gagal memuat data.");
     } finally {
@@ -25,7 +25,7 @@ export default function AdminInquiriesPage() {
   const setStatus = async (id, status) => {
     try {
       const res = await adminApi.updateInquiry(id, { status });
-      setItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...res.data } : it)));
+      setItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...res?.data } : it)));
     } catch (e) {
       setError(e?.message || "Gagal memperbarui status.");
     }

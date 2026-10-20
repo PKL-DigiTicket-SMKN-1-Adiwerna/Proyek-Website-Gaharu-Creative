@@ -24,10 +24,10 @@ export default function AdminAboutPage() {
         adminApi.listTeam("id"),
         adminApi.getMission("id"),
       ]);
-      setStories(s.data || []);
-      setValues(v.data || []);
-      setTeam(t.data || []);
-      setMission(m.data || { mission: "", vision: "" });
+      setStories(s?.data || []);
+      setValues(v?.data || []);
+      setTeam(t?.data || []);
+      setMission(m?.data || { mission: "", vision: "" });
     } catch (e) { setError(e?.message || "Gagal memuat data."); }
     finally { setLoading(false); }
   };
@@ -38,10 +38,10 @@ export default function AdminAboutPage() {
     try {
       if (sForm.id) {
         const res = await adminApi.updateStory(sForm.id, { title: sForm.title, body: sForm.body });
-        setStories((prev) => prev.map((x) => (x.id === sForm.id ? res.data : x)));
+        setStories((prev) => prev.map((x) => (x.id === sForm.id ? res?.data : x)));
       } else {
         const res = await adminApi.createStory({ title: sForm.title, body: sForm.body, locale: "id" });
-        setStories((prev) => [res.data, ...prev]);
+        setStories((prev) => [res?.data, ...prev]);
       }
       setSForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
@@ -58,10 +58,10 @@ export default function AdminAboutPage() {
     try {
       if (vForm.id) {
         const res = await adminApi.updateValue(vForm.id, { title: vForm.title, description: vForm.description, icon: vForm.icon });
-        setValues((prev) => prev.map((x) => (x.id === vForm.id ? res.data : x)));
+        setValues((prev) => prev.map((x) => (x.id === vForm.id ? res?.data : x)));
       } else {
         const res = await adminApi.createValue({ title: vForm.title, description: vForm.description, icon: vForm.icon, locale: "id" });
-        setValues((prev) => [res.data, ...prev]);
+        setValues((prev) => [res?.data, ...prev]);
       }
       setVForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
@@ -78,10 +78,10 @@ export default function AdminAboutPage() {
     try {
       if (tForm.id) {
         const res = await adminApi.updateMember(tForm.id, { name: tForm.name, role: tForm.role, photo_path: tForm.photo });
-        setTeam((prev) => prev.map((x) => (x.id === tForm.id ? res.data : x)));
+        setTeam((prev) => prev.map((x) => (x.id === tForm.id ? res?.data : x)));
       } else {
         const res = await adminApi.createMember({ name: tForm.name, role: tForm.role, photo_path: tForm.photo, locale: "id" });
-        setTeam((prev) => [res.data, ...prev]);
+        setTeam((prev) => [res?.data, ...prev]);
       }
       setTForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
@@ -97,7 +97,7 @@ export default function AdminAboutPage() {
     e.preventDefault(); setSaving(true); setError("");
     try {
       const res = await adminApi.updateMission({ mission: mission.mission, vision: mission.vision, locale: "id" });
-      setMission(res.data || mission);
+      setMission(res?.data || mission);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
     finally { setSaving(false); }
   };

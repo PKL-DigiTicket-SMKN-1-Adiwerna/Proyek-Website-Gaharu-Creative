@@ -36,7 +36,7 @@ export default function AdminSiteSettingsPage() {
     setLoading(true); setError("");
     try {
       const res = await adminApi.listSettings("id");
-      const rows = res.data || [];
+      const rows = res?.data || [];
       const next = { ...DEFAULTS };
       rows.forEach((r) => {
         if (r && r.key && r.value !== undefined) {

@@ -5,6 +5,7 @@ import ImageUpload from "./ImageUpload.jsx";
 const CATEGORIES = ["Branding", "Web", "Konten", "Digital", "Konsultasi"];
 
 function toForm(row) {
+  if (!row) return null;
   return {
     id: row.id,
     title: row.name || "",
@@ -39,7 +40,7 @@ export default function AdminServicesPage() {
     setError("");
     try {
       const res = await adminApi.listServices("id");
-      setItems((res.data || []).map(toForm));
+      setItems((res?.data || []).map(toForm));
     } catch (e) {
       setError(e?.message || "Gagal memuat data.");
     } finally {
@@ -56,10 +57,10 @@ export default function AdminServicesPage() {
     try {
       if (form.id) {
         const res = await adminApi.updateService(form.id, toDto(form));
-        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res.data) : it)));
+        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res?.data) : it)));
       } else {
         const res = await adminApi.createService(toDto(form));
-        setItems((prev) => [toForm(res.data), ...prev]);
+        setItems((prev) => [toForm(res?.data), ...prev]);
       }
       setForm(null);
     } catch (e) {

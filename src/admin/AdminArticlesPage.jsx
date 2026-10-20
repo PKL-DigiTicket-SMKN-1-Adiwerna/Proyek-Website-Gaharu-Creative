@@ -3,6 +3,7 @@ import { adminApi } from "../lib/adminApi";
 import ImageUpload from "./ImageUpload.jsx";
 
 function toForm(row) {
+  if (!row) return null;
   return {
     id: row.id,
     title: row.title || "",
@@ -39,7 +40,7 @@ export default function AdminArticlesPage() {
     setLoading(true); setError("");
     try {
       const res = await adminApi.listArticles("id");
-      setItems((res.data || []).map(toForm));
+      setItems((res?.data || []).map(toForm));
     } catch (e) { setError(e?.message || "Gagal memuat data."); }
     finally { setLoading(false); }
   };
@@ -50,10 +51,10 @@ export default function AdminArticlesPage() {
     try {
       if (form.id) {
         const res = await adminApi.updateArticle(form.id, toDto(form));
-        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res.data) : it)));
+        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res?.data) : it)));
       } else {
         const res = await adminApi.createArticle(toDto(form));
-        setItems((prev) => [toForm(res.data), ...prev]);
+        setItems((prev) => [toForm(res?.data), ...prev]);
       }
       setForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }

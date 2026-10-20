@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { adminApi } from "../lib/adminApi";
 
 function toForm(row) {
+  if (!row) return null;
   return { id: row.id, label: row.label || "", value: row.value || "", suffix: row.suffix || "" };
 }
 function toDto(form) {
@@ -19,7 +20,7 @@ export default function AdminStatsPage() {
     setLoading(true); setError("");
     try {
       const res = await adminApi.listStats("id");
-      setItems((res.data || []).map(toForm));
+      setItems((res?.data || []).map(toForm));
     } catch (e) { setError(e?.message || "Gagal memuat data."); }
     finally { setLoading(false); }
   };
@@ -30,10 +31,10 @@ export default function AdminStatsPage() {
     try {
       if (form.id) {
         const res = await adminApi.updateStat(form.id, toDto(form));
-        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res.data) : it)));
+        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res?.data) : it)));
       } else {
         const res = await adminApi.createStat(toDto(form));
-        setItems((prev) => [toForm(res.data), ...prev]);
+        setItems((prev) => [toForm(res?.data), ...prev]);
       }
       setForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }

@@ -30,7 +30,7 @@ export async function adminFetch(path, opts = {}) {
     }
     throw err;
   }
-  return json;
+  return json || { data: null };
 }
 
 export const adminApi = {
