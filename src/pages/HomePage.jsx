@@ -3,6 +3,7 @@ import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { site, links } from "../data/site.js";
+import { getContent } from "../lib/contentStore.js";
 import { services as staticServices } from "../data/services.js";
 import { angkaBeranda as staticAngka, portfolioItems as staticKarya, testimonials as staticTestimonials } from "../data/portfolio.js";
 import { api, adaptHomeServices, adaptPortfolioItems, adaptTestimonials } from "../lib/api.js";
@@ -100,16 +101,18 @@ export default function HomePage() {
   const { data: homeApi } = useApi(() => api.home(), null);
   const { data: apiTestimonials } = useApi(() => api.testimonials().then((j) => adaptTestimonials(j.data)), staticTestimonials);
 
+  const csServices = getContent("services");
+  const csStats = getContent("stats");
   const services = (homeApi && Array.isArray(homeApi.services && homeApi.services.items) && homeApi.services.items.length)
     ? adaptHomeServices(homeApi.services.items).map((s) => {
         const st = staticServices.find((x) => x.slug === s.slug);
         return st ? { ...st, ...s, icon: s.icon || st.icon, title: s.title || st.title, short: s.short || st.short, tag: s.tag || st.tag } : s;
       })
-    : staticServices;
+    : (csServices && csServices.length ? csServices : staticServices);
 
   const angkaBeranda = (homeApi && homeApi.stats && Array.isArray(homeApi.stats.items) && homeApi.stats.items.length)
     ? homeApi.stats.items.map((it) => ({ nilai: it.value, arti: it.suffix ? `${it.label} ${it.suffix}`.trim() : it.label }))
-    : staticAngka;
+    : (csStats && csStats.length ? csStats.map((it) => ({ nilai: it.value, arti: it.label })) : staticAngka);
 
   const karyaApi = (homeApi && homeApi.featuredPortfolio && Array.isArray(homeApi.featuredPortfolio.items) && homeApi.featuredPortfolio.items.length)
     ? adaptPortfolioItems(homeApi.featuredPortfolio.items)

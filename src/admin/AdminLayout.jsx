@@ -2,10 +2,13 @@ import { NavLink, useNavigate, Outlet } from "react-router-dom";
 
 const NAV = [
   { to: "/admin", label: "Dasbor", end: true },
+  { to: "/admin/site", label: "Pengaturan Situs" },
   { to: "/admin/services", label: "Layanan" },
-  { to: "/admin/inquiries", label: "Inquiry" },
   { to: "/admin/portfolio", label: "Portofolio" },
   { to: "/admin/articles", label: "Artikel" },
+  { to: "/admin/about", label: "Tentang" },
+  { to: "/admin/stats", label: "Statistik" },
+  { to: "/admin/inquiries", label: "Inquiry" },
 ];
 
 export default function AdminLayout({ children }) {

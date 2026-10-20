@@ -7,6 +7,9 @@ import AdminServicesPage from "./AdminServicesPage.jsx";
 import AdminInquiriesPage from "./AdminInquiriesPage.jsx";
 import AdminPortfolioPage from "./AdminPortfolioPage.jsx";
 import AdminArticlesPage from "./AdminArticlesPage.jsx";
+import AdminSiteSettingsPage from "./AdminSiteSettingsPage.jsx";
+import AdminAboutPage from "./AdminAboutPage.jsx";
+import AdminStatsPage from "./AdminStatsPage.jsx";
 
 export default function AdminApp() {
   return (
@@ -19,6 +22,9 @@ export default function AdminApp() {
           <Route path="/admin/inquiries" element={<AdminInquiriesPage />} />
           <Route path="/admin/portfolio" element={<AdminPortfolioPage />} />
           <Route path="/admin/articles" element={<AdminArticlesPage />} />
+          <Route path="/admin/site" element={<AdminSiteSettingsPage />} />
+          <Route path="/admin/about" element={<AdminAboutPage />} />
+          <Route path="/admin/stats" element={<AdminStatsPage />} />
         </Route>
       </Route>
     </Routes>

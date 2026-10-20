@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useContent } from "../lib/contentStore.js";
 import { MOCK_INQUIRIES } from "./mockData.js";
 
 export default function AdminInquiriesPage() {
-  const [items, setItems] = useState(MOCK_INQUIRIES);
+  const [items, setItems] = useContent("inquiries", MOCK_INQUIRIES);
   const [filter, setFilter] = useState("all");
 
   const filtered = filter === "all" ? items : items.filter((i) => i.status === filter);
