@@ -1,22 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { adminApi, setAdminToken } from "../lib/adminApi";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
       setError("Email dan kata sandi wajib diisi.");
       return;
     }
-    // Tiruan: tanpa backend, token dummy disimpan lokal.
-    localStorage.setItem("admin_token", "dummy-admin-token");
-    localStorage.setItem("admin_email", email.trim());
-    navigate("/admin", { replace: true });
+    setLoading(true);
+    setError("");
+    try {
+      const res = await adminApi.login(email.trim(), password);
+      setAdminToken(res.access_token);
+      try { localStorage.setItem("admin_email", res.user?.email || email.trim()); } catch {}
+      try { localStorage.setItem("admin_role", res.user?.role || ""); } catch {}
+      navigate("/admin", { replace: true });
+    } catch (err) {
+      setError(err?.message || "Gagal masuk. Periksa email dan kata sandi.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,7 +35,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
         <div className="text-xs uppercase tracking-widest text-brand-700 font-semibold">Gaharu Creative</div>
         <h1 className="mt-2 text-2xl font-bold text-slate-900">Masuk Panel Admin</h1>
-        <p className="mt-1 text-sm text-slate-500">Data tiruan — belum terhubung ke backend.</p>
+        <p className="mt-1 text-sm text-slate-500">Terhubung ke backend (Supabase Auth).</p>
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-700">Email</label>
@@ -48,14 +59,12 @@ export default function AdminLoginPage() {
           {error && <div className="text-sm text-red-600">{error}</div>}
           <button
             type="submit"
-            className="w-full rounded-lg bg-brand-800 text-white py-2.5 text-sm font-semibold hover:bg-brand-900"
+            disabled={loading}
+            className="w-full rounded-lg bg-brand-800 text-white py-2.5 text-sm font-semibold hover:bg-brand-900 disabled:opacity-60"
           >
-            Masuk
+            {loading ? "Memproses…" : "Masuk"}
           </button>
         </form>
-        <div className="mt-4 text-xs text-slate-400">
-          Tip: isi email &amp; kata sandi apa saja (mode tiruan).
-        </div>
       </div>
     </div>
   );
