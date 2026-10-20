@@ -7,6 +7,7 @@ import Footer from "./components/Footer.jsx";
 import CtaBanner from "./components/CtaBanner.jsx";
 import WhatsAppButton from "./components/WhatsAppButton.jsx";
 import Diagnosa from "./components/Diagnosa.jsx";
+import AdminApp from "./admin/AdminApp.jsx";
 /* Halaman rute lain dimuat terpisah (code splitting) supaya bundel awal kecil.
  * Beranda sengaja tetap dimuat langsung: isinya yang paling besar dan paling
  * sering dibuka, dan kalau dimuat menyusul, isi halaman mendorong footer turun
@@ -83,6 +84,10 @@ export default function App() {
       stopParallax();
     };
   }, [pathname]);
+
+  if (pathname.startsWith("/admin")) {
+    return <AdminApp />;
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-paper">
