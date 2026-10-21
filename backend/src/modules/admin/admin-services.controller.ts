@@ -32,7 +32,7 @@ export class AdminServicesController {
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
     this.db.run(`INSERT INTO services (id, group_id, locale, slug, tag, name, short_desc, problem, solution, deliverables, icon, sort_order, is_featured, is_published, published_at, created_by, updated_by)
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [id, groupId, locale, dto.slug, dto.tag, dto.name, dto.short_desc ?? null, dto.problem ?? null, dto.solution ?? null,
        JSON.stringify(dto.deliverables ?? []), dto.icon ?? null, dto.sort_order ?? 0, (dto.is_featured ?? true) ? 1 : 0, (dto.is_published ?? false) ? 1 : 0,
        dto.is_published ? new Date().toISOString() : null, user?.id ?? null, user?.id ?? null]);
