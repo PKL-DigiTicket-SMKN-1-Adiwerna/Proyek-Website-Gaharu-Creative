@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: gaharu-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /tmp/gaharu.db
+      - key: ADMIN_EMAIL
+        value: admin@gmail.com
+      - key: ADMIN_PASSWORD
+        value: GaharuAdmin2026!
+      - key: FRONTEND_ORIGIN
+        value: https://proyek-website-gaharu-creative.vercel.app
