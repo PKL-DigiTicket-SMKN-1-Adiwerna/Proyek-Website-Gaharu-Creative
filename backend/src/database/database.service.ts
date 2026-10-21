@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import * as bcrypt from 'bcryptjs';
 
 function parseRow(row: any): any {
