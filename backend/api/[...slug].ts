@@ -20,12 +20,6 @@ async function getHandler() {
 }
 
 export default async function handler(req: any, res: any) {
-  try {
-    const h = await getHandler();
-    return h(req, res);
-  } catch (err: any) {
-    res.statusCode = 500;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ error: err?.message, stack: err?.stack }));
-  }
+  const h = await getHandler();
+  return h(req, res);
 }
