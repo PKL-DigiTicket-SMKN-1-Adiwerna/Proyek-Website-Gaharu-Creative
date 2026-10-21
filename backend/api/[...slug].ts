@@ -7,6 +7,7 @@ let cachedHandler: any;
 async function getHandler() {
   if (!cachedHandler) {
     const app = await NestFactory.create(AppModule, { logger: ['error', 'warn'] });
+    app.setGlobalPrefix('api/v1');
     app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
     app.enableCors({
       origin: process.env.FRONTEND_ORIGIN || '*',
