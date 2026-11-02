@@ -24,7 +24,9 @@ export default function AdminStatsPage() {
     } catch (e) { setError(e?.message || "Gagal memuat data."); }
     finally { setLoading(false); }
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    (async () => { await load(); })();
+  }, []);
 
   const save = async (e) => {
     e.preventDefault(); setSaving(true); setError("");

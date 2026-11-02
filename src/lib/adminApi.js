@@ -5,10 +5,11 @@ const RAW_BASE = (import.meta.env.VITE_API_BASE_URL || "").trim();
 const API_BASE = (RAW_BASE ? RAW_BASE.replace(/\/$/, "") : "") + "/api/v1";
 
 export function getAdminToken() {
-  try { return localStorage.getItem("admin_token") || ""; } catch { return ""; }
+  try { return localStorage.getItem("admin_token") || ""; } catch { void 0; }
+  return "";
 }
-export function setAdminToken(tok) { try { localStorage.setItem("admin_token", tok); } catch {} }
-export function clearAdminToken() { try { localStorage.removeItem("admin_token"); localStorage.removeItem("admin_email"); localStorage.removeItem("admin_role"); } catch {} }
+export function setAdminToken(tok) { try { localStorage.setItem("admin_token", tok); } catch { void 0; } }
+export function clearAdminToken() { try { localStorage.removeItem("admin_token"); localStorage.removeItem("admin_email"); localStorage.removeItem("admin_role"); } catch { void 0; } }
 
 export async function adminFetch(path, opts = {}) {
   const token = getAdminToken();
@@ -61,6 +62,11 @@ export const adminApi = {
   createStat: (dto) => adminFetch("/admin/stats", { method: "POST", body: JSON.stringify(dto) }),
   updateStat: (id, dto) => adminFetch(`/admin/stats/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
   deleteStat: (id) => adminFetch(`/admin/stats/${id}`, { method: "DELETE" }),
+  // clients (dinding logo mitra)
+  listClients: (locale = "id") => adminFetch(`/admin/clients?locale=${locale}`),
+  createClient: (dto) => adminFetch("/admin/clients", { method: "POST", body: JSON.stringify(dto) }),
+  updateClient: (id, dto) => adminFetch(`/admin/clients/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
+  deleteClient: (id) => adminFetch(`/admin/clients/${id}`, { method: "DELETE" }),
   // settings
   listSettings: (locale = "id") => adminFetch(`/admin/settings?locale=${locale}`),
   updateSetting: (key, value, locale = "id") => adminFetch(`/admin/settings/${encodeURIComponent(key)}`, { method: "PATCH", body: JSON.stringify({ value, locale }) }),
