@@ -1,11 +1,49 @@
 import { Section, Kepala, Tag } from "./ui.jsx";
-import { Icon } from "../components/Icons.jsx";
-import { rekamJejak, mitraGroups, penghargaan } from "../data/klien.js";
+import { rekamJejak, penghargaan, MITRA_LOGOS } from "../data/klien.js";
+import { api, adaptClients } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 
-/* Section rekam jejak: kalimat pengantar, daftar mitra per kelompok, dan daftar
+/* Section rekam jejak: kalimat pengantar, dinding logo mitra, dan daftar
  * penghargaan. Dipakai di Beranda dan Tentang supaya narasinya konsisten.
+ *
+ * Logo dibaca dari backend (/public/clients) dan jatuh ke MITRA_LOGOS kalau
+ * backend tidak menjawab. Dimensi diambil dari berkas statis lewat peta STATIS
+ * supaya tinggi sel tidak melompat saat logo muncul (hindari CLS).
  */
+const STATIS = new Map(MITRA_LOGOS.map((m) => [m.slug, m]));
+
+const KELOMPOK = [
+  { key: "pemerintah", label: "Kementerian dan Lembaga Pemerintah" },
+  { key: "swasta", label: "Perusahaan Swasta dan BUMN" },
+];
+
+function LogoSel({ item }) {
+  const acuan = STATIS.get(item.slug);
+  const lebar = item.width || (acuan ? acuan.width : undefined);
+  const tinggi = item.height || (acuan ? acuan.height : undefined);
+  return (
+    <li className="flex min-h-[96px] items-center justify-center bg-paper p-4 sm:min-h-[112px] sm:p-5">
+      <img
+        src={item.logo}
+        alt={item.alt || item.name}
+        title={item.name}
+        width={lebar}
+        height={tinggi}
+        loading="lazy"
+        decoding="async"
+        className="h-auto max-h-10 w-auto max-w-[78%] object-contain sm:max-h-12"
+      />
+    </li>
+  );
+}
+
 export default function RekamJejak({ withHead = true }) {
+  const { data } = useApi(
+    () => api.clients().then((json) => ({ data: adaptClients(json.data) })),
+    MITRA_LOGOS,
+  );
+  const logos = Array.isArray(data) && data.length > 0 ? data : MITRA_LOGOS;
+
   return (
     <Section divider className="bg-lav-50">
       {withHead ? (
@@ -21,31 +59,24 @@ export default function RekamJejak({ withHead = true }) {
         <p className="mt-4 text-base leading-relaxed text-muted">{rekamJejak.intro}</p>
       </div>
 
-      <div className="mt-10 grid gap-5 md:grid-cols-2">
-        {mitraGroups.map((group) => (
-          <article key={group.key} className="rounded-lg border border-line bg-paper p-6">
-            <div className="flex items-start gap-4">
-              <span
-                aria-hidden="true"
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-fill text-ink"
-              >
-                <Icon name={group.icon} className="h-6 w-6" />
-              </span>
-              <div className="min-w-0">
-                <h3 className="text-base font-bold text-ink">{group.label}</h3>
-                <p className="mt-1 text-sm text-muted">{group.items.length} institusi</p>
+      <div className="mt-10 space-y-10">
+        {KELOMPOK.map((grup) => {
+          const isi = logos.filter((m) => (m.category || "pemerintah") === grup.key);
+          if (isi.length === 0) return null;
+          return (
+            <div key={grup.key}>
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-base font-bold tracking-tight text-ink sm:text-lg">{grup.label}</h3>
+                <p className="text-sm text-muted">{isi.length} institusi</p>
               </div>
+              <ul className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                {isi.map((item) => (
+                  <LogoSel key={item.slug || item.name} item={item} />
+                ))}
+              </ul>
             </div>
-            <ul className="mt-5 space-y-2 border-t border-line pt-5">
-              {group.items.map((name) => (
-                <li key={name} className="flex gap-3 text-sm leading-relaxed text-muted">
-                  <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-button" />
-                  <span className="min-w-0">{name}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-10">

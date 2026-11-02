@@ -137,6 +137,7 @@ export const api = {
   articles: (params = {}) => apiFetch(`/public/articles${buildQuery(params)}`),
   article: (slug) => apiFetch(`/public/articles/${encodeURIComponent(slug)}`),
   about: () => apiFetch("/public/about"),
+  clients: () => apiFetch("/public/clients"),
   contact: () => apiFetch("/public/contact"),
   testimonials: () => apiFetch("/public/testimonials"),
 
@@ -239,6 +240,23 @@ export function adaptArticles(apiItems) {
     publishedAt: a.publishedAt || a.published_at,
     publishedLabel: a.publishedLabel || a.published_label,
     content: a.body || a.content,
+    _fromApi: true,
+  }));
+}
+
+/* Mitra/klien: bentuk API disamakan dengan MITRA_LOGOS di src/data/klien.js.
+ * Ukuran gambar tidak dikirim backend, jadi komponen melengkapinya dari peta
+ * slug -> dimensi berkas statis (lihat STATIS di RekamJejak.jsx).
+ */
+export function adaptClients(apiItems) {
+  if (!Array.isArray(apiItems)) return null;
+  return apiItems.map((c, i) => ({
+    slug: c.slug,
+    name: c.name,
+    category: c.category === "swasta" ? "swasta" : "pemerintah",
+    logo: c.logo_path || c.logoPath || `/logos/klien/${c.slug}.svg`,
+    alt: c.logo_alt || c.name,
+    order: c.sort_order ?? c.sortOrder ?? i,
     _fromApi: true,
   }));
 }
