@@ -6,6 +6,7 @@ import { AdminArticlesController } from './admin-articles.controller';
 import { AdminStatsController } from './admin-stats.controller';
 import { AdminSettingsController } from './admin-settings.controller';
 import { AdminAboutController } from './admin-about.controller';
+import { AdminClientsController } from './admin-clients.controller';
 
 @Module({
   imports: [DatabaseModule],
@@ -16,6 +17,7 @@ import { AdminAboutController } from './admin-about.controller';
     AdminStatsController,
     AdminSettingsController,
     AdminAboutController,
+    AdminClientsController,
   ],
 })
 export class AdminModule {}

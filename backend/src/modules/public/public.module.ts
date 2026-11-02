@@ -6,9 +6,10 @@ import { PublicPortfolioController } from './portfolio.controller';
 import { PublicArticlesController } from './articles.controller';
 import { PublicStatsController } from './stats.controller';
 import { PublicAboutController } from './about.controller';
+import { PublicClientsController } from './clients.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [PublicServicesController, PublicSiteController, PublicPortfolioController, PublicArticlesController, PublicStatsController, PublicAboutController],
+  controllers: [PublicServicesController, PublicSiteController, PublicPortfolioController, PublicArticlesController, PublicStatsController, PublicAboutController, PublicClientsController],
 })
 export class PublicModule {}

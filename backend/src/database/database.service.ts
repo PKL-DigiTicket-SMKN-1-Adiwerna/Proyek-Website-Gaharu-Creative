@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as crypto from 'crypto';
 import Database from 'better-sqlite3';
 import * as bcrypt from 'bcryptjs';
+import { SEED_SERVICES, SEED_PORTFOLIO, SEED_ARTICLES, SEED_STATS, SEED_STORIES, SEED_VALUES, SEED_TEAM, SEED_MISSION, SEED_VISION, SEED_CLIENTS } from './seed-data';
 
 function parseRow(row: any): any {
   if (!row || typeof row !== 'object') return row;
@@ -173,6 +174,20 @@ CREATE TABLE IF NOT EXISTS team_members (
   sort_order INTEGER NOT NULL DEFAULT 0,
   is_published INTEGER NOT NULL DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS clients (
+  id TEXT PRIMARY KEY,
+  group_id TEXT,
+  locale TEXT NOT NULL DEFAULT 'id',
+  name TEXT NOT NULL,
+  slug TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'pemerintah',
+  logo_path TEXT,
+  logo_alt TEXT,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_published INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 CREATE TABLE IF NOT EXISTS contact_inquiries (
   id TEXT PRIMARY KEY,
   reference_code TEXT UNIQUE NOT NULL,
@@ -218,6 +233,62 @@ export class DatabaseService implements OnModuleInit {
       const hash = bcrypt.hashSync(password, 10);
       this.db.prepare('INSERT INTO profiles (id,email,password_hash,full_name,role,is_active) VALUES (?,?,?,?,?,1)')
         .run(crypto.randomUUID(), email, hash, 'Administrator', 'superadmin');
+    }
+    // auto-seed content if empty
+    const svcCount = (this.db.prepare('SELECT COUNT(*) as c FROM services').get() as any).c;
+    if (svcCount === 0) {
+      const now = new Date().toISOString();
+      for (const s of SEED_SERVICES) {
+        this.db.prepare('INSERT INTO services (id,group_id,locale,slug,tag,name,short_desc,icon,sort_order,is_featured,is_published,published_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', s.slug, s.tag, s.name, s.short_desc, s.icon, 0, 1, 1, now, now, now);
+      }
+      for (const p of SEED_PORTFOLIO) {
+        this.db.prepare('INSERT INTO portfolio_items (id,group_id,locale,slug,title,client_name,industry,summary,result_badge,cover_path,cover_alt,is_published,published_at,sort_order,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', p.slug, p.title, p.client_name, p.industry, p.summary, p.result_badge, p.cover_path, p.cover_alt, 1, now, 0, now, now);
+      }
+      for (const a of SEED_ARTICLES) {
+        this.db.prepare('INSERT INTO articles (id,group_id,locale,slug,title,excerpt,body,cover_path,cover_alt,is_published,published_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', a.slug, a.title, a.excerpt, a.body, a.cover_path, a.cover_alt, 1, a.published_at, now, now);
+      }
+      for (let i=0;i<SEED_STATS.length;i++){
+        const s=SEED_STATS[i];
+        this.db.prepare('INSERT INTO stats (id,group_id,locale,label,value,sort_order,is_published) VALUES (?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', s.label, s.value, s.sort_order ?? i, 1);
+      }
+      for (let i=0;i<SEED_STORIES.length;i++){
+        const s=SEED_STORIES[i];
+        this.db.prepare('INSERT INTO about_stories (id,group_id,locale,title,description,sort_order,is_published) VALUES (?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', s.title, s.body, s.sort_order ?? i, 1);
+      }
+      for (let i=0;i<SEED_VALUES.length;i++){
+        const v=SEED_VALUES[i];
+        this.db.prepare('INSERT INTO company_values (id,group_id,locale,title,description,sort_order,is_published) VALUES (?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', v.title, v.description, v.sort_order ?? i, 1);
+      }
+      for (let i=0;i<SEED_TEAM.length;i++){
+        const t=SEED_TEAM[i];
+        this.db.prepare('INSERT INTO team_members (id,group_id,locale,name,role,bio,sort_order,is_published) VALUES (?,?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', t.name, t.role, t.bio, t.sort_order ?? i, 1);
+      }
+      // mission/vision
+      const mId = crypto.randomUUID();
+      this.db.prepare('INSERT INTO mission_vision (id,group_id,locale,kind,title,description,sort_order) VALUES (?,?,?,?,?,?,?)')
+        .run(mId, crypto.randomUUID(), 'id', 'misi', 'Misi', SEED_MISSION, 0);
+      const vId = crypto.randomUUID();
+      this.db.prepare('INSERT INTO mission_vision (id,group_id,locale,kind,title,description,sort_order) VALUES (?,?,?,?,?,?,?)')
+        .run(vId, crypto.randomUUID(), 'id', 'visi', 'Visi', SEED_VISION, 0);
+    }
+    // mitra / klien: dipisah dari blok di atas supaya basis data yang sudah terisi
+    // layanan ikut mendapat tabel clients saat pertama kali dibaca
+    const clientCount = (this.db.prepare('SELECT COUNT(*) as c FROM clients').get() as any).c;
+    if (clientCount === 0) {
+      const now = new Date().toISOString();
+      for (let i = 0; i < SEED_CLIENTS.length; i++) {
+        const c = SEED_CLIENTS[i];
+        this.db.prepare('INSERT INTO clients (id,group_id,locale,name,slug,category,logo_path,logo_alt,sort_order,is_published,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)')
+          .run(crypto.randomUUID(), crypto.randomUUID(), 'id', c.name, c.slug, c.category,
+            `/logos/klien/${c.logo}`, c.name, i, 1, now, now);
+      }
     }
   }
 
