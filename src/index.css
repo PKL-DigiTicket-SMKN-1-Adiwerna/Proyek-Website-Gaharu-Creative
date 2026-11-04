@@ -227,6 +227,15 @@ body {
   will-change: opacity, transform;
 }
 
+/* Mode tanpa geser untuk pengguna yang meminta "kurangi gerakan" (lazim aktif
+ * di HP). Hanya opasitas yang berubah, jadi tetap ada animasi halus tetapi
+ * tidak memicu rasa pusing. */
+[data-reveal="fade"][data-reveal-state="in"] {
+  animation: gc-fade-in 0.3s ease-out both;
+  animation-delay: var(--reveal-delay, 0ms);
+  will-change: opacity;
+}
+
 /* Setelah animasi selesai, keadaan ditukar agar transform tidak aktif lagi. */
 [data-reveal][data-reveal-state="done"] {
   opacity: 1;
@@ -291,6 +300,14 @@ body {
   /* Kalau animasi dimatikan, konten langsung tampil. */
   [data-reveal] {
     opacity: 1;
+  }
+
+  /* Reveal tetap boleh memudar singkat: aturan global di atas hanya untuk
+   * gerakan dekoratif. Tanpa ini, pengguna HP dengan "Reduce Motion" melihat
+   * halaman yang sepenuhnya statis. */
+  [data-reveal="fade"][data-reveal-state="in"] {
+    animation: gc-fade-in 0.3s ease-out both !important;
+    animation-delay: var(--reveal-delay, 0ms) !important;
   }
 
   /* Parallax ikut dimatikan agar tidak ada gerakan latar. */

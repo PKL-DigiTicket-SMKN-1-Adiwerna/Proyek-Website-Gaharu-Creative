@@ -93,39 +93,86 @@ export function initScrollReveal(roots) {
   );
   if (rootList.length === 0) return () => {};
 
+  /* Di HP, "Reduce Motion" (kurangi gerakan) sering aktif. Dulu mode ini
+   * mematikan semua animasi, sehingga situs terasa statis. Sekarang reveal
+   * tetap berjalan sebagai memudar singkat tanpa pergeseran: masih ada gerak
+   * halus, tetapi tidak memicu pusing. Parallax tetap dimatikan di parallax.js. */
   const reduce = prefersReducedMotion();
+  const mode = reduce ? "fade" : "rise";
+
+  const tracked = new Set();
+
+  function reveal(el) {
+    if (stateOf(el) !== PENDING) return;
+    mark(el, IN);
+    tracked.delete(el);
+    /* Jaring aman: kalau animationend tidak pernah sampai (misalnya elemen
+     * disembunyikan saat animasi berjalan), keadaan tetap dipromosikan agar
+     * isi halaman tidak tertinggal tak terlihat. */
+    window.setTimeout(() => {
+      if (stateOf(el) === IN) mark(el, DONE);
+    }, delayOf(el) + 1200);
+  }
+
+  /* Elemen yang sudah lewat ke atas viewport (misalnya browser memulihkan
+   * posisi scroll saat tab dibuka lagi di HP) tidak akan pernah memenuhi
+   * IntersectionObserver dan bisa tertinggal tak terlihat. Tandai selesai
+   * tanpa animasi supaya tetap terbaca saat pengguna menggulir ke atas. */
+  function skipAbove(el) {
+    if (stateOf(el) !== PENDING) return;
+    mark(el, DONE);
+    tracked.delete(el);
+  }
 
   const observer =
-    !reduce && typeof IntersectionObserver !== "undefined"
+    typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
               if (!entry.isIntersecting) continue;
               const el = entry.target;
               observer.unobserve(el);
-              if (stateOf(el) === DONE) continue;
-              mark(el, IN);
-              /* Jaring aman: kalau animationend tidak pernah sampai (misalnya
-               * elemen disembunyikan saat animasi berjalan), keadaan tetap
-               * dipromosikan agar isi halaman tidak tertinggal tak terlihat. */
-              window.setTimeout(() => {
-                if (stateOf(el) === IN) mark(el, DONE);
-              }, delayOf(el) + 1200);
+              reveal(el);
             }
           },
           { threshold: 0.05, rootMargin: "0px 0px -5% 0px" }
         )
       : null;
 
+  /* Cadangan untuk peramban tanpa IntersectionObserver (mis. WebView lama di
+   * HP), sekaligus penyapu elemen yang sudah berada di atas viewport. */
+  let frame = 0;
+  function sync() {
+    frame = 0;
+    if (tracked.size === 0) return;
+    const vh = window.innerHeight || 0;
+    for (const el of Array.from(tracked)) {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom <= 0) {
+        skipAbove(el);
+      } else if (!observer && rect.top <= vh * 0.95) {
+        reveal(el);
+      }
+    }
+  }
+  function requestSync() {
+    if (frame) return;
+    frame = window.requestAnimationFrame(sync);
+  }
+
   /* Reveal memakai dua animasi (fade + rise). Hanya akhir animasi geser
    * (gc-rise) yang menandai selesai, agar fade yang lebih pendek tidak
-   * memotong pergeseran elemen di tengah jalan. */
+   * memotong pergeseran elemen di tengah jalan. Mode fade hanya punya satu
+   * animasi, jadi cukup menunggu gc-fade-in. */
   const onAnimationEnd = (event) => {
-    if (event.animationName !== "gc-rise") return;
     const el = event.target;
-    if (el && typeof el.setAttribute === "function" && stateOf(el) === IN) {
-      mark(el, DONE);
+    if (!el || typeof el.getAttribute !== "function" || stateOf(el) !== IN) {
+      return;
     }
+    const expected =
+      el.getAttribute("data-reveal") === "fade" ? "gc-fade-in" : "gc-rise";
+    if (event.animationName !== expected) return;
+    mark(el, DONE);
   };
 
   rootList.forEach((root) => root.addEventListener("animationend", onAnimationEnd));
@@ -141,15 +188,15 @@ export function initScrollReveal(roots) {
     const pool = new Set(fresh);
     for (const el of fresh) {
       tagged.add(el);
-      el.setAttribute("data-reveal", "rise");
+      el.setAttribute("data-reveal", mode);
       el.style.setProperty("--reveal-delay", `${stagedDelay(el, pool)}ms`);
-      if (observer) {
-        mark(el, PENDING);
-        observer.observe(el);
-      } else {
-        mark(el, DONE);
-      }
+      mark(el, PENDING);
+      tracked.add(el);
+      if (observer) observer.observe(el);
     }
+
+    /* Elemen yang sudah di atas viewport langsung ditandai selesai. */
+    requestSync();
   }
 
   function scan(scope) {
@@ -161,11 +208,16 @@ export function initScrollReveal(roots) {
 
   rootList.forEach(scan);
 
+  /* Selalu dipasang: jadi cadangan bila IntersectionObserver tidak ada, dan
+   * menyapu elemen yang terlewat saat posisi scroll dipulihkan browser. */
+  window.addEventListener("scroll", requestSync, { passive: true });
+  window.addEventListener("resize", requestSync);
+
   // Konten yang muncul belakangan (hasil filter, ganti slide, dsb.) tetap
   // ikut dianimasikan. MutationObserver hanya memantau perubahan anak, jadi
   // atribut yang kita tambahkan sendiri tidak memicu putaran baru.
   const mutation =
-    observer && typeof MutationObserver !== "undefined"
+    typeof MutationObserver !== "undefined"
       ? new MutationObserver((records) => {
           const scopes = new Set();
           for (const record of records) {
@@ -188,6 +240,9 @@ export function initScrollReveal(roots) {
   return () => {
     if (observer) observer.disconnect();
     if (mutation) mutation.disconnect();
+    window.removeEventListener("scroll", requestSync);
+    window.removeEventListener("resize", requestSync);
+    if (frame) window.cancelAnimationFrame(frame);
     rootList.forEach((root) =>
       root.removeEventListener("animationend", onAnimationEnd)
     );
