@@ -216,11 +216,11 @@ export function adaptArticleCategories(apiItems) {
 export function adaptTestimonials(apiItems) {
   if (!Array.isArray(apiItems)) return null;
   return apiItems.map((t) => ({
-    name: t.clientName || t.name,
+    name: t.clientName || t.client_name || t.name,
     company: t.company,
     role: t.role,
     quote: t.quote,
-    avatar: t.avatarPath || t.avatar,
+    avatar: t.avatarPath || t.avatar_path || t.avatar,
     _fromApi: true,
   }));
 }

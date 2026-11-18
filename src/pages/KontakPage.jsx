@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Seo } from "../components/Seo.jsx";
 import {
@@ -34,6 +34,17 @@ export default function KontakPage() {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [state, setState] = useState("idle");
+  /* Satu kunci per percobaan kirim, bukan per klik: klik ganda pada tombol yang sama
+   * mengirim kunci identik sehingga backend hanya menyimpan satu inquiry. Kunci baru
+   * dibuat setelah kiriman berhasil supaya pesan berikutnya tidak dianggap duplikat.
+   */
+  const idemRef = useRef(null);
+  const ambilKunciIdempotensi = () => {
+    if (!idemRef.current) {
+      idemRef.current = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+    }
+    return idemRef.current;
+  };
 
   const field = (id, value) => {
     setForm((prev) => ({ ...prev, [id]: value }));
@@ -58,7 +69,7 @@ export default function KontakPage() {
     setErrors({});
     setState("sending");
 
-    const idempotencyKey = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+    const idempotencyKey = ambilKunciIdempotensi();
     const serviceSlug = (apiContact && Array.isArray(apiContact.serviceOptions))
       ? (apiContact.serviceOptions.find((s) => (s.label || s.value) === form.layanan)?.value || form.layanan)
       : form.layanan;
@@ -78,6 +89,7 @@ export default function KontakPage() {
     try {
       const json = await api.submitInquiry(payload, idempotencyKey);
       if (json && json.data) {
+        idemRef.current = null;
         setState("sent");
         setForm(emptyForm);
         return;
@@ -100,6 +112,7 @@ export default function KontakPage() {
       .join("\n");
 
     window.open(`${waBase}?text=${encodeURIComponent(isi)}`, "_blank", "noopener");
+    idemRef.current = null;
     setState("sent");
     setForm(emptyForm);
   };
