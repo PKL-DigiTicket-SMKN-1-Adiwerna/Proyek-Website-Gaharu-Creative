@@ -11,6 +11,7 @@ import AdminSiteSettingsPage from "./AdminSiteSettingsPage.jsx";
 import AdminAboutPage from "./AdminAboutPage.jsx";
 import AdminStatsPage from "./AdminStatsPage.jsx";
 import AdminClientsPage from "./AdminClientsPage.jsx";
+import AdminAwardsPage from "./AdminAwardsPage.jsx";
 
 export default function AdminApp() {
   return (
@@ -27,6 +28,7 @@ export default function AdminApp() {
           <Route path="/admin/about" element={<AdminAboutPage />} />
           <Route path="/admin/stats" element={<AdminStatsPage />} />
           <Route path="/admin/clients" element={<AdminClientsPage />} />
+          <Route path="/admin/awards" element={<AdminAwardsPage />} />
         </Route>
       </Route>
     </Routes>

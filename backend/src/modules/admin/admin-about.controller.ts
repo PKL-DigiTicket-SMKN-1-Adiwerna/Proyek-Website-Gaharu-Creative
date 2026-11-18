@@ -23,8 +23,10 @@ export class AdminAboutController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    await this.db.run('INSERT INTO about_stories (id, group_id, locale, title, description, sort_order) VALUES (?,?,?,?,?,?)',
-      [id, groupId, locale, dto.title, dto.body ?? null, dto.sort_order ?? 0]);
+    await this.db.run(`INSERT INTO about_stories (id, group_id, locale, title, label, description, image_path, sort_order, is_published)
+      VALUES (?,?,?,?,?,?,?,?,?)`,
+      [id, groupId, locale, dto.title, dto.label ?? null, dto.description ?? dto.body ?? null,
+       dto.image_path ?? null, dto.sort_order ?? 0, dto.is_published === false ? false : true]);
     const data = await this.db.get('SELECT * FROM about_stories WHERE id = ?', [id]);
     return { data };
   }
@@ -32,11 +34,17 @@ export class AdminAboutController {
   async updateStory(@Param('id') id: string, @Body() dto: any, @CurrentUser() user: any) {
     const fields: string[] = [];
     const vals: any[] = [];
-    if (dto.title !== undefined) { fields.push('title = ?'); vals.push(dto.title); }
-    if (dto.body !== undefined) { fields.push('description = ?'); vals.push(dto.body); }
-    if (dto.sort_order !== undefined) { fields.push('sort_order = ?'); vals.push(dto.sort_order); }
-    vals.push(id);
-    await this.db.run(`UPDATE about_stories SET ${fields.join(', ')} WHERE id = ?`, vals);
+    // `body` diterima sebagai alias supaya klien lama tetap jalan.
+    const body = dto.description !== undefined ? dto.description : dto.body;
+    for (const k of ['title', 'label', 'image_path', 'sort_order', 'is_published']) {
+      if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
+    }
+    if (body !== undefined) { fields.push('description = ?'); vals.push(body); }
+    if (fields.length) {
+      fields.push('updated_at = ?');
+      vals.push(new Date().toISOString(), id);
+      await this.db.run(`UPDATE about_stories SET ${fields.join(', ')} WHERE id = ?`, vals);
+    }
     const data = await this.db.get('SELECT * FROM about_stories WHERE id = ?', [id]);
     return { data };
   }
@@ -58,8 +66,10 @@ export class AdminAboutController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    await this.db.run('INSERT INTO company_values (id, group_id, locale, title, description, icon, sort_order) VALUES (?,?,?,?,?,?,?)',
-      [id, groupId, locale, dto.title, dto.description ?? null, dto.icon ?? null, dto.sort_order ?? 0]);
+    await this.db.run(`INSERT INTO company_values (id, group_id, locale, title, description, icon, sort_order, is_published)
+      VALUES (?,?,?,?,?,?,?,?)`,
+      [id, groupId, locale, dto.title, dto.description ?? null, dto.icon || null, dto.sort_order ?? 0,
+       dto.is_published === false ? false : true]);
     const data = await this.db.get('SELECT * FROM company_values WHERE id = ?', [id]);
     return { data };
   }
@@ -67,11 +77,14 @@ export class AdminAboutController {
   async updateValue(@Param('id') id: string, @Body() dto: any, @CurrentUser() user: any) {
     const fields: string[] = [];
     const vals: any[] = [];
-    for (const k of ['title','description','icon','sort_order']) {
+    for (const k of ['title','description','icon','sort_order','is_published']) {
       if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
     }
-    vals.push(id);
-    await this.db.run(`UPDATE company_values SET ${fields.join(', ')} WHERE id = ?`, vals);
+    if (fields.length) {
+      fields.push('updated_at = ?');
+      vals.push(new Date().toISOString(), id);
+      await this.db.run(`UPDATE company_values SET ${fields.join(', ')} WHERE id = ?`, vals);
+    }
     const data = await this.db.get('SELECT * FROM company_values WHERE id = ?', [id]);
     return { data };
   }
@@ -93,8 +106,11 @@ export class AdminAboutController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    await this.db.run('INSERT INTO team_members (id, group_id, locale, name, role, bio, photo_path, sort_order) VALUES (?,?,?,?,?,?,?,?)',
-      [id, groupId, locale, dto.name, dto.role ?? null, dto.bio ?? null, dto.photo_path ?? null, dto.sort_order ?? 0]);
+    await this.db.run(`INSERT INTO team_members (id, group_id, locale, name, role, bio, photo_path, photo_alt, linkedin_url, sort_order, is_published)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
+      [id, groupId, locale, dto.name, dto.role ?? null, dto.bio ?? null, dto.photo_path || null,
+       dto.photo_alt ?? null, dto.linkedin_url || null, dto.sort_order ?? 0,
+       dto.is_published === false ? false : true]);
     const data = await this.db.get('SELECT * FROM team_members WHERE id = ?', [id]);
     return { data };
   }
@@ -102,11 +118,14 @@ export class AdminAboutController {
   async updateMember(@Param('id') id: string, @Body() dto: any, @CurrentUser() user: any) {
     const fields: string[] = [];
     const vals: any[] = [];
-    for (const k of ['name','role','bio','photo_path','sort_order']) {
+    for (const k of ['name','role','bio','photo_path','photo_alt','linkedin_url','sort_order','is_published']) {
       if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
     }
-    vals.push(id);
-    await this.db.run(`UPDATE team_members SET ${fields.join(', ')} WHERE id = ?`, vals);
+    if (fields.length) {
+      fields.push('updated_at = ?');
+      vals.push(new Date().toISOString(), id);
+      await this.db.run(`UPDATE team_members SET ${fields.join(', ')} WHERE id = ?`, vals);
+    }
     const data = await this.db.get('SELECT * FROM team_members WHERE id = ?', [id]);
     return { data };
   }

@@ -1,128 +1,272 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { adminApi } from "../lib/adminApi";
 import ImageUpload from "./ImageUpload.jsx";
+import {
+  INPUT,
+  BTN_UTAMA,
+  BTN_KEDUA,
+  Field,
+  Pesan,
+  PreviewKartu,
+  StatusPill,
+  slugify,
+} from "./components/FormKit.jsx";
+
+const tanggal = (iso) =>
+  iso ? new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(iso)) : "";
 
 function toForm(row) {
-  if (!row) return null;
   return {
     id: row.id,
     title: row.title || "",
-    category: "Branding",
-    status: row.is_published ? "published" : "draft",
-    excerpt: row.excerpt || "",
-    content: row.body || "",
-    cover: row.cover_path || "",
-    published_at: row.published_at ? row.published_at.slice(0, 10) : "",
+    slug: row.slug || "",
+    slugManual: true,
+    ringkasan: row.excerpt || "",
+    isi: row.body || "",
+    gambar: row.cover_path || "",
+    terbit: Boolean(row.is_published),
+    terbitPada: row.published_at || "",
   };
 }
-function toDto(form) {
+
+function kosong() {
   return {
-    title: form.title,
-    slug: form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
-    excerpt: form.excerpt,
-    body: form.content,
-    cover_path: form.cover,
-    cover_alt: form.title,
-    is_published: form.status === "published",
-    published_at: form.status === "published" ? (form.published_at || new Date().toISOString().slice(0, 10)) : null,
+    id: "",
+    title: "",
+    slug: "",
+    slugManual: false,
+    ringkasan: "",
+    isi: "",
+    gambar: "",
+    terbit: false,
+    terbitPada: "",
+  };
+}
+
+function toDto(f) {
+  return {
+    title: f.title.trim(),
+    slug: f.slug.trim(),
+    excerpt: f.ringkasan.trim(),
+    body: f.isi.trim(),
+    cover_path: f.gambar || "",
+    cover_alt: f.title.trim(),
+    is_published: f.terbit,
     locale: "id",
   };
 }
 
+function cekForm(f) {
+  if (!f.title.trim()) return "Judul artikel wajib diisi.";
+  if (f.title.trim().length < 5) return "Judul minimal 5 karakter.";
+  if (!f.slug.trim()) return "Slug wajib diisi.";
+  if (!/^[a-z0-9-]+$/.test(f.slug.trim())) return "Slug hanya boleh huruf kecil, angka, dan tanda hubung.";
+  if (f.ringkasan.trim().length < 10) return "Ringkasan minimal 10 karakter supaya kartu insight tidak kosong.";
+  if (f.isi.trim().length < 20) return "Isi artikel minimal 20 karakter.";
+  return "";
+}
+
 export default function AdminArticlesPage() {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [memuat, setMemuat] = useState(true);
+  const [galat, setGalat] = useState("");
+  const [info, setInfo] = useState("");
   const [form, setForm] = useState(null);
-  const [saving, setSaving] = useState(false);
+  const [menyimpan, setMenyimpan] = useState(false);
+  const [cari, setCari] = useState("");
+  const [filter, setFilter] = useState("semua");
 
-  const load = async () => {
-    setLoading(true); setError("");
+  const muat = async (senyap = false) => {
+    if (!senyap) setMemuat(true);
+    setGalat("");
     try {
       const res = await adminApi.listArticles("id");
       setItems((res?.data || []).map(toForm));
-    } catch (e) { setError(e?.message || "Gagal memuat data."); }
-    finally { setLoading(false); }
+    } catch (e) {
+      setGalat(e?.message || "Gagal memuat data.");
+    } finally {
+      setMemuat(false);
+    }
   };
-  useEffect(() => { load(); }, []);
 
-  const save = async (e) => {
-    e.preventDefault(); setSaving(true); setError("");
+  useEffect(() => { (async () => { await muat(); })(); }, []);
+
+  const buka = (it) => {
+    setGalat(""); setInfo("");
+    setForm(it ? { ...it } : kosong());
+  };
+
+  const ubahJudul = (nilai) =>
+    setForm((f) => ({ ...f, title: nilai, slug: f.slugManual ? f.slug : slugify(nilai) }));
+
+  const simpan = async (e) => {
+    e.preventDefault();
+    const salah = cekForm(form);
+    if (salah) { setGalat(salah); setInfo(""); return; }
+    setMenyimpan(true); setGalat(""); setInfo("");
     try {
-      if (form.id) {
-        const res = await adminApi.updateArticle(form.id, toDto(form));
-        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res?.data) : it)));
-      } else {
-        const res = await adminApi.createArticle(toDto(form));
-        setItems((prev) => [toForm(res?.data), ...prev]);
-      }
+      if (form.id) await adminApi.updateArticle(form.id, toDto(form));
+      else await adminApi.createArticle(toDto(form));
+      setInfo(form.id ? `Artikel "${form.title.trim()}" diperbarui.` : `Artikel "${form.title.trim()}" ditambahkan.`);
       setForm(null);
-    } catch (e) { setError(e?.message || "Gagal menyimpan."); }
-    finally { setSaving(false); }
+      await muat(true);
+    } catch (err) {
+      setGalat(err?.message || "Gagal menyimpan artikel.");
+    } finally {
+      setMenyimpan(false);
+    }
   };
-  const remove = async (id) => {
-    if (!confirm("Hapus artikel ini?")) return;
-    try { await adminApi.deleteArticle(id); setItems((prev) => prev.filter((it) => it.id !== id)); }
-    catch (e) { setError(e?.message || "Gagal menghapus."); }
+
+  const hapus = async (it) => {
+    if (!confirm(`Hapus artikel "${it.title}"?`)) return;
+    setGalat(""); setInfo("");
+    try {
+      await adminApi.deleteArticle(it.id);
+      setItems((prev) => prev.filter((x) => x.id !== it.id));
+      setInfo(`Artikel "${it.title}" dihapus.`);
+    } catch (e) {
+      setGalat(e?.message || "Gagal menghapus.");
+    }
   };
+
+  const tersaring = useMemo(() => {
+    const q = cari.trim().toLowerCase();
+    return items
+      .filter((it) => (filter === "terbit" ? it.terbit : filter === "draf" ? !it.terbit : true))
+      .filter((it) => !q || [it.title, it.slug, it.ringkasan].join(" ").toLowerCase().includes(q));
+  }, [items, cari, filter]);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">Artikel / Insight</h1>
-        <button onClick={() => setForm({ title: "", category: "Branding", status: "draft", excerpt: "", content: "", cover: "", published_at: null })} className="rounded-lg bg-brand-800 text-white px-4 py-2 text-sm font-semibold hover:bg-brand-900">+ Tambah</button>
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Artikel / Insight</h1>
+          <p className="text-sm text-slate-500">
+            {items.length} artikel, {items.filter((it) => it.terbit).length} terbit. Terbaru tampil lebih dulu.
+          </p>
+        </div>
+        <button onClick={() => buka(null)} className={BTN_UTAMA}>Tambah artikel</button>
       </div>
-      {error && <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</div>}
+
+      <Pesan jenis="gagal">{galat}</Pesan>
+      <Pesan>{info}</Pesan>
+
       {form && (
-        <form onSubmit={save} className="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <input placeholder="Judul" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" required />
-            <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="rounded-lg border border-slate-300 px-3 py-2 text-sm">
-              <option>Branding</option><option>Digital</option><option>Konten</option><option>Web</option>
-            </select>
-            <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className="rounded-lg border border-slate-300 px-3 py-2 text-sm">
-              <option value="draft">Draf</option><option value="published">Terbit</option>
-            </select>
+        <form onSubmit={simpan} className="rounded-xl border border-slate-200 bg-white">
+          <div className="flex flex-wrap items-start justify-between gap-2 border-b border-slate-100 px-5 py-4">
+            <div>
+              <h2 className="font-semibold text-slate-900">{form.id ? "Ubah artikel" : "Artikel baru"}</h2>
+              <p className="text-xs text-slate-500">Tanggal terbit diisi otomatis oleh sistem saat artikel diterbitkan.</p>
+            </div>
+            <button type="button" onClick={() => setForm(null)} className="text-sm text-slate-500 hover:text-slate-800">Tutup</button>
           </div>
-          <textarea placeholder="Ringkasan (excerpt)" value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} rows={2} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-          <textarea placeholder="Isi artikel" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={6} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-          <ImageUpload label="Gambar cover" value={form.cover} onChange={(v) => setForm({ ...form, cover: v })} />
-          <div className="flex gap-2">
-            <button type="submit" disabled={saving} className="rounded-lg bg-brand-800 text-white px-4 py-2 text-sm font-semibold disabled:opacity-60">{saving ? "Menyimpan…" : "Simpan"}</button>
-            <button type="button" onClick={() => setForm(null)} className="rounded-lg border border-slate-300 px-4 py-2 text-sm">Batal</button>
+
+          <div className="grid gap-6 p-5 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="space-y-5">
+              <fieldset className="space-y-3">
+                <legend className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-800">Judul dan alamat</legend>
+                <Field label="Judul" wajib>
+                  <input className={INPUT} value={form.title} onChange={(e) => ubahJudul(e.target.value)} placeholder="Contoh: Tiga Tanda Merek Anda Perlu Diperbarui" />
+                </Field>
+                <Field label="Slug" wajib hint="Alamat /insight/slug. Ikut judul sampai Anda menyuntingnya sendiri.">
+                  <input
+                    className={INPUT}
+                    value={form.slug}
+                    onChange={(e) => setForm({ ...form, slug: slugify(e.target.value), slugManual: true })}
+                    placeholder="tiga-tanda-merek-perlu-diperbarui"
+                  />
+                </Field>
+                <Field label="Ringkasan" wajib hint="Tampil di kartu insight dan pratinjau berbagi.">
+                  <textarea className={INPUT} rows={3} value={form.ringkasan} onChange={(e) => setForm({ ...form, ringkasan: e.target.value })} />
+                </Field>
+              </fieldset>
+
+              <fieldset className="space-y-3">
+                <legend className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-800">Isi artikel</legend>
+                <Field label="Isi" wajib hint={`${form.isi.trim().length} karakter. Pisahkan paragraf dengan satu baris kosong.`}>
+                  <textarea className={INPUT} rows={12} value={form.isi} onChange={(e) => setForm({ ...form, isi: e.target.value })} />
+                </Field>
+                <label className="flex items-center gap-2 text-sm text-slate-700">
+                  <input type="checkbox" className="h-4 w-4" checked={form.terbit} onChange={(e) => setForm({ ...form, terbit: e.target.checked })} />
+                  Terbitkan di situs publik
+                </label>
+              </fieldset>
+            </div>
+
+            <div className="space-y-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Pratinjau kartu</p>
+              <PreviewKartu
+                gambar={form.gambar}
+                tag="Insight"
+                judul={form.title}
+                ringkasan={form.ringkasan}
+                meta={form.terbit ? `Terbit ${tanggal(form.terbitPada) || "hari ini"}` : "Belum terbit"}
+              />
+              <ImageUpload
+                label="Gambar cover"
+                value={form.gambar}
+                onChange={(v) => setForm({ ...form, gambar: v })}
+                hint="Rasio 16:10 paling rapi. Berkas besar dikecilkan otomatis."
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2 border-t border-slate-100 px-5 py-4">
+            <button type="submit" disabled={menyimpan} className={BTN_UTAMA}>
+              {menyimpan ? "Menyimpan..." : form.id ? "Simpan perubahan" : "Simpan artikel"}
+            </button>
+            <button type="button" onClick={() => setForm(null)} className={BTN_KEDUA}>Batal</button>
           </div>
         </form>
       )}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        {loading ? <div className="px-5 py-8 text-sm text-slate-500">Memuat…</div> : (
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600">
-              <tr>
-                <th className="text-left px-5 py-3">Cover</th>
-                <th className="text-left px-5 py-3">Judul</th>
-                <th className="text-left px-5 py-3">Status</th>
-                <th className="text-left px-5 py-3">Terbit</th>
-                <th className="text-right px-5 py-3">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((it) => (
-                <tr key={it.id} className="border-t border-slate-100">
-                  <td className="px-5 py-3">{it.cover ? <img src={it.cover} alt="" className="h-10 w-10 rounded object-cover" /> : <span className="text-slate-300 text-xs">-</span>}</td>
-                  <td className="px-5 py-3 font-medium">{it.title}</td>
-                  <td className="px-5 py-3">{it.status}</td>
-                  <td className="px-5 py-3 text-slate-500">{it.published_at || "-"}</td>
-                  <td className="px-5 py-3 text-right space-x-2">
-                    <button onClick={() => setForm({ ...it })} className="text-brand-700 hover:underline">Edit</button>
-                    <button onClick={() => remove(it.id)} className="text-red-600 hover:underline">Hapus</button>
-                  </td>
-                </tr>
-              ))}
-              {items.length === 0 && <tr><td colSpan={5} className="px-5 py-8 text-center text-slate-400">Belum ada data.</td></tr>}
-            </tbody>
-          </table>
-        )}
+
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          className={`${INPUT} sm:max-w-xs`}
+          value={cari}
+          onChange={(e) => setCari(e.target.value)}
+          placeholder="Cari judul artikel"
+          aria-label="Cari artikel"
+        />
+        <select className={`${INPUT} sm:w-40`} value={filter} onChange={(e) => setFilter(e.target.value)} aria-label="Saring status">
+          <option value="semua">Semua status</option>
+          <option value="terbit">Terbit</option>
+          <option value="draf">Draf</option>
+        </select>
       </div>
+
+      {memuat ? (
+        <div className="rounded-xl border border-slate-200 bg-white px-5 py-8 text-sm text-slate-500">Memuat artikel...</div>
+      ) : tersaring.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-10 text-center text-sm text-slate-500">
+          {items.length === 0 ? "Belum ada artikel. Mulai dengan tombol Tambah artikel." : "Tidak ada artikel yang cocok dengan pencarian."}
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {tersaring.map((it) => (
+            <article key={it.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+              {it.gambar ? (
+                <img src={it.gambar} alt="" className="aspect-[16/10] w-full object-cover" />
+              ) : (
+                <div className="flex aspect-[16/10] w-full items-center justify-center bg-slate-50 text-xs text-slate-400">Tanpa cover</div>
+              )}
+              <div className="space-y-1.5 p-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <StatusPill terbit={it.terbit} />
+                  <span className="text-[11px] text-slate-400">{it.terbitPada ? `Terbit ${tanggal(it.terbitPada)}` : "Belum terbit"}</span>
+                </div>
+                <h3 className="font-semibold leading-snug text-slate-900">{it.title}</h3>
+                <p className="line-clamp-2 text-xs text-slate-500">{it.ringkasan}</p>
+                <p className="text-[11px] text-slate-400">/{it.slug}</p>
+                <div className="flex gap-3 pt-1 text-sm">
+                  <button onClick={() => buka(it)} className="text-brand-700 hover:underline">Ubah</button>
+                  <button onClick={() => hapus(it)} className="text-red-600 hover:underline">Hapus</button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

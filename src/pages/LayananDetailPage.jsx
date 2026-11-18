@@ -1,24 +1,46 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { services } from "../data/services.js";
+import { services as staticServices } from "../data/services.js";
 import { links } from "../data/site.js";
 import { Seo } from "../components/Seo.jsx";
 import { Button, Container, IconCircle, Section, Kepala } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
+import { api, adaptServiceDetail } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 
-/* Satu template untuk kelima layanan (DESAIN.md v2 bagian 5.3). Section yang
+/* Satu template untuk semua layanan (DESAIN.md v2 bagian 5.3). Section yang
  * datanya kosong tidak dirender sama sekali, jadi tidak ada blok kosong di
  * halaman layanan yang belum lengkap isinya.
+ *
+ * Lima layanan lama memakai data statis yang lengkap. Layanan yang dibuat dari
+ * panel admin tidak ada di data statis, jadi isinya diambil dari API dan
+ * dibentuk oleh adaptServiceDetail dengan bagian yang sama.
  *
  * Angka klaim tidak ditampilkan. Grafik KPI di halaman performance marketing
  * diberi keterangan "contoh tampilan" supaya tidak dibaca sebagai hasil klien.
  */
 export default function LayananDetailPage() {
   const { slug } = useParams();
-  const service = services.find((item) => item.slug === slug);
+  const statis = staticServices.find((item) => item.slug === slug) || null;
+  const { data, loading } = useApi(
+    () =>
+      statis
+        ? Promise.resolve({ data: statis })
+        : api.service(slug).then((j) => ({ data: adaptServiceDetail(j.data) })),
+    null,
+    [slug]
+  );
+  const service = data || statis;
   const [openFaq, setOpenFaq] = useState(0);
 
   if (!service) {
+    if (loading) {
+      return (
+        <Section>
+          <p className="text-base text-muted">Memuat layanan...</p>
+        </Section>
+      );
+    }
     return (
       <Section>
         <div className="mx-auto max-w-xl text-center">
@@ -210,7 +232,9 @@ export default function LayananDetailPage() {
             {service.deliverables.map((item) => (
               <article key={item.title} className="flex flex-col rounded-2xl border border-line bg-paper p-6">
                 <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
+                {item.body ? (
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
+                ) : null}
                 {item.chip ? (
                   <span className="mt-4 inline-flex w-fit items-center gap-2 rounded-md bg-chip px-3 py-1.5 text-xs font-semibold text-chip-ink">
                     <Icon name="doc" className="h-4 w-4" />

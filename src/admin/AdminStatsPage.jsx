@@ -28,24 +28,27 @@ export default function AdminStatsPage() {
     (async () => { await load(); })();
   }, []);
 
+  // Sesudah simpan/hapus, daftar dimuat ulang dari server supaya tabel tidak
+  // menampilkan angka lama kalau server menyimpan nilai lain (mis. trim/urutan).
   const save = async (e) => {
     e.preventDefault(); setSaving(true); setError("");
     try {
       if (form.id) {
-        const res = await adminApi.updateStat(form.id, toDto(form));
-        setItems((prev) => prev.map((it) => (it.id === form.id ? toForm(res?.data) : it)));
+        await adminApi.updateStat(form.id, toDto(form));
       } else {
-        const res = await adminApi.createStat(toDto(form));
-        setItems((prev) => [toForm(res?.data), ...prev]);
+        await adminApi.createStat({ ...toDto(form), is_published: true });
       }
       setForm(null);
-    } catch (e) { setError(e?.message || "Gagal menyimpan."); }
-    finally { setSaving(false); }
+      await load();
+    } catch (e) {
+      setError(`Gagal menyimpan statistik: ${e?.message || "server menolak perubahan."} Data di bawah belum berubah.`);
+    } finally { setSaving(false); }
   };
   const remove = async (id) => {
     if (!confirm("Hapus statistik ini?")) return;
-    try { await adminApi.deleteStat(id); setItems((prev) => prev.filter((it) => it.id !== id)); }
-    catch (e) { setError(e?.message || "Gagal menghapus."); }
+    setError("");
+    try { await adminApi.deleteStat(id); await load(); }
+    catch (e) { setError(`Gagal menghapus statistik: ${e?.message || "server menolak penghapusan."}`); }
   };
 
   return (

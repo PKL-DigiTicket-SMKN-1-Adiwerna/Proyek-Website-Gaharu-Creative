@@ -1,9 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { posts } from "../data/insights.js";
+import { posts as staticPosts } from "../data/insights.js";
 import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section, Tag } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { links } from "../data/site.js";
+import { api, adaptArticles } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 
 /* Jumlah artikel terkait yang ditampilkan di bawah halaman artikel. */
 const RELATED_COUNT = 2;
@@ -11,24 +13,38 @@ const RELATED_COUNT = 2;
 /* Kolom baca satu ukuran di semua layar: 768px, ditengahkan di Container. */
 const COL = "mx-auto w-full max-w-3xl";
 
-function artikelTerkait(post) {
-  const lain = posts.filter((item) => item.slug !== post.slug);
+function artikelTerkait(semua, post) {
+  const lain = semua.filter((item) => item.slug !== post.slug);
   const serumacam = lain.filter((item) => item.category === post.category);
   const lainLagi = lain.filter((item) => item.category !== post.category);
   return [...serumacam, ...lainLagi].slice(0, RELATED_COUNT);
 }
 
-/* Halaman artikel. Menampilkan isi artikel jika sudah ada naskahnya,
- * atau pesan "Naskah menyusul" jika belum.
+/* Halaman artikel. Daftar artikel diambil dari API (badan naskah ikut terkirim di
+ * daftar), lalu jatuh ke data statis kalau API kosong atau gagal. Artikel baru
+ * dari panel admin jadi bisa dibuka tanpa menambah entri statis.
  * Urutan bagian bawah: Artikel terkait, lalu box CTA (WhatsApp & daftar artikel).
  * Kolom baca satu ukuran di semua layar supaya margin kiri dan kanan sama rata.
  */
 export default function InsightDetailPage() {
   const { slug } = useParams();
-  const post = posts.find((item) => item.slug === slug);
-  const terkait = post ? artikelTerkait(post) : [];
+  const { data: apiPosts, loading } = useApi(
+    () => api.articles().then((j) => ({ data: adaptArticles(j.data) })),
+    null,
+    [slug]
+  );
+  const semua = apiPosts && apiPosts.length ? apiPosts : staticPosts;
+  const post = semua.find((item) => item.slug === slug) || null;
+  const terkait = post ? artikelTerkait(semua, post) : [];
 
   if (!post) {
+    if (loading) {
+      return (
+        <Section>
+          <p className="text-base text-muted">Memuat artikel...</p>
+        </Section>
+      );
+    }
     return (
       <Section>
         <div className="mx-auto max-w-xl text-center">
@@ -77,7 +93,8 @@ export default function InsightDetailPage() {
               </h1>
               <p className="mt-4 text-base leading-relaxed text-muted">{post.excerpt}</p>
               <p className="mt-4 text-xs text-subtle">
-                Tim Gaharu Creative · {post.dateLabel}
+                {post.authorName || "Tim Gaharu Creative"}
+                {post.dateLabel || post.publishedLabel ? ` · ${post.dateLabel || post.publishedLabel}` : ""}
               </p>
             </div>
 
@@ -116,44 +133,45 @@ export default function InsightDetailPage() {
               </h2>
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 {terkait.map((item) => (
-                  <article
-                    key={item.slug}
-                    className="group flex flex-col rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-600"
-                  >
-                    <div className="mb-3 flex items-center justify-between gap-2">
-                      <Tag>{item.tag || item.category}</Tag>
-                      <span className="text-[11px] font-medium text-subtle">
-                        {item.dateLabel || "2026"}
-                      </span>
-                    </div>
-                    <div className="mb-4 aspect-[16/9] overflow-hidden rounded-xl border border-line bg-chip">
-                      {item.image ? (
-                        <img
-                          src={item.image}
-                          alt={item.imageAlt || item.title}
-                          width={item.imageWidth}
-                          height={item.imageHeight}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover object-center"
-                        />
-                      ) : (
-                        <div
-                          aria-hidden="true"
-                          className="flex h-full w-full items-center justify-center bg-mint"
-                        >
-                          <Icon name="doc" className="h-7 w-7 text-brand-700" />
-                        </div>
-                      )}
-                    </div>
-                    <h3 className="text-sm font-bold leading-snug text-ink transition-colors group-hover:text-button">
-                      <Link to={`/insight/${item.slug}`} className="block py-1.5">
+                  <article key={item.slug} className="h-full">
+                    {/* Seluruh kartu adalah tautan, bukan hanya judulnya. */}
+                    <Link
+                      to={`/insight/${item.slug}`}
+                      className="group flex h-full flex-col rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-600"
+                    >
+                      <div className="mb-3 flex items-center justify-between gap-2">
+                        <Tag>{item.tag || item.categoryName || item.category}</Tag>
+                        <span className="text-[11px] font-medium text-subtle">
+                          {item.dateLabel || item.publishedLabel || ""}
+                        </span>
+                      </div>
+                      <div className="mb-4 aspect-[16/9] overflow-hidden rounded-xl border border-line bg-chip">
+                        {item.image ? (
+                          <img
+                            src={item.image}
+                            alt={item.imageAlt || item.title}
+                            width={item.imageWidth}
+                            height={item.imageHeight}
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full object-cover object-center"
+                          />
+                        ) : (
+                          <div
+                            aria-hidden="true"
+                            className="flex h-full w-full items-center justify-center bg-mint"
+                          >
+                            <Icon name="doc" className="h-7 w-7 text-brand-700" />
+                          </div>
+                        )}
+                      </div>
+                      <h3 className="text-sm font-bold leading-snug text-ink transition-colors group-hover:text-button">
                         {item.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-muted line-clamp-2">
-                      {item.excerpt}
-                    </p>
+                      </h3>
+                      <p className="mt-1 text-xs leading-relaxed text-muted line-clamp-2">
+                        {item.excerpt}
+                      </p>
+                    </Link>
                   </article>
                 ))}
               </div>

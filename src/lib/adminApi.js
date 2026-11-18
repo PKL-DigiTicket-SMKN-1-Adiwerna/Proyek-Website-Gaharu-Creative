@@ -63,10 +63,15 @@ export const adminApi = {
   updateStat: (id, dto) => adminFetch(`/admin/stats/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
   deleteStat: (id) => adminFetch(`/admin/stats/${id}`, { method: "DELETE" }),
   // clients (dinding logo mitra)
-  listClients: (locale = "id") => adminFetch(`/admin/clients?locale=${locale}`),
-  createClient: (dto) => adminFetch("/admin/clients", { method: "POST", body: JSON.stringify(dto) }),
-  updateClient: (id, dto) => adminFetch(`/admin/clients/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
-  deleteClient: (id) => adminFetch(`/admin/clients/${id}`, { method: "DELETE" }),
+    listClients: (locale = "id") => adminFetch(`/admin/clients?locale=${locale}`),
+    createClient: (dto) => adminFetch("/admin/clients", { method: "POST", body: JSON.stringify(dto) }),
+    updateClient: (id, dto) => adminFetch(`/admin/clients/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
+    deleteClient: (id) => adminFetch(`/admin/clients/${id}`, { method: "DELETE" }),
+    // awards (penghargaan)
+    listAwards: (locale = "id") => adminFetch(`/admin/awards?locale=${locale}`),
+    createAward: (dto) => adminFetch("/admin/awards", { method: "POST", body: JSON.stringify(dto) }),
+    updateAward: (id, dto) => adminFetch(`/admin/awards/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
+    deleteAward: (id) => adminFetch(`/admin/awards/${id}`, { method: "DELETE" }),
   // settings
   listSettings: (locale = "id") => adminFetch(`/admin/settings?locale=${locale}`),
   updateSetting: (key, value, locale = "id") => adminFetch(`/admin/settings/${encodeURIComponent(key)}`, { method: "PATCH", body: JSON.stringify({ value, locale }) }),

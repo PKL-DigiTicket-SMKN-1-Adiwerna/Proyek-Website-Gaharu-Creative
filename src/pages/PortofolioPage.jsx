@@ -21,13 +21,24 @@ export default function PortofolioPage() {
   const [tampilSemua, setTampilSemua] = useState(false);
   const labelAktif = segments.find((item) => item.key === active)?.label ?? "Semua";
 
+  /* category_id -> slug dari daftar kategori, supaya baris yang dibuat dari panel
+   * admin tetap masuk kategori yang benar walau kolom industry-nya kosong. */
+  const segmenPerId = useMemo(() => {
+    const peta = new Map();
+    (apiCats || []).forEach((c) => {
+      if (c.id && c.slug) peta.set(c.id, c.slug);
+    });
+    return peta;
+  }, [apiCats]);
+
   const { filtered, visible } = useMemo(() => {
+    const segmen = (item) => (item.categoryId && segmenPerId.get(item.categoryId)) || item.segment;
     const hasil =
       active === "semua"
         ? portfolioItems
-        : portfolioItems.filter((item) => item.segment === active);
+        : portfolioItems.filter((item) => segmen(item) === active);
     return { filtered: hasil, visible: tampilSemua ? hasil : hasil.slice(0, 3) };
-  }, [active, portfolioItems, tampilSemua]);
+  }, [active, portfolioItems, tampilSemua, segmenPerId]);
 
   const sisa = filtered.length - visible.length;
 

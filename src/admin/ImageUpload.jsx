@@ -43,7 +43,7 @@ export async function fileToWebP(file, maxDim = 1600, quality = 0.82) {
   });
 }
 
-export default function ImageUpload({ value, onChange, label = "Gambar" }) {
+export default function ImageUpload({ value, onChange, label = "Gambar", hint = "" }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -51,6 +51,11 @@ export default function ImageUpload({ value, onChange, label = "Gambar" }) {
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > 8 * 1024 * 1024) {
+      setErr("Ukuran berkas melebihi 8 MB.");
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
     setBusy(true);
     setErr("");
     try {
@@ -68,23 +73,27 @@ export default function ImageUpload({ value, onChange, label = "Gambar" }) {
     <div className="space-y-2">
       <div className="text-sm font-medium text-slate-700">{label}</div>
       {value ? (
-        <div className="relative inline-block">
-          <img src={value} alt="preview" className="h-32 w-auto rounded-lg border border-slate-200 object-cover" />
+        <div className="relative">
+          <img
+            src={value}
+            alt="Pratinjau gambar"
+            className="aspect-[16/10] w-full rounded-lg border border-slate-200 object-cover"
+          />
           <button
             type="button"
             onClick={() => onChange("")}
-            className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 text-xs leading-6 text-center"
+            className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-red-600 text-xs leading-6 text-center text-white"
             title="Hapus gambar"
           >
             ×
           </button>
         </div>
       ) : (
-        <div className="h-32 w-48 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">
+        <div className="flex aspect-[16/10] w-full items-center justify-center rounded-lg border-2 border-dashed border-slate-300 text-xs text-slate-400">
           Belum ada gambar
         </div>
       )}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
@@ -96,6 +105,7 @@ export default function ImageUpload({ value, onChange, label = "Gambar" }) {
         <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
         <span className="text-xs text-slate-400">Otomatis dikonversi ke WebP</span>
       </div>
+      {hint ? <p className="text-xs text-slate-400">{hint}</p> : null}
       {err && <div className="text-xs text-red-600">{err}</div>}
     </div>
   );

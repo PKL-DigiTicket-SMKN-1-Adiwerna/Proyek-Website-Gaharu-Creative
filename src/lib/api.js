@@ -140,6 +140,7 @@ export const api = {
   clients: () => apiFetch("/public/clients"),
   contact: () => apiFetch("/public/contact"),
   testimonials: () => apiFetch("/public/testimonials"),
+  awards: () => apiFetch("/public/awards"),
 
   submitInquiry: (payload, idempotencyKey, turnstileToken) =>
     apiFetch("/public/inquiries", {
@@ -159,13 +160,80 @@ export function adaptServices(apiItems) {
   return apiItems.map((s) => ({
     slug: s.slug,
     tag: (s.tag || "").toUpperCase(),
-    title: s.name,
+    title: s.name || s.title,
     icon: s.icon,
     short: s.shortDesc || s.short_desc || "",
-    // field kaya (hero/problems/solutions/workflow/faq) tetap dari static bila ada;
-    // di sini hanya data dasar yang tersedia dari API.
+    // Layanan dari API hanya punya satu masalah/solusi dan daftar deliverables
+    // berbentuk teks; dibungkus ke bentuk yang dipakai kartu.
+    problems: s.problem ? [{ title: s.problem }] : [],
+    deliverables: Array.isArray(s.deliverables)
+      ? s.deliverables.map((d) => (typeof d === "string" ? { title: d } : d))
+      : [],
     _fromApi: true,
   }));
+}
+
+/* Satu layanan untuk /layanan/:slug yang tidak ada di data statis. Semua bagian
+ * yang datanya kosong tetap disediakan sebagai array kosong supaya template
+ * halaman tidak perlu tahu asal datanya. */
+export function adaptServiceDetail(s) {
+  if (!s || typeof s !== "object" || !s.slug) return null;
+  const title = s.name || s.title || "";
+  const short = s.shortDesc || s.short_desc || "";
+  const tag = (s.tag || "").toUpperCase();
+  const deliverables = Array.isArray(s.deliverables)
+    ? s.deliverables.map((d) => (typeof d === "string" ? { title: d } : d))
+    : [];
+  return {
+    slug: s.slug,
+    tag: tag || "LAYANAN",
+    title,
+    icon: s.icon,
+    short,
+    hero: {
+      eyebrow: tag || "Layanan",
+      titleBefore: title,
+      accent: "",
+      titleAfter: "",
+      lede: short,
+      primary: { label: "Konsultasi Gratis" },
+      secondary: { to: "/kontak", label: "Minta Penawaran" },
+    },
+    problems: s.problem ? [{ title: "Masalah yang sering muncul", body: s.problem }] : [],
+    solutions: s.solution
+      ? [{ label: "Pendekatan", title: "Yang kami kerjakan", body: s.solution }]
+      : [],
+    highlights: [],
+    deliverables,
+    steps: [],
+    faqs: [],
+    kpi: null,
+    quote: null,
+    qualityNote: "",
+    cta: {
+      eyebrow: "Langkah berikutnya",
+      title: `Mulai ${title}`,
+      body: short,
+      primary: "Konsultasi Gratis",
+    },
+    _fromApi: true,
+  };
+}
+
+const BULAN = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+function labelTanggal(nilai) {
+  if (!nilai) return "";
+  const d = new Date(nilai);
+  if (Number.isNaN(d.getTime())) return "";
+  return `${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function slugify(nilai) {
+  return String(nilai || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export function adaptHomeServices(apiItems) {
@@ -173,15 +241,20 @@ export function adaptHomeServices(apiItems) {
 }
 
 export function adaptPortfolioCategories(apiItems) {
-  if (!Array.isArray(apiItems)) return null;
-  return apiItems.map((c) => ({
-    key: c.slug === "all" ? "semua" : c.slug,
+  if (!Array.isArray(apiItems) || !apiItems.length) return null;
+  const list = apiItems.map((c) => ({
+    key: c.slug === "all" ? "semua" : slugify(c.slug || c.name),
     slug: c.slug,
+    id: c.id,
     label: c.name,
     icon: c.icon,
-    detail: c.description,
+    detail: c.description || "",
     isAll: !!c.isAll,
   }));
+  /* Basis data tidak menyimpan baris "semua", jadi chip itu dilengkapi di sini. */
+  return list.some((c) => c.key === "semua")
+    ? list
+    : [{ key: "semua", slug: "all", label: "Semua", icon: "layers", detail: "", isAll: true }, ...list];
 }
 
 export function adaptPortfolioItems(apiItems) {
@@ -190,8 +263,13 @@ export function adaptPortfolioItems(apiItems) {
     slug: p.slug,
     proyek: p.title || p.proyek,
     title: p.title,
-    tag: (p.category ? p.category.name : null) || p.industry || p.tag || "",
-    segment: String((p.category ? p.category.slug : null) || p.industry || p.segment || "").toLowerCase(),
+    tag: (p.category ? p.category.name : null) || p.category_name || p.industry || p.tag || "",
+    /* Segmen dipakai untuk mencocokkan chip filter; slug kategori diutamakan,
+     * industri jadi cadangan untuk baris lama yang belum punya category_id. */
+    segment: slugify(
+      (p.category ? p.category.slug : null) || p.category_slug || p.industry || p.segment || ""
+    ),
+    categoryId: p.category_id || null,
     summary: p.summary,
     resultDraft: p.resultBadge || p.result_badge || "",
     image: (p.cover && p.cover.path) ? p.cover.path : (p.cover_path || p.image || ""),
@@ -221,14 +299,17 @@ export function adaptPortfolioItem(apiItem) {
 }
 
 export function adaptArticleCategories(apiItems) {
-  if (!Array.isArray(apiItems)) return null;
-  return apiItems.map((c) => ({
-    key: c.slug,
+  if (!Array.isArray(apiItems) || !apiItems.length) return null;
+  const list = apiItems.map((c) => ({
+    key: slugify(c.slug || c.name),
     slug: c.slug,
     label: c.name,
     icon: c.icon,
-    detail: c.description,
+    detail: c.description || "",
   }));
+  return list.some((c) => c.key === "semua")
+    ? list
+    : [{ key: "semua", label: "Semua", icon: "layers" }, ...list];
 }
 
 export function adaptTestimonials(apiItems) {
@@ -244,22 +325,33 @@ export function adaptTestimonials(apiItems) {
 }
 export function adaptArticles(apiItems) {
   if (!Array.isArray(apiItems)) return null;
-  return apiItems.map((a) => ({
-    slug: a.slug,
-    title: a.title,
-    excerpt: a.excerpt,
-    category: (a.category ? a.category.slug : null) || a.category || "",
-    categoryName: (a.category ? a.category.name : null) || a.categoryName || null,
-    tag: (a.category ? a.category.name : null) || a.tag || "",
-    image: (a.cover && a.cover.path) ? a.cover.path : (a.cover_path || a.image || ""),
-    imageAlt: (a.cover && a.cover.alt) ? a.cover.alt : (a.cover_alt || a.imageAlt || ""),
-    authorName: a.authorName || a.author_name,
-    readMinutes: a.readMinutes || a.read_minutes,
-    publishedAt: a.publishedAt || a.published_at,
-    publishedLabel: a.publishedLabel || a.published_label,
-    content: a.body || a.content,
-    _fromApi: true,
-  }));
+  return apiItems.map((a) => {
+    const namaKategori =
+      (a.category ? a.category.name : null) || a.category_name || a.categoryName || a.tag || null;
+    const slugKategori =
+      (a.category ? a.category.slug : null) ||
+      a.category_slug ||
+      (typeof a.category === "string" ? a.category : "");
+    return {
+      slug: a.slug,
+      title: a.title,
+      excerpt: a.excerpt,
+      /* Filter kategori membandingkan slug; baris API hanya punya category_id,
+       * jadi slug/nama kategori datang dari join di backend. */
+      category: slugify(slugKategori || namaKategori),
+      categoryName: namaKategori,
+      tag: namaKategori || a.tag || "",
+      image: (a.cover && a.cover.path) ? a.cover.path : (a.cover_path || a.image || ""),
+      imageAlt: (a.cover && a.cover.alt) ? a.cover.alt : (a.cover_alt || a.imageAlt || ""),
+      authorName: a.authorName || a.author_name,
+      readMinutes: a.readMinutes || a.read_minutes,
+      publishedAt: a.publishedAt || a.published_at,
+      publishedLabel:
+        a.publishedLabel || a.published_label || labelTanggal(a.publishedAt || a.published_at),
+      content: a.body || a.content,
+      _fromApi: true,
+    };
+  });
 }
 
 /* Mitra/klien: bentuk API disamakan dengan MITRA_LOGOS di src/data/klien.js.
@@ -282,6 +374,20 @@ export function adaptClients(apiItems) {
 export function adaptSite(apiData) {
   if (!apiData || typeof apiData !== "object") return null;
   return apiData;
+}
+
+export function adaptAwards(apiItems) {
+  if (!Array.isArray(apiItems)) return null;
+  return apiItems.map((a) => ({
+    id: a.id,
+    slug: a.slug,
+    title: a.title,
+    issuer: a.issuer || "",
+    year: a.year || "",
+    description: a.description || "",
+    image: a.image_path || "",
+    alt: a.image_alt || a.title || "",
+  }));
 }
 
 export default api;

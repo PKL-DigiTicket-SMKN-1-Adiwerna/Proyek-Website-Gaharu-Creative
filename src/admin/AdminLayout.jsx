@@ -9,6 +9,7 @@ const NAV = [
   { to: "/admin/about", label: "Tentang" },
   { to: "/admin/stats", label: "Statistik" },
   { to: "/admin/clients", label: "Mitra dan Logo" },
+  { to: "/admin/awards", label: "Penghargaan" },
   { to: "/admin/inquiries", label: "Inquiry" },
 ];
 

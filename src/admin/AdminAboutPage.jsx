@@ -9,6 +9,7 @@ export default function AdminAboutPage() {
   const [mission, setMission] = useState({ mission: "", vision: "" });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   const [sForm, setSForm] = useState(null);
   const [vForm, setVForm] = useState(null);
@@ -31,18 +32,18 @@ export default function AdminAboutPage() {
     } catch (e) { setError(e?.message || "Gagal memuat data."); }
     finally { setLoading(false); }
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => { (async () => { await load(); })(); }, []);
 
   const saveStory = async (e) => {
     e.preventDefault(); setSaving(true); setError("");
     try {
       if (sForm.id) {
-        const res = await adminApi.updateStory(sForm.id, { title: sForm.title, body: sForm.body });
-        setStories((prev) => prev.map((x) => (x.id === sForm.id ? res?.data : x)));
-      } else {
-        const res = await adminApi.createStory({ title: sForm.title, body: sForm.body, locale: "id" });
-        setStories((prev) => [res?.data, ...prev]);
-      }
+              const res = await adminApi.updateStory(sForm.id, { title: sForm.title, description: sForm.body, label: sForm.label });
+              setStories((prev) => prev.map((x) => (x.id === sForm.id ? res?.data : x)));
+            } else {
+              const res = await adminApi.createStory({ title: sForm.title, description: sForm.body, label: sForm.label, locale: "id" });
+              setStories((prev) => [res?.data, ...prev]);
+            }
       setSForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
     finally { setSaving(false); }
@@ -77,12 +78,12 @@ export default function AdminAboutPage() {
     e.preventDefault(); setSaving(true); setError("");
     try {
       if (tForm.id) {
-        const res = await adminApi.updateMember(tForm.id, { name: tForm.name, role: tForm.role, photo_path: tForm.photo });
-        setTeam((prev) => prev.map((x) => (x.id === tForm.id ? res?.data : x)));
-      } else {
-        const res = await adminApi.createMember({ name: tForm.name, role: tForm.role, photo_path: tForm.photo, locale: "id" });
-        setTeam((prev) => [res?.data, ...prev]);
-      }
+              const res = await adminApi.updateMember(tForm.id, { name: tForm.name, role: tForm.role, photo_path: tForm.photo || null });
+              setTeam((prev) => prev.map((x) => (x.id === tForm.id ? res?.data : x)));
+            } else {
+              const res = await adminApi.createMember({ name: tForm.name, role: tForm.role, photo_path: tForm.photo || null, locale: "id" });
+              setTeam((prev) => [res?.data, ...prev]);
+            }
       setTForm(null);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
     finally { setSaving(false); }
@@ -98,6 +99,8 @@ export default function AdminAboutPage() {
     try {
       const res = await adminApi.updateMission({ mission: mission.mission, vision: mission.vision, locale: "id" });
       setMission(res?.data || mission);
+      setInfo("Misi dan visi tersimpan.");
+      setTimeout(() => setInfo(""), 2000);
     } catch (e) { setError(e?.message || "Gagal menyimpan."); }
     finally { setSaving(false); }
   };
@@ -108,6 +111,7 @@ export default function AdminAboutPage() {
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-slate-900">Tentang</h1>
       {error && <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</div>}
+      {info && <div className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">{info}</div>}
 
       <section className="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
         <h2 className="font-semibold text-slate-800">Misi & Visi</h2>
@@ -121,12 +125,13 @@ export default function AdminAboutPage() {
       <section className="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-slate-800">Cerita / Tentang</h2>
-          <button onClick={() => setSForm({ title: "", body: "" })} className="text-sm text-brand-700 hover:underline">+ Tambah</button>
-        </div>
-        {sForm && (
-          <form onSubmit={saveStory} className="space-y-2">
-            <input placeholder="Judul" value={sForm.title} onChange={(e) => setSForm({ ...sForm, title: e.target.value })} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" required />
-            <textarea placeholder="Isi" value={sForm.body} onChange={(e) => setSForm({ ...sForm, body: e.target.value })} rows={4} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          <button onClick={() => setSForm({ title: "", label: "", body: "" })} className="text-sm text-brand-700 hover:underline">+ Tambah</button>
+                  </div>
+                  {sForm && (
+                    <form onSubmit={saveStory} className="space-y-2">
+                      <input placeholder="Judul" value={sForm.title} onChange={(e) => setSForm({ ...sForm, title: e.target.value })} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" required />
+                      <input placeholder="Label kecil (opsional)" value={sForm.label || ""} onChange={(e) => setSForm({ ...sForm, label: e.target.value })} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                      <textarea placeholder="Isi cerita" value={sForm.body || ""} onChange={(e) => setSForm({ ...sForm, body: e.target.value })} rows={4} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
             <div className="flex gap-2">
               <button type="submit" disabled={saving} className="rounded-lg bg-brand-800 text-white px-3 py-1.5 text-sm disabled:opacity-60">Simpan</button>
               <button type="button" onClick={() => setSForm(null)} className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm">Batal</button>
@@ -135,12 +140,13 @@ export default function AdminAboutPage() {
         )}
         {stories.map((s) => (
           <div key={s.id} className="border-t border-slate-100 pt-3 flex items-start justify-between gap-3">
-            <div>
-              <div className="font-medium">{s.title}</div>
-              <div className="text-sm text-slate-500 line-clamp-2">{s.body}</div>
-            </div>
-            <div className="flex gap-2 shrink-0">
-              <button onClick={() => setSForm({ ...s })} className="text-brand-700 text-sm hover:underline">Edit</button>
+            <div className="min-w-0">
+                          <div className="font-medium">{s.title}</div>
+                          {s.label && <div className="text-xs uppercase tracking-wide text-brand-700">{s.label}</div>}
+                          <div className="text-sm text-slate-500 line-clamp-2">{s.description}</div>
+                        </div>
+                        <div className="flex gap-2 shrink-0">
+                          <button onClick={() => setSForm({ id: s.id, title: s.title || "", label: s.label || "", body: s.description || "" })} className="text-brand-700 text-sm hover:underline">Edit</button>
               <button onClick={() => removeStory(s.id)} className="text-red-600 text-sm hover:underline">Hapus</button>
             </div>
           </div>

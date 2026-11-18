@@ -10,9 +10,10 @@ import { PublicClientsController } from './clients.controller';
 import { PublicContactController } from './contact.controller';
 import { PublicHomeController } from './home.controller';
 import { PublicTestimonialsController } from './testimonials.controller';
+import { PublicAwardsController } from './awards.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [PublicServicesController, PublicSiteController, PublicPortfolioController, PublicArticlesController, PublicStatsController, PublicAboutController, PublicClientsController, PublicHomeController, PublicTestimonialsController, PublicContactController],
+  controllers: [PublicServicesController, PublicSiteController, PublicPortfolioController, PublicArticlesController, PublicStatsController, PublicAboutController, PublicClientsController, PublicHomeController, PublicTestimonialsController, PublicAwardsController, PublicContactController],
 })
 export class PublicModule {}

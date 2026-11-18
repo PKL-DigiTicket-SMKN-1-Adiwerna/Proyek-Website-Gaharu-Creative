@@ -1,6 +1,6 @@
 import { Section, Kepala, Tag } from "./ui.jsx";
 import { rekamJejak, penghargaan, MITRA_LOGOS } from "../data/klien.js";
-import { api, adaptClients } from "../lib/api.js";
+import { api, adaptClients, adaptAwards } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
 
 /* Section rekam jejak: kalimat pengantar, dinding logo mitra, dan daftar
@@ -44,6 +44,14 @@ export default function RekamJejak({ withHead = true }) {
   );
   const logos = Array.isArray(data) && data.length > 0 ? data : MITRA_LOGOS;
 
+  // Penghargaan dari panel admin (/public/awards); jatuh ke daftar statis
+  // selama tabel awards masih kosong atau backend tidak menjawab.
+  const { data: dataAwards } = useApi(
+    () => api.awards().then((json) => ({ data: adaptAwards(json.data) })),
+    [],
+  );
+  const daftarAwards = Array.isArray(dataAwards) && dataAwards.length > 0 ? dataAwards : null;
+
   return (
     <Section divider className="bg-lav-50">
       {withHead ? (
@@ -84,7 +92,21 @@ export default function RekamJejak({ withHead = true }) {
           Penghargaan dan Rekognisi Internasional
         </h3>
         <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {penghargaan.map((item) => (
+          {daftarAwards
+            ? daftarAwards.map((item) => (
+                <li
+                  key={item.id || item.slug || item.title}
+                  className="rounded-lg border border-line bg-paper p-4 text-sm font-semibold leading-relaxed text-ink"
+                >
+                  {item.title}
+                  {item.issuer || item.year ? (
+                    <span className="mt-1 block text-xs font-normal text-muted">
+                      {[item.issuer, item.year].filter(Boolean).join(" · ")}
+                    </span>
+                  ) : null}
+                </li>
+              ))
+            : penghargaan.map((item) => (
             <li
               key={item}
               className="rounded-lg border border-line bg-paper p-4 text-sm font-semibold leading-relaxed text-ink"
