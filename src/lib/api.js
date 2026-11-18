@@ -191,7 +191,7 @@ export function adaptPortfolioItems(apiItems) {
     proyek: p.title || p.proyek,
     title: p.title,
     tag: (p.category ? p.category.name : null) || p.industry || p.tag || "",
-    segment: (p.category ? p.category.slug : null) || p.industry || p.segment || "",
+    segment: String((p.category ? p.category.slug : null) || p.industry || p.segment || "").toLowerCase(),
     summary: p.summary,
     resultDraft: p.resultBadge || p.result_badge || "",
     image: (p.cover && p.cover.path) ? p.cover.path : (p.cover_path || p.image || ""),
@@ -200,6 +200,24 @@ export function adaptPortfolioItems(apiItems) {
     contoh: true,
     _fromApi: true,
   }));
+}
+
+/* Satu item portofolio untuk halaman detail /portofolio/:slug. */
+export function adaptPortfolioItem(apiItem) {
+  if (!apiItem || typeof apiItem !== "object") return null;
+  return {
+    slug: apiItem.slug,
+    title: apiItem.title,
+    summary: apiItem.summary,
+    industry: apiItem.industry,
+    clientName: apiItem.client_name || apiItem.clientName || "",
+    projectDate: apiItem.project_date || apiItem.projectDate || "",
+    resultBadge: apiItem.result_badge || apiItem.resultBadge || "",
+    image: (apiItem.cover && apiItem.cover.path) ? apiItem.cover.path : (apiItem.cover_path || apiItem.image || ""),
+    imageAlt: (apiItem.cover && apiItem.cover.alt) ? apiItem.cover.alt : (apiItem.cover_alt || apiItem.title || ""),
+    body: apiItem.body || "",
+    _fromApi: true,
+  };
 }
 
 export function adaptArticleCategories(apiItems) {

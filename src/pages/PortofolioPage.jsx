@@ -18,16 +18,18 @@ export default function PortofolioPage() {
   const segments = (apiCats && apiCats.length ? apiCats : staticSegments);
   const portfolioItems = (apiItems && apiItems.length ? apiItems : staticItems);
   const [active, setActive] = useState("semua");
+  const [tampilSemua, setTampilSemua] = useState(false);
   const labelAktif = segments.find((item) => item.key === active)?.label ?? "Semua";
 
-  // Membatasi secara presisi tepat 3 proyek utama
-  const visible = useMemo(() => {
-    const filtered =
+  const { filtered, visible } = useMemo(() => {
+    const hasil =
       active === "semua"
         ? portfolioItems
         : portfolioItems.filter((item) => item.segment === active);
-    return filtered.slice(0, 3);
-  }, [active, portfolioItems]);
+    return { filtered: hasil, visible: tampilSemua ? hasil : hasil.slice(0, 3) };
+  }, [active, portfolioItems, tampilSemua]);
+
+  const sisa = filtered.length - visible.length;
 
   return (
     <div className="bg-white text-ink font-sans min-h-screen">
@@ -109,7 +111,10 @@ export default function PortofolioPage() {
                   type="button"
                   aria-pressed={active === item.key}
                   aria-controls="studi-kasus"
-                  onClick={() => setActive(item.key)}
+                  onClick={() => {
+                    setActive(item.key);
+                    setTampilSemua(false);
+                  }}
                   className={`group relative text-left p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                     active === item.key
                       ? "bg-white border-button ring-2 ring-button/20 shadow-lg"
@@ -141,7 +146,7 @@ export default function PortofolioPage() {
             catatan="Klik kartu proyek untuk melihat strategi dan hasil detail proyek."
           />
           <p aria-live="polite" className="mt-4 text-xs font-semibold uppercase tracking-wider text-button">
-            Menampilkan {visible.length} dari {portfolioItems.length} studi kasus kategori {labelAktif}
+            Menampilkan {visible.length} dari {filtered.length} studi kasus kategori {labelAktif}
           </p>
           <p className="text-xs text-subtle">
             Angka hasil per proyek belum ditampilkan karena masih menunggu konfirmasi pemilik proyek.
@@ -193,6 +198,20 @@ export default function PortofolioPage() {
               );
             })}
           </div>
+
+          {filtered.length > 3 && (
+            <div className="flex justify-center">
+              <button
+                type="button"
+                aria-expanded={tampilSemua}
+                aria-controls="studi-kasus"
+                onClick={() => setTampilSemua((nilai) => !nilai)}
+                className="border border-field bg-white hover:bg-block text-ink font-bold px-7 py-3 rounded-lg text-sm transition-all shadow-sm"
+              >
+                {tampilSemua ? "Tampilkan lebih ringkas" : `Selengkapnya (${sisa} lagi)`}
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </div>

@@ -21,6 +21,7 @@ const PortofolioPage = lazy(() => import("./pages/PortofolioPage.jsx"));
 const PortofolioUmkmPage = lazy(() => import("./pages/PortofolioUmkmPage.jsx"));
 const PortofolioKorporatPage = lazy(() => import("./pages/PortofolioKorporatPage.jsx"));
 const PortofolioPemerintahPage = lazy(() => import("./pages/PortofolioPemerintahPage.jsx"));
+const PortofolioDetailPage = lazy(() => import("./pages/PortofolioDetailPage.jsx"));
 const InsightPage = lazy(() => import("./pages/InsightPage.jsx"));
 const InsightDetailPage = lazy(() => import("./pages/InsightDetailPage.jsx"));
 const KontakPage = lazy(() => import("./pages/KontakPage.jsx"));
@@ -120,6 +121,9 @@ export default function App() {
             <Route path="/portofolio/umkm-ecommerce-lokal" element={<PortofolioUmkmPage />} />
             <Route path="/portofolio/korporat-gaharu-cloud" element={<PortofolioKorporatPage />} />
             <Route path="/portofolio/pemerintah-literasi-digital" element={<PortofolioPemerintahPage />} />
+            {/* Studi kasus baru dari basis data memakai satu rute dinamis; rute statis di atas
+             * tetap menang untuk tiga studi kasus lama. */}
+            <Route path="/portofolio/:slug" element={<PortofolioDetailPage />} />
 
             {/* Rute Insight */}
             <Route path="/insight" element={<InsightPage />} />
