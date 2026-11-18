@@ -124,7 +124,7 @@ const TABLES = ['services', 'clients', 'stats', 'portfolio_items', 'articles', '
     // --- endpoint publik (permintaan yang benar-benar dikirim frontend) ---
     // locale dipaksa `id`: middleware tidak lagi membaca Accept-Language, jadi tanpa ini
     // curl dari mesin berbahasa Inggris akan dianggap meminta locale default yang sama.
-    for (const p of ['/public/site', '/public/home', '/public/services', '/public/clients', '/public/portfolio', '/public/articles', '/public/stats', '/public/about', '/public/testimonials']) {
+    for (const p of ['/public/site', '/public/home', '/public/services', '/public/clients', '/public/portfolio', '/public/articles', '/public/stats', '/public/about', '/public/testimonials', '/public/contact']) {
       const r = await call('GET', p);
       const n = Array.isArray(r.json?.data) ? r.json.data.length : (r.json?.data ? Object.keys(r.json.data).length : 0);
       ok(`GET ${p}`, r.status === 200, `HTTP ${r.status} jumlah=${n}`);
@@ -135,6 +135,11 @@ const TABLES = ['services', 'clients', 'stats', 'portfolio_items', 'articles', '
       `services=${home.json?.data?.services?.items?.length} stats=${home.json?.data?.stats?.items?.length} portfolio=${home.json?.data?.featuredPortfolio?.items?.length}`);
     const enHome = await call('GET', '/public/home?locale=en');
     ok('?locale=en tetap dihormati', enHome.status === 200 && enHome.json?.meta?.locale === 'en', `locale=${enHome.json?.meta?.locale}`);
+    const contact = await call('GET', '/public/contact');
+    const opts = contact.json?.data?.serviceOptions;
+    ok('GET /public/contact berisi pilihan layanan aktif',
+      Array.isArray(opts) && opts.length > 0 && opts.every((o) => o.value && o.label) && !opts.some((o) => o.value === 'test'),
+      `jumlah=${opts?.length} contoh=${opts?.[0]?.value}/${opts?.[0]?.label}`);
 
     // --- hapus resource uji lewat API (soft delete) ---
     for (const [table, id] of created) {

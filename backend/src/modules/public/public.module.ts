@@ -7,11 +7,12 @@ import { PublicArticlesController } from './articles.controller';
 import { PublicStatsController } from './stats.controller';
 import { PublicAboutController } from './about.controller';
 import { PublicClientsController } from './clients.controller';
+import { PublicContactController } from './contact.controller';
 import { PublicHomeController } from './home.controller';
 import { PublicTestimonialsController } from './testimonials.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [PublicServicesController, PublicSiteController, PublicPortfolioController, PublicArticlesController, PublicStatsController, PublicAboutController, PublicClientsController, PublicHomeController, PublicTestimonialsController],
+  controllers: [PublicServicesController, PublicSiteController, PublicPortfolioController, PublicArticlesController, PublicStatsController, PublicAboutController, PublicClientsController, PublicHomeController, PublicTestimonialsController, PublicContactController],
 })
 export class PublicModule {}
