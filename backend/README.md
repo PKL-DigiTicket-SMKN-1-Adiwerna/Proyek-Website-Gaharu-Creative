@@ -1,99 +1,65 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Backend Gaharu Creative
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API NestJS untuk website Gaharu Creative. Database dan autentikasi memakai **Supabase**
+(Postgres + Supabase Auth), query lewat driver `pg`, bukan SQLite.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Alur singkat
 
-## Description
+- Semua permintaan masuk lewat prefix `/api/v1`.
+- Endpoint publik (`/public/*`) tidak butuh token, hanya menampilkan data yang sudah
+  dipublikasikan.
+- Endpoint admin (`/admin/*`) butuh header `Authorization: Bearer <access_token>` dari
+  Supabase Auth, dan hanya untuk profil di tabel `public.profiles` dengan `is_active = true`.
+- Role `superadmin` boleh semuanya, `editor` untuk konten, `viewer` hanya baca
+  (lihat `src/common/guards/roles.guard.ts`).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Menyiapkan lingkungan
 
-## Project setup
+1. `npm install`
+2. Salin `.env.example` menjadi `.env`, lalu isi:
+   - `DATABASE_URL` — connection string Postgres Supabase. Untuk deploy serverless
+     (Vercel) wajib memakai **pooler** port `6543`.
+   - `SUPABASE_URL` dan `SUPABASE_SERVICE_ROLE_KEY` — dipakai hanya di server untuk
+     Supabase Auth. Jangan pernah dipakai di frontend.
+   - `FRONTEND_ORIGIN` — asal yang diizinkan CORS (mis. `http://localhost:5173`).
+3. Jalankan `npm run start:dev`. Cek `GET /api/v1/health`: balas
+   `{"status":"ok","database":"supabase"}` kalau koneksi database hidup.
 
-```bash
-$ npm install
-```
+## Migrasi database
 
-## Compile and run the project
+Semua perubahan skema ditulis sebagai file SQL di `db/migrations/` dan dijalankan manual
+di Supabase (SQL Editor atau `supabase db push`). Tidak ada DDL yang jalan otomatis dari
+kode aplikasi.
 
-```bash
-# development
-$ npm run start
+| File | Isi |
+| --- | --- |
+| `0001_align_backend_columns.sql` | kolom `clients` yang dipakai API + `category_id` portfolio boleh kosong |
+| `0002_seed_clients.sql` | data awal mitra/klien |
+| `0003_add_updated_at_columns.sql` | kolom `updated_at` untuk tabel yang sudah punya trigger `set_updated_at()` |
+| `0004_inquiry_idempotency_key.sql` | kunci idempotensi form kontak |
+| `0005_mission_vision_kind_visi.sql` | constraint `mission_vision.kind` menerima `misi`, `visi`, `tujuan` |
 
-# watch mode
-$ npm run start:dev
+## Akun admin
 
-# production mode
-$ npm run start:prod
-```
+Baris `public.profiles` diisi otomatis oleh trigger `handle_new_user` saat user dibuat di
+Supabase Auth. Setelah user dibuat, cukup perbarui `role` dan `is_active` di tabel
+`profiles`; jangan INSERT manual karena akan bentrok dengan trigger.
 
-## Run tests
+Endpoint auth: `POST /api/v1/auth/login`, `POST /api/v1/auth/refresh`,
+`POST /api/v1/auth/logout` (butuh token), `GET /api/v1/auth/me`.
 
-```bash
-# unit tests
-$ npm run test
+## Pengujian
 
-# e2e tests
-$ npm run test:e2e
+- `npm test` — unit test (`src/**/*.spec.ts`), tidak butuh database.
+- `npm run test:e2e` — e2e `/health`, **butuh `.env` valid dan database terjangkau**.
+- `npm run smoke` — alur penuh lewat HTTP: CRUD semua resource admin, form kontak publik
+  (termasuk uji idempotensi), dan pembacaan semua endpoint publik. Butuh server hidup:
+  `npm run start:dev`. Skrip membuat user uji sementara lalu menghapusnya, dan
+  membandingkan jumlah baris tabel sebelum/sesudah supaya data tidak tertinggal.
+  Arahkan ke server lain dengan `SMOKE_API=http://localhost:3000 npm run smoke`.
 
-# test coverage
-$ npm run test:cov
-```
+## Deploy
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+`vercel.json` + `api/[...slug].ts` membungkus aplikasi Nest sebagai fungsi serverless.
+Pastikan variabel lingkungan diset di Vercel dan `DATABASE_URL` memakai pooler port 6543
+karena koneksi langsung akan kehabisan slot saat trafik naik.

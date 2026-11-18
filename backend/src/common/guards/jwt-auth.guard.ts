@@ -1,25 +1,39 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import * as jwt from 'jsonwebtoken';
-import { ConfigService } from '@nestjs/config';
+import { SupabaseService } from '../../database/supabase.service';
 
+/**
+ * Verifikasi token akses Supabase Auth, lalu tempelkan profil lokal
+ * (tabel `profiles`) ke request supaya RolesGuard dan controller bisa memakai
+ * `req.user.profile.role`.
+ */
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly db: DatabaseService, private readonly config: ConfigService) {}
+  constructor(
+    private readonly supabase: SupabaseService,
+    private readonly db: DatabaseService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    const auth = req.headers?.authorization as string | undefined;
-    if (!auth?.startsWith('Bearer ')) throw new UnauthorizedException('Token tidak ada');
-    const token = auth.slice(7);
-    const secret = this.config.get<string>('JWT_SECRET')!;
-    let payload: any;
-    try { payload = jwt.verify(token, secret); } catch { throw new UnauthorizedException('Token tidak valid'); }
-    if (!payload?.sub) throw new UnauthorizedException('Token tidak valid');
-    const profile = this.db.get('SELECT * FROM profiles WHERE id = ?', [payload.sub]);
-    if (!profile) throw new UnauthorizedException('Token tidak valid');
+    const header: string = req.headers?.authorization ?? '';
+    const token = header.startsWith('Bearer ') ? header.slice(7).trim() : '';
+    if (!token) throw new UnauthorizedException('Token tidak ditemukan');
+
+    const { data, error } = await this.supabase.admin.auth.getUser(token);
+    if (error || !data?.user) throw new UnauthorizedException('Token tidak valid atau kedaluwarsa');
+
+    const profile = await this.db.get('SELECT * FROM profiles WHERE id = ?', [data.user.id]);
+    if (!profile) throw new UnauthorizedException('Profil belum terdaftar');
     if (!profile.is_active) throw new UnauthorizedException('Akun tidak aktif');
-    req.user = { id: profile.id, email: profile.email, role: profile.role, profile, accessToken: token };
+
+    req.user = {
+      id: profile.id,
+      email: data.user.email,
+      role: profile.role,
+      profile,
+      accessToken: token,
+    };
     return true;
   }
 }

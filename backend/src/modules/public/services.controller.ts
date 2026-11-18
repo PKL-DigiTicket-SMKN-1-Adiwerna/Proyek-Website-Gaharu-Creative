@@ -8,14 +8,14 @@ export class PublicServicesController {
   @Get()
   async list(@Req() req: any) {
     const locale = req.locale ?? 'id';
-    const data = this.db.all('SELECT * FROM services WHERE locale = ? AND is_published = 1 AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM services WHERE locale = ? AND is_published = true AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
 
   @Get(':slug')
   async detail(@Param('slug') slug: string, @Req() req: any) {
     const locale = req.locale ?? 'id';
-    const data = this.db.get('SELECT * FROM services WHERE locale = ? AND slug = ? AND is_published = 1 AND deleted_at IS NULL', [locale, slug]);
+    const data = await this.db.get('SELECT * FROM services WHERE locale = ? AND slug = ? AND is_published = true AND deleted_at IS NULL', [locale, slug]);
     return { data };
   }
 }

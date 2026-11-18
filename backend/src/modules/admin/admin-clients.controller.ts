@@ -26,7 +26,7 @@ export class AdminClientsController {
   @Get()
   async list(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = this.db.all('SELECT * FROM clients WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM clients WHERE locale = ? ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [], meta: { total: (data ?? []).length } };
   }
 
@@ -35,7 +35,7 @@ export class AdminClientsController {
     const category = CATEGORIES.includes(dto.category) ? dto.category : 'pemerintah';
     const slug = dto.slug ? slugify(dto.slug) : slugify(dto.name);
     const id = crypto.randomUUID();
-    this.db.run(
+    await this.db.run(
       'INSERT INTO clients (id,group_id,locale,name,slug,category,logo_path,logo_alt,sort_order,is_published,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,datetime(\'now\'),datetime(\'now\'))',
       [
         id,
@@ -47,10 +47,10 @@ export class AdminClientsController {
         dto.logo_path ?? `/logos/klien/${slug}.svg`,
         dto.logo_alt ?? dto.name,
         dto.sort_order ?? 999,
-        dto.is_published === false ? 0 : 1,
+        dto.is_published === false ? false : true,
       ],
     );
-    return { data: this.db.get('SELECT * FROM clients WHERE id = ?', [id]) };
+    return { data: await this.db.get('SELECT * FROM clients WHERE id = ?', [id]) };
   }
 
   @Patch(':id')
@@ -73,19 +73,19 @@ export class AdminClientsController {
     }
     if (dto.is_published !== undefined) {
       fields.push('is_published = ?');
-      vals.push(dto.is_published ? 1 : 0);
+      vals.push(dto.is_published ? true : false);
     }
     if (fields.length) {
       vals.push(id);
-      this.db.run(`UPDATE clients SET ${fields.join(', ')}, updated_at = datetime('now') WHERE id = ?`, vals);
+      await this.db.run(`UPDATE clients SET ${fields.join(', ')}, updated_at = datetime('now') WHERE id = ?`, vals);
     }
-    return { data: this.db.get('SELECT * FROM clients WHERE id = ?', [id]) };
+    return { data: await this.db.get('SELECT * FROM clients WHERE id = ?', [id]) };
   }
 
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id') id: string) {
-    this.db.run('DELETE FROM clients WHERE id = ?', [id]);
+    await this.db.run('DELETE FROM clients WHERE id = ?', [id]);
     return;
   }
 }

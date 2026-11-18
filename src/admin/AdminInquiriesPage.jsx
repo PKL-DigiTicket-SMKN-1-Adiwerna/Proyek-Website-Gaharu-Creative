@@ -1,6 +1,17 @@
 import { useState, useEffect } from "react";
 import { adminApi } from "../lib/adminApi";
 
+// Harus sama dengan enum `inquiry_status` di Supabase.
+const STATUS_OPTIONS = [
+  { value: "new", label: "Baru" },
+  { value: "read", label: "Dibaca" },
+  { value: "replied", label: "Dibalas" },
+  { value: "in_progress", label: "Diproses" },
+  { value: "won", label: "Deal" },
+  { value: "lost", label: "Batal" },
+  { value: "spam", label: "Spam" },
+];
+
 export default function AdminInquiriesPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,9 +54,9 @@ export default function AdminInquiriesPage() {
           className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
         >
           <option value="all">Semua status</option>
-          <option value="new">Baru</option>
-          <option value="in_progress">Diproses</option>
-          <option value="done">Selesai</option>
+          {STATUS_OPTIONS.map((s) => (
+            <option key={s.value} value={s.value}>{s.label}</option>
+          ))}
         </select>
       </div>
       {error && <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</div>}
@@ -77,8 +88,9 @@ export default function AdminInquiriesPage() {
                       className="rounded-lg border border-slate-300 px-2 py-1 text-xs"
                     >
                       <option value="new">Baru</option>
-                      <option value="in_progress">Diproses</option>
-                      <option value="done">Selesai</option>
+                      {STATUS_OPTIONS.map((s) => (
+                        <option key={s.value} value={s.value}>{s.label}</option>
+                      ))}
                     </select>
                   </td>
                 </tr>

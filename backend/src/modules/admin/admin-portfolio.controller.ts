@@ -15,13 +15,13 @@ export class AdminPortfolioController {
   @Get()
   async list(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = this.db.all('SELECT * FROM portfolio_items WHERE locale = ? AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM portfolio_items WHERE locale = ? AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
 
   @Get(':id')
   async get(@Param('id') id: string) {
-    const data = this.db.get('SELECT * FROM portfolio_items WHERE id = ?', [id]);
+    const data = await this.db.get('SELECT * FROM portfolio_items WHERE id = ?', [id]);
     return { data };
   }
 
@@ -30,13 +30,13 @@ export class AdminPortfolioController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    this.db.run(`INSERT INTO portfolio_items (id, group_id, locale, category_id, slug, title, summary, result_badge, body, cover_path, cover_alt, client_name, industry, project_date, is_featured, is_published, published_at, sort_order, created_by, updated_by)
+    await this.db.run(`INSERT INTO portfolio_items (id, group_id, locale, category_id, slug, title, summary, result_badge, body, cover_path, cover_alt, client_name, industry, project_date, is_featured, is_published, published_at, sort_order, created_by, updated_by)
       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [id, groupId, locale, dto.category_id ?? null, dto.slug, dto.title, dto.summary ?? null, dto.result_badge ?? null,
        dto.body ?? null, dto.cover_path ?? null, dto.cover_alt ?? null, dto.client_name ?? null, dto.industry ?? null,
-       dto.project_date ?? null, dto.is_featured ? 1 : 0, dto.is_published ? 1 : 0,
+       dto.project_date ?? null, dto.is_featured ? true : false, dto.is_published ? true : false,
        dto.is_published ? new Date().toISOString() : null, dto.sort_order ?? 0, user?.id ?? null, user?.id ?? null]);
-    const data = this.db.get('SELECT * FROM portfolio_items WHERE id = ?', [id]);
+    const data = await this.db.get('SELECT * FROM portfolio_items WHERE id = ?', [id]);
     return { data };
   }
 
@@ -47,22 +47,22 @@ export class AdminPortfolioController {
     for (const k of ['category_id', 'slug', 'title', 'summary', 'result_badge', 'body', 'cover_path', 'cover_alt', 'client_name', 'industry', 'project_date', 'sort_order']) {
       if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
     }
-    if (dto.is_featured !== undefined) { fields.push('is_featured = ?'); vals.push(dto.is_featured ? 1 : 0); }
+    if (dto.is_featured !== undefined) { fields.push('is_featured = ?'); vals.push(dto.is_featured ? true : false); }
     if (dto.is_published !== undefined) {
-      fields.push('is_published = ?'); vals.push(dto.is_published ? 1 : 0);
+      fields.push('is_published = ?'); vals.push(dto.is_published ? true : false);
       if (dto.is_published === true) { fields.push('published_at = ?'); vals.push(new Date().toISOString()); }
     }
     fields.push('updated_by = ?', 'updated_at = ?');
     vals.push(user?.id ?? null, new Date().toISOString(), id);
-    this.db.run(`UPDATE portfolio_items SET ${fields.join(', ')} WHERE id = ?`, vals);
-    const data = this.db.get('SELECT * FROM portfolio_items WHERE id = ?', [id]);
+    await this.db.run(`UPDATE portfolio_items SET ${fields.join(', ')} WHERE id = ?`, vals);
+    const data = await this.db.get('SELECT * FROM portfolio_items WHERE id = ?', [id]);
     return { data };
   }
 
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id') id: string, @CurrentUser() user: any) {
-    this.db.run('UPDATE portfolio_items SET deleted_at = ?, updated_by = ? WHERE id = ?', [new Date().toISOString(), user?.id ?? null, id]);
+    await this.db.run('UPDATE portfolio_items SET deleted_at = ?, updated_by = ? WHERE id = ?', [new Date().toISOString(), user?.id ?? null, id]);
     return;
   }
 }

@@ -15,7 +15,7 @@ export class AdminStatsController {
   @Get()
   async list(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = this.db.all('SELECT * FROM stats WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM stats WHERE locale = ? ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
 
@@ -24,9 +24,9 @@ export class AdminStatsController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    this.db.run('INSERT INTO stats (id, group_id, locale, label, value, suffix, icon, sort_order, is_published) VALUES (?,?,?,?,?,?,?,?,?)',
-      [id, groupId, locale, dto.label, String(dto.value), dto.suffix ?? null, dto.icon ?? null, dto.sort_order ?? 0, dto.is_published ? 1 : 0]);
-    const data = this.db.get('SELECT * FROM stats WHERE id = ?', [id]);
+    await this.db.run('INSERT INTO stats (id, group_id, locale, label, value, suffix, icon, sort_order, is_published) VALUES (?,?,?,?,?,?,?,?,?)',
+      [id, groupId, locale, dto.label, String(dto.value), dto.suffix ?? null, dto.icon ?? null, dto.sort_order ?? 0, dto.is_published ? true : false]);
+    const data = await this.db.get('SELECT * FROM stats WHERE id = ?', [id]);
     return { data };
   }
 
@@ -37,17 +37,17 @@ export class AdminStatsController {
     for (const k of ['value', 'suffix', 'label', 'sort_order']) {
       if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
     }
-    if (dto.is_published !== undefined) { fields.push('is_published = ?'); vals.push(dto.is_published ? 1 : 0); }
+    if (dto.is_published !== undefined) { fields.push('is_published = ?'); vals.push(dto.is_published ? true : false); }
     vals.push(id);
-    this.db.run(`UPDATE stats SET ${fields.join(', ')} WHERE id = ?`, vals);
-    const data = this.db.get('SELECT * FROM stats WHERE id = ?', [id]);
+    await this.db.run(`UPDATE stats SET ${fields.join(', ')} WHERE id = ?`, vals);
+    const data = await this.db.get('SELECT * FROM stats WHERE id = ?', [id]);
     return { data };
   }
 
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id') id: string, @CurrentUser() user: any) {
-    this.db.run('DELETE FROM stats WHERE id = ?', [id]);
+    await this.db.run('DELETE FROM stats WHERE id = ?', [id]);
     return;
   }
 }

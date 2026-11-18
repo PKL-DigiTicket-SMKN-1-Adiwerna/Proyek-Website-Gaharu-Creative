@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { validateEnv } from './config/env.validation';
+import { HealthController } from './health.controller';
 import { DatabaseModule } from './database/database.module';
 import { I18nModule } from './common/i18n.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -26,5 +27,6 @@ import { PublicModule } from './modules/public/public.module';
     PublicModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+  controllers: [HealthController],
 })
 export class AppModule {}

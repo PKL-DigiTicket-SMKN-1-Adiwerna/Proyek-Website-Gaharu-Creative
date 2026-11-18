@@ -15,7 +15,7 @@ export class AdminAboutController {
   @Get('stories')
   async listStories(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = this.db.all('SELECT * FROM about_stories WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM about_stories WHERE locale = ? ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
   @Post('stories')
@@ -23,9 +23,9 @@ export class AdminAboutController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    this.db.run('INSERT INTO about_stories (id, group_id, locale, title, description, sort_order) VALUES (?,?,?,?,?,?)',
+    await this.db.run('INSERT INTO about_stories (id, group_id, locale, title, description, sort_order) VALUES (?,?,?,?,?,?)',
       [id, groupId, locale, dto.title, dto.body ?? null, dto.sort_order ?? 0]);
-    const data = this.db.get('SELECT * FROM about_stories WHERE id = ?', [id]);
+    const data = await this.db.get('SELECT * FROM about_stories WHERE id = ?', [id]);
     return { data };
   }
   @Patch('stories/:id')
@@ -36,21 +36,21 @@ export class AdminAboutController {
     if (dto.body !== undefined) { fields.push('description = ?'); vals.push(dto.body); }
     if (dto.sort_order !== undefined) { fields.push('sort_order = ?'); vals.push(dto.sort_order); }
     vals.push(id);
-    this.db.run(`UPDATE about_stories SET ${fields.join(', ')} WHERE id = ?`, vals);
-    const data = this.db.get('SELECT * FROM about_stories WHERE id = ?', [id]);
+    await this.db.run(`UPDATE about_stories SET ${fields.join(', ')} WHERE id = ?`, vals);
+    const data = await this.db.get('SELECT * FROM about_stories WHERE id = ?', [id]);
     return { data };
   }
   @Delete('stories/:id')
   @HttpCode(204)
   async removeStory(@Param('id') id: string) {
-    this.db.run('DELETE FROM about_stories WHERE id = ?', [id]);
+    await this.db.run('DELETE FROM about_stories WHERE id = ?', [id]);
     return;
   }
 
   @Get('values')
   async listValues(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = this.db.all('SELECT * FROM company_values WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM company_values WHERE locale = ? ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
   @Post('values')
@@ -58,9 +58,9 @@ export class AdminAboutController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    this.db.run('INSERT INTO company_values (id, group_id, locale, title, description, icon, sort_order) VALUES (?,?,?,?,?,?,?)',
+    await this.db.run('INSERT INTO company_values (id, group_id, locale, title, description, icon, sort_order) VALUES (?,?,?,?,?,?,?)',
       [id, groupId, locale, dto.title, dto.description ?? null, dto.icon ?? null, dto.sort_order ?? 0]);
-    const data = this.db.get('SELECT * FROM company_values WHERE id = ?', [id]);
+    const data = await this.db.get('SELECT * FROM company_values WHERE id = ?', [id]);
     return { data };
   }
   @Patch('values/:id')
@@ -71,21 +71,21 @@ export class AdminAboutController {
       if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
     }
     vals.push(id);
-    this.db.run(`UPDATE company_values SET ${fields.join(', ')} WHERE id = ?`, vals);
-    const data = this.db.get('SELECT * FROM company_values WHERE id = ?', [id]);
+    await this.db.run(`UPDATE company_values SET ${fields.join(', ')} WHERE id = ?`, vals);
+    const data = await this.db.get('SELECT * FROM company_values WHERE id = ?', [id]);
     return { data };
   }
   @Delete('values/:id')
   @HttpCode(204)
   async removeValue(@Param('id') id: string) {
-    this.db.run('DELETE FROM company_values WHERE id = ?', [id]);
+    await this.db.run('DELETE FROM company_values WHERE id = ?', [id]);
     return;
   }
 
   @Get('team')
   async listTeam(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = this.db.all('SELECT * FROM team_members WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM team_members WHERE locale = ? ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
   @Post('team')
@@ -93,9 +93,9 @@ export class AdminAboutController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
-    this.db.run('INSERT INTO team_members (id, group_id, locale, name, role, bio, photo_path, sort_order) VALUES (?,?,?,?,?,?,?,?)',
+    await this.db.run('INSERT INTO team_members (id, group_id, locale, name, role, bio, photo_path, sort_order) VALUES (?,?,?,?,?,?,?,?)',
       [id, groupId, locale, dto.name, dto.role ?? null, dto.bio ?? null, dto.photo_path ?? null, dto.sort_order ?? 0]);
-    const data = this.db.get('SELECT * FROM team_members WHERE id = ?', [id]);
+    const data = await this.db.get('SELECT * FROM team_members WHERE id = ?', [id]);
     return { data };
   }
   @Patch('team/:id')
@@ -106,21 +106,21 @@ export class AdminAboutController {
       if (dto[k] !== undefined) { fields.push(`${k} = ?`); vals.push(dto[k]); }
     }
     vals.push(id);
-    this.db.run(`UPDATE team_members SET ${fields.join(', ')} WHERE id = ?`, vals);
-    const data = this.db.get('SELECT * FROM team_members WHERE id = ?', [id]);
+    await this.db.run(`UPDATE team_members SET ${fields.join(', ')} WHERE id = ?`, vals);
+    const data = await this.db.get('SELECT * FROM team_members WHERE id = ?', [id]);
     return { data };
   }
   @Delete('team/:id')
   @HttpCode(204)
   async removeMember(@Param('id') id: string) {
-    this.db.run('DELETE FROM team_members WHERE id = ?', [id]);
+    await this.db.run('DELETE FROM team_members WHERE id = ?', [id]);
     return;
   }
 
   @Get('mission')
   async getMission(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const rows = this.db.all("SELECT * FROM mission_vision WHERE locale = ? AND kind IN ('misi','visi')", [locale]) ?? [];
+    const rows = await this.db.all("SELECT * FROM mission_vision WHERE locale = ? AND kind IN ('misi','visi')", [locale]) ?? [];
     const misi = rows.find((r: any) => r.kind === 'misi');
     const visi = rows.find((r: any) => r.kind === 'visi');
     return { data: { mission: misi?.description ?? '', vision: visi?.description ?? '' } };
@@ -129,26 +129,26 @@ export class AdminAboutController {
   async updateMission(@Body() dto: any, @Req() req: any, @CurrentUser() user: any) {
     const locale = dto.locale ?? (req.query?.locale as string) ?? 'id';
     if (dto.mission !== undefined) {
-      const existing = this.db.get("SELECT id FROM mission_vision WHERE locale = ? AND kind = 'misi'", [locale]);
+      const existing = await this.db.get("SELECT id FROM mission_vision WHERE locale = ? AND kind = 'misi'", [locale]);
       if (existing?.id) {
-        this.db.run("UPDATE mission_vision SET description = ?, title = 'Misi' WHERE id = ?", [dto.mission, existing.id]);
+        await this.db.run("UPDATE mission_vision SET description = ?, title = 'Misi' WHERE id = ?", [dto.mission, existing.id]);
       } else {
         const id = crypto.randomUUID();
-        this.db.run("INSERT INTO mission_vision (id, group_id, locale, kind, title, description, sort_order) VALUES (?,?,?,?,?,?,?)",
+        await this.db.run("INSERT INTO mission_vision (id, group_id, locale, kind, title, description, sort_order) VALUES (?,?,?,?,?,?,?)",
           [id, crypto.randomUUID(), locale, 'misi', 'Misi', dto.mission, 0]);
       }
     }
     if (dto.vision !== undefined) {
-      const existing = this.db.get("SELECT id FROM mission_vision WHERE locale = ? AND kind = 'visi'", [locale]);
+      const existing = await this.db.get("SELECT id FROM mission_vision WHERE locale = ? AND kind = 'visi'", [locale]);
       if (existing?.id) {
-        this.db.run("UPDATE mission_vision SET description = ?, title = 'Visi' WHERE id = ?", [dto.vision, existing.id]);
+        await this.db.run("UPDATE mission_vision SET description = ?, title = 'Visi' WHERE id = ?", [dto.vision, existing.id]);
       } else {
         const id = crypto.randomUUID();
-        this.db.run("INSERT INTO mission_vision (id, group_id, locale, kind, title, description, sort_order) VALUES (?,?,?,?,?,?,?)",
+        await this.db.run("INSERT INTO mission_vision (id, group_id, locale, kind, title, description, sort_order) VALUES (?,?,?,?,?,?,?)",
           [id, crypto.randomUUID(), locale, 'visi', 'Visi', dto.vision, 0]);
       }
     }
-    const rows = this.db.all("SELECT * FROM mission_vision WHERE locale = ? AND kind IN ('misi','visi')", [locale]) ?? [];
+    const rows = await this.db.all("SELECT * FROM mission_vision WHERE locale = ? AND kind IN ('misi','visi')", [locale]) ?? [];
     const misi = rows.find((r: any) => r.kind === 'misi');
     const visi = rows.find((r: any) => r.kind === 'visi');
     return { data: { mission: misi?.description ?? '', vision: visi?.description ?? '' } };

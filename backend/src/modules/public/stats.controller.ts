@@ -7,7 +7,7 @@ export class PublicStatsController {
   @Get()
   async list(@Req() req: any) {
     const locale = req.locale ?? 'id';
-    const data = this.db.all('SELECT * FROM stats WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM stats WHERE locale = ? ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
 }
