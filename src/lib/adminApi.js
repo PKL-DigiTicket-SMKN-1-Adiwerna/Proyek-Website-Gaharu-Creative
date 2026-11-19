@@ -45,6 +45,17 @@ export const adminApi = {
   // inquiries
   listInquiries: () => adminFetch("/admin/inquiries"),
   updateInquiry: (id, dto) => adminFetch(`/admin/inquiries/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
+  deleteInquiry: (id) => adminFetch(`/admin/inquiries/${id}`, { method: "DELETE" }),
+  // kategori portofolio
+  listPortfolioCategories: (locale = "id") => adminFetch(`/admin/portfolio-categories?locale=${locale}`),
+  createPortfolioCategory: (dto) => adminFetch("/admin/portfolio-categories", { method: "POST", body: JSON.stringify(dto) }),
+  updatePortfolioCategory: (id, dto) => adminFetch(`/admin/portfolio-categories/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
+  deletePortfolioCategory: (id) => adminFetch(`/admin/portfolio-categories/${id}`, { method: "DELETE" }),
+  // kategori artikel
+  listArticleCategories: (locale = "id") => adminFetch(`/admin/article-categories?locale=${locale}`),
+  createArticleCategory: (dto) => adminFetch("/admin/article-categories", { method: "POST", body: JSON.stringify(dto) }),
+  updateArticleCategory: (id, dto) => adminFetch(`/admin/article-categories/${id}`, { method: "PATCH", body: JSON.stringify(dto) }),
+  deleteArticleCategory: (id) => adminFetch(`/admin/article-categories/${id}`, { method: "DELETE" }),
   // portfolio
   listPortfolio: (locale = "id") => adminFetch(`/admin/portfolio?locale=${locale}`),
   getPortfolio: (id) => adminFetch(`/admin/portfolio/${id}`),

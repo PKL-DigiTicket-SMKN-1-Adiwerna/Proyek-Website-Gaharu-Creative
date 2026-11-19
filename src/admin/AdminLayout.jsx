@@ -6,6 +6,7 @@ const NAV = [
   { to: "/admin/services", label: "Layanan" },
   { to: "/admin/portfolio", label: "Portofolio" },
   { to: "/admin/articles", label: "Artikel" },
+  { to: "/admin/categories", label: "Kategori" },
   { to: "/admin/about", label: "Tentang" },
   { to: "/admin/stats", label: "Statistik" },
   { to: "/admin/clients", label: "Mitra dan Logo" },
@@ -56,7 +57,7 @@ export default function AdminLayout({ children }) {
       </aside>
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-14 bg-white border-b border-slate-200 flex items-center px-6">
-          <div className="text-sm font-semibold text-slate-700">Area Admin (data tiruan)</div>
+          <div className="text-sm font-semibold text-slate-700">Area Admin</div>
         </header>
         <main className="flex-1 p-6 overflow-auto">
           {children || <Outlet />}

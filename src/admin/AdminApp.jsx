@@ -12,6 +12,7 @@ import AdminAboutPage from "./AdminAboutPage.jsx";
 import AdminStatsPage from "./AdminStatsPage.jsx";
 import AdminClientsPage from "./AdminClientsPage.jsx";
 import AdminAwardsPage from "./AdminAwardsPage.jsx";
+import AdminCategoriesPage from "./AdminCategoriesPage.jsx";
 
 export default function AdminApp() {
   return (
@@ -29,6 +30,7 @@ export default function AdminApp() {
           <Route path="/admin/stats" element={<AdminStatsPage />} />
           <Route path="/admin/clients" element={<AdminClientsPage />} />
           <Route path="/admin/awards" element={<AdminAwardsPage />} />
+          <Route path="/admin/categories" element={<AdminCategoriesPage />} />
         </Route>
       </Route>
     </Routes>
