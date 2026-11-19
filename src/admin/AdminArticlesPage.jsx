@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { adminApi } from "../lib/adminApi";
+import { api } from "../lib/api.js";
 import ImageUpload from "./ImageUpload.jsx";
 import {
   INPUT,
@@ -24,6 +25,11 @@ function toForm(row) {
     ringkasan: row.excerpt || "",
     isi: row.body || "",
     gambar: row.cover_path || "",
+    // Kategori disimpan sebagai id baris article_categories; penulis dan waktu baca
+    // dirender di halaman publik, jadi ikut diisi di form.
+    kategoriId: row.category_id || "",
+    penulis: row.author_name || "",
+    readMenit: row.read_minutes ?? "",
     terbit: Boolean(row.is_published),
     terbitPada: row.published_at || "",
   };
@@ -38,12 +44,16 @@ function kosong() {
     ringkasan: "",
     isi: "",
     gambar: "",
+    kategoriId: "",
+    penulis: "",
+    readMenit: "",
     terbit: false,
     terbitPada: "",
   };
 }
 
 function toDto(f) {
+  const menit = String(f.readMenit).trim() === "" ? null : Number(f.readMenit);
   return {
     title: f.title.trim(),
     slug: f.slug.trim(),
@@ -51,6 +61,10 @@ function toDto(f) {
     body: f.isi.trim(),
     cover_path: f.gambar || "",
     cover_alt: f.title.trim(),
+    category_id: f.kategoriId || null,
+    author_name: f.penulis.trim(),
+    // Kolom angka; nilai kosong dikirim null supaya tidak jadi NaN di basis data.
+    read_minutes: Number.isFinite(menit) ? menit : null,
     is_published: f.terbit,
     locale: "id",
   };
@@ -75,6 +89,18 @@ export default function AdminArticlesPage() {
   const [menyimpan, setMenyimpan] = useState(false);
   const [cari, setCari] = useState("");
   const [filter, setFilter] = useState("semua");
+  const [daftarKategori, setDaftarKategori] = useState([]);
+
+  // Kategori dari endpoint publik dimuat sekali; kalau kosong atau gagal, form
+  // tetap bisa disimpan dengan pilihan "Tanpa kategori".
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await api.articleCategories();
+        setDaftarKategori((res?.data || []).filter((c) => c && c.id));
+      } catch { void 0; }
+    })();
+  }, []);
 
   const muat = async (senyap = false) => {
     if (!senyap) setMemuat(true);
@@ -186,6 +212,29 @@ export default function AdminArticlesPage() {
                 <Field label="Isi" wajib hint={`${form.isi.trim().length} karakter. Pisahkan paragraf dengan satu baris kosong.`}>
                   <textarea className={INPUT} rows={12} value={form.isi} onChange={(e) => setForm({ ...form, isi: e.target.value })} />
                 </Field>
+              </fieldset>
+
+              <fieldset className="space-y-3">
+                <legend className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-800">Kategori dan penulis</legend>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="Kategori" hint="Daftar diambil dari kategori artikel di server.">
+                    <select className={INPUT} value={form.kategoriId} onChange={(e) => setForm({ ...form, kategoriId: e.target.value })}>
+                      <option value="">Tanpa kategori</option>
+                      {daftarKategori.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="Penulis" hint="Nama yang tampil di halaman insight.">
+                    <input className={INPUT} value={form.penulis} onChange={(e) => setForm({ ...form, penulis: e.target.value })} placeholder="Nama penulis" />
+                  </Field>
+                  <Field label="Waktu baca" hint="Perkiraan menit baca, isi angka.">
+                    <input type="number" min="1" className={INPUT} value={form.readMenit} onChange={(e) => setForm({ ...form, readMenit: e.target.value })} placeholder="5" />
+                  </Field>
+                </div>
+                {daftarKategori.length === 0 ? (
+                  <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                    Belum ada kategori dari server. Artikel tetap bisa disimpan tanpa kategori.
+                  </p>
+                ) : null}
                 <label className="flex items-center gap-2 text-sm text-slate-700">
                   <input type="checkbox" className="h-4 w-4" checked={form.terbit} onChange={(e) => setForm({ ...form, terbit: e.target.checked })} />
                   Terbitkan di situs publik
@@ -197,7 +246,7 @@ export default function AdminArticlesPage() {
               <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Pratinjau kartu</p>
               <PreviewKartu
                 gambar={form.gambar}
-                tag="Insight"
+                tag={daftarKategori.find((k) => k.id === form.kategoriId)?.name || "Insight"}
                 judul={form.title}
                 ringkasan={form.ringkasan}
                 meta={form.terbit ? `Terbit ${tanggal(form.terbitPada) || "hari ini"}` : "Belum terbit"}

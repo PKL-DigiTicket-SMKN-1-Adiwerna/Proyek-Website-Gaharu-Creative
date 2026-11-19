@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { adminApi } from "../lib/adminApi";
+import { api } from "../lib/api.js";
 import ImageUpload from "./ImageUpload.jsx";
 import {
   INPUT,
@@ -12,8 +13,6 @@ import {
   slugify,
 } from "./components/FormKit.jsx";
 
-const KATEGORI = ["UMKM", "Korporat", "Pemerintah"];
-
 function toForm(row) {
   return {
     id: row.id,
@@ -23,7 +22,11 @@ function toForm(row) {
     ringkasan: row.summary || "",
     isi: row.body || "",
     client: row.client_name || "",
-    kategori: row.industry || "UMKM",
+    // kategori = id baris portfolio_categories; label = nama kategori yang dikirim
+    // sebagai industry supaya kartu publik tetap punya tulisan kategori.
+    kategoriId: row.category_id || "",
+    label: row.industry || "",
+    badgeHasil: row.result_badge || "",
     tanggal: row.project_date ? String(row.project_date).slice(0, 10) : "",
     urutan: row.sort_order ?? 0,
     terbit: Boolean(row.is_published),
@@ -40,7 +43,9 @@ function kosong(urutan) {
     ringkasan: "",
     isi: "",
     client: "",
-    kategori: "UMKM",
+    kategoriId: "",
+    label: "",
+    badgeHasil: "",
     tanggal: "",
     urutan,
     terbit: false,
@@ -48,12 +53,16 @@ function kosong(urutan) {
   };
 }
 
-function toDto(f) {
+function toDto(f, daftarKategori = []) {
   return {
     title: f.title.trim(),
     slug: f.slug.trim(),
     client_name: f.client.trim(),
-    industry: f.kategori,
+    // category_id yang benar; industry diisi nama kategori pilihan supaya label kartu
+    // dan chip filter publik cocok. "Tanpa kategori" mengirim keduanya kosong/null.
+    category_id: f.kategoriId || null,
+    industry: f.label || daftarKategori.find((k) => k.id === f.kategoriId)?.name || "",
+    result_badge: f.badgeHasil.trim(),
     summary: f.ringkasan.trim(),
     body: f.isi.trim(),
     project_date: f.tanggal || null,
@@ -83,6 +92,19 @@ export default function AdminPortfolioPage() {
   const [menyimpan, setMenyimpan] = useState(false);
   const [cari, setCari] = useState("");
   const [filter, setFilter] = useState("semua");
+  const [daftarKategori, setDaftarKategori] = useState([]);
+
+  // Kategori nyata diambil sekali dari endpoint publik supaya category_id yang
+  // dikirim form sama dengan chip filter di situs. Gagal memuat tidak menghalangi
+  // simpan: pilihan "Tanpa kategori" tetap tersedia.
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await api.portfolioCategories();
+        setDaftarKategori((res?.data || []).filter((c) => c && c.id));
+      } catch { void 0; }
+    })();
+  }, []);
 
   const muat = async (senyap = false) => {
     if (!senyap) setMemuat(true);
@@ -117,8 +139,8 @@ export default function AdminPortfolioPage() {
     if (salah) { setGalat(salah); setInfo(""); return; }
     setMenyimpan(true); setGalat(""); setInfo("");
     try {
-      if (form.id) await adminApi.updatePortfolio(form.id, toDto(form));
-      else await adminApi.createPortfolio(toDto(form));
+      if (form.id) await adminApi.updatePortfolio(form.id, toDto(form, daftarKategori));
+      else await adminApi.createPortfolio(toDto(form, daftarKategori));
       setInfo(form.id ? `Portofolio "${form.title.trim()}" diperbarui.` : `Portofolio "${form.title.trim()}" ditambahkan.`);
       setForm(null);
       await muat(true);
@@ -145,7 +167,7 @@ export default function AdminPortfolioPage() {
     const q = cari.trim().toLowerCase();
     return items
       .filter((it) => (filter === "terbit" ? it.terbit : filter === "draf" ? !it.terbit : true))
-      .filter((it) => !q || [it.title, it.client, it.kategori, it.slug].join(" ").toLowerCase().includes(q))
+      .filter((it) => !q || [it.title, it.client, it.label, it.slug].join(" ").toLowerCase().includes(q))
       .sort((a, b) => (Number(a.urutan) || 0) - (Number(b.urutan) || 0) || a.title.localeCompare(b.title));
   }, [items, cari, filter]);
 
@@ -203,10 +225,31 @@ export default function AdminPortfolioPage() {
                   <Field label="Klien">
                     <input className={INPUT} value={form.client} onChange={(e) => setForm({ ...form, client: e.target.value })} placeholder="Nama klien" />
                   </Field>
-                  <Field label="Kategori">
-                    <select className={INPUT} value={form.kategori} onChange={(e) => setForm({ ...form, kategori: e.target.value })}>
-                      {KATEGORI.map((k) => <option key={k} value={k}>{k}</option>)}
+                  <Field label="Kategori" hint="Daftar diambil dari kategori portofolio di server.">
+                    <select
+                      className={INPUT}
+                      value={form.kategoriId}
+                      onChange={(e) => {
+                        const id = e.target.value;
+                        setForm({
+                          ...form,
+                          kategoriId: id,
+                          label: daftarKategori.find((k) => k.id === id)?.name || "",
+                        });
+                      }}
+                    >
+                      <option value="">Tanpa kategori</option>
+                      {daftarKategori.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}
                     </select>
+                  </Field>
+                  <Field label="Badge hasil" hint="Teks pendek, tampil sebagai penanda hasil. Contoh: +38% penjualan.">
+                    <input
+                      className={INPUT}
+                      maxLength={40}
+                      value={form.badgeHasil}
+                      onChange={(e) => setForm({ ...form, badgeHasil: e.target.value })}
+                      placeholder="+38% penjualan"
+                    />
                   </Field>
                   <Field label="Tanggal proyek">
                     <input type="date" className={INPUT} value={form.tanggal} onChange={(e) => setForm({ ...form, tanggal: e.target.value })} />
@@ -215,6 +258,11 @@ export default function AdminPortfolioPage() {
                     <input type="number" min="0" className={INPUT} value={form.urutan} onChange={(e) => setForm({ ...form, urutan: e.target.value })} />
                   </Field>
                 </div>
+                {daftarKategori.length === 0 ? (
+                  <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                    Belum ada kategori dari server. Portofolio tersimpan tanpa kategori dan bisa diberi kategori nanti.
+                  </p>
+                ) : null}
                 <label className="flex items-center gap-2 text-sm text-slate-700">
                   <input type="checkbox" className="h-4 w-4" checked={form.terbit} onChange={(e) => setForm({ ...form, terbit: e.target.checked })} />
                   Terbitkan di situs publik
@@ -226,7 +274,7 @@ export default function AdminPortfolioPage() {
               <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Pratinjau kartu</p>
               <PreviewKartu
                 gambar={form.gambar}
-                tag={form.kategori}
+                tag={form.label || daftarKategori.find((k) => k.id === form.kategoriId)?.name || ""}
                 judul={form.title}
                 ringkasan={form.ringkasan}
                 meta={[form.client, form.tanggal].filter(Boolean).join(" · ")}
@@ -286,7 +334,7 @@ export default function AdminPortfolioPage() {
                   <span className="text-[11px] text-slate-400">/{it.slug}</span>
                 </div>
                 <h3 className="font-semibold leading-snug text-slate-900">{it.title}</h3>
-                <p className="text-xs text-slate-500">{[it.client, it.kategori].filter(Boolean).join(" · ")}</p>
+                <p className="text-xs text-slate-500">{[it.client, it.label].filter(Boolean).join(" · ")}</p>
                 <p className="line-clamp-2 text-xs text-slate-500">{it.ringkasan}</p>
                 <div className="flex gap-3 pt-1 text-sm">
                   <button onClick={() => buka(it)} className="text-brand-700 hover:underline">Ubah</button>

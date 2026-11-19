@@ -40,15 +40,18 @@ export default function AdminDashboardPage() {
 
   const d = data || {};
   const recent = d.recent_inquiries || [];
+  /* Angka tayang dan draf dipisah supaya kartu tidak menyesatkan (total termasuk draf). */
+  const rincian = (total, tayang) =>
+    `${tayang ?? 0} tayang, ${Math.max(0, (total ?? 0) - (tayang ?? 0))} draf`;
   const cards = [
-    { label: "Layanan", total: d.services_total, catatan: `${d.services_published ?? 0} tayang` },
-    { label: "Portofolio", total: d.portfolio_total, catatan: `${d.portfolio_published ?? 0} tayang` },
-    { label: "Artikel", total: d.articles_total, catatan: `${d.articles_published ?? 0} tayang` },
-    { label: "Mitra", total: d.clients_total, catatan: `${d.clients_published ?? 0} tayang` },
+    { label: "Layanan", total: d.services_total, catatan: rincian(d.services_total, d.services_published) },
+    { label: "Portofolio", total: d.portfolio_total, catatan: rincian(d.portfolio_total, d.portfolio_published) },
+    { label: "Artikel", total: d.articles_total, catatan: rincian(d.articles_total, d.articles_published) },
+    { label: "Mitra", total: d.clients_total, catatan: rincian(d.clients_total, d.clients_published) },
     { label: "Inquiry", total: d.inquiries_total, catatan: `${d.inquiries_new ?? 0} baru` },
-    { label: "Statistik", total: d.stats_total, catatan: `${d.stats_published ?? 0} tayang` },
-    { label: "Tim", total: d.team_total, catatan: "" },
-    { label: "Penghargaan", total: d.awards_total, catatan: "" },
+    { label: "Statistik", total: d.stats_total, catatan: rincian(d.stats_total, d.stats_published) },
+    { label: "Tim", total: d.team_total, catatan: rincian(d.team_total, d.team_published) },
+    { label: "Penghargaan", total: d.awards_total, catatan: rincian(d.awards_total, d.awards_published) },
   ];
 
   return (

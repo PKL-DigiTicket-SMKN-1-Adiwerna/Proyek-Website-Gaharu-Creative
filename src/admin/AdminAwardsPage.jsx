@@ -11,6 +11,9 @@ function toForm(row) {
   return {
     id: row.id,
     title: row.title || "",
+    // Slug dibuat otomatis oleh backend dari judul (unik per locale), jadi tidak
+    // perlu input manual; di sini hanya dibaca untuk ditampilkan di daftar.
+    slug: row.slug || "",
     issuer: row.issuer || "",
     year: row.year ?? "",
     description: row.description || "",
@@ -236,6 +239,7 @@ export default function AdminAwardsPage() {
                     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${it.published ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>
                       {it.published ? "Terbit" : "Belum terbit"}
                     </span>
+                    {it.slug ? <span className="text-[11px] text-slate-400">/{it.slug}</span> : null}
                   </div>
                   <p className="mt-1 text-sm text-slate-600">
                     {[it.issuer, it.year].filter(Boolean).join(" - ") || "Penerbit dan tahun belum diisi"}
