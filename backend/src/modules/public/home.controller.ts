@@ -11,7 +11,7 @@ export class PublicHomeController {
     const locale = req.locale ?? 'id';
     const [services, stats, featuredPortfolio] = await Promise.all([
       this.db.all('SELECT * FROM services WHERE locale = ? AND is_published = true AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]),
-      this.db.all('SELECT * FROM stats WHERE locale = ? ORDER BY sort_order ASC', [locale]),
+      this.db.all('SELECT * FROM stats WHERE locale = ? AND is_published = true ORDER BY sort_order ASC', [locale]),
       this.db.all('SELECT * FROM portfolio_items WHERE locale = ? AND is_published = true AND deleted_at IS NULL ORDER BY sort_order ASC LIMIT 3', [locale]),
     ]);
     return {

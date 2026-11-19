@@ -7,9 +7,10 @@ export class PublicAboutController {
   @Get()
   async get(@Req() req: any) {
     const locale = req.locale ?? 'id';
-    const stories = await this.db.all('SELECT * FROM about_stories WHERE locale = ? ORDER BY sort_order ASC', [locale]) ?? [];
-    const values = await this.db.all('SELECT * FROM company_values WHERE locale = ? ORDER BY sort_order ASC', [locale]) ?? [];
-    const team = await this.db.all('SELECT * FROM team_members WHERE locale = ? ORDER BY sort_order ASC', [locale]) ?? [];
+    // Hanya konten tayang yang dikirim ke situs publik; draf tetap tersimpan di panel admin.
+    const stories = await this.db.all('SELECT * FROM about_stories WHERE locale = ? AND is_published = true ORDER BY sort_order ASC', [locale]) ?? [];
+    const values = await this.db.all('SELECT * FROM company_values WHERE locale = ? AND is_published = true ORDER BY sort_order ASC', [locale]) ?? [];
+    const team = await this.db.all('SELECT * FROM team_members WHERE locale = ? AND is_published = true ORDER BY sort_order ASC', [locale]) ?? [];
     const mrows = await this.db.all("SELECT * FROM mission_vision WHERE locale = ? AND kind IN ('misi','visi')", [locale]) ?? [];
     const misi = mrows.find((r: any) => r.kind === 'misi');
     const visi = mrows.find((r: any) => r.kind === 'visi');

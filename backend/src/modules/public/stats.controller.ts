@@ -7,7 +7,8 @@ export class PublicStatsController {
   @Get()
   async list(@Req() req: any) {
     const locale = req.locale ?? 'id';
-    const data = await this.db.all('SELECT * FROM stats WHERE locale = ? ORDER BY sort_order ASC', [locale]);
+    // Tabel stats tidak punya kolom deleted_at, jadi cukup saring is_published.
+    const data = await this.db.all('SELECT * FROM stats WHERE locale = ? AND is_published = true ORDER BY sort_order ASC', [locale]);
     return { data: data ?? [] };
   }
 }
