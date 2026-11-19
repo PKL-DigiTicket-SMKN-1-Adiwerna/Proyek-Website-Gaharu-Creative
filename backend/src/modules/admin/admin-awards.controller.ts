@@ -7,7 +7,7 @@ import { CreateAwardDto, UpdateAwardDto } from './dto/award.dto';
 import * as crypto from 'crypto';
 
 /** Kolom yang boleh diubah lewat PATCH; slug dibuat dari judul saat POST. */
-const FIELDS = ['title', 'issuer', 'year', 'description', 'image_path', 'image_alt', 'sort_order'];
+const FIELDS = ['title', 'issuer', 'year', 'description', 'image_path', 'image_alt', 'sort_order', 'slug'];
 
 function slugify(value: string): string {
   return String(value || '')
