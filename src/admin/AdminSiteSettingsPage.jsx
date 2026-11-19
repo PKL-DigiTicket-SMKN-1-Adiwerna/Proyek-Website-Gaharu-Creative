@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { adminApi } from "../lib/adminApi";
-import ImageUpload from "./ImageUpload.jsx";
 
 const DEFAULTS = {
   brand: {
@@ -9,15 +8,15 @@ const DEFAULTS = {
     hero_headline: "Merek yang rapi, pesan yang jelas, hasil yang terukur.",
     hero_subtitle: "Kami membantu bisnis membangun identitas, website, dan kampanye digital yang konsisten.",
     founded_year: "2016",
-    hero_image: "",
   },
   contact: { email: "halo@gaharucreative.id", whatsapp: "6289605177985", address: "Semarang, Jawa Tengah" },
   social: { instagram: "", linkedin: "", tiktok: "" },
   seo: { title: "Gaharu Creative", description: "" },
 };
 
-// Key lama (datar) tetap dibaca supaya nilai yang pernah disimpan tidak hilang.
-const LEGACY = {
+// Tiap kolom formulir disimpan sebagai baris pengaturan datar; situs publik
+// membaca kunci yang sama lewat /public/site.
+const DATAR = {
   brand: { name: "brandName", tagline: "tagline", hero_headline: "heroHeadline", hero_subtitle: "heroSubtitle", founded_year: "foundedYear" },
   contact: { email: "email", whatsapp: "ctaWhatsapp", address: "address" },
 };
@@ -40,12 +39,12 @@ export default function AdminSiteSettingsPage() {
       const peta = {};
       rows.forEach((r) => { if (r?.key) peta[r.key] = r.value; });
       const ambil = (grup) => {
-        const nilai = peta[grup];
         const dasar = { ...DEFAULTS[grup] };
+        const nilai = peta[grup];
         if (nilai && typeof nilai === "object" && !Array.isArray(nilai)) Object.assign(dasar, nilai);
-        Object.entries(LEGACY[grup] || {}).forEach(([k, lama]) => {
-          const kosong = dasar[k] === undefined || dasar[k] === null || dasar[k] === "";
-          if (kosong && peta[lama] !== undefined && peta[lama] !== null && peta[lama] !== "") dasar[k] = peta[lama];
+        Object.entries(DATAR[grup] || {}).forEach(([k, kunci]) => {
+          const v = peta[kunci];
+          if (v !== undefined && v !== null && v !== "") dasar[k] = v;
         });
         return dasar;
       };
@@ -68,8 +67,12 @@ export default function AdminSiteSettingsPage() {
   const save = async (e) => {
     e.preventDefault(); setSaving(true); setError(""); setSaved(false);
     try {
-      await adminApi.updateSetting("brand", form.brand, "id");
-      await adminApi.updateSetting("contact", form.contact, "id");
+      const simpanDatar = Object.entries(DATAR)
+        .flatMap(([grup, petaKolom]) => Object.entries(petaKolom).map(([k, kunci]) => [kunci, form[grup][k] ?? ""]))
+        .filter(([, v]) => v !== null && v !== undefined);
+      for (const [kunci, nilai] of simpanDatar) {
+        await adminApi.updateSetting(kunci, String(nilai), "id");
+      }
       const sosial = PLATFORM.filter((p) => form.social[p]).map((p) => ({ platform: p, url: form.social[p] }));
       await adminApi.updateSetting("social", [...sosial, ...socialLain], "id");
       await adminApi.updateSetting("seo", form.seo, "id");
@@ -107,8 +110,6 @@ export default function AdminSiteSettingsPage() {
           {field("brand", "hero_headline", "Headline hero")}
           {field("brand", "hero_subtitle", "Subtitle hero", "textarea")}
           {field("brand", "founded_year", "Tahun berdiri")}
-          <ImageUpload label="Gambar hero (opsional)" value={form.brand.hero_image || ""}
-            onChange={(v) => ubah("brand", "hero_image", v)} />
         </section>
 
         <section className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">

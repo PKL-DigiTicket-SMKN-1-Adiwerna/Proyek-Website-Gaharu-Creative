@@ -20,8 +20,8 @@ export default function AdminLoginPage() {
     try {
       const res = await adminApi.login(email.trim(), password);
       setAdminToken(res.access_token);
-      try { localStorage.setItem("admin_email", res.user?.email || email.trim()); } catch {}
-      try { localStorage.setItem("admin_role", res.user?.role || ""); } catch {}
+      try { localStorage.setItem("admin_email", res.user?.email || email.trim()); } catch { /* localStorage bisa diblokir peramban */ }
+            try { localStorage.setItem("admin_role", res.user?.role || ""); } catch { /* localStorage bisa diblokir peramban */ }
       navigate("/admin", { replace: true });
     } catch (err) {
       setError(err?.message || "Gagal masuk. Periksa email dan kata sandi.");

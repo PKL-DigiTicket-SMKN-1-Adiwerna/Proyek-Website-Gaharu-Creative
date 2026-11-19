@@ -406,32 +406,34 @@ export function adaptSite(payload, fallback = {}) {
   const contact = p.contact || {};
   const hasil = { ...fallback };
 
-  const nama = teks(brand.name) || teks(p.brandName);
+  // Nilai datar (brandName, ctaWhatsapp, ...) jadi acuan utama; objek grup lama
+  // hanya cadangan supaya data lama tidak hilang.
+  const nama = teks(p.brandName) || teks(brand.name);
   if (nama) hasil.name = nama;
 
-  const tagline = teks(brand.tagline) || teks(p.tagline);
+  const tagline = teks(p.tagline) || teks(brand.tagline);
   if (tagline) hasil.tagline = tagline;
 
-  const email = teks(contact.email) || teks(p.email);
+  const email = teks(p.email) || teks(contact.email);
   if (email) {
     hasil.email = email;
     hasil.emailVerified = true;
   }
 
-  const wa = teks(contact.whatsapp) || teks(p.ctaWhatsapp);
+  const wa = teks(p.ctaWhatsapp) || teks(contact.whatsapp);
   if (wa) {
     hasil.waNumber = wa;
     hasil.waDisplay = nomorTampil(wa) || wa;
     hasil.waNumberVerified = true;
   }
 
-  const alamat = teks(contact.address) || teks(p.address);
+  const alamat = teks(p.address) || teks(contact.address);
   if (alamat) {
     hasil.address = alamat;
     hasil.addressVerified = true;
   }
 
-  const berdiri = brand.founded_year ?? p.foundedYear;
+  const berdiri = p.foundedYear ?? brand.founded_year;
   if (berdiri) hasil.founded = Number(berdiri) || hasil.founded;
 
   const sosial = (Array.isArray(p.social) ? p.social : [])
