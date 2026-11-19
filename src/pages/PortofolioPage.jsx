@@ -105,7 +105,6 @@ export default function PortofolioPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-4">
               <Kepala
-                nomor="01 / Filter"
                 judul="Filter Cepat"
                 catatan="Pilih kategori untuk melihat studi kasus yang relevan dengan skala kebutuhan dan model objektif instansi Anda."
               />
@@ -152,7 +151,6 @@ export default function PortofolioPage() {
       <section id="studi-kasus" className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <Kepala
-            nomor="02 / Studi kasus"
             judul="Studi Kasus Terbaru"
             catatan="Klik kartu proyek untuk melihat strategi dan hasil detail proyek."
           />

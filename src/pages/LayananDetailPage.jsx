@@ -132,7 +132,6 @@ export default function LayananDetailPage() {
       {service.problems?.length ? (
         <Section className="bg-lav-50">
           <Kepala
-            nomor="02 / Masalah"
             judul="Yang biasanya menghambat"
             catatan={`Tiga kondisi yang paling sering muncul sebelum klien memakai layanan ${service.title}.`}
           />
@@ -153,7 +152,6 @@ export default function LayananDetailPage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
             <div>
               <Kepala
-                nomor="03 / Solusi"
                 judul="Solusi yang kami kerjakan"
                 catatan="Setiap bagian punya keluaran yang jelas, jadi progresnya bisa diperiksa."
               />
@@ -186,7 +184,6 @@ export default function LayananDetailPage() {
       {service.kpi?.cards?.length ? (
         <Section className="bg-lav-50">
           <Kepala
-            nomor="04 / KPI"
             judul="Indikator kinerja utama"
             catatan={service.kpi.caption}
           />
@@ -224,7 +221,6 @@ export default function LayananDetailPage() {
       {service.deliverables?.length ? (
         <Section>
           <Kepala
-            nomor="05 / Deliverables"
             judul="Hasil yang Anda terima"
             catatan="Setiap keluaran diserahkan dalam format yang bisa langsung dipakai tim Anda."
           />
@@ -256,7 +252,6 @@ export default function LayananDetailPage() {
       {service.steps?.length ? (
         <Section className="bg-lav-50">
           <Kepala
-            nomor="06 / Workflow"
             judul="Cara kami mengerjakannya"
             catatan="Urutan kerja yang sama untuk setiap proyek, supaya Anda tahu posisi pekerjaan kapan saja."
           />
@@ -276,7 +271,6 @@ export default function LayananDetailPage() {
       {service.faqs?.length ? (
         <Section>
           <Kepala
-            nomor="07 / FAQ"
             judul={`Pertanyaan seputar ${service.title}`}
             catatan="Jawaban singkat untuk pertanyaan yang paling sering masuk."
           />

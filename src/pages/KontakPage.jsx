@@ -344,7 +344,6 @@ export default function KontakPage() {
 
       <Section id="informasi-kontak" divider className="bg-block">
         <Kepala
-          nomor="02 / Kontak"
           judul="Informasi Kontak"
           catatan="Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional."
         />
@@ -379,7 +378,6 @@ export default function KontakPage() {
 
       <Section id="peta" divider>
         <Kepala
-          nomor="03 / Peta"
           judul="Peta"
           catatan="Lokasi kantor dan area layanan."
         />

@@ -242,7 +242,6 @@ export default function HomePage() {
       {/* 3. Layanan editorial bernomor, ala WPP. */}
       <Section id="layanan">
         <Kepala
-          nomor="01 / Layanan"
           judul="Yang kami kerjakan"
           catatan="Lima layanan. Diambil satu saja bisa, digabung juga bisa."
           tautan={{ to: links.layanan, label: "Semua layanan" }}
@@ -281,7 +280,6 @@ export default function HomePage() {
       {/* 4. Portofolio gambar-led, ala Creativeans. */}
       <Section id="portofolio" className="bg-mint" divider>
         <Kepala
-          nomor="02 / Portofolio"
           judul="Pekerjaan yang pernah kami tangani"
           catatan="Nama proyek, angka hasil, dan gambar di bawah masih contoh, menunggu portofolio asli."
           tautan={{ to: links.portofolio, label: "Semua pekerjaan" }}
@@ -308,7 +306,6 @@ export default function HomePage() {
       {testimonials.length ? (
         <Section divider className="bg-mint">
           <Kepala
-            nomor="03 / Kata klien"
             judul="Apa kata mereka yang sudah bekerja sama"
             catatan="Testimoni yang tayang sudah disetujui pemilik bisnis."
           />

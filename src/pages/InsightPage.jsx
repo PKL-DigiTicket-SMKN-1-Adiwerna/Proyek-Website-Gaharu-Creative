@@ -79,7 +79,6 @@ export default function InsightPage() {
       {/* FILTER KATEGORI */}
       <Section divider>
         <Kepala
-          nomor="01 / Filter"
           judul="Filter Kategori"
           catatan="Pilih kategori untuk melihat artikel yang relevan dengan fokus bisnis Anda."
         />
@@ -100,7 +99,6 @@ export default function InsightPage() {
       {/* DAFTAR ARTIKEL */}
       <Section divider className="bg-block/60">
         <Kepala
-          nomor="02 / Artikel"
           judul="Artikel Terbaru"
           catatan="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."
         />

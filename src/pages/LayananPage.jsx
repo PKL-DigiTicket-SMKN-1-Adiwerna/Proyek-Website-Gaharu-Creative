@@ -70,7 +70,6 @@ export default function LayananPage() {
       {/* Kenapa memilih Gaharu */}
       <Section className="bg-mint">
         <Kepala
-          nomor="02 / Kenapa kami"
           judul="Kenapa Memilih Gaharu Creative"
           catatan="Pendekatan berbasis data yang memastikan strategi jelas, eksekusi rapi, dan dampak pemasaran digital dapat diukur secara transparan."
         />

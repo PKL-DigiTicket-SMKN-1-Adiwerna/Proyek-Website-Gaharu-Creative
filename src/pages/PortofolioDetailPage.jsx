@@ -138,7 +138,6 @@ export default function PortofolioDetailPage() {
       <Section>
         <div className="mx-auto w-full max-w-3xl">
           <Kepala
-            nomor="01 / Uraian"
             judul="Isi studi kasus"
             catatan={paragraf.length ? "Ditulis oleh tim Gaharu Creative." : null}
           />

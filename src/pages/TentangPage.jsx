@@ -138,7 +138,6 @@ export default function TentangPage() {
       {/* Misi dan Tujuan */}
       <Section divider className="bg-lav-50">
         <Kepala
-          nomor="01 / Misi & tujuan"
           judul="Misi dan Tujuan"
           catatan="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
         />
@@ -166,7 +165,6 @@ export default function TentangPage() {
       {/* Nilai Perusahaan */}
       <Section divider>
         <Kepala
-          nomor="02 / Nilai"
           judul="Nilai Perusahaan"
           catatan="Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil."
         />
@@ -183,7 +181,6 @@ export default function TentangPage() {
       {/* Tim Inti */}
       <Section divider className="bg-lav-50">
         <Kepala
-          nomor="03 / Tim"
           judul="Tim Inti"
           catatan="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang."
         />
@@ -209,7 +206,6 @@ export default function TentangPage() {
       {/* Legalitas */}
       <Section divider>
         <Kepala
-          nomor="04 / Legalitas"
           judul="Legalitas"
           catatan="Dokumen dan informasi penting untuk meningkatkan kepercayaan dalam kerja sama."
         />
