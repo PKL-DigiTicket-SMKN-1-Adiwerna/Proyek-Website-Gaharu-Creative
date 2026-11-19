@@ -33,6 +33,14 @@ export default function InsightPage() {
     [active, posts]
   );
 
+  /* Sama seperti halaman Portofolio: gulirkan daftar artikel ke layar supaya
+   * perubahan filter terlihat, terutama di HP. */
+  const pilihKategori = (key) => {
+    setActive(key);
+    const el = document.getElementById("daftar-artikel");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const submit = (e) => {
     e.preventDefault();
     const value = email.trim();
@@ -87,7 +95,7 @@ export default function InsightPage() {
             <FilterChip
               key={item.key}
               active={active === item.key}
-              onClick={() => setActive(item.key)}
+              onClick={() => pilihKategori(item.key)}
             >
               <IconCircle name={item.icon} size="sm" />
               {item.label}
@@ -97,7 +105,7 @@ export default function InsightPage() {
       </Section>
 
       {/* DAFTAR ARTIKEL */}
-      <Section divider className="bg-block/60">
+      <Section id="daftar-artikel" divider className="bg-block/60">
         <Kepala
           judul="Artikel Terbaru"
           catatan="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."

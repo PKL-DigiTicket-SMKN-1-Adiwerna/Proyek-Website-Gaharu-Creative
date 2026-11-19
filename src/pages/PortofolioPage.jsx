@@ -40,6 +40,13 @@ export default function PortofolioPage() {
     return { filtered: hasil, visible: tampilSemua ? hasil : hasil.slice(0, 3) };
   }, [active, portfolioItems, tampilSemua, segmenPerId]);
 
+  /* Setelah chip dipilih, hasilnya di bawah layar (khususnya di HP) sehingga
+   * pengguna mengira filter tidak bekerja. Gulir ke daftar hasil. */
+  const tampilkanHasil = () => {
+    const el = document.getElementById("studi-kasus");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const sisa = filtered.length - visible.length;
 
   return (
@@ -124,6 +131,7 @@ export default function PortofolioPage() {
                   onClick={() => {
                     setActive(item.key);
                     setTampilSemua(false);
+                    tampilkanHasil();
                   }}
                   className={`group relative text-left p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                     active === item.key
@@ -148,7 +156,7 @@ export default function PortofolioPage() {
       </section>
 
       {/* 3. STUDI KASUS TERBARU (Satu klik membuka halaman detail statis) */}
-      <section id="studi-kasus" className="bg-white py-20">
+      <section id="studi-kasus" className="scroll-mt-20 bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <Kepala
             judul="Studi Kasus Terbaru"
@@ -161,6 +169,24 @@ export default function PortofolioPage() {
             Angka hasil per proyek belum ditampilkan karena masih menunggu konfirmasi pemilik proyek.
           </p>
 
+          {filtered.length === 0 ? (
+            <div className="mx-auto mt-8 max-w-md rounded-2xl border border-dashed border-field bg-white p-8 text-center shadow-sm">
+              <p className="text-base font-bold text-ink">Belum ada studi kasus di kategori ini</p>
+              <p className="mt-2 text-xs text-muted leading-relaxed">
+                Karya untuk kategori {labelAktif} sedang disiapkan. Pilih kategori lain atau lihat semua studi kasus.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setActive("semua");
+                  setTampilSemua(false);
+                }}
+                className="mt-4 inline-flex min-h-11 items-center rounded-xl border border-line bg-block px-4 text-xs font-bold text-muted transition-all hover:border-button hover:bg-button hover:text-white"
+              >
+                Lihat semua studi kasus
+              </button>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {visible.map((item) => {
               let imageSrc = item.image || "/Beranda-Portofolio(UMKM E-Commerce).webp";
@@ -207,6 +233,7 @@ export default function PortofolioPage() {
               );
             })}
           </div>
+          )}
 
           {filtered.length > 3 && (
             <div className="flex justify-center">
