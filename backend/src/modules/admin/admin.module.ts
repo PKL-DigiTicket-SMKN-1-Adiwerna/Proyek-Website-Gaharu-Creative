@@ -9,6 +9,8 @@ import { AdminAboutController } from './admin-about.controller';
 import { AdminClientsController } from './admin-clients.controller';
 import { AdminAwardsController } from './admin-awards.controller';
 import { AdminDashboardController } from './admin-dashboard.controller';
+import { AdminPortfolioCategoriesController } from './admin-portfolio-categories.controller';
+import { AdminArticleCategoriesController } from './admin-article-categories.controller';
 
 @Module({
   imports: [DatabaseModule],
@@ -22,6 +24,8 @@ import { AdminDashboardController } from './admin-dashboard.controller';
     AdminClientsController,
     AdminAwardsController,
     AdminDashboardController,
+    AdminPortfolioCategoriesController,
+    AdminArticleCategoriesController,
   ],
 })
 export class AdminModule {}
