@@ -10,6 +10,8 @@ import {
 } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { site, links } from "../data/site.js";
+import { api } from "../lib/api.js";
+import { useApi } from "../lib/useApi.js";
 import {
   tentangIntro,
   ceritaCards,
@@ -24,6 +26,22 @@ const description =
   "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2020: strategi, digital branding, pembuatan website, dan pemasaran digital.";
 
 export default function TentangPage() {
+  // Konten dari panel admin lewat /public/about; jatuh ke berkas statis bila
+  // backend mengembalikan kosong supaya halaman tetap utuh.
+  const { data: about } = useApi(() => api.about().then((json) => ({ data: json.data })), null);
+  const cerita = about?.stories?.length
+    ? about.stories.map((s) => ({ title: s.title, label: s.label, detail: s.description, image: s.image_path }))
+    : ceritaCards;
+  const nilai = about?.values?.length
+    ? about.values.map((v) => ({ title: v.title, detail: v.description }))
+    : values;
+  const pengurus = about?.team?.length
+    ? about.team.map((t) => ({ role: t.name || t.role, detail: t.bio, photo: t.photo_path, alt: t.photo_alt }))
+    : team;
+  const misi = missionGoals.map((item, i) =>
+    i === 0 && about?.mission?.mission ? { ...item, detail: about.mission.mission } : item,
+  );
+
   return (
     <>
       <Seo title={title} description={description} />
@@ -119,8 +137,17 @@ export default function TentangPage() {
               </Button>
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
-              {ceritaCards.map((item) => (
-                <article key={item.title} className="rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
+              {cerita.map((item, i) => (
+                <article key={`${item.title}-${i}`} className="rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="mb-4 aspect-[4/3] w-full rounded-md object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
                   <h3 className="text-base font-bold text-ink">{item.title}</h3>
                   <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-700">
                     {item.label}
@@ -142,7 +169,7 @@ export default function TentangPage() {
           catatan="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
         />
         <div className="mt-10 grid gap-5 md:grid-cols-2">
-          {missionGoals.map((item) => (
+          {misi.map((item) => (
             <article key={item.title} className="flex gap-4 rounded-lg border border-line bg-paper p-6 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <IconCircle name={item.icon} />
               <div className="min-w-0">
@@ -169,7 +196,7 @@ export default function TentangPage() {
           catatan="Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {values.map((item) => (
+          {nilai.map((item) => (
             <article key={item.title} className="rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <h3 className="text-base font-bold text-ink">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
@@ -185,17 +212,27 @@ export default function TentangPage() {
           catatan="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((item) => (
+          {pengurus.map((item, i) => (
             <article
-              key={item.role}
+              key={`${item.role}-${i}`}
               className="rounded-lg border border-line bg-paper p-5 text-center"
             >
-              <span
-                aria-hidden="true"
-                className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-100 text-brand-800"
-              >
-                <Icon name="team" className="h-6 w-6" />
-              </span>
+              {item.photo ? (
+                <img
+                  src={item.photo}
+                  alt={item.alt || item.role}
+                  className="mx-auto h-14 w-14 rounded-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-100 text-brand-800"
+                >
+                  <Icon name="team" className="h-6 w-6" />
+                </span>
+              )}
               <h3 className="mt-4 text-base font-semibold text-ink">{item.role}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
             </article>

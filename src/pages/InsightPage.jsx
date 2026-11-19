@@ -124,8 +124,9 @@ export default function InsightPage() {
         ) : (
           <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((post) => (
-              <article
+              <Link
                 key={post.slug}
+                to={`/insight/${post.slug}`}
                 className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-5 transition-all duration-300 hover:border-brand-600"
               >
                 <div>
@@ -164,14 +165,14 @@ export default function InsightPage() {
                 </div>
 
                 <div className="pt-6">
-                  <Link
-                    to={`/insight/${post.slug}`}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-line bg-block py-2.5 px-4 text-xs font-bold text-muted transition-all hover:border-button hover:bg-button hover:text-white"
+                  {/* Kartu seluruhnya sudah berupa tautan; ini hanya penanda visual. */}
+                  <span
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-line bg-block py-2.5 px-4 text-xs font-bold text-muted transition-all group-hover:border-button group-hover:bg-button group-hover:text-white"
                   >
                     Baca Selengkapnya →
-                  </Link>
+                  </span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         )}
