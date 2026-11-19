@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { site } from "../data/site.js";
+import { useSite } from "../lib/useSite.js";
 
 /* Meta tag per halaman. Title dan description di-set lewat JS karena route
  * dirender di browser.
@@ -19,16 +20,17 @@ function upsertMeta(selector, attrs) {
 }
 
 export function Seo({ title, description, image = null }) {
+  const { name, tagline } = useSite();
   useEffect(() => {
     /* Nama merek tidak boleh muncul dua kali di satu judul tab. Kalau halaman
-     * sudah menulis "Gaharu Creative" di judulnya, pakai apa adanya.
+     * sudah menulis nama merek di judulnya, pakai apa adanya.
      */
     const fullTitle =
-      title === site.name
-        ? `${title} | ${site.tagline}`
-        : title.includes(site.name)
+      title === name
+        ? `${title} | ${tagline}`
+        : title.includes(name)
           ? title
-          : `${title} | ${site.name}`;
+          : `${title} | ${name}`;
     document.title = fullTitle;
 
     const meta = document.querySelector('meta[name="description"]');
@@ -69,7 +71,7 @@ export function Seo({ title, description, image = null }) {
       upsertMeta('meta[property="og:image"]', { property: "og:image", content: image });
       upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: image });
     }
-  }, [title, description, image]);
+  }, [title, description, image, name, tagline]);
 
   return null;
 }

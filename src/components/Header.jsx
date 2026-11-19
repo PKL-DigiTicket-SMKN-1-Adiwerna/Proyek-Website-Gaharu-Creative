@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { site, navLinks, links, clientLanguages } from "../data/site.js";
+import { navLinks, links, clientLanguages } from "../data/site.js";
+import { useSite } from "../lib/useSite.js";
 import { Button, Container } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
 import Logo from "./Logo.jsx";
@@ -72,6 +73,7 @@ function LanguagePicker() {
 }
 
 export default function Header() {
+  const { name } = useSite();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -94,7 +96,7 @@ export default function Header() {
           <Link
             to="/"
             className="flex shrink-0 items-center lg:justify-self-start"
-            aria-label={`${site.name}, beranda`}
+            aria-label={`${name}, beranda`}
           >
             <Logo className="h-12 w-auto" />
           </Link>

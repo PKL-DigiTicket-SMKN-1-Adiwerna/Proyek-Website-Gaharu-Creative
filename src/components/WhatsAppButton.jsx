@@ -1,13 +1,12 @@
-import { site } from "../data/site.js";
+import { useSite, waHref } from "../lib/useSite.js";
 import { Icon } from "./Icons.jsx";
 
-/* Tombol mengapung ke WhatsApp resmi perusahaan. Nomor diambil dari
- * src/data/site.js supaya hanya ada satu sumber kebenaran.
+/* Tombol mengapung ke WhatsApp resmi perusahaan. Nomor diambil dari panel
+ * admin (/public/site) dengan cadangan src/data/site.js.
  */
 export default function WhatsAppButton() {
-  const href = site.waNumber
-    ? `https://wa.me/${site.waNumber}?text=${encodeURIComponent(site.waMessage)}`
-    : null;
+  const s = useSite();
+  const href = s.waNumber ? waHref(s) : null;
 
   if (!href) return null;
 

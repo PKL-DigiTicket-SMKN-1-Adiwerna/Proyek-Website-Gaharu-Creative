@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Container } from "./ui.jsx";
 import { LogoNama } from "./Logo.jsx";
-import { site, links, footerExtraLinks, footerServices } from "../data/site.js";
+import { footerExtraLinks, footerServices } from "../data/site.js";
+import { useSite, waHref } from "../lib/useSite.js";
 
 /* Kontak footer dibaca dari src/data/site.js supaya hanya ada satu sumber
  * kebenaran (jam kerja, nomor, alamat). Field yang belum dikonfirmasi klien
@@ -18,7 +19,8 @@ const SOCIAL_ICONS = {
 };
 
 export default function Footer() {
-  const socials = site.socials.filter((item) => item.href);
+  const s = useSite();
+  const socials = s.socials.filter((item) => item.href);
 
   return (
     <footer className="border-t border-line bg-white text-muted font-sans">
@@ -29,9 +31,9 @@ export default function Footer() {
           <div className="space-y-6 lg:col-span-5">
             <LogoNama className="h-10 w-auto" />
             <p className="max-w-md text-sm leading-relaxed text-muted">
-              Gaharu Creative adalah agensi digital 360° yang menangani strategi, eksekusi konten,
+              {s.name} adalah agensi digital 360° yang menangani strategi, eksekusi konten,
               sampai produk digital untuk enterprise, institusi, dan UMKM di Indonesia.
-              Mendampingi klien sejak {site.founded}.
+              Mendampingi klien sejak {s.founded}.
             </p>
 
             {/* Ikon Sosial Media: hanya dirender kalau tautan resminya sudah ada. */}
@@ -109,35 +111,35 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <a
-                  href={links.whatsapp}
+                  href={waHref(s)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6"
                 >
-                  {site.waDisplay}
+                  {s.waDisplay}
                 </a>
               </li>
 
-              {site.emailVerified && site.email ? (
+              {s.emailVerified && s.email ? (
                 <li className="flex items-center gap-3">
                   {/* Icon Mail */}
                   <svg className="h-5 w-5 shrink-0 text-button" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">
-                    {site.email}
+                  <a href={`mailto:${s.email}`} className="inline-flex min-h-11 items-center transition-colors hover:text-ink pointer-fine:min-h-6">
+                    {s.email}
                   </a>
                 </li>
               ) : null}
 
-              {site.addressVerified && site.address ? (
+              {s.addressVerified && s.address ? (
                 <li className="flex items-start gap-3">
                   {/* Icon Map Pin */}
                   <svg className="h-5 w-5 shrink-0 text-button mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>{site.address}</span>
+                  <span>{s.address}</span>
                 </li>
               ) : null}
 
@@ -146,18 +148,21 @@ export default function Footer() {
                 <svg className="h-5 w-5 shrink-0 text-button mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{site.hours}</span>
+                <span>{s.hours}</span>
               </li>
             </ul>
-            <p className="text-xs leading-relaxed text-subtle">
-              Email dan alamat kantor belum dikonfirmasi perusahaan, jadi belum kami cantumkan.
-            </p>
+            {/* Catatan ini hanya relevan selama email/alamat belum diisi dari panel. */}
+            {!s.email && !s.address ? (
+              <p className="text-xs leading-relaxed text-subtle">
+                Email dan alamat kantor belum dikonfirmasi perusahaan, jadi belum kami cantumkan.
+              </p>
+            ) : null}
           </div>
         </div>
 
         {/* Bagian Bawah: Copyright dan Tautan Legal */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-xs text-muted sm:flex-row">
-          <p>© {site.founded}-2026 Gaharu Creative. Semua hak dilindungi.</p>
+          <p>© {s.founded}-2026 {s.name}. Semua hak dilindungi.</p>
           <div className="flex flex-wrap items-center gap-4">
             {footerExtraLinks.map((item) =>
               item.to ? (

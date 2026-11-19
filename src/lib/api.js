@@ -141,6 +141,7 @@ export const api = {
   contact: () => apiFetch("/public/contact"),
   testimonials: () => apiFetch("/public/testimonials"),
   awards: () => apiFetch("/public/awards"),
+  stats: () => apiFetch("/public/stats"),
 
   submitInquiry: (payload, idempotencyKey, turnstileToken) =>
     apiFetch("/public/inquiries", {
@@ -371,9 +372,77 @@ export function adaptClients(apiItems) {
   }));
 }
 
-export function adaptSite(apiData) {
-  if (!apiData || typeof apiData !== "object") return null;
-  return apiData;
+/* Identitas situs dari panel admin (/public/site) -> bentuk src/data/site.js.
+ * Nilai kosong atau null tidak menimpa fallback statis, jadi field yang belum
+ * diisi di panel tetap memakai nilai bawaan. Penanda *Verified dinyalakan
+ * untuk field yang benar-benar dikirim backend supaya footer merendernya.
+ */
+const LABEL_SOSIAL = {
+  instagram: "Instagram",
+  linkedin: "LinkedIn",
+  youtube: "YouTube",
+  facebook: "Facebook",
+  tiktok: "TikTok",
+  x: "X",
+  twitter: "X",
+};
+
+function teks(nilai) {
+  return typeof nilai === "string" && nilai.trim() ? nilai.trim() : null;
+}
+
+/* 628111222333 -> +62 811-1222-333 (3 digit awal, sisanya per 4). */
+function nomorTampil(nomor) {
+  const digit = String(nomor).replace(/\D/g, "");
+  const lokal = (digit.startsWith("62") ? digit.slice(2) : digit).replace(/^0/, "");
+  if (!lokal) return null;
+  const sisa = lokal.slice(3).match(/.{1,4}/g) || [];
+  return `+62 ${[lokal.slice(0, 3), ...sisa].filter(Boolean).join("-")}`;
+}
+
+export function adaptSite(payload, fallback = {}) {
+  const p = payload && typeof payload === "object" ? payload : {};
+  const brand = p.brand || {};
+  const contact = p.contact || {};
+  const hasil = { ...fallback };
+
+  const nama = teks(brand.name) || teks(p.brandName);
+  if (nama) hasil.name = nama;
+
+  const tagline = teks(brand.tagline) || teks(p.tagline);
+  if (tagline) hasil.tagline = tagline;
+
+  const email = teks(contact.email) || teks(p.email);
+  if (email) {
+    hasil.email = email;
+    hasil.emailVerified = true;
+  }
+
+  const wa = teks(contact.whatsapp) || teks(p.ctaWhatsapp);
+  if (wa) {
+    hasil.waNumber = wa;
+    hasil.waDisplay = nomorTampil(wa) || wa;
+    hasil.waNumberVerified = true;
+  }
+
+  const alamat = teks(contact.address) || teks(p.address);
+  if (alamat) {
+    hasil.address = alamat;
+    hasil.addressVerified = true;
+  }
+
+  const berdiri = brand.founded_year ?? p.foundedYear;
+  if (berdiri) hasil.founded = Number(berdiri) || hasil.founded;
+
+  const sosial = (Array.isArray(p.social) ? p.social : [])
+    .filter((s) => s && teks(s.url))
+    .map((s) => {
+      const kunci = String(s.platform || "").toLowerCase();
+      return { label: LABEL_SOSIAL[kunci] || s.platform, href: s.url, verified: true };
+    });
+  if (sosial.length) hasil.socials = sosial;
+
+  return hasil;
 }
 
 export function adaptAwards(apiItems) {
