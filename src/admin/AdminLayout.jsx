@@ -1,4 +1,5 @@
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
+import { useTemaTerang } from "../lib/tema.js";
 
 const NAV = [
   { to: "/admin", label: "Dasbor", end: true },
@@ -15,6 +16,7 @@ const NAV = [
 ];
 
 export default function AdminLayout({ children }) {
+  useTemaTerang();
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("admin_token");

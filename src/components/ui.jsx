@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Icon } from "./Icons.jsx";
+import { useT } from "../lib/i18n.js";
 
 /* Primitif tampilan yang dipakai ulang di enam halaman. Warna diambil dari token
  * di src/index.css.
@@ -14,7 +15,7 @@ const buttonBase =
 
 const buttonStyles = {
   primary: "bg-button text-button-text hover:bg-brand-900",
-  secondary: "border border-button bg-paper text-button hover:bg-button/10",
+  secondary: "border border-button bg-paper text-button-sec-ink hover:bg-button/10",
   nav: "bg-button text-button-text hover:bg-brand-900",
 };
 
@@ -100,9 +101,10 @@ export function IconCircle({ name, size = "md", className = "" }) {
 
 /* Slot gambar, peta, atau foto yang isinya belum ada. */
 export function ImageBlock({ label, hint = "", ratio = "aspect-[4/3]", className = "" }) {
+  const t = useT();
   return (
     <div
-      data-placeholder="Data belum diverifikasi"
+      data-placeholder={t("Data belum diverifikasi")}
       className={`flex flex-col items-center justify-center gap-1 rounded-md border border-dashed border-line bg-block p-6 text-center ${ratio} ${className}`}
     >
       <Icon name="layers" className="h-8 w-8 text-muted" />

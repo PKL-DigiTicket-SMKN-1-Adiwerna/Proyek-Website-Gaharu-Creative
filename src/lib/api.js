@@ -123,25 +123,49 @@ export async function apiFetch(path, options = {}) {
 
 // ---------- Endpoint publik ----------
 
+/* Isi konten (layanan, artikel, portofolio, tentang) disimpan per bahasa di DB.
+ * Versi Inggris belum tentu ada, dan backend mengembalikan daftar kosong (atau
+ * 404 untuk detail) kalau barisnya tidak ada. Supaya halaman tidak pernah kosong,
+ * permintaan diulang dengan locale=id; begitu admin mengisi konten Inggris,
+ * versi itu yang dipakai.
+ */
+function kosong(json) {
+  const d = json && json.data;
+  if (Array.isArray(d)) return d.length === 0;
+  if (d && typeof d === "object") return Object.keys(d).length === 0;
+  return d === null || d === undefined;
+}
+
+async function apiKonten(path, opsi = {}) {
+  if (resolveLocale() !== "en") return apiFetch(path, opsi);
+  try {
+    const utama = await apiFetch(path, opsi);
+    if (!kosong(utama)) return utama;
+  } catch (err) {
+    if (!(err instanceof ApiError) || err.status !== 404) throw err;
+  }
+  return apiFetch(path, { ...opsi, locale: "id" });
+}
+
 export const api = {
   site: () => apiFetch("/public/site"),
-  home: () => apiFetch("/public/home"),
-  services: () => apiFetch("/public/services"),
-  service: (slug) => apiFetch(`/public/services/${encodeURIComponent(slug)}`),
-  portfolioCategories: () => apiFetch("/public/portfolio/categories"),
-  portfolioHero: () => apiFetch("/public/portfolio/hero"),
-  portfolio: (params = {}) => apiFetch(`/public/portfolio${buildQuery(params)}`),
-  portfolioItem: (slug) => apiFetch(`/public/portfolio/${encodeURIComponent(slug)}`),
-  articleCategories: () => apiFetch("/public/articles/categories"),
-  articleHero: () => apiFetch("/public/articles/hero"),
-  articles: (params = {}) => apiFetch(`/public/articles${buildQuery(params)}`),
-  article: (slug) => apiFetch(`/public/articles/${encodeURIComponent(slug)}`),
-  about: () => apiFetch("/public/about"),
-  clients: () => apiFetch("/public/clients"),
-  contact: () => apiFetch("/public/contact"),
-  testimonials: () => apiFetch("/public/testimonials"),
-  awards: () => apiFetch("/public/awards"),
-  stats: () => apiFetch("/public/stats"),
+  home: () => apiKonten("/public/home"),
+  services: () => apiKonten("/public/services"),
+  service: (slug) => apiKonten(`/public/services/${encodeURIComponent(slug)}`),
+  portfolioCategories: () => apiKonten("/public/portfolio/categories"),
+  portfolioHero: () => apiKonten("/public/portfolio/hero"),
+  portfolio: (params = {}) => apiKonten(`/public/portfolio${buildQuery(params)}`),
+  portfolioItem: (slug) => apiKonten(`/public/portfolio/${encodeURIComponent(slug)}`),
+  articleCategories: () => apiKonten("/public/articles/categories"),
+  articleHero: () => apiKonten("/public/articles/hero"),
+  articles: (params = {}) => apiKonten(`/public/articles${buildQuery(params)}`),
+  article: (slug) => apiKonten(`/public/articles/${encodeURIComponent(slug)}`),
+  about: () => apiKonten("/public/about"),
+  clients: () => apiKonten("/public/clients"),
+  contact: () => apiKonten("/public/contact"),
+  testimonials: () => apiKonten("/public/testimonials"),
+  awards: () => apiKonten("/public/awards"),
+  stats: () => apiKonten("/public/stats"),
 
   submitInquiry: (payload, idempotencyKey, turnstileToken) =>
     apiFetch("/public/inquiries", {

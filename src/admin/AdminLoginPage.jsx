@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminApi, setAdminToken } from "../lib/adminApi";
+import { useTemaTerang } from "../lib/tema.js";
 
 export default function AdminLoginPage() {
+  useTemaTerang();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

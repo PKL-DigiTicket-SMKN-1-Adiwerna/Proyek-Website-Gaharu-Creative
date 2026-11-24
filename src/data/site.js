@@ -108,5 +108,5 @@ export const footerServices = [
 
 export const clientLanguages = [
   { code: "ID", label: "Bahasa Indonesia", available: true },
-  { code: "EN", label: "English", available: false },
+  { code: "EN", label: "English", available: true },
 ];

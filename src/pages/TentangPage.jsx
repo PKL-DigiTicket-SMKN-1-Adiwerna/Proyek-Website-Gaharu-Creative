@@ -12,6 +12,8 @@ import { Icon } from "../components/Icons.jsx";
 import { site, links } from "../data/site.js";
 import { api } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { linksFor, useSite } from "../lib/useSite.js";
+import { useT } from "../lib/i18n.js";
 import {
   tentangIntro,
   ceritaCards,
@@ -26,6 +28,9 @@ const description =
   "Gaharu Creative adalah konsultan digital marketing & agensi kreatif terpercaya di Semarang sejak 2020: strategi, digital branding, pembuatan website, dan pemasaran digital.";
 
 export default function TentangPage() {
+  const t = useT();
+  /* Tautan WhatsApp/email ikut setelan situs. */
+  const wa = linksFor(useSite());
   // Konten dari panel admin lewat /public/about; jatuh ke berkas statis bila
   // backend mengembalikan kosong supaya halaman tetap utuh.
   const { data: about } = useApi(() => api.about().then((json) => ({ data: json.data })), null);
@@ -52,18 +57,18 @@ export default function TentangPage() {
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
-                Tentang Gaharu Creative
+                {t("Tentang Gaharu Creative")}
               </p>
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
                 <span className="text-brand-700">Gaharu Creative</span><br />
-                Konsultan Digital Marketing Semarang
+                {t("Konsultan Digital Marketing Semarang")}
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-                Agensi kreatif dan konsultan digital marketing 360 berbasis di Semarang dan Indonesia yang berfokus pada pertumbuhan bisnis secara terukur.
+                {t("Agensi kreatif dan konsultan digital marketing 360 berbasis di Semarang dan Indonesia yang berfokus pada pertumbuhan bisnis secara terukur.")}
               </p>
               <div className="mt-8">
-                <Button to={links.konsultasi} kind="primary">
-                  Konsultasi Gratis
+                <Button href={wa.konsultasi} kind="primary">
+                  {t("Konsultasi Gratis")}
                 </Button>
               </div>
             </div>
@@ -78,7 +83,7 @@ export default function TentangPage() {
                 <div data-parallax="1" className="h-full w-full">
                   <img
                     src="/Tentang Kami.webp"
-                    alt="Tim Gaharu Creative"
+                    alt={t("Tim Gaharu Creative")}
                     width={1400}
                     height={935}
                     fetchPriority="high"
@@ -95,9 +100,9 @@ export default function TentangPage() {
       {/* Ringkasan Dedikasi */}
       <Section divider>
         <div className="group rounded-lg border border-line bg-block p-6 text-center transition-all duration-300 hover:border-brand-700 hover:shadow-lg sm:p-10">
-          <Tag>{tentangIntro.subtitle}</Tag>
+          <Tag>{t(tentangIntro.subtitle)}</Tag>
           <h2 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            {tentangIntro.title}
+            {t(tentangIntro.title)}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
             {tentangIntro.description}
@@ -112,7 +117,7 @@ export default function TentangPage() {
           <div className="group overflow-hidden rounded-lg border border-line bg-paper transition-all duration-300">
             <img
               src="/Tentang Kami-Cerita Kami.webp"
-              alt="Perjalanan Gaharu Creative"
+              alt={t("Perjalanan Gaharu Creative")}
               className="aspect-[4/3] w-full object-cover object-center transition-transform duration-700"
               loading="lazy"
               decoding="async"
@@ -120,20 +125,20 @@ export default function TentangPage() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">Cerita Kami</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">{t("Cerita Kami")}</h2>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              Perjalanan dimulai sejak {site.founded} sebagai agensi kreatif dan konsultan digital marketing Semarang, berkembang menjadi tim yang fokus pada hasil dan kolaborasi strategis.
+              {t("Perjalanan dimulai sejak")} {site.founded}{" "}{t("sebagai agensi kreatif dan konsultan digital marketing Semarang, berkembang menjadi tim yang fokus pada hasil dan kolaborasi strategis.")}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
-                href={links.mail}
+                href={wa.mail}
                 kind="secondary"
-                title="Company profile belum tersedia, kirim email untuk memintanya."
+                title={t("Company profile belum tersedia, kirim email untuk memintanya.")}
               >
-                Unduh Company Profile
+                {t("Unduh Company Profile")}
               </Button>
               <Button to={links.layanan} kind="primary">
-                Lihat Layanan
+                {t("Lihat Layanan")}
               </Button>
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -148,9 +153,9 @@ export default function TentangPage() {
                       decoding="async"
                     />
                   ) : null}
-                  <h3 className="text-base font-bold text-ink">{item.title}</h3>
+                  <h3 className="text-base font-bold text-ink">{t(item.title)}</h3>
                   <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-700">
-                    {item.label}
+                    {t(item.label)}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted">{item.detail}</p>
                 </article>
@@ -165,17 +170,17 @@ export default function TentangPage() {
       {/* Misi dan Tujuan */}
       <Section divider className="bg-lav-50">
         <Kepala
-          judul="Misi dan Tujuan"
-          catatan="Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu."
+          judul={t("Misi dan Tujuan")}
+          catatan={t("Dua arah yang saling melengkapi: bagaimana kami bekerja (misi) dan apa yang ingin dicapai (tujuan) melalui eksekusi strategi digital marketing terpadu.")}
         />
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {misi.map((item) => (
             <article key={item.title} className="flex gap-4 rounded-lg border border-line bg-paper p-6 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <IconCircle name={item.icon} />
               <div className="min-w-0">
-                <h3 className="text-lg font-bold text-ink">{item.title}</h3>
+                <h3 className="text-lg font-bold text-ink">{t(item.title)}</h3>
                 <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-700">
-                  {item.label}
+                  {t(item.label)}
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.detail}</p>
               </div>
@@ -183,8 +188,8 @@ export default function TentangPage() {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <Button to={links.konsultasi} kind="primary" className="shadow-md transition-transform">
-            Diskusikan Kebutuhan Anda
+          <Button href={wa.konsultasi} kind="primary" className="shadow-md transition-transform">
+            {t("Diskusikan Kebutuhan Anda")}
           </Button>
         </div>
       </Section>
@@ -192,13 +197,13 @@ export default function TentangPage() {
       {/* Nilai Perusahaan */}
       <Section divider>
         <Kepala
-          judul="Nilai Perusahaan"
-          catatan="Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil."
+          judul={t("Nilai Perusahaan")}
+          catatan={t("Prinsip kerja yang menuntun setiap proyek digital branding, dari perencanaan sampai pengukuran hasil.")}
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {nilai.map((item) => (
             <article key={item.title} className="rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
-              <h3 className="text-base font-bold text-ink">{item.title}</h3>
+              <h3 className="text-base font-bold text-ink">{t(item.title)}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
             </article>
           ))}
@@ -208,8 +213,8 @@ export default function TentangPage() {
       {/* Tim Inti */}
       <Section divider className="bg-lav-50">
         <Kepala
-          judul="Tim Inti"
-          catatan="Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang."
+          judul={t("Tim Inti")}
+          catatan={t("Peran kunci yang memastikan kualitas strategi, kreativitas, pemasaran digital, dan teknis berjalan seimbang.")}
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {pengurus.map((item, i) => (
@@ -233,7 +238,7 @@ export default function TentangPage() {
                   <Icon name="team" className="h-6 w-6" />
                 </span>
               )}
-              <h3 className="mt-4 text-base font-semibold text-ink">{item.role}</h3>
+              <h3 className="mt-4 text-base font-semibold text-ink">{t(item.role)}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
             </article>
           ))}
@@ -243,17 +248,17 @@ export default function TentangPage() {
       {/* Legalitas */}
       <Section divider>
         <Kepala
-          judul="Legalitas"
-          catatan="Dokumen dan informasi penting untuk meningkatkan kepercayaan dalam kerja sama."
+          judul={t("Legalitas")}
+          catatan={t("Dokumen dan informasi penting untuk meningkatkan kepercayaan dalam kerja sama.")}
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
           {legality.map((item) => (
             <article key={item.title} className="flex gap-4 rounded-lg border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-700 hover:shadow-md">
               <IconCircle name={item.icon} />
               <div className="min-w-0">
-                <h3 className="text-sm font-bold text-ink">{item.title}</h3>
+                <h3 className="text-sm font-bold text-ink">{t(item.title)}</h3>
                 <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-700">
-                  {item.label}
+                  {t(item.label)}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
               </div>
@@ -261,7 +266,7 @@ export default function TentangPage() {
           ))}
         </div>
         <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-muted">
-          {site.legal.legalNote}
+          {t(site.legal.legalNote)}
         </p>
       </Section>
     </>

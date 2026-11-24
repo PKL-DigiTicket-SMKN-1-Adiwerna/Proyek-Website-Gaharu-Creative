@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { site } from "../data/site.js";
+import { useSite } from "../lib/useSite.js";
 import { services } from "../data/services.js";
 import { Button, Tag } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
+import { useT } from "../lib/i18n.js";
 
 const GOALS = [
   { key: "brand", label: "Membangun atau memperbarui brand", detail: "Identitas visual, positioning, dan tone of voice.", icon: "brand" },
@@ -146,6 +147,9 @@ function toggle(list, value) {
 }
 
 export default function Diagnosa() {
+  const t = useT();
+  /* Nomor WhatsApp dan email dari setelan situs, bukan nilai statis. */
+  const situs = useSite();
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [goal, setGoal] = useState(null);
@@ -223,19 +227,19 @@ export default function Diagnosa() {
   const summary = useMemo(() => {
     if (!goal) return "";
     return [
-      "Diagnosa Digital 360 - Gaharu Creative",
-      `Tujuan utama: ${GOAL_LABELS[goal]}`,
-      `Segmen: ${SEGMENT_LABELS[segment]}`,
-      `Kanal aktif: ${channels.length ? channels.map((key) => CHANNELS.find((c) => c.key === key).label).join(", ") : "-"}`,
-      `Tantangan: ${pains.length ? pains.map((key) => PAINS.find((p) => p.key === key).label).join(", ") : "-"}`,
-      `Waktu yang realistis: ${TIMELINE_LABELS[timeline] || "-"}`,
-      `Skala kebutuhan: ${SCALE_LABELS[scale] || "-"}`,
-      `Rekomendasi layanan: ${recomputed.map((s) => s.title).join(", ")}`,
-      `Perkiraan kompleksitas: ${complexity} (estimasi ${duration})`,
+      `${t("Diagnosa Digital 360")} - Gaharu Creative`,
+      `${t("Tujuan utama:")} ${t(GOAL_LABELS[goal])}`,
+      `${t("Segmen:")} ${t(SEGMENT_LABELS[segment])}`,
+      `${t("Kanal aktif:")} ${channels.length ? channels.map((key) => t(CHANNELS.find((c) => c.key === key).label)).join(", ") : "-"}`,
+      `${t("Tantangan:")} ${pains.length ? pains.map((key) => t(PAINS.find((p) => p.key === key).label)).join(", ") : "-"}`,
+      `${t("Waktu yang realistis:")} ${t(TIMELINE_LABELS[timeline]) || "-"}`,
+      `${t("Skala kebutuhan:")} ${t(SCALE_LABELS[scale]) || "-"}`,
+      `${t("Rekomendasi layanan:")} ${recomputed.map((s) => s.title).join(", ")}`,
+      `${t("Perkiraan kompleksitas:")} ${t(complexity)} (${t("estimasi")} ${t(duration)})`,
       "",
-      "Ringkasan ini dihasilkan otomatis dari jawaban di diagnosa digital. Angka dan ruang lingkup final disesuaikan setelah discovery.",
+      t("Ringkasan ini dihasilkan otomatis dari jawaban di diagnosa digital. Angka dan ruang lingkup final disesuaikan setelah discovery."),
     ].join("\n");
-  }, [goal, segment, channels, pains, timeline, scale, recomputed, complexity, duration]);
+  }, [goal, segment, channels, pains, timeline, scale, recomputed, complexity, duration, t]);
 
   const canContinue = () => {
     if (step === 0) return Boolean(goal);
@@ -257,12 +261,12 @@ export default function Diagnosa() {
     }
   };
 
-  const waHref = `https://wa.me/${site.waNumber}?text=${encodeURIComponent(summary)}`;
+  const waHref = `https://wa.me/${situs.waNumber}?text=${encodeURIComponent(summary)}`;
   /* Email resmi belum dikonfirmasi, jadi tombol email baru muncul kalau
    * site.emailVerified true (temuan audit C01, diterima 17 Okt 2026). */
   const mailHref =
-    site.emailVerified && site.email
-      ? `mailto:${site.email}?subject=${encodeURIComponent("Hasil Diagnosa Digital 360")}&body=${encodeURIComponent(summary)}`
+    situs.emailVerified && situs.email
+      ? `mailto:${situs.email}?subject=${encodeURIComponent("Hasil Diagnosa Digital 360")}&body=${encodeURIComponent(summary)}`
       : null;
 
   if (!open) {
@@ -274,10 +278,10 @@ export default function Diagnosa() {
           setOpen(true);
         }}
         className="float-in-late fixed bottom-24 right-5 z-40 inline-flex items-center justify-center gap-2 rounded-full border border-button bg-button p-3 text-sm font-semibold text-button-text shadow-sm transition-colors hover:opacity-90 2xl:gap-2 2xl:rounded-lg 2xl:px-4 2xl:py-3"
-        aria-label="Buka diagnosa digital 360"
+        aria-label={t("Buka diagnosa digital 360")}
       >
         <Icon name="compass" className="h-5 w-5" />
-        <span className="hidden 2xl:inline">Diagnosa Digital</span>
+        <span className="hidden 2xl:inline">{t("Diagnosa Digital")}</span>
       </button>
     );
   }
@@ -286,7 +290,7 @@ export default function Diagnosa() {
     <>
       <button
         type="button"
-        aria-label="Tutup diagnosa"
+        aria-label={t("Tutup diagnosa")}
         className="fixed inset-0 z-[60] bg-ink/20 backdrop-blur-sm"
         onClick={close}
       />
@@ -302,13 +306,13 @@ export default function Diagnosa() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted">Gaharu Studio</p>
             <h2 id="diagnosa-title" className="mt-1 text-2xl font-bold tracking-tight text-ink">
-              Diagnosa Digital 360
+              {t("Diagnosa Digital 360")}
             </h2>
           </div>
           <button
             type="button"
             onClick={close}
-            aria-label="Tutup"
+            aria-label={t("Tutup")}
             className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-field text-ink hover:bg-block"
           >
             <span aria-hidden="true" className="text-lg leading-none">&times;</span>
@@ -318,7 +322,7 @@ export default function Diagnosa() {
         <div className="mt-5">
           <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted">
             <span>
-              Langkah {Math.min(step + 1, steps - 1)} dari {steps - 1}
+              {t("Langkah")} {Math.min(step + 1, steps - 1)} {t("dari")} {steps - 1}
             </span>
             <span>{progress}%</span>
           </div>
@@ -334,7 +338,7 @@ export default function Diagnosa() {
           {step === 0 ? (
             <div>
               <p className="text-base leading-relaxed text-muted">
-                Pilih satu tujuan utama. Jawaban ini menentukan kombinasi layanan yang paling masuk akal.
+                {t("Pilih satu tujuan utama. Jawaban ini menentukan kombinasi layanan yang paling masuk akal.")}
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {GOALS.map((item) => (
@@ -343,8 +347,8 @@ export default function Diagnosa() {
                     active={goal === item.key}
                     onClick={() => setGoal(item.key)}
                     icon={item.icon}
-                    title={item.label}
-                    detail={item.detail}
+                    title={t(item.label)}
+                    detail={t(item.detail)}
                   />
                 ))}
               </div>
@@ -353,15 +357,15 @@ export default function Diagnosa() {
 
           {step === 1 ? (
             <div>
-              <p className="text-base leading-relaxed text-muted">Segmen mana yang paling mendekati bisnis Anda?</p>
+              <p className="text-base leading-relaxed text-muted">{t("Segmen mana yang paling mendekati bisnis Anda?")}</p>
               <div className="mt-5 grid gap-3">
                 {SEGMENTS.map((item) => (
                   <OptionCard
                     key={item.key}
                     active={segment === item.key}
                     onClick={() => setSegment(item.key)}
-                    title={item.label}
-                    detail={item.detail}
+                    title={t(item.label)}
+                    detail={t(item.detail)}
                   />
                 ))}
               </div>
@@ -371,7 +375,7 @@ export default function Diagnosa() {
           {step === 2 ? (
             <div>
               <p className="text-base leading-relaxed text-muted">
-                Kanal apa saja yang saat ini aktif? Pilih minimal satu.
+                {t("Kanal apa saja yang saat ini aktif? Pilih minimal satu.")}
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {CHANNELS.map((item) => (
@@ -380,7 +384,7 @@ export default function Diagnosa() {
                     active={channels.includes(item.key)}
                     onClick={() => setChannels((prev) => toggle(prev, item.key))}
                     icon={item.icon}
-                    title={item.label}
+                    title={t(item.label)}
                     multi
                   />
                 ))}
@@ -391,7 +395,7 @@ export default function Diagnosa() {
           {step === 3 ? (
             <div>
               <p className="text-base leading-relaxed text-muted">
-                Tantangan mana yang paling mengganggu saat ini? Pilih minimal satu.
+                {t("Tantangan mana yang paling mengganggu saat ini? Pilih minimal satu.")}
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {PAINS.map((item) => (
@@ -399,7 +403,7 @@ export default function Diagnosa() {
                     key={item.key}
                     active={pains.includes(item.key)}
                     onClick={() => setPains((prev) => toggle(prev, item.key))}
-                    title={item.label}
+                    title={t(item.label)}
                     multi
                   />
                 ))}
@@ -410,31 +414,31 @@ export default function Diagnosa() {
           {step === 4 ? (
             <div className="grid gap-6 lg:grid-cols-2">
               <div>
-                <p className="text-base font-bold text-ink">Waktu yang realistis</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted">Kapan hasil pertama perlu terlihat?</p>
+                <p className="text-base font-bold text-ink">{t("Waktu yang realistis")}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{t("Kapan hasil pertama perlu terlihat?")}</p>
                 <div className="mt-4 grid gap-3">
                   {TIMELINES.map((item) => (
                     <OptionCard
                       key={item.key}
                       active={timeline === item.key}
                       onClick={() => setTimeline(item.key)}
-                      title={item.label}
-                      detail={item.detail}
+                      title={t(item.label)}
+                      detail={t(item.detail)}
                     />
                   ))}
                 </div>
               </div>
               <div>
-                <p className="text-base font-bold text-ink">Skala kebutuhan</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted">Seberapa luas program yang diharapkan?</p>
+                <p className="text-base font-bold text-ink">{t("Skala kebutuhan")}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{t("Seberapa luas program yang diharapkan?")}</p>
                 <div className="mt-4 grid gap-3">
                   {SCALES.map((item) => (
                     <OptionCard
                       key={item.key}
                       active={scale === item.key}
                       onClick={() => setScale(item.key)}
-                      title={item.label}
-                      detail={item.detail}
+                      title={t(item.label)}
+                      detail={t(item.detail)}
                     />
                   ))}
                 </div>
@@ -444,12 +448,12 @@ export default function Diagnosa() {
 
           {step === 5 ? (
             <div>
-              <Tag>Hasil diagnosa</Tag>
+              <Tag>{t("Hasil diagnosa")}</Tag>
               <h3 className="mt-4 text-2xl font-bold tracking-tight text-ink">
-                Rekomendasi layanan untuk Anda
+                {t("Rekomendasi layanan untuk Anda")}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
-                Berdasarkan jawaban Anda, berikut kombinasi layanan yang kami sarankan untuk memulai.
+                {t("Berdasarkan jawaban Anda, berikut kombinasi layanan yang kami sarankan untuk memulai.")}
               </p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -464,7 +468,7 @@ export default function Diagnosa() {
                       </span>
                       <span>
                         <span className="block text-xs font-semibold uppercase tracking-widest text-muted">
-                          Prioritas {index + 1}
+                          {t("Prioritas")} {index + 1}
                         </span>
                         <span className="block text-sm font-bold text-ink">{service.title}</span>
                       </span>
@@ -476,37 +480,37 @@ export default function Diagnosa() {
 
               <div className="mt-6 grid gap-4 rounded-md border border-line bg-paper p-5 sm:grid-cols-2">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted">Perkiraan kompleksitas</p>
-                  <p className="mt-2 text-lg font-bold text-ink">{complexity}</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted">{t("Perkiraan kompleksitas")}</p>
+                  <p className="mt-2 text-lg font-bold text-ink">{t(complexity)}</p>
                   <p className="mt-1 text-sm leading-relaxed text-muted">
-                    Estimasi durasi {duration}. Final setelah discovery.
+                    {t("Estimasi durasi")} {t(duration)}. {t("Final setelah discovery.")}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted">Langkah selanjutnya</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted">{t("Langkah selanjutnya")}</p>
                   <ul className="mt-2 space-y-1 text-sm leading-relaxed text-ink">
-                    <li>1. Kirim ringkasan ini ke tim Gaharu.</li>
-                    <li>2. Kami balas dengan pertanyaan lanjutan.</li>
-                    <li>3. Susun roadmap dan estimasi yang pas.</li>
+                    <li>{t("1. Kirim ringkasan ini ke tim Gaharu.")}</li>
+                    <li>{t("2. Kami balas dengan pertanyaan lanjutan.")}</li>
+                    <li>{t("3. Susun roadmap dan estimasi yang pas.")}</li>
                   </ul>
                 </div>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button href={waHref} kind="primary">
-                  Kirim ke WhatsApp
+                  {t("Kirim ke WhatsApp")}
                 </Button>
                 {mailHref ? (
                   <Button href={mailHref} kind="secondary">
-                    Kirim lewat Email
+                    {t("Kirim lewat Email")}
                   </Button>
                 ) : null}
                 <Button kind="nav" onClick={copySummary}>
                   {copyState === "copied"
-                    ? "Ringkasan tersalin"
+                    ? t("Ringkasan tersalin")
                     : copyState === "error"
-                    ? "Gagal menyalin"
-                    : "Salin ringkasan"}
+                    ? t("Gagal menyalin")
+                    : t("Salin ringkasan")}
                 </Button>
               </div>
 
@@ -523,17 +527,17 @@ export default function Diagnosa() {
             onClick={() => setStep((prev) => Math.max(0, prev - 1))}
             disabled={step === 0}
           >
-            Kembali
+            {t("Kembali")}
           </Button>
 
           <div className="flex flex-wrap gap-3">
             {step < 5 ? (
               <Button kind="primary" onClick={() => setStep((prev) => prev + 1)} disabled={!canContinue()}>
-                Lanjut
+                {t("Lanjut")}
               </Button>
             ) : (
               <Button kind="secondary" onClick={reset}>
-                Ulangi diagnosa
+                {t("Ulangi diagnosa")}
               </Button>
             )}
           </div>

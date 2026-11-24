@@ -3,9 +3,10 @@ import { posts as staticPosts } from "../data/insights.js";
 import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section, Tag } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
-import { links } from "../data/site.js";
 import { api, adaptArticles } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { linksFor, useSite } from "../lib/useSite.js";
+import { useT } from "../lib/i18n.js";
 
 /* Semua artikel lain ditampilkan; yang sekategori didahulukan supaya artikel
  * yang berhubungan tetap muncul paling atas.
@@ -27,6 +28,9 @@ const COL = "mx-auto w-full max-w-3xl";
  * Kolom baca satu ukuran di semua layar supaya margin kiri dan kanan sama rata.
  */
 export default function InsightDetailPage() {
+  const t = useT();
+  /* Tautan WhatsApp ikut setelan situs. */
+  const wa = linksFor(useSite());
   const { slug } = useParams();
   const { data: apiPosts, loading } = useApi(
     () => api.articles().then((j) => ({ data: adaptArticles(j.data) })),
@@ -41,23 +45,23 @@ export default function InsightDetailPage() {
     if (loading) {
       return (
         <Section>
-          <p className="text-base text-muted">Memuat artikel...</p>
+          <p className="text-base text-muted">{t("Memuat artikel...")}</p>
         </Section>
       );
     }
     return (
       <Section>
         <div className="mx-auto max-w-xl text-center">
-          <h1 className="text-3xl font-bold text-ink">Artikel tidak ditemukan</h1>
+          <h1 className="text-3xl font-bold text-ink">{t("Artikel tidak ditemukan")}</h1>
           <p className="mt-3 text-base leading-relaxed text-muted">
-            Artikel dengan alamat tersebut belum ada di daftar Insight kami.
+            {t("Artikel dengan alamat tersebut belum ada di daftar Insight kami.")}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button to="/insight" kind="primary">
-              Lihat semua artikel
+              {t("Lihat semua artikel")}
             </Button>
-            <Button href={links.konsultasi} kind="secondary">
-              Tanya lewat WhatsApp
+            <Button href={wa.konsultasi} kind="secondary">
+              {t("Tanya lewat WhatsApp")}
             </Button>
           </div>
         </div>
@@ -74,11 +78,11 @@ export default function InsightDetailPage() {
           <div className={COL}>
             <nav aria-label="Breadcrumb" className="text-xs text-subtle">
               <Link to="/" className="inline-flex min-h-6 items-center hover:text-brand-700">
-                Beranda
+                {t("Beranda")}
               </Link>
               <span className="px-2">›</span>
               <Link to="/insight" className="inline-flex min-h-6 items-center hover:text-brand-700">
-                Insight
+                {t("Insight")}
               </Link>
               <span className="px-2">›</span>
               <span className="text-ink">{post.tag}</span>
@@ -93,7 +97,7 @@ export default function InsightDetailPage() {
               </h1>
               <p className="mt-4 text-base leading-relaxed text-muted">{post.excerpt}</p>
               <p className="mt-4 text-xs text-subtle">
-                {post.authorName || "Tim Gaharu Creative"}
+                {post.authorName || t("Tim Gaharu Creative")}
                 {post.dateLabel || post.publishedLabel ? ` · ${post.dateLabel || post.publishedLabel}` : ""}
               </p>
             </div>
@@ -129,7 +133,7 @@ export default function InsightDetailPage() {
           {terkait.length > 0 ? (
             <div className="mb-10 border-t border-line pt-8">
               <h2 className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                Artikel terkait
+                {t("Artikel terkait")}
               </h2>
               <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {terkait.map((item) => (
@@ -137,7 +141,7 @@ export default function InsightDetailPage() {
                     {/* Seluruh kartu adalah tautan, bukan hanya judulnya. */}
                     <Link
                       to={`/insight/${item.slug}`}
-                      className="group flex h-full flex-col rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-600"
+                      className="group flex h-full flex-col rounded-2xl border border-line bg-paper p-4 transition-colors hover:border-brand-600"
                     >
                       <div className="mb-3 flex items-center justify-between gap-2">
                         <Tag>{item.tag || item.categoryName || item.category}</Tag>
@@ -181,19 +185,19 @@ export default function InsightDetailPage() {
           {/* Box CTA (WhatsApp & Semua artikel Insight) tetap selalu tampil di semua artikel */}
           <div className="rounded-lg border border-line bg-block p-6">
             <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
-              {post.content ? "Diskusi Lebih Lanjut" : "Naskah menyusul"}
+              {post.content ? t("Diskusi Lebih Lanjut") : t("Naskah menyusul")}
             </p>
             <p className="mt-3 text-base leading-relaxed text-muted">
               {post.content
-                ? "Apakah Anda ingin menerapkan strategi di atas untuk bisnis Anda? Diskusi langsung dengan tim kami untuk mendapatkan solusi yang spesifik."
-                : "Isi lengkap artikel ini sedang ditulis. Kalau Anda butuh pembahasan untuk kasus bisnis Anda sekarang, tanyakan langsung supaya bisa dibahas dengan konteks Anda."}
+                ? t("Apakah Anda ingin menerapkan strategi di atas untuk bisnis Anda? Diskusi langsung dengan tim kami untuk mendapatkan solusi yang spesifik.")
+                : t("Isi lengkap artikel ini sedang ditulis. Kalau Anda butuh pembahasan untuk kasus bisnis Anda sekarang, tanyakan langsung supaya bisa dibahas dengan konteks Anda.")}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button href={links.konsultasi} kind="primary">
-                Tanya lewat WhatsApp
+              <Button href={wa.konsultasi} kind="primary">
+                {t("Tanya lewat WhatsApp")}
               </Button>
               <Button to="/insight" kind="secondary">
-                Semua artikel Insight
+                {t("Semua artikel Insight")}
               </Button>
             </div>
           </div>

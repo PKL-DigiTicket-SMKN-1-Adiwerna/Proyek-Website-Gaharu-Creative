@@ -214,8 +214,17 @@ export default function AdminPortfolioPage() {
                 <Field label="Ringkasan kartu" wajib hint="Satu sampai dua kalimat, tampil di bawah judul kartu.">
                   <textarea className={INPUT} rows={3} value={form.ringkasan} onChange={(e) => setForm({ ...form, ringkasan: e.target.value })} />
                 </Field>
-                <Field label="Isi detail" hint="Opsional, tampil di halaman detail portofolio.">
-                  <textarea className={INPUT} rows={5} value={form.isi} onChange={(e) => setForm({ ...form, isi: e.target.value })} />
+                <Field
+                  label="Isi detail"
+                  hint="Opsional. Pakai penanda supaya tata letak halaman detail sama seperti studi kasus lama: '## Judul bagian' untuk bagian baru, '- poin' untuk kartu output, 'Nilai | Label' untuk kartu metrik (contoh: +320% | Omzet penjualan), dan '> kalimat' untuk kutipan testimoni."
+                >
+                  <textarea
+                    className={INPUT}
+                    rows={8}
+                    value={form.isi}
+                    onChange={(e) => setForm({ ...form, isi: e.target.value })}
+                    placeholder={"## Tantangan\nKendala yang dihadapi klien.\n\n## Solusi\nPendekatan yang dipakai tim.\n\n## Output\n- Katalog produk\n- Kalender konten\n\n## Dampak\n+320% | Omzet penjualan\n3.8x | ROAS"}
+                  />
                 </Field>
               </fieldset>
 

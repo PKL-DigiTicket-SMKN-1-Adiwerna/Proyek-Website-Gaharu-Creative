@@ -2,6 +2,7 @@ import { Section, Kepala, Tag } from "./ui.jsx";
 import { rekamJejak, penghargaan, MITRA_LOGOS } from "../data/klien.js";
 import { api, adaptClients, adaptAwards } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { useT } from "../lib/i18n.js";
 
 /* Section rekam jejak: kalimat pengantar, dinding logo mitra, dan daftar
  * penghargaan. Dipakai di Beranda dan Tentang supaya narasinya konsisten.
@@ -38,6 +39,7 @@ function LogoSel({ item }) {
 }
 
 export default function RekamJejak({ withHead = true }) {
+  const t = useT();
   const { data } = useApi(
     () => api.clients().then((json) => ({ data: adaptClients(json.data) })),
     MITRA_LOGOS,
@@ -56,15 +58,15 @@ export default function RekamJejak({ withHead = true }) {
     <Section divider className="bg-lav-50">
       {withHead ? (
         <Kepala
-          nomor="Rekam jejak"
-          judul={rekamJejak.title}
-          catatan="Daftar institusi yang telah berkolaborasi dengan kami."
+          nomor={t("Rekam jejak")}
+          judul={t(rekamJejak.title)}
+          catatan={t("Daftar institusi yang telah berkolaborasi dengan kami.")}
         />
       ) : null}
 
       <div className="mx-auto mt-8 max-w-3xl rounded-lg border border-line bg-paper p-6 sm:p-8">
-        <Tag>Mitra Strategis</Tag>
-        <p className="mt-4 text-base leading-relaxed text-muted">{rekamJejak.intro}</p>
+        <Tag>{t("Mitra Strategis")}</Tag>
+        <p className="mt-4 text-base leading-relaxed text-muted">{t(rekamJejak.intro)}</p>
       </div>
 
       <div className="mt-10 space-y-10">
@@ -74,8 +76,10 @@ export default function RekamJejak({ withHead = true }) {
           return (
             <div key={grup.key}>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-base font-bold tracking-tight text-ink sm:text-lg">{grup.label}</h3>
-                <p className="text-sm text-muted">{isi.length} institusi</p>
+                <h3 className="text-base font-bold tracking-tight text-ink sm:text-lg">
+                  {grup.key === "pemerintah" ? t("Kementerian dan Lembaga Pemerintah") : t("Perusahaan Swasta dan BUMN")}
+                </h3>
+                <p className="text-sm text-muted">{isi.length} {t("institusi")}</p>
               </div>
               <ul className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                 {isi.map((item) => (
@@ -89,7 +93,7 @@ export default function RekamJejak({ withHead = true }) {
 
       <div className="mt-10">
         <h3 className="text-lg font-bold tracking-tight text-ink sm:text-xl">
-          Penghargaan dan Rekognisi Internasional
+          {t("Penghargaan dan Rekognisi Internasional")}
         </h3>
         <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {daftarAwards

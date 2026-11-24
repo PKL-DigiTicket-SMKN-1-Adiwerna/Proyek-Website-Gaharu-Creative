@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { links } from "../data/site.js";
 import { ctaSlides } from "../data/cta.js";
 import { Container } from "./ui.jsx";
+import { linksFor, useSite } from "../lib/useSite.js";
+import { useT } from "../lib/i18n.js";
 
 /* Band CTA penutup halaman (DESAIN.md v2 bagian 3.10): satu gradasi hijau,
  * eyebrow pill transparan, judul putih, lalu dua tombol. Slide teksnya berbeda
  * per halaman, komponennya satu.
  */
-const slideHref = (href) => {
-  if (href === "whatsapp") return links.whatsapp;
-  if (href === "email") return links.mail;
-  return href;
-};
-
 const bandClass =
   "bg-[linear-gradient(120deg,var(--brand-800)_0%,var(--brand-900)_100%)]";
 const buttonPrimary =
@@ -22,23 +17,31 @@ const buttonSecondary =
   "inline-flex min-h-11 items-center justify-center rounded-lg border border-white/50 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10";
 
 export default function CtaBanner({ page }) {
+  const t = useT();
+  /* Tautan WhatsApp/email dari setelan situs, bukan nilai statis. */
+  const wa = linksFor(useSite());
+  const slideHref = (href) => {
+    if (href === "whatsapp") return wa.whatsapp;
+    if (href === "email") return wa.mail;
+    return href;
+  };
   const slides = ctaSlides[page] || ctaSlides.beranda;
   const [index, setIndex] = useState(0);
   const slide = slides[index];
   const isExternal = (href) => !href.startsWith("/");
 
   return (
-    <section aria-label="Ajakan konsultasi" className="border-t border-line bg-paper py-16 sm:py-20">
+    <section aria-label={t("Ajakan konsultasi")} className="border-t border-line bg-paper py-16 sm:py-20">
       <Container>
         <div className={`rounded-3xl px-6 py-12 text-center sm:px-12 sm:py-14 ${bandClass}`}>
           <span className="inline-flex items-center rounded-full border border-white/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white">
-            Konsultasi gratis
+            {t("Konsultasi gratis")}
           </span>
           <h2 className="mx-auto mt-5 max-w-2xl text-2xl font-bold leading-snug text-white sm:text-3xl">
-            {slide.title}
+            {t(slide.title)}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/85">
-            {slide.detail}
+            {t(slide.detail)}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {slide.actions.map((action) => {
@@ -51,15 +54,15 @@ export default function CtaBanner({ page }) {
                   rel="noopener noreferrer"
                   className={className}
                 >
-                  {action.label}
+                  {t(action.label)}
                 </a>
               ) : action.href.startsWith("/") ? (
                 <Link key={action.label} to={action.href} className={className}>
-                  {action.label}
+                  {t(action.label)}
                 </Link>
               ) : (
                 <a key={action.label} href={action.href} className={className}>
-                  {action.label}
+                  {t(action.label)}
                 </a>
               );
             })}
@@ -72,7 +75,7 @@ export default function CtaBanner({ page }) {
               key={item.title}
               type="button"
               aria-current={i === index ? "true" : undefined}
-              aria-label={`Tampilkan ajakan ${i + 1}: ${item.title}`}
+              aria-label={`${t("Tampilkan ajakan")} ${i + 1}: ${t(item.title)}`}
               onClick={() => setIndex(i)}
               className="inline-flex min-h-11 items-center px-1"
             >

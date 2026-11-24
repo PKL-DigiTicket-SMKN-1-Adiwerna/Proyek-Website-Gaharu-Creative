@@ -9,11 +9,12 @@ import {
   Kepala,
   Tag,
 } from "../components/ui.jsx";
-import { site, links } from "../data/site.js";
-import { useSite, waHref } from "../lib/useSite.js";
+import { site } from "../data/site.js";
+import { useSite, waHref, waHrefDenganPesan, linksFor } from "../lib/useSite.js";
 import { kontakInfo, inquiryServices as staticInquiryServices } from "../data/cta.js";
 import { api } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { useT } from "../lib/i18n.js";
 
 const title = "Kontak";
 const description = "Hubungi Gaharu Creative lewat WhatsApp resmi atau formulir konsultasi. Lihat juga kebijakan privasi kami."
@@ -30,7 +31,10 @@ export default function KontakPage() {
   /* Identitas, kontak, dan alamat mengikuti isian panel admin; jam kerja masih
    * statis karena belum ada kolomnya di pengaturan. */
   const situs = useSite();
+  const t = useT();
   const waResmi = waHref(situs);
+  /* Tautan WhatsApp/email ikut setelan situs, bukan nilai statis src/data/site.js. */
+  const wa = linksFor(situs);
   const infoKontak = kontakInfo.map((item) => {
     if (item.href === "whatsapp") return { ...item, value: situs.waDisplay || item.value, verified: true };
     if (item.href === "mail" || item.title === "Email") {
@@ -74,10 +78,10 @@ export default function KontakPage() {
   const submit = async (event) => {
     event.preventDefault();
     const next = {};
-    if (!form.nama.trim()) next.nama = "Nama lengkap belum diisi.";
-    if (!form.kontak.trim()) next.kontak = "Nomor WhatsApp atau email belum diisi.";
-    if (!form.layanan) next.layanan = "Pilih salah satu layanan.";
-    if (!form.pesan.trim()) next.pesan = "Ceritakan singkat kebutuhan proyek Anda.";
+    if (!form.nama.trim()) next.nama = t("Nama lengkap belum diisi.");
+    if (!form.kontak.trim()) next.kontak = t("Nomor WhatsApp atau email belum diisi.");
+    if (!form.layanan) next.layanan = t("Pilih salah satu layanan.");
+    if (!form.pesan.trim()) next.pesan = t("Ceritakan singkat kebutuhan proyek Anda.");
 
     if (Object.keys(next).length > 0) {
       setErrors(next);
@@ -130,13 +134,13 @@ export default function KontakPage() {
       .filter((line) => line !== null)
       .join("\n");
 
-    window.open(`${waResmi}&text=${encodeURIComponent(isi)}`, "_blank", "noopener");
+    window.open(waHrefDenganPesan(situs, isi), "_blank", "noopener");
     idemRef.current = null;
     setState("sent");
     setForm(emptyForm);
   };
 
-  const infoHref = (kind) => (kind === "whatsapp" ? links.whatsapp : kind === "email" ? links.mail : null);
+  const infoHref = (kind) => (kind === "whatsapp" ? wa.whatsapp : kind === "email" ? wa.mail : null);
 
   return (
     <>
@@ -145,13 +149,13 @@ export default function KontakPage() {
       <Section id="hubungi" className="border-b border-brand-100 bg-paper">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
-            Hubungi kami
+            {t("Hubungi kami")}
           </p>
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-            Hubungi Kami
+            {t("Hubungi Kami")}
           </h1>
           <p className="mt-4 text-base leading-relaxed text-muted">
-            Isi form di bawah atau hubungi lewat kanal yang tersedia. Tim kami merespons di hari kerja.
+            {t("Isi form di bawah atau hubungi lewat kanal yang tersedia. Tim kami merespons di hari kerja.")}
           </p>
         </div>
         <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
@@ -161,14 +165,14 @@ export default function KontakPage() {
           >
             <Kepala
               nomor="Form"
-              judul="Form Kontak"
-              catatan="Isi data berikut, lalu pesan diteruskan ke WhatsApp tim kami."
+              judul={t("Form Kontak")}
+              catatan={t("Isi data berikut, lalu pesan diteruskan ke WhatsApp tim kami.")}
             />
 
             <form className="mt-8 grid gap-5 sm:grid-cols-2" onSubmit={submit} noValidate>
               <div>
                 <label htmlFor="nama" className="block text-sm font-semibold text-ink">
-                  Nama Lengkap <span aria-hidden="true">*</span>
+                  {t("Nama Lengkap")} <span aria-hidden="true">*</span>
                 </label>
                 <input
                   id="nama"
@@ -178,7 +182,7 @@ export default function KontakPage() {
                   autoComplete="name"
                   value={form.nama}
                   onChange={(e) => field("nama", e.target.value)}
-                  placeholder="Masukkan nama lengkap Anda"
+                  placeholder={t("Masukkan nama lengkap Anda")}
                   aria-invalid={errors.nama ? "true" : undefined}
                   aria-describedby={errors.nama ? "nama-error" : undefined}
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
@@ -192,7 +196,7 @@ export default function KontakPage() {
 
               <div>
                 <label htmlFor="perusahaan" className="block text-sm font-semibold text-ink">
-                  Perusahaan
+                  {t("Perusahaan")}
                 </label>
                 <input
                   id="perusahaan"
@@ -201,14 +205,14 @@ export default function KontakPage() {
                   autoComplete="organization"
                   value={form.perusahaan}
                   onChange={(e) => field("perusahaan", e.target.value)}
-                  placeholder="Nama perusahaan / institusi"
+                  placeholder={t("Nama perusahaan / institusi")}
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
                 />
               </div>
 
               <div className="sm:col-span-2">
                 <label htmlFor="kontak" className="block text-sm font-semibold text-ink">
-                  WhatsApp atau Email untuk Balasan <span aria-hidden="true">*</span>
+                  {t("WhatsApp atau Email untuk Balasan")} <span aria-hidden="true">*</span>
                 </label>
                 <input
                   id="kontak"
@@ -218,13 +222,13 @@ export default function KontakPage() {
                   autoComplete="tel"
                   value={form.kontak}
                   onChange={(e) => field("kontak", e.target.value)}
-                  placeholder="Contoh: 08xx xxxx xxxx atau nama@email.com"
+                  placeholder={t("Contoh: 08xx xxxx xxxx atau nama@email.com")}
                   aria-invalid={errors.kontak ? "true" : undefined}
                   aria-describedby={errors.kontak ? "kontak-error" : "kontak-help"}
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
                 />
                 <p id="kontak-help" className="mt-2 text-xs text-muted">
-                  Dipakai hanya untuk membalas kebutuhan proyek Anda.
+                  {t("Dipakai hanya untuk membalas kebutuhan proyek Anda.")}
                 </p>
                 {errors.kontak ? (
                   <p id="kontak-error" className="mt-2 text-sm font-semibold text-ink">
@@ -235,7 +239,7 @@ export default function KontakPage() {
 
               <div className="sm:col-span-2">
                 <label htmlFor="layanan" className="block text-sm font-semibold text-ink">
-                  Layanan Digital <span aria-hidden="true">*</span>
+                  {t("Layanan Digital")} <span aria-hidden="true">*</span>
                 </label>
                 <select
                   id="layanan"
@@ -247,16 +251,15 @@ export default function KontakPage() {
                   aria-describedby={errors.layanan ? "layanan-error" : "layanan-help"}
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink"
                 >
-                  <option value="">Pilih layanan yang dibutuhkan</option>
+                  <option value="">{t("Pilih layanan yang dibutuhkan")}</option>
                   {inquiryServices.map((name) => (
                     <option key={name} value={name}>
-                      {name}
+                      {t(name)}
                     </option>
                   ))}
                 </select>
                 <p id="layanan-help" className="mt-2 text-xs text-muted">
-                  Pilihan diambil dari lima layanan resmi kami. Pilih &quot;Belum tahu&quot; kalau
-                  Anda ingin kami merekomendasikan lebih dulu.
+                  {t('Pilihan diambil dari lima layanan resmi kami. Pilih "Belum tahu" kalau Anda ingin kami merekomendasikan lebih dulu.')}
                 </p>
                 {errors.layanan ? (
                   <p id="layanan-error" className="mt-2 text-sm font-semibold text-ink">
@@ -267,7 +270,7 @@ export default function KontakPage() {
 
               <div className="sm:col-span-2">
                 <label htmlFor="pesan" className="block text-sm font-semibold text-ink">
-                  Pesan <span aria-hidden="true">*</span>
+                  {t("Pesan")} <span aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id="pesan"
@@ -276,14 +279,13 @@ export default function KontakPage() {
                   rows={5}
                   value={form.pesan}
                   onChange={(e) => field("pesan", e.target.value)}
-                  placeholder="Ceritakan kebutuhan proyek Anda (tujuan, timeline, dan detail singkat)"
+                  placeholder={t("Ceritakan kebutuhan proyek Anda (tujuan, timeline, dan detail singkat)")}
                   aria-invalid={errors.pesan ? "true" : undefined}
                   aria-describedby={errors.pesan ? "pesan-error" : "pesan-help"}
                   className="mt-2 min-h-11 w-full rounded-md border border-field bg-paper px-4 py-3 text-base text-ink placeholder:text-muted"
                 />
                 <p id="pesan-help" className="mt-2 text-xs text-muted">
-                  Contoh: Ingin website company profile dengan fitur lead form, target rilis akhir
-                  bulan.
+                  {t("Contoh: Ingin website company profile dengan fitur lead form, target rilis akhir bulan.")}
                 </p>
                 {errors.pesan ? (
                   <p id="pesan-error" className="mt-2 text-sm font-semibold text-ink">
@@ -294,7 +296,7 @@ export default function KontakPage() {
 
               {state === "error" ? (
                 <p role="alert" className="text-sm font-semibold text-ink sm:col-span-2">
-                  Ada kolom yang belum lengkap. Perbaiki tulisan di atas kolom terkait, lalu kirim lagi.
+                  {t("Ada kolom yang belum lengkap. Perbaiki tulisan di atas kolom terkait, lalu kirim lagi.")}
                 </p>
               ) : null}
 
@@ -303,34 +305,32 @@ export default function KontakPage() {
                   role="status"
                   className="rounded-md border border-dashed border-line bg-block p-4 text-sm leading-relaxed text-ink sm:col-span-2"
                 >
-                  Pesan sudah disiapkan di tab WhatsApp. Kalau tab tidak terbuka, hubungi langsung
-                  nomor {situs.waDisplay || site.waDisplay}.
+                  {t("Pesan sudah disiapkan di tab WhatsApp. Kalau tab tidak terbuka, hubungi langsung nomor")}{" "}
+                  {situs.waDisplay || site.waDisplay}.
                 </p>
               ) : null}
 
               <div className="rounded-md border border-line bg-block p-4 sm:col-span-2">
-                <p className="text-sm font-semibold text-ink">Alur pengiriman form ini</p>
+                <p className="text-sm font-semibold text-ink">{t("Alur pengiriman form ini")}</p>
                 <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm leading-relaxed text-muted">
-                  <li>Isi kolom wajib di atas, lalu tekan tombol kirim di bawah.</li>
+                  <li>{t("Isi kolom wajib di atas, lalu tekan tombol kirim di bawah.")}</li>
                   <li>
-                    WhatsApp terbuka di tab baru dengan isi pesan yang sudah tersusun dari isian Anda.
+                    {t("WhatsApp terbuka di tab baru dengan isi pesan yang sudah tersusun dari isian Anda.")}
                   </li>
                   <li>
-                    Tekan kirim di WhatsApp supaya pesan benar-benar masuk ke tim kami. Situs ini
-                    tidak menyimpan isian form di server, jadi tidak ada pesan yang terkirim sendiri.
+                    {t("Tekan kirim di WhatsApp supaya pesan benar-benar masuk ke tim kami. Situs ini tidak menyimpan isian form di server, jadi tidak ada pesan yang terkirim sendiri.")}
                   </li>
                 </ol>
               </div>
 
               <div className="flex flex-col items-center gap-3 sm:col-span-2">
                 <Button kind="primary" type="submit" className="w-full sm:w-auto">
-                  Kirim lewat WhatsApp
+                  {t("Kirim lewat WhatsApp")}
                 </Button>
                 <p className="text-xs leading-relaxed text-muted">
-                  Dengan mengirim pesan, Anda setuju data isian ini dipakai untuk menanggapi
-                  permintaan Anda. Detailnya ada di{" "}
+                  {t("Dengan mengirim pesan, Anda setuju data isian ini dipakai untuk menanggapi permintaan Anda. Detailnya ada di")}{" "}
                   <Link to="/kebijakan-privasi" className="font-semibold text-ink underline decoration-line underline-offset-2 hover:decoration-brand-600">
-                    Kebijakan Privasi
+                    {t("Kebijakan Privasi")}
                   </Link>
                   .
                 </p>
@@ -339,15 +339,14 @@ export default function KontakPage() {
           </div>
 
           <aside className="rounded-lg border border-line bg-paper p-6">
-            <Tag>Bentuk komunikasi cepat</Tag>
-            <h2 className="mt-4 text-lg font-bold text-ink">Area Kontak</h2>
+            <Tag>{t("Bentuk komunikasi cepat")}</Tag>
+            <h2 className="mt-4 text-lg font-bold text-ink">{t("Area Kontak")}</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              Cara tercepat lewat WhatsApp. Isi form di sebelah kiri, atau chat langsung ke nomor
-              resmi kami.
+              {t("Cara tercepat lewat WhatsApp. Isi form di sebelah kiri, atau chat langsung ke nomor resmi kami.")}
             </p>
-            <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted">Respon hari kerja</p>
+            <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted">{t("Respon hari kerja")}</p>
             <div className="mt-5 space-y-3 border-t border-line pt-5 text-sm text-muted">
-              <p>{site.hours}</p>
+              <p>{t(site.hours)}</p>
               <a
                 href={waResmi}
                 target="_blank"
@@ -363,14 +362,14 @@ export default function KontakPage() {
 
       <Section id="informasi-kontak" divider className="bg-block">
         <Kepala
-          judul="Informasi Kontak"
-          catatan="Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional."
+          judul={t("Informasi Kontak")}
+          catatan={t("Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional.")}
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {infoKontak.map((item) => (
             <article key={item.title} className="rounded-lg border border-line bg-paper p-5">
               <IconCircle name={item.icon} className="mb-4" />
-              <h2 className="text-sm font-bold text-ink">{item.title}</h2>
+              <h2 className="text-sm font-bold text-ink">{t(item.title)}</h2>
               {item.verified && item.href ? (
                 <a
                   href={infoHref(item.href)}
@@ -381,30 +380,29 @@ export default function KontakPage() {
                 </a>
               ) : (
                 <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {item.verified ? item.value : "Belum tersedia"}
+                  {item.verified ? t(item.value) : t("Belum tersedia")}
                 </p>
               )}
-              {item.note ? <p className="mt-2 text-xs text-muted">{item.note}</p> : null}
+              {item.note ? <p className="mt-2 text-xs text-muted">{t(item.note)}</p> : null}
             </article>
           ))}
         </div>
         {!situs.email || !situs.address ? (
           <p className="mt-6 max-w-3xl text-sm text-muted">
-            Kanal yang belum dikonfirmasi dikosongkan, jadi tidak ada data contoh yang tayang.
-            Email dan alamat diambil dari Pengaturan Situs di panel admin.
+            {t("Kanal yang belum dikonfirmasi dikosongkan, jadi tidak ada data contoh yang tayang. Email dan alamat diambil dari Pengaturan Situs di panel admin.")}
           </p>
         ) : null}
       </Section>
 
       <Section id="peta" divider>
         <Kepala
-          judul="Peta"
-          catatan="Lokasi kantor dan area layanan."
+          judul={t("Peta")}
+          catatan={t("Lokasi kantor dan area layanan.")}
         />
         <div className="mt-10">
           {situs.address ? (
             <iframe
-              title="Peta lokasi kantor Gaharu Creative"
+              title={t("Peta lokasi kantor Gaharu Creative")}
               src={`https://www.google.com/maps?q=${encodeURIComponent(situs.address)}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -412,18 +410,17 @@ export default function KontakPage() {
             />
           ) : (
             <ImageBlock
-              label="Peta Google Maps"
-              hint="Isi alamat di Pengaturan Situs supaya peta otomatis tampil di sini."
+              label={t("Peta Google Maps")}
+              hint={t("Isi alamat di Pengaturan Situs supaya peta otomatis tampil di sini.")}
               ratio="aspect-[16/7]"
             />
           )}
           {situs.address ? (
-            <p className="mt-3 text-sm text-muted">Alamat kantor: {situs.address}</p>
+            <p className="mt-3 text-sm text-muted">{t("Alamat kantor:")} {situs.address}</p>
           ) : null}
         </div>
         <p className="mt-6 max-w-3xl text-sm text-muted">
-          Kami melayani klien di seluruh Indonesia; pertemuan bisa lewat panggilan video atau
-          kunjungan sesuai kesepakatan.
+          {t("Kami melayani klien di seluruh Indonesia; pertemuan bisa lewat panggilan video atau kunjungan sesuai kesepakatan.")}
         </p>
       </Section>
     </>

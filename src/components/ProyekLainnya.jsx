@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { portfolioItems as staticItems } from "../data/portfolio.js";
 import { api, adaptPortfolioItems } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { useT } from "../lib/i18n.js";
 
 /* Daftar proyek lain di luar studi kasus yang sedang dibuka. Diambil dari API
  * supaya proyek baru dari panel admin ikut tampil, dengan cadangan statis kalau
  * API kosong atau gagal. Semua proyek selain yang sedang dibuka ditampilkan.
  */
 export default function ProyekLainnya({ slug }) {
+  const t = useT();
   const { data } = useApi(
     () => api.portfolio().then((j) => ({ data: adaptPortfolioItems(j.data) })),
     staticItems
@@ -21,7 +23,7 @@ export default function ProyekLainnya({ slug }) {
         <Link
           key={p.slug}
           to={`/portofolio/${p.slug}`}
-          className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-4 shadow-sm transition-all hover:border-brand-600 hover:shadow-md"
+          className="group flex flex-col justify-between rounded-2xl border border-line bg-paper p-4 shadow-sm transition-all hover:border-brand-600 hover:shadow-md"
         >
           <div>
             <div className="mb-3 aspect-[16/10] overflow-hidden rounded-xl bg-chip">
@@ -38,7 +40,7 @@ export default function ProyekLainnya({ slug }) {
               <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted">{p.summary}</p>
             ) : null}
           </div>
-          <span className="mt-4 block text-xs font-bold text-button">Lihat Detail Proyek →</span>
+          <span className="mt-4 block text-xs font-bold text-button">{t("Lihat Detail Proyek →")}</span>
         </Link>
       ))}
     </div>

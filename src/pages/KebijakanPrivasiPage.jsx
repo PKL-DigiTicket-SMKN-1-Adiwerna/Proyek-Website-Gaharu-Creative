@@ -1,6 +1,8 @@
 import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section, Kepala } from "../components/ui.jsx";
-import { links, site } from "../data/site.js";
+import { site } from "../data/site.js";
+import { linksFor, useSite } from "../lib/useSite.js";
+import { useT } from "../lib/i18n.js";
 
 /* Kebijakan privasi ditulis sebatas apa yang benar-benar terjadi di situs ini.
  * Tidak ada klaim tentang layanan yang belum dipakai: formulir kontak di situs
@@ -94,30 +96,33 @@ const BAGIAN = [
 ];
 
 export default function KebijakanPrivasiPage() {
+  const t = useT();
+  /* Nomor WhatsApp yang tampil dan ditautkan ikut setelan situs. */
+  const situs = useSite();
+  const wa = linksFor(situs);
   return (
     <>
       <Seo
-        title="Kebijakan Privasi"
-        description={`Keterangan tentang data yang diterima ${site.name} lewat formulir kontak dan WhatsApp resmi, cara pemakaiannya, lama simpan, dan cara mengajukan hak Anda.`}
+        title={t("Kebijakan Privasi")}
+        description={`${t("Keterangan tentang data yang diterima")} ${site.name} ${t("lewat formulir kontak dan WhatsApp resmi, cara pemakaiannya, lama simpan, dan cara mengajukan hak Anda.")}`}
       />
 
       <Section className="border-b border-brand-100 bg-brand-50">
         <Container className="py-16 sm:py-20">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted">
-              Dokumen resmi
+              {t("Dokumen resmi")}
             </p>
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Kebijakan Privasi
+              {t("Kebijakan Privasi")}
             </h1>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              Halaman ini menjelaskan data apa yang kami terima dari pengunjung situs {site.name},
-              untuk apa data itu dipakai, berapa lama disimpan, dan bagaimana Anda mengajukan hak
-              Anda. Ditulis sesuai apa yang benar-benar berjalan di situs ini, tanpa janji layanan
-              yang belum kami pasang.
+              {t("Halaman ini menjelaskan data apa yang kami terima dari pengunjung situs")}{" "}
+              {site.name},{" "}
+              {t("untuk apa data itu dipakai, berapa lama disimpan, dan bagaimana Anda mengajukan hak Anda. Ditulis sesuai apa yang benar-benar berjalan di situs ini, tanpa janji layanan yang belum kami pasang.")}
             </p>
             <p className="mt-4 text-sm text-muted">
-              Terakhir diperbarui: {PEMBARUAN}
+              {t("Terakhir diperbarui:")} {t(PEMBARUAN)}
             </p>
           </div>
         </Container>
@@ -126,31 +131,31 @@ export default function KebijakanPrivasiPage() {
       <Section className="bg-paper">
         <Container className="py-14 sm:py-16">
           <Kepala
-            nomor="Kebijakan"
-            judul="Hal yang perlu Anda ketahui sebelum menghubungi kami"
-            catatan="Isi kebijakan privasi situs Gaharu Creative."
+            nomor={t("Kebijakan")}
+            judul={t("Hal yang perlu Anda ketahui sebelum menghubungi kami")}
+            catatan={t("Isi kebijakan privasi situs Gaharu Creative.")}
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {BAGIAN.map((bagian, index) => (
               <article
                 key={bagian.judul}
-                className="rounded-2xl border border-line bg-white p-6 sm:p-8"
+                className="rounded-2xl border border-line bg-paper p-6 sm:p-8"
               >
                 <h2 className="text-lg font-bold text-ink sm:text-xl">
                   <span className="text-muted">{index + 1}. </span>
-                  {bagian.judul}
+                  {t(bagian.judul)}
                 </h2>
                 <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted sm:text-base">
                   {bagian.isi.map((kalimat) => (
                     <li key={kalimat} className="flex gap-3">
                       <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
-                      <span>{kalimat}</span>
+                      <span>{t(kalimat)}</span>
                     </li>
                   ))}
                 </ul>
                 {bagian.catatan ? (
                   <p className="mt-4 rounded-md border border-dashed border-line bg-block p-4 text-sm leading-relaxed text-ink">
-                    {bagian.catatan}
+                    {t(bagian.catatan)}
                   </p>
                 ) : null}
               </article>
@@ -161,24 +166,24 @@ export default function KebijakanPrivasiPage() {
 
       <Section className="border-t border-line bg-brand-50">
         <Container className="py-14 sm:py-16">
-          <div className="mx-auto max-w-3xl rounded-2xl border border-line bg-white p-6 sm:p-8">
-            <h2 className="text-lg font-bold text-ink sm:text-xl">Mengajukan permintaan atau pertanyaan</h2>
+          <div className="mx-auto max-w-3xl rounded-2xl border border-line bg-paper p-6 sm:p-8">
+            <h2 className="text-lg font-bold text-ink sm:text-xl">{t("Mengajukan permintaan atau pertanyaan")}</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-              Satu-satunya kanal resmi yang sudah dikonfirmasi perusahaan adalah WhatsApp{" "}
-              <span className="font-semibold text-ink">{site.waDisplay}</span>. Email dan alamat
-              kantor belum dikonfirmasi, jadi sengaja tidak dicantumkan di sini.
+              {t("Satu-satunya kanal resmi yang sudah dikonfirmasi perusahaan adalah WhatsApp")}{" "}
+              <span className="font-semibold text-ink">{situs.waDisplay || situs.waNumber}</span>
+              {t(". Email dan alamat kantor belum dikonfirmasi, jadi sengaja tidak dicantumkan di sini.")}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
-                href={links.whatsapp}
+                href={wa.whatsapp}
                 kind="primary"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Hubungi via WhatsApp
+                {t("Hubungi via WhatsApp")}
               </Button>
               <Button to="/kontak" kind="secondary">
-                Halaman Kontak
+                {t("Halaman Kontak")}
               </Button>
             </div>
           </div>

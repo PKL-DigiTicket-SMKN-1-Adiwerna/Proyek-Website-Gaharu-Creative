@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { navLinks, links, clientLanguages } from "../data/site.js";
-import { useSite } from "../lib/useSite.js";
+import { navLinks, clientLanguages } from "../data/site.js";
+import { useSite, linksFor } from "../lib/useSite.js";
+import { useBahasa } from "../lib/i18n.js";
+import { useTema } from "../lib/tema.js";
 import { Button, Container } from "./ui.jsx";
 import { Icon } from "./Icons.jsx";
 import Logo from "./Logo.jsx";
 
-/* Logo kiri, menu rata tengah, pemilih bahasa dan tombol Hubungi Kami di kanan
- * (DESAIN.md bagian 3.1; permintaan CeO 19 Okt 2026). */
+/* Logo kiri, menu rata tengah, pemilih tema + bahasa dan tombol Hubungi Kami di
+ * kanan (DESAIN.md bagian 3.1; permintaan CeO 19 Okt 2026). Pemilih bahasa
+ * benar-benar mengganti bahasa antarmuka (src/lib/i18n.js); tombol tema
+ * mengganti mode terang/gelap (src/lib/tema.js). */
 function LanguagePicker() {
   const [open, setOpen] = useState(false);
   const box = useRef(null);
+  const { kode, t, ganti } = useBahasa();
 
   useEffect(() => {
     if (!open) return;
@@ -35,45 +40,66 @@ function LanguagePicker() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="true"
-        aria-label="Pilih bahasa"
+        aria-label={t("Pilih bahasa")}
         className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-field px-3 text-sm font-semibold text-ink transition-colors hover:bg-block"
       >
         <Icon name="globe" className="h-5 w-5" />
-        ID
+        {kode.toUpperCase()}
         <Icon name="chevronDown" className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open ? (
         <ul className="absolute right-0 z-50 mt-2 w-56 rounded-md border border-line bg-paper p-1.5 shadow-sm">
-          {clientLanguages.map((lang) => (
-            <li key={lang.code}>
-              {lang.available ? (
-                <span
-                  aria-current="true"
-                  className="flex min-h-11 items-center justify-between rounded px-3 py-2 text-sm font-semibold text-ink"
+          {clientLanguages.map((lang) => {
+            const bahasa = lang.code.toLowerCase();
+            const aktif = bahasa === kode;
+            return (
+              <li key={lang.code}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    ganti(bahasa);
+                    setOpen(false);
+                  }}
+                  aria-current={aktif ? "true" : undefined}
+                  className={`flex min-h-11 w-full items-center justify-between rounded px-3 py-2 text-sm font-semibold transition-colors ${
+                    aktif ? "bg-block text-ink" : "text-ink hover:bg-block"
+                  }`}
                 >
                   {lang.label}
-                  <Icon name="check" className="h-5 w-5" />
-                </span>
-              ) : (
-                <span
-                  aria-disabled="true"
-                  className="flex min-h-11 items-center justify-between rounded px-3 py-2 text-sm text-muted"
-                >
-                  {lang.label}
-                  <span className="text-xs uppercase tracking-wider">segera</span>
-                </span>
-              )}
-            </li>
-          ))}
+                  {aktif ? <Icon name="check" className="h-5 w-5" /> : null}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       ) : null}
     </div>
   );
 }
 
+function ThemeToggle() {
+  const { gelap, balik } = useTema();
+  const { t } = useBahasa();
+  const label = gelap ? t("Mode terang") : t("Mode gelap");
+  return (
+    <button
+      type="button"
+      onClick={balik}
+      aria-label={label}
+      title={label}
+      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-field text-ink transition-colors hover:bg-block"
+    >
+      <Icon name={gelap ? "sun" : "moon"} className="h-5 w-5" />
+    </button>
+  );
+}
+
 export default function Header() {
   const { name } = useSite();
+  /* Tombol "Hubungi Kami" memakai nomor dari setelan situs, bukan nilai statis. */
+  const wa = linksFor(useSite());
+  const { t } = useBahasa();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -96,14 +122,14 @@ export default function Header() {
           <Link
             to="/"
             className="flex shrink-0 items-center lg:justify-self-start"
-            aria-label={`${name}, beranda`}
+            aria-label={`${name}, ${t("beranda")}`}
           >
             <Logo className="h-12 w-auto" />
           </Link>
 
           <nav
             className="hidden items-center gap-1 lg:flex lg:justify-self-center"
-            aria-label="Navigasi utama"
+            aria-label={t("Navigasi utama")}
           >
             {navLinks.map((link) => (
               <NavLink
@@ -117,15 +143,16 @@ export default function Header() {
                   }`
                 }
               >
-                {link.label}
+                {t(link.label)}
               </NavLink>
             ))}
           </nav>
 
           <div className="ml-auto hidden items-center gap-3 lg:ml-0 lg:flex lg:justify-self-end">
+            <ThemeToggle />
             <LanguagePicker />
-            <Button href={links.konsultasi} kind="nav" className="px-4">
-              Hubungi Kami
+            <Button href={wa.konsultasi} kind="nav" className="px-4">
+              {t("Hubungi Kami")}
             </Button>
           </div>
 
@@ -135,7 +162,7 @@ export default function Header() {
             aria-expanded={open}
             aria-controls="menu-mobile"
             className="ml-auto inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-field text-ink lg:hidden"
-            aria-label={open ? "Tutup menu" : "Buka menu"}
+            aria-label={open ? t("Tutup menu") : t("Buka menu")}
           >
             <span aria-hidden="true" className="relative block h-4 w-5">
               <span className={`absolute left-0 h-0.5 w-5 bg-ink transition-transform ${open ? "top-2 rotate-45" : "top-0"}`} />
@@ -149,7 +176,7 @@ export default function Header() {
       {open ? (
         <div id="menu-mobile" className="border-t border-line bg-paper lg:hidden">
           <Container className="py-4">
-            <nav className="flex flex-col" aria-label="Navigasi mobile">
+            <nav className="flex flex-col" aria-label={t("Navigasi mobile")}>
               {navLinks.map((link) => (
                 <NavLink
                   key={link.to}
@@ -161,19 +188,20 @@ export default function Header() {
                     }`
                   }
                 >
-                  {link.label}
+                  {t(link.label)}
                 </NavLink>
               ))}
             </nav>
             <div className="mt-4 flex items-center gap-3 border-t border-line pt-4">
+              <ThemeToggle />
               <LanguagePicker />
               <Button
-                href={links.konsultasi}
+                href={wa.konsultasi}
                 kind="nav"
                 className="flex-1"
                 onClick={() => setOpen(false)}
               >
-                Hubungi Kami
+                {t("Hubungi Kami")}
               </Button>
             </div>
           </Container>

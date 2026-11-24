@@ -3,11 +3,13 @@ import { Seo } from "../components/Seo.jsx";
 import { Button, Container, Section } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { site, links } from "../data/site.js";
+import { linksFor, useSite } from "../lib/useSite.js";
 import { getContent } from "../lib/contentStore.js";
 import { services as staticServices } from "../data/services.js";
 import { angkaBeranda as staticAngka, portfolioItems as staticKarya, testimonials as staticTestimonials } from "../data/portfolio.js";
 import { api, adaptHomeServices, adaptPortfolioItems, adaptTestimonials } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { useT } from "../lib/i18n.js";
 import RekamJejak from "../components/RekamJejak.jsx";
 
 const title = `${site.name}: Branding, Konten, Media Sosial, Iklan, dan Produk Digital`;
@@ -42,6 +44,7 @@ function Kepala({ nomor, judul, catatan, tautan }) {
 }
 
 function KaryaCard({ item, ukuran }) {
+  const t = useT();
   const span = { besar: "lg:col-span-7", sedang: "lg:col-span-5", lebar: "lg:col-span-12" }[ukuran];
   const lebarBody = ukuran === "lebar";
   const ratio = {
@@ -72,9 +75,9 @@ function KaryaCard({ item, ukuran }) {
         <div className="flex flex-1 flex-col p-5 sm:p-6">
           <div className="flex items-baseline justify-between gap-3">
             <span className="text-[11px] font-semibold uppercase tracking-widest text-subtle">
-              {item.tag}
+              {t(item.tag)}
             </span>
-            {item.contoh ? <span className="rounded-sm bg-tag px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-tag-ink">Contoh</span> : null}
+            {item.contoh ? <span className="rounded-sm bg-tag px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-tag-ink">{t("Contoh")}</span> : null}
           </div>
           <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight text-ink group-hover:text-brand-700 sm:text-xl">
             {item.proyek}
@@ -98,6 +101,9 @@ function KaryaCard({ item, ukuran }) {
 }
 
 export default function HomePage() {
+  const t = useT();
+  /* Tautan WhatsApp ikut setelan situs dari panel admin. */
+  const wa = linksFor(useSite());
   const { data: homeApi } = useApi(() => api.home(), null);
   const { data: apiTestimonials } = useApi(() => api.testimonials().then((j) => ({ data: adaptTestimonials(j.data) })), staticTestimonials);
   const { data: apiHomeServices } = useApi(() => api.services().then((j) => ({ data: adaptHomeServices(j.data) })), null);
@@ -149,28 +155,27 @@ export default function HomePage() {
               <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold uppercase tracking-normal text-brand-700 sm:tracking-widest">
                 <span>{site.name}</span>
                 <span aria-hidden="true" className="hidden h-px w-8 bg-line sm:block" />
-                <span className="text-subtle">Sejak {site.founded}</span>
+                <span className="text-subtle">{t("Sejak")} {site.founded}</span>
               </p>
               <h1 className="mt-5 max-w-[22ch] text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                Merek yang rapi, kerja yang <span className="text-brand-700">kelihatan angkanya.</span>
+                {t("Merek yang rapi, kerja yang")} <span className="text-brand-700">{t("kelihatan angkanya.")}</span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-                Satu tim untuk branding, produksi konten, media sosial, iklan berbayar, dan produk
-                digital, dari riset sampai laporan berjalan.
+                {t("Satu tim untuk branding, produksi konten, media sosial, iklan berbayar, dan produk digital, dari riset sampai laporan berjalan.")}
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Button href={links.konsultasi} kind="primary">
-                  Konsultasi Gratis
+                <Button href={wa.konsultasi} kind="primary">
+                  {t("Konsultasi Gratis")}
                 </Button>
                 <Button to={links.portofolio} kind="secondary">
-                  Lihat Portofolio
+                  {t("Lihat Portofolio")}
                 </Button>
               </div>
               <ul className="mt-8 grid gap-x-6 gap-y-2 border-t border-line pt-5 text-sm leading-relaxed text-muted sm:grid-cols-3">
                 {[
-                  "Satu alur kerja dari strategi sampai eksekusi",
-                  "Pelaporan berkala, bukan laporan tebal",
-                  "Tanpa biaya konsultasi awal",
+                  t("Satu alur kerja dari strategi sampai eksekusi"),
+                  t("Pelaporan berkala, bukan laporan tebal"),
+                  t("Tanpa biaya konsultasi awal"),
                 ].map((item, i) => (
                   <li
                     key={item}
@@ -189,7 +194,7 @@ export default function HomePage() {
                   <div data-parallax="1" className="h-full w-full">
                     <img
                       src="/Beranda.webp"
-                      alt="Tim Gaharu Creative sedang bekerja di depan monitor"
+                      alt={t("Tim Gaharu Creative sedang bekerja di depan monitor")}
                       width={1400}
                       height={933}
                       fetchPriority="high"
@@ -200,10 +205,10 @@ export default function HomePage() {
                 </div>
                 <figcaption className="p-4 sm:p-5">
                   <p className="text-[11px] font-semibold uppercase tracking-widest text-subtle">
-                    Yang dikerjakan
+                    {t("Yang dikerjakan")}
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
-                    Brand, konten, media sosial, iklan berbayar, produk digital.
+                    {t("Brand, konten, media sosial, iklan berbayar, produk digital.")}
                   </p>
                 </figcaption>
               </figure>
@@ -217,19 +222,19 @@ export default function HomePage() {
         <Container>
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-xl font-semibold tracking-tight text-brand-ink sm:text-2xl">
-              Angka resmi, bukan hiasan
+              {t("Angka resmi, bukan hiasan")}
             </h2>
             <p className="text-xs uppercase tracking-widest text-brand-100">
-              Dari data resmi perusahaan
+              {t("Dari data resmi perusahaan")}
             </p>
           </div>
           <dl className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {angkaBeranda.map((a) => (
               <div key={a.arti} className="border-t border-brand-100/30 pt-4">
                 <dt className="text-3xl font-bold tabular-nums tracking-tight text-brand-ink sm:text-4xl">
-                  {a.nilai}
+                  {t(a.nilai)}
                 </dt>
-                <dd className="mt-2 text-sm leading-relaxed text-brand-100">{a.arti}</dd>
+                <dd className="mt-2 text-sm leading-relaxed text-brand-100">{t(a.arti)}</dd>
               </div>
             ))}
           </dl>
@@ -242,9 +247,9 @@ export default function HomePage() {
       {/* 3. Layanan editorial bernomor, ala WPP. */}
       <Section id="layanan">
         <Kepala
-          judul="Yang kami kerjakan"
-          catatan={`${services.length} layanan. Diambil satu saja bisa, digabung juga bisa.`}
-          tautan={{ to: links.layanan, label: "Semua layanan" }}
+          judul={t("Yang kami kerjakan")}
+          catatan={`${services.length} ${t("layanan. Diambil satu saja bisa, digabung juga bisa.")}`}
+          tautan={{ to: links.layanan, label: t("Semua layanan") }}
         />
         <div className="mt-8 border-t border-line">
           {services.map((service, i) => (
@@ -262,11 +267,11 @@ export default function HomePage() {
                       {service.title}
                     </span>
                     <span className="text-[11px] font-semibold uppercase tracking-widest text-subtle">
-                      {service.tag}
+                      {t(service.tag)}
                     </span>
                   </span>
                   <span className="mt-1.5 block max-w-2xl text-sm leading-relaxed text-muted">
-                    {service.short}
+                    {t(service.short)}
                   </span>
                 </span>
                 <Icon name={service.icon} className="mt-1 hidden h-6 w-6 shrink-0 text-brand-700 sm:block" />
@@ -280,18 +285,16 @@ export default function HomePage() {
       {/* 4. Portofolio gambar-led, ala Creativeans. */}
       <Section id="portofolio" className="bg-mint" divider>
         <Kepala
-          judul="Pekerjaan yang pernah kami tangani"
-          catatan="Nama proyek, angka hasil, dan gambar di bawah masih contoh, menunggu portofolio asli."
-          tautan={{ to: links.portofolio, label: "Semua pekerjaan" }}
+          judul={t("Pekerjaan yang pernah kami tangani")}
+          catatan={t("Nama proyek, angka hasil, dan gambar di bawah masih contoh, menunggu portofolio asli.")}
+          tautan={{ to: links.portofolio, label: t("Semua pekerjaan") }}
         />
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-muted">
           <span className="rounded-sm bg-tag px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-tag-ink">
-            Contoh
+            {t("Contoh")}
           </span>
           <span>
-            Semua data portofolio di sini dummy, menunggu portofolio asli. Cara
-            menggantinya ada di satu file data portofolio: ubah isi datanya, lalu
-            set tanda &quot;contoh&quot; ke false.
+            {t('Semua data portofolio di sini dummy, menunggu portofolio asli. Cara menggantinya ada di satu file data portofolio: ubah isi datanya, lalu set tanda "contoh" ke false.')}
             {/* jalur file untuk pengelola: src/data/portfolio.js */}
           </span>
         </div>
@@ -306,8 +309,8 @@ export default function HomePage() {
       {testimonials.length ? (
         <Section divider className="bg-mint">
           <Kepala
-            judul="Apa kata mereka yang sudah bekerja sama"
-            catatan="Testimoni yang tayang sudah disetujui pemilik bisnis."
+            judul={t("Apa kata mereka yang sudah bekerja sama")}
+            catatan={t("Testimoni yang tayang sudah disetujui pemilik bisnis.")}
           />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {testimonials.map((t) => (

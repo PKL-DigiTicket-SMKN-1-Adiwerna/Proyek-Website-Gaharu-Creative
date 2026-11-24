@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { services as staticServices } from "../data/services.js";
-import { links } from "../data/site.js";
 import { Seo } from "../components/Seo.jsx";
 import { Button, Container, IconCircle, Section, Kepala } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
 import { api, adaptServiceDetail } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { linksFor, useSite } from "../lib/useSite.js";
+import { useT } from "../lib/i18n.js";
 
 /* Satu template untuk semua layanan (DESAIN.md v2 bagian 5.3). Section yang
  * datanya kosong tidak dirender sama sekali, jadi tidak ada blok kosong di
@@ -20,6 +21,9 @@ import { useApi } from "../lib/useApi.js";
  * diberi keterangan "contoh tampilan" supaya tidak dibaca sebagai hasil klien.
  */
 export default function LayananDetailPage() {
+  const t = useT();
+  /* Tautan WhatsApp ikut setelan situs. */
+  const wa = linksFor(useSite());
   const { slug } = useParams();
   const statis = staticServices.find((item) => item.slug === slug) || null;
   const { data, loading } = useApi(
@@ -37,23 +41,23 @@ export default function LayananDetailPage() {
     if (loading) {
       return (
         <Section>
-          <p className="text-base text-muted">Memuat layanan...</p>
+          <p className="text-base text-muted">{t("Memuat layanan...")}</p>
         </Section>
       );
     }
     return (
       <Section>
         <div className="mx-auto max-w-xl text-center">
-          <h1 className="text-3xl font-bold text-ink">Layanan tidak ditemukan</h1>
+          <h1 className="text-3xl font-bold text-ink">{t("Layanan tidak ditemukan")}</h1>
           <p className="mt-3 text-base leading-relaxed text-muted">
-            Alamat yang Anda buka tidak cocok dengan layanan yang kami sediakan.
+            {t("Alamat yang Anda buka tidak cocok dengan layanan yang kami sediakan.")}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button to="/layanan" kind="primary">
-              Lihat semua layanan
+              {t("Lihat semua layanan")}
             </Button>
-            <Button href={links.konsultasi} kind="secondary">
-              Tanya lewat WhatsApp
+            <Button href={wa.konsultasi} kind="secondary">
+              {t("Tanya lewat WhatsApp")}
             </Button>
           </div>
         </div>
@@ -76,7 +80,7 @@ export default function LayananDetailPage() {
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
-                {service.hero.eyebrow}
+                {t(service.hero.eyebrow)}
               </p>
 
               <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
@@ -90,11 +94,11 @@ export default function LayananDetailPage() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button href={links.konsultasi} kind="primary">
-                  {service.hero.primary.label}
+                <Button href={wa.konsultasi} kind="primary">
+                  {t(service.hero.primary.label)}
                 </Button>
                 <Button to={service.hero.secondary.to} kind="secondary">
-                  {service.hero.secondary.label}
+                  {t(service.hero.secondary.label)}
                 </Button>
               </div>
 
@@ -104,8 +108,8 @@ export default function LayananDetailPage() {
                     <li key={item.value} className="flex items-start gap-3">
                       <IconCircle name="check" size="sm" />
                       <span className="text-sm leading-relaxed text-muted">
-                        <span className="block font-semibold text-ink">{item.value}</span>
-                        {item.label}
+                        <span className="block font-semibold text-ink">{t(item.value)}</span>
+                        {t(item.label)}
                       </span>
                     </li>
                   ))}
@@ -118,10 +122,10 @@ export default function LayananDetailPage() {
               <div className="rounded-xl bg-mint p-8 text-center">
                 <IconCircle name={service.icon} className="mx-auto" />
                 <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-brand-800">
-                  {service.tag}
+                  {t(service.tag)}
                 </p>
                 <p className="mt-2 text-lg font-bold text-ink">{service.title}</p>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{service.short}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{t(service.short)}</p>
               </div>
             </div>
           </div>
@@ -132,13 +136,13 @@ export default function LayananDetailPage() {
       {service.problems?.length ? (
         <Section className="bg-lav-50">
           <Kepala
-            judul="Yang biasanya menghambat"
-            catatan={`Tiga kondisi yang paling sering muncul sebelum klien memakai layanan ${service.title}.`}
+            judul={t("Yang biasanya menghambat")}
+            catatan={`${t("Tiga kondisi yang paling sering muncul sebelum klien memakai layanan")} ${service.title}.`}
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {service.problems.map((problem) => (
               <article key={problem.title} className="rounded-2xl border border-line bg-paper p-6">
-                <h3 className="text-lg font-semibold text-ink">{problem.title}</h3>
+                <h3 className="text-lg font-semibold text-ink">{t(problem.title)}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{problem.body}</p>
               </article>
             ))}
@@ -152,13 +156,13 @@ export default function LayananDetailPage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
             <div>
               <Kepala
-                judul="Solusi yang kami kerjakan"
-                catatan="Setiap bagian punya keluaran yang jelas, jadi progresnya bisa diperiksa."
+                judul={t("Solusi yang kami kerjakan")}
+                catatan={t("Setiap bagian punya keluaran yang jelas, jadi progresnya bisa diperiksa.")}
               />
               {service.quote ? (
                 <div className="mt-8 rounded-2xl bg-brand-50 p-6">
                   <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
-                    {service.quote.label}
+                    {t(service.quote.label)}
                   </p>
                   <p className="mt-3 text-base leading-relaxed text-muted">{service.quote.body}</p>
                 </div>
@@ -169,9 +173,9 @@ export default function LayananDetailPage() {
               {service.solutions.map((solution) => (
                 <article key={solution.title} className="rounded-2xl border border-line bg-paper p-6">
                   <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">
-                    {solution.label}
+                    {t(solution.label)}
                   </p>
-                  <h3 className="mt-2 text-lg font-semibold text-ink">{solution.title}</h3>
+                  <h3 className="mt-2 text-lg font-semibold text-ink">{t(solution.title)}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{solution.body}</p>
                 </article>
               ))}
@@ -184,7 +188,7 @@ export default function LayananDetailPage() {
       {service.kpi?.cards?.length ? (
         <Section className="bg-lav-50">
           <Kepala
-            judul="Indikator kinerja utama"
+            judul={t("Indikator kinerja utama")}
             catatan={service.kpi.caption}
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -192,11 +196,11 @@ export default function LayananDetailPage() {
               <article key={card.title} className="rounded-2xl border border-line bg-paper p-6">
                 <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
                   <div>
-                    <h3 className="text-base font-semibold text-ink">{card.title}</h3>
-                    <p className="text-xs text-subtle">{card.subtitle}</p>
+                    <h3 className="text-base font-semibold text-ink">{t(card.title)}</h3>
+                    <p className="text-xs text-subtle">{t(card.subtitle)}</p>
                   </div>
                   <span className="rounded-full bg-chip px-3 py-1 text-xs font-semibold text-chip-ink">
-                    {card.badge}
+                    {t(card.badge)}
                   </span>
                 </div>
                 <div className="mt-6 flex items-end justify-around gap-3" aria-hidden="true">
@@ -207,7 +211,7 @@ export default function LayananDetailPage() {
                           index === card.bars.length - 1 ? "h-16 bg-brand-700" : "h-10 bg-line"
                         }`}
                       />
-                      <span className="text-xs text-subtle">{label}</span>
+                      <span className="text-xs text-subtle">{t(label)}</span>
                     </span>
                   ))}
                 </div>
@@ -221,20 +225,20 @@ export default function LayananDetailPage() {
       {service.deliverables?.length ? (
         <Section>
           <Kepala
-            judul="Hasil yang Anda terima"
-            catatan="Setiap keluaran diserahkan dalam format yang bisa langsung dipakai tim Anda."
+            judul={t("Hasil yang Anda terima")}
+            catatan={t("Setiap keluaran diserahkan dalam format yang bisa langsung dipakai tim Anda.")}
           />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {service.deliverables.map((item) => (
               <article key={item.title} className="flex flex-col rounded-2xl border border-line bg-paper p-6">
-                <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
+                <h3 className="text-lg font-semibold text-ink">{t(item.title)}</h3>
                 {item.body ? (
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
                 ) : null}
                 {item.chip ? (
                   <span className="mt-4 inline-flex w-fit items-center gap-2 rounded-md bg-chip px-3 py-1.5 text-xs font-semibold text-chip-ink">
                     <Icon name="doc" className="h-4 w-4" />
-                    {item.chip}
+                    {t(item.chip)}
                   </span>
                 ) : null}
               </article>
@@ -242,7 +246,7 @@ export default function LayananDetailPage() {
           </div>
           {service.qualityNote ? (
             <p className="mt-8 rounded-2xl bg-brand-700 p-6 text-base leading-relaxed text-white">
-              {service.qualityNote}
+              {t(service.qualityNote)}
             </p>
           ) : null}
         </Section>
@@ -252,14 +256,14 @@ export default function LayananDetailPage() {
       {service.steps?.length ? (
         <Section className="bg-lav-50">
           <Kepala
-            judul="Cara kami mengerjakannya"
-            catatan="Urutan kerja yang sama untuk setiap proyek, supaya Anda tahu posisi pekerjaan kapan saja."
+            judul={t("Cara kami mengerjakannya")}
+            catatan={t("Urutan kerja yang sama untuk setiap proyek, supaya Anda tahu posisi pekerjaan kapan saja.")}
           />
           <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {service.steps.map((step) => (
               <li key={step.title} className="rounded-2xl border border-line bg-paper p-6">
-                <p className="text-sm font-bold text-brand-600">{step.label}</p>
-                <h3 className="mt-2 text-base font-semibold text-ink">{step.title}</h3>
+                <p className="text-sm font-bold text-brand-600">{t(step.label)}</p>
+                <h3 className="mt-2 text-base font-semibold text-ink">{t(step.title)}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
               </li>
             ))}
@@ -271,8 +275,8 @@ export default function LayananDetailPage() {
       {service.faqs?.length ? (
         <Section>
           <Kepala
-            judul={`Pertanyaan seputar ${service.title}`}
-            catatan="Jawaban singkat untuk pertanyaan yang paling sering masuk."
+            judul={`${t("Pertanyaan seputar")} ${service.title}`}
+            catatan={t("Jawaban singkat untuk pertanyaan yang paling sering masuk.")}
           />
           <div className="mt-8 space-y-3">
             {service.faqs.map((faq, index) => {
@@ -301,14 +305,14 @@ export default function LayananDetailPage() {
             })}
           </div>
           <p className="mt-6 max-w-3xl text-sm text-muted">
-            Pertanyaan lain?{" "}
+            {t("Pertanyaan lain?")}{" "}
             <a
-              href={links.whatsapp}
+              href={wa.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold text-brand-700 underline underline-offset-4"
             >
-              Hubungi tim kami lewat WhatsApp
+              {t("Hubungi tim kami lewat WhatsApp")}
             </a>
             .
           </p>
@@ -319,28 +323,28 @@ export default function LayananDetailPage() {
       <Section>
         <div className="rounded-3xl bg-[linear-gradient(120deg,var(--brand-800)_0%,var(--brand-900)_100%)] px-6 py-12 text-center sm:px-12">
           <span className="inline-flex items-center rounded-full border border-white/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white">
-            {service.cta.eyebrow}
+            {t(service.cta.eyebrow)}
           </span>
           <h2 className="mx-auto mt-5 max-w-2xl text-2xl font-bold leading-snug text-white sm:text-3xl">
-            {service.cta.title}
+            {t(service.cta.title)}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/85">
             {service.cta.body}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
-              href={links.konsultasi}
+              href={wa.konsultasi}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-lg bg-paper px-6 py-2.5 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50"
             >
-              {service.cta.primary}
+              {t(service.cta.primary)}
             </a>
             <Link
               to="/layanan"
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/50 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
-              Lihat layanan lain
+              {t("Lihat layanan lain")}
             </Link>
           </div>
         </div>

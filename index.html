@@ -10,6 +10,21 @@
     <link rel="mask-icon" href="/icon.svg" color="#047857" />
     <meta name="theme-color" content="#047857" />
     <title>Gaharu Creative | Konsultan dan Eksekutor 360 Digital Agency</title>
+    <!-- Tema dipasang sebelum React jalan supaya halaman tidak berkedip putih
+         saat pengunjung memilih mode gelap (lihat src/lib/tema.js). -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("gaharu_tema");
+          if (t !== "gelap" && t !== "terang") {
+            t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "gelap" : "terang";
+          }
+          document.documentElement.dataset.tema = t;
+        } catch (e) {
+          /* localStorage bisa diblokir peramban; tema bawaan terang dipakai. */
+        }
+      })();
+    </script>
     <!-- Gambar hero beranda sekaligus elemen LCP: dimuat lebih awal. -->
     <link rel="preload" as="image" href="/Beranda.webp" fetchpriority="high" />
     <meta name="description" content="Gaharu Creative, konsultan dan eksekutor 360 derajat digital agency sejak 2016. Branding, content, social media, performance marketing, dan digital product development." />

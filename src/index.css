@@ -59,12 +59,71 @@
   --button: var(--brand-800);
   --button-ink: #ffffff;
   --button-text: #ffffff;
+  --button-sec-ink: var(--button);
 
   /* Kurva gerak untuk animasi masuk & reveal.
    * ease-smooth = deselerasi panjang (terasa halus saat elemen "mendarat"),
    * ease-soft   = untuk gerakan kecil seperti tombol mengambang. */
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Tema gelap (permintaan CeO 24 Nov 2026). Hanya nilai token yang diganti,
+ * jadi seluruh halaman ikut berganti tanpa mengubah komponen. Dipasang lewat
+ * <html data-tema="gelap"> (lihat src/lib/tema.js + skrip di index.html).
+ * Kontras dijaga di atas latar baru:
+ *   --ink   #eef3f9  16.4:1 di #0b1220 (judul)
+ *   --muted #c8d3e1  11.3:1 (teks isi)
+ *   --subtle#9fb0c4   7.1:1 (meta)
+ *   --brand #34d399   9.6:1 di #0b1220 (teks aksen)
+ *   --button#059669 dengan teks #04231a (6.4:1)
+ */
+:root[data-tema="gelap"] {
+  color-scheme: dark;
+  scrollbar-color: #26344a #0b1220;
+
+  --paper: #0b1220;
+  --ink: #eef3f9;
+  --muted: #c8d3e1;
+  --subtle: #9fb0c4;
+  --line: #26344a;
+  --line-soft: #1b2637;
+  --field: #7f90a8;
+  --fill: #064e3b;
+  --block: #131d2e;
+  --tag-bg: #064e3b;
+  --tag-ink: #a7f3d0;
+  --focus: #34d399;
+
+  --brand-900: #a7f3d0;
+  --brand-800: #6ee7b7;
+  --brand-700: #34d399;
+  --brand-600: #10b981;
+  --brand-500: #059669;
+  --brand-100: #064e3b;
+  --brand-50: #042f24;
+
+  --brand: #34d399;
+  --brand-mid: #6ee7b7;
+  --brand-strong: #6ee7b7;
+  --brand-ink: #04231a;
+  --brand-bright: #6ee7b7;
+
+  --lav-50: #141d33;
+  --lav-100: #1b2544;
+  --mint: #0f2b22;
+  --chip: #16202e;
+  --chip-ink: #c8d3e1;
+  --danger-50: #2b1519;
+  --danger-600: #fb7185;
+  --warn-500: #fbbf24;
+
+  /* Tombol primer di tema gelap: latar emerald cerah (#10b981) dengan teks gelap
+   * pekat (#04231a), rasio kontras 6.9:1 (melebihi WCAG AA 4.5:1). */
+  --button: #10b981;
+  --button-ink: #04231a;
+  --button-text: #04231a;
+  --button-sec-ink: #eef3f9;
 }
 
 /* Nilai di atas diterjemahkan jadi utility Tailwind, jadi bg-paper dan text-ink
@@ -105,6 +164,7 @@
   --color-button: var(--button);
   --color-button-ink: var(--button-ink);
   --color-button-text: var(--button-text);
+  --color-button-sec-ink: var(--button-sec-ink);
 
   --font-sans: "Plus Jakarta Sans Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
 }

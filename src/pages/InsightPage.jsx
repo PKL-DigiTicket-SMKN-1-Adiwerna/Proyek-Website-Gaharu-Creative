@@ -11,15 +11,21 @@ import {
   Tag,
 } from "../components/ui.jsx";
 import { Icon } from "../components/Icons.jsx";
-import { links, waBase } from "../data/site.js";
+import { links } from "../data/site.js";
 import { insightCategories as staticCategories, posts as staticPosts, insightsDraftOnly } from "../data/insights.js";
 import { api, adaptArticleCategories, adaptArticles } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import { linksFor, useSite, waHrefDenganPesan } from "../lib/useSite.js";
+import { useT } from "../lib/i18n.js";
 
 const title = "Insight: Artikel Strategi Digital";
 const description = "Artikel, panduan, dan studi kasus seputar strategi pertumbuhan digital dari Gaharu Creative.";
 
 export default function InsightPage() {
+  const t = useT();
+  /* Nomor WhatsApp untuk buletin dan tombol konsultasi ikut setelan situs. */
+  const situs = useSite();
+  const wa = linksFor(situs);
   const { data: apiCats } = useApi(() => api.articleCategories().then((j) => ({ data: adaptArticleCategories(j.data) })), staticCategories);
   const { data: apiPosts } = useApi(() => api.articles().then((j) => ({ data: adaptArticles(j.data) })), staticPosts);
   const insightCategories = (apiCats && apiCats.length ? apiCats : staticCategories);
@@ -51,12 +57,12 @@ export default function InsightPage() {
     /* Tidak ada layanan buletin otomatis di balik form ini, jadi permintaan
      * diteruskan ke WhatsApp supaya tidak ada klaim "terdaftar" yang tidak benar. */
     const pesan = `Halo Gaharu Creative, saya ingin menerima artikel Insight di email: ${value}`;
-    window.open(`${waBase}?text=${encodeURIComponent(pesan)}`, "_blank", "noopener");
+    window.open(waHrefDenganPesan(situs, pesan), "_blank", "noopener");
     setStatus("sent");
   };
 
   return (
-    <div className="bg-white text-ink font-sans min-h-screen">
+    <div className="bg-paper text-ink font-sans min-h-screen">
       <Seo title={title} description={description} />
 
       {/* HERO SECTION */}
@@ -64,20 +70,20 @@ export default function InsightPage() {
         <Container className="py-14 sm:py-20">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-brand-700">
-              Panduan & strategi digital
+              {t("Panduan & strategi digital")}
             </p>
             <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-              Insight & Artikel
+              {t("Insight & Artikel")}
             </h1>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              Catatan praktis dan pembacaan tren digital untuk membantu keputusan pemasaran Anda.
+              {t("Catatan praktis dan pembacaan tren digital untuk membantu keputusan pemasaran Anda.")}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button to={links.portofolio} kind="secondary">
-                Lihat Portofolio
+                {t("Lihat Portofolio")}
               </Button>
-              <Button href={links.konsultasi} kind="primary">
-                Konsultasi Gratis
+              <Button href={wa.konsultasi} kind="primary">
+                {t("Konsultasi Gratis")}
               </Button>
             </div>
           </div>
@@ -87,8 +93,8 @@ export default function InsightPage() {
       {/* FILTER KATEGORI */}
       <Section divider>
         <Kepala
-          judul="Filter Kategori"
-          catatan="Pilih kategori untuk melihat artikel yang relevan dengan fokus bisnis Anda."
+          judul={t("Filter Kategori")}
+          catatan={t("Pilih kategori untuk melihat artikel yang relevan dengan fokus bisnis Anda.")}
         />
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {insightCategories.map((item) => (
@@ -98,7 +104,7 @@ export default function InsightPage() {
               onClick={() => pilihKategori(item.key)}
             >
               <IconCircle name={item.icon} size="sm" />
-              {item.label}
+              {t(item.label)}
             </FilterChip>
           ))}
         </div>
@@ -107,18 +113,18 @@ export default function InsightPage() {
       {/* DAFTAR ARTIKEL */}
       <Section id="daftar-artikel" divider className="bg-block/60">
         <Kepala
-          judul="Artikel Terbaru"
-          catatan="Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda."
+          judul={t("Artikel Terbaru")}
+          catatan={t("Pilihan artikel dari Gaharu Creative untuk membantu strategi dan eksekusi digital Anda.")}
         />
         <p aria-live="polite" className="mx-auto mt-4 max-w-3xl text-center text-xs font-semibold text-muted uppercase tracking-wider">
-          Menampilkan {visible.length} dari {posts.length} artikel
+          {t("Menampilkan {n} dari {m} artikel").replace("{n}", visible.length).replace("{m}", posts.length)}
         </p>
 
         {visible.length === 0 ? (
-          <div className="mx-auto mt-8 max-w-md rounded-2xl border border-dashed border-field bg-white p-8 text-center shadow-sm">
-            <p className="text-base font-bold text-ink">Belum ada artikel di kategori ini</p>
+          <div className="mx-auto mt-8 max-w-md rounded-2xl border border-dashed border-field bg-paper p-8 text-center shadow-sm">
+            <p className="text-base font-bold text-ink">{t("Belum ada artikel di kategori ini")}</p>
             <p className="mt-2 text-xs text-muted leading-relaxed">
-              Naskah untuk kategori ini sedang dalam tahap penyusunan. Silakan cek kategori lainnya.
+              {t("Naskah untuk kategori ini sedang dalam tahap penyusunan. Silakan cek kategori lainnya.")}
             </p>
           </div>
         ) : (
@@ -127,11 +133,11 @@ export default function InsightPage() {
               <Link
                 key={post.slug}
                 to={`/insight/${post.slug}`}
-                className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-5 transition-all duration-300 hover:border-brand-600"
+                className="group flex flex-col justify-between rounded-2xl border border-line bg-paper p-5 transition-all duration-300 hover:border-brand-600"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <Tag>{post.tag || post.category}</Tag>
+                    <Tag>{t(post.tag || post.category)}</Tag>
                     <span className="text-[11px] font-medium text-subtle">{post.dateLabel || "2026"}</span>
                   </div>
 
@@ -169,7 +175,7 @@ export default function InsightPage() {
                   <span
                     className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-line bg-block py-2.5 px-4 text-xs font-bold text-muted transition-all group-hover:border-button group-hover:bg-button group-hover:text-white"
                   >
-                    Baca Selengkapnya →
+                    {t("Baca Selengkapnya")} →
                   </span>
                 </div>
               </Link>
@@ -179,23 +185,23 @@ export default function InsightPage() {
 
         {insightsDraftOnly ? (
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs text-subtle">
-            Daftar artikel diperbarui saat naskahnya selesai ditulis.
+            {t("Daftar artikel diperbarui saat naskahnya selesai ditulis.")}
           </p>
         ) : null}
       </Section>
 
       {/* FORM BERLANGGANAN */}
       <Section divider>
-        <div className="mx-auto max-w-xl rounded-2xl border border-line bg-white p-6 sm:p-8 shadow-sm">
-          <h2 className="text-xl font-bold tracking-tight text-ink">Berlangganan Insight Terbaru</h2>
+        <div className="mx-auto max-w-xl rounded-2xl border border-line bg-paper p-6 sm:p-8 shadow-sm">
+          <h2 className="text-xl font-bold tracking-tight text-ink">{t("Berlangganan Insight Terbaru")}</h2>
           <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted">
-            Kirim alamat email Anda, kami catat untuk pengiriman artikel berikutnya lewat WhatsApp atau email.
+            {t("Kirim alamat email Anda, kami catat untuk pengiriman artikel berikutnya lewat WhatsApp atau email.")}
           </p>
 
           <form className="mt-6 space-y-3" onSubmit={submit} noValidate>
             <div>
               <label htmlFor="email-insight" className="block text-xs font-bold text-muted uppercase tracking-wider mb-1">
-                Email Anda
+                {t("Email Anda")}
               </label>
               <input
                 id="email-insight"
@@ -207,36 +213,35 @@ export default function InsightPage() {
                   setEmail(e.target.value);
                   if (status !== "idle") setStatus("idle");
                 }}
-                placeholder="nama@perusahaan.com"
-                className="w-full rounded-xl border border-field bg-white px-4 py-3 text-sm text-ink placeholder:text-subtle focus:border-button focus:outline-none focus:ring-1 focus:ring-button"
+                placeholder={t("nama@perusahaan.com")}
+                className="w-full rounded-xl border border-field bg-paper px-4 py-3 text-sm text-ink placeholder:text-subtle focus:border-button focus:outline-none focus:ring-1 focus:ring-button"
               />
             </div>
 
             {status === "invalid" && (
               <p role="alert" className="text-xs font-bold text-danger-600">
-                Format email belum benar. Periksa kembali tanda @ dan domain email Anda.
+                {t("Format email belum benar. Periksa kembali tanda @ dan domain email Anda.")}
               </p>
             )}
 
             {status === "sent" && (
               <p role="status" className="text-xs font-bold text-brand-700">
-                Permintaan Anda diteruskan ke WhatsApp kami. Balas pesannya supaya email {email} masuk daftar kiriman.
+                {t("Permintaan Anda diteruskan ke WhatsApp kami. Balas pesannya supaya email {email} masuk daftar kiriman.").replace("{email}", email)}
               </p>
             )}
 
             <p className="text-xs leading-relaxed text-muted">
-              Tombol di bawah membuka WhatsApp dengan pesan berisi alamat email Anda. Tekan kirim
-              di WhatsApp supaya permintaan benar-benar sampai ke tim kami.
+              {t("Tombol di bawah membuka WhatsApp dengan pesan berisi alamat email Anda. Tekan kirim di WhatsApp supaya permintaan benar-benar sampai ke tim kami.")}
             </p>
 
             <Button kind="primary" className="w-full" type="submit">
-              Berlangganan Sekarang
+              {t("Berlangganan Sekarang")}
             </Button>
           </form>
 
           <p className="mt-6 flex items-center justify-center gap-2 text-xs text-subtle">
             <Icon name="shield" className="h-4 w-4 text-button" />
-            Kami menjamin kerahasiaan email Anda tanpa spam.
+            {t("Kami menjamin kerahasiaan email Anda tanpa spam.")}
           </p>
         </div>
       </Section>
