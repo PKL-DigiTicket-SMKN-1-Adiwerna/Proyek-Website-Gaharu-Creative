@@ -36,10 +36,10 @@ export default function LayananPage() {
               Solusi digital terpadu
             </p>
             <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-              5 Layanan Utama Jasa Digital Marketing
+              {services.length} Layanan Utama Jasa Digital Marketing
             </h1>
             <p className="mt-4 text-base leading-relaxed text-muted">
-              Lima solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
+              Solusi terpadu yang saling terhubung untuk mengakselerasi penjualan online dan pertumbuhan bisnis Anda secara sistematis dan berkelanjutan.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button href={links.konsultasi} kind="primary">

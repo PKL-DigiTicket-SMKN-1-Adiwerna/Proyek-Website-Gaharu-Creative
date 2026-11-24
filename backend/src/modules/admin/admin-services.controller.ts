@@ -16,7 +16,7 @@ export class AdminServicesController {
   @Get()
   async list(@Req() req: any) {
     const locale = (req.query?.locale as string) ?? 'id';
-    const data = await this.db.all('SELECT * FROM services WHERE locale = ? AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM services WHERE locale = ? AND deleted_at IS NULL ORDER BY sort_order ASC, created_at ASC, slug ASC', [locale]);
     return { data: data ?? [] };
   }
 
@@ -31,10 +31,14 @@ export class AdminServicesController {
     const locale = dto.locale ?? 'id';
     const id = crypto.randomUUID();
     const groupId = crypto.randomUUID();
+    // Urutan kosong ditaruh di belakang (maks+1). Tanpa ini semua layanan baru
+    // bernilai 0 dan urutannya jadi seri, sehingga urutan tampil berubah-ubah.
+    const baris = await this.db.get('SELECT MAX(sort_order) AS maks FROM services WHERE locale = ? AND deleted_at IS NULL', [locale]);
+    const urutan = dto.sort_order ?? (Number(baris?.maks ?? -1) + 1);
     await this.db.run(`INSERT INTO services (id, group_id, locale, slug, tag, name, short_desc, problem, solution, deliverables, icon, sort_order, is_featured, is_published, published_at, created_by, updated_by)
       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [id, groupId, locale, dto.slug, dto.tag, dto.name, dto.short_desc ?? null, dto.problem ?? null, dto.solution ?? null,
-       dto.deliverables ?? [], dto.icon ?? null, dto.sort_order ?? 0, (dto.is_featured ?? true) ? true : false, (dto.is_published ?? false) ? true : false,
+       dto.deliverables ?? [], dto.icon ?? null, urutan, (dto.is_featured ?? true) ? true : false, (dto.is_published ?? false) ? true : false,
        dto.is_published ? new Date().toISOString() : null, user?.id ?? null, user?.id ?? null]);
     const data = await this.db.get('SELECT * FROM services WHERE id = ?', [id]);
     return { data };

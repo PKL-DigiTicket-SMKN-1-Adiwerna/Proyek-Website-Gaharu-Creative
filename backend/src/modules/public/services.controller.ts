@@ -8,7 +8,7 @@ export class PublicServicesController {
   @Get()
   async list(@Req() req: any) {
     const locale = req.locale ?? 'id';
-    const data = await this.db.all('SELECT * FROM services WHERE locale = ? AND is_published = true AND deleted_at IS NULL ORDER BY sort_order ASC', [locale]);
+    const data = await this.db.all('SELECT * FROM services WHERE locale = ? AND is_published = true AND deleted_at IS NULL ORDER BY sort_order ASC, created_at ASC, slug ASC', [locale]);
     return { data: data ?? [] };
   }
 

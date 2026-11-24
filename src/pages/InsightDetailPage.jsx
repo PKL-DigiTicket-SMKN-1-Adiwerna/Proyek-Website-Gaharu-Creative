@@ -7,18 +7,18 @@ import { links } from "../data/site.js";
 import { api, adaptArticles } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
 
-/* Jumlah artikel terkait yang ditampilkan di bawah halaman artikel. */
-const RELATED_COUNT = 2;
-
-/* Kolom baca satu ukuran di semua layar: 768px, ditengahkan di Container. */
-const COL = "mx-auto w-full max-w-3xl";
-
+/* Semua artikel lain ditampilkan; yang sekategori didahulukan supaya artikel
+ * yang berhubungan tetap muncul paling atas.
+ */
 function artikelTerkait(semua, post) {
   const lain = semua.filter((item) => item.slug !== post.slug);
   const serumacam = lain.filter((item) => item.category === post.category);
   const lainLagi = lain.filter((item) => item.category !== post.category);
-  return [...serumacam, ...lainLagi].slice(0, RELATED_COUNT);
+  return [...serumacam, ...lainLagi];
 }
+
+/* Kolom baca satu ukuran di semua layar: 768px, ditengahkan di Container. */
+const COL = "mx-auto w-full max-w-3xl";
 
 /* Halaman artikel. Daftar artikel diambil dari API (badan naskah ikut terkirim di
  * daftar), lalu jatuh ke data statis kalau API kosong atau gagal. Artikel baru
@@ -125,13 +125,13 @@ export default function InsightDetailPage() {
             />
           )}
 
-          {/* Artikel terkait: dua artikel lain, yang sekategori didahulukan. */}
+          {/* Artikel terkait: semua artikel lain, yang sekategori didahulukan. */}
           {terkait.length > 0 ? (
             <div className="mb-10 border-t border-line pt-8">
               <h2 className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
                 Artikel terkait
               </h2>
-              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {terkait.map((item) => (
                   <article key={item.slug} className="h-full">
                     {/* Seluruh kartu adalah tautan, bukan hanya judulnya. */}

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Icon } from "../components/Icons.jsx";
 import { Seo } from "../components/Seo.jsx";
+import ProyekLainnya from "../components/ProyekLainnya.jsx";
 
 export default function PortofolioUmkmPage() {
   return (
@@ -203,40 +204,7 @@ export default function PortofolioUmkmPage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link to="/portofolio/korporat-gaharu-cloud" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
-              <div>
-                <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Beranda-Portofolio(Gaharu Cloud).webp" alt="Gaharu Cloud Launch" loading="lazy" decoding="async" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="font-bold text-ink text-sm group-hover:text-button">Korporat: Gaharu Cloud Launch</h3>
-                <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Penguatan awareness dan penanganan pipeline B2B.</p>
-              </div>
-              <span className="text-xs font-bold text-button mt-4 block">Lihat Detail Proyek →</span>
-            </Link>
-
-            <Link to="/portofolio/pemerintah-literasi-digital" className="group bg-white rounded-2xl border border-line overflow-hidden shadow-sm hover:shadow-md hover:border-brand-600 transition-all p-4 flex flex-col justify-between">
-              <div>
-                <div className="overflow-hidden rounded-xl mb-3 aspect-[16/10] bg-chip">
-                  <img src="/Proyek Literasi Digital Pemerintah.webp" alt="Literasi Digital" loading="lazy" decoding="async" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="font-bold text-ink text-sm group-hover:text-button">Pemerintah: Literasi Digital</h3>
-                <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-1">Kampanye informasi publik berbasis micro-learning.</p>
-              </div>
-              <span className="text-xs font-bold text-button mt-4 block">Lihat Detail Proyek →</span>
-            </Link>
-
-            <div className="bg-brand-50 border border-brand-100 rounded-2xl p-6 flex flex-col justify-between text-center space-y-4">
-              <div className="space-y-2 my-auto">
-                <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-brand-800"><Icon name="doc" className="h-5 w-5" /></span>
-                <h3 className="font-bold text-ink text-base">Kembali ke Seluruh Portofolio</h3>
-                <p className="text-xs text-muted leading-relaxed">Jelajahi lebih banyak studi kasus dan rekam jejak hasil kerja tim Gaharu.</p>
-              </div>
-              <Link to="/portofolio" className="bg-button text-white font-bold py-2.5 px-5 rounded-lg text-xs hover:bg-brand-700 transition-all shadow-sm">
-                ← Daftar Portofolio
-              </Link>
-            </div>
-          </div>
+          <ProyekLainnya slug="umkm-ecommerce-lokal" />
         </div>
       </section>
     </div>

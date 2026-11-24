@@ -9,7 +9,8 @@ import {
   Kepala,
   Tag,
 } from "../components/ui.jsx";
-import { site, links, waBase } from "../data/site.js";
+import { site, links } from "../data/site.js";
+import { useSite, waHref } from "../lib/useSite.js";
 import { kontakInfo, inquiryServices as staticInquiryServices } from "../data/cta.js";
 import { api } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
@@ -26,6 +27,24 @@ const emptyForm = { nama: "", perusahaan: "", kontak: "", layanan: "", pesan: ""
  * Kontak di kanan, lalu Informasi Kontak dan Peta.
  */
 export default function KontakPage() {
+  /* Identitas, kontak, dan alamat mengikuti isian panel admin; jam kerja masih
+   * statis karena belum ada kolomnya di pengaturan. */
+  const situs = useSite();
+  const waResmi = waHref(situs);
+  const infoKontak = kontakInfo.map((item) => {
+    if (item.href === "whatsapp") return { ...item, value: situs.waDisplay || item.value, verified: true };
+    if (item.href === "mail" || item.title === "Email") {
+      return situs.email
+        ? { ...item, value: situs.email, href: "mail", verified: true, note: null }
+        : item;
+    }
+    if (item.title === "Alamat") {
+      return situs.address
+        ? { ...item, value: situs.address, verified: true, note: null }
+        : item;
+    }
+    return item;
+  });
   const { data: apiContact } = useApi(() => api.contact(), null);
   const inquiryServices = (apiContact && Array.isArray(apiContact.serviceOptions) && apiContact.serviceOptions.length)
     ? apiContact.serviceOptions.map((s) => s.label || s.value)
@@ -111,7 +130,7 @@ export default function KontakPage() {
       .filter((line) => line !== null)
       .join("\n");
 
-    window.open(`${waBase}?text=${encodeURIComponent(isi)}`, "_blank", "noopener");
+    window.open(`${waResmi}&text=${encodeURIComponent(isi)}`, "_blank", "noopener");
     idemRef.current = null;
     setState("sent");
     setForm(emptyForm);
@@ -285,7 +304,7 @@ export default function KontakPage() {
                   className="rounded-md border border-dashed border-line bg-block p-4 text-sm leading-relaxed text-ink sm:col-span-2"
                 >
                   Pesan sudah disiapkan di tab WhatsApp. Kalau tab tidak terbuka, hubungi langsung
-                  nomor {site.waDisplay}.
+                  nomor {situs.waDisplay || site.waDisplay}.
                 </p>
               ) : null}
 
@@ -330,12 +349,12 @@ export default function KontakPage() {
             <div className="mt-5 space-y-3 border-t border-line pt-5 text-sm text-muted">
               <p>{site.hours}</p>
               <a
-                href={links.whatsapp}
+                href={waResmi}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-6 items-center font-semibold text-ink underline decoration-line underline-offset-4 hover:decoration-ink"
               >
-                {site.waDisplay}
+                {situs.waDisplay || site.waDisplay}
               </a>
             </div>
           </aside>
@@ -348,7 +367,7 @@ export default function KontakPage() {
           catatan="Hubungi kami melalui kanal berikut atau datang langsung sesuai jam operasional."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {kontakInfo.map((item) => (
+          {infoKontak.map((item) => (
             <article key={item.title} className="rounded-lg border border-line bg-paper p-5">
               <IconCircle name={item.icon} className="mb-4" />
               <h2 className="text-sm font-bold text-ink">{item.title}</h2>
@@ -369,11 +388,12 @@ export default function KontakPage() {
             </article>
           ))}
         </div>
-        <p className="mt-6 max-w-3xl text-sm text-muted">
-          Baru WhatsApp dan jam operasional yang sudah resmi dari perusahaan. Email dan alamat
-          kantor belum dikonfirmasi, jadi sengaja tidak dicantumkan supaya tidak ada data contoh
-          yang tayang.
-        </p>
+        {!situs.email || !situs.address ? (
+          <p className="mt-6 max-w-3xl text-sm text-muted">
+            Kanal yang belum dikonfirmasi dikosongkan, jadi tidak ada data contoh yang tayang.
+            Email dan alamat diambil dari Pengaturan Situs di panel admin.
+          </p>
+        ) : null}
       </Section>
 
       <Section id="peta" divider>
@@ -382,11 +402,24 @@ export default function KontakPage() {
           catatan="Lokasi kantor dan area layanan."
         />
         <div className="mt-10">
-          <ImageBlock
-            label="Peta Google Maps"
-            hint="Placeholder: alamat kantor belum dikonfirmasi, jadi peta belum ditanam."
-            ratio="aspect-[16/7]"
-          />
+          {situs.address ? (
+            <iframe
+              title="Peta lokasi kantor Gaharu Creative"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(situs.address)}&output=embed`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="aspect-[16/7] w-full rounded-xl border border-line"
+            />
+          ) : (
+            <ImageBlock
+              label="Peta Google Maps"
+              hint="Isi alamat di Pengaturan Situs supaya peta otomatis tampil di sini."
+              ratio="aspect-[16/7]"
+            />
+          )}
+          {situs.address ? (
+            <p className="mt-3 text-sm text-muted">Alamat kantor: {situs.address}</p>
+          ) : null}
         </div>
         <p className="mt-6 max-w-3xl text-sm text-muted">
           Kami melayani klien di seluruh Indonesia; pertemuan bisa lewat panggilan video atau

@@ -6,6 +6,7 @@ import { links } from "../data/site.js";
 import { portfolioItems } from "../data/portfolio.js";
 import { api, adaptPortfolioItem } from "../lib/api.js";
 import { useApi } from "../lib/useApi.js";
+import ProyekLainnya from "../components/ProyekLainnya.jsx";
 
 /* Gambar cadangan kalau berkas sampul hilang atau gagal dimuat. Penanda di
  * dataset mencegah perulangan onError saat gambar cadangan ikut gagal. */
@@ -179,6 +180,18 @@ export default function PortofolioDetailPage() {
               </div>
             </div>
           )}
+        </div>
+      </Section>
+
+      {/* Semua proyek lain ikut ditampilkan, bukan hanya beberapa. */}
+      <Section divider>
+        <Kepala
+          judul="Proyek lainnya"
+          catatan="Studi kasus lain dari tim Gaharu Creative."
+          tautan={{ to: "/portofolio", label: "Semua portofolio" }}
+        />
+        <div className="mt-10">
+          <ProyekLainnya slug={item.slug} />
         </div>
       </Section>
     </>

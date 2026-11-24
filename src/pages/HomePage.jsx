@@ -243,7 +243,7 @@ export default function HomePage() {
       <Section id="layanan">
         <Kepala
           judul="Yang kami kerjakan"
-          catatan="Lima layanan. Diambil satu saja bisa, digabung juga bisa."
+          catatan={`${services.length} layanan. Diambil satu saja bisa, digabung juga bisa.`}
           tautan={{ to: links.layanan, label: "Semua layanan" }}
         />
         <div className="mt-8 border-t border-line">
